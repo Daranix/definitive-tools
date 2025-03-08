@@ -1,0 +1,3 @@
+<form (submit)="onSubmit($event)">
+    <ng-container [ngTemplateOutlet]="tmpl()" [ngTemplateOutletContext]="{formGroup: formGroup()}"></ng-container>
+</form>

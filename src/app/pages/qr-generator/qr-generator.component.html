@@ -1,0 +1,431 @@
+<!-- Navigation Bar -->
+<nav class="bg-white shadow-md py-4">
+    <div class="container mx-auto px-4 flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+            <lucide-angular name="bolt" class="h-8 w-8 text-indigo-600"></lucide-angular>
+            <a routerLink="/" class="text-2xl font-bold text-gray-800">Definitive Tools</a>
+        </div>
+        <div class="hidden md:flex space-x-6">
+            <a href="index.html" class="text-gray-700 hover:text-indigo-600 transition">Home</a>
+            <a href="#" class="text-gray-700 hover:text-indigo-600 transition">All Tools</a>
+            <a href="#" class="text-gray-700 hover:text-indigo-600 transition">About</a>
+            <a href="#" class="text-gray-700 hover:text-indigo-600 transition">Contact</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Tool Header -->
+<div class="bg-indigo-600 text-white py-10">
+    <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
+        <div class="mb-6 md:mb-0 text-center md:text-left">
+            <div class="flex items-center justify-center md:justify-start mb-4">
+                <div class="bg-white p-3 rounded-full mr-4">
+                    <lucide-angular name="qr-code" class="text-3xl text-indigo-600"></lucide-angular>
+                </div>
+                <h1 class="text-3xl md:text-4xl font-bold">QR Code Generator</h1>
+            </div>
+            <p class="text-xl text-indigo-100 max-w-2xl">Create customized QR codes for URLs, text, contact information,
+                and more. high-quality QR codes that work anywhere.</p>
+        </div>
+        <div class="flex space-x-3">
+            <button class="bg-white text-indigo-600 font-medium py-2 px-4 rounded hover:bg-indigo-50 transition flex items-center justify-center justify-items-center gap-1">
+                <lucide-angular name="bookmark" class="w-6 h-6"></lucide-angular>Save to Favorites
+            </button>
+            <button class="bg-indigo-700 text-white font-medium py-2 px-4 rounded hover:bg-indigo-800 transition">
+                <i class="fas fa-share-alt mr-2"></i>Share
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Breadcrumbs -->
+<div class="container mx-auto px-4 py-3">
+    <div class="text-sm text-gray-600">
+        <a [routerLink]="['/']" class="hover:text-indigo-600 transition">Home</a> &gt;
+        <a [routerLink]="['/']" class="hover:text-indigo-600 transition">All Tools</a> &gt;
+        <span class="text-gray-800 font-medium">QR Code Generator</span>
+    </div>
+</div>
+
+<!-- Main Content -->
+<main class="flex-grow container mx-auto px-4 py-8">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Options Panel -->
+        <div class="lg:col-span-2 bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">QR Code Configuration</h2>
+
+            <app-zod-form #generatorForm [zodSchema]="formSchema()" (submit)="generateQrCode($event)">
+                <ng-template let-formGroup="formGroup">
+                    <!-- Content Type Selection -->
+                    <div class="mb-8">
+                        <label class="block text-gray-700 text-sm font-bold mb-3">Content Type</label>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                            @for (contentType of contentTypes; track $index) {
+                            <button (click)="selectedContentType.set(contentType.id)" type="button"
+                                [ngClass]="{'bg-indigo-600 text-white': selectedContentType() === contentType.id, 'bg-white hover:bg-gray-50 hover:text-gray-700': selectedContentType() !== contentType.id}"
+                                class="border border-gray-300 text-gray-700 px-4 py-3 rounded-md flex items-center justify-center text-sm font-medium transition">
+                                <lucide-icon [name]="contentType.icon" class="h-4 w-4 mr-2"></lucide-icon> {{ contentType.name }}
+                            </button>
+                            }
+                            <input type="hidden" name="contentType" [formControl]="formGroup.get('contentType')" />
+                        </div>
+                    </div>
+
+                    @if(selectedContentType() === 'url') {
+                    <!-- URL Content Form (default view) -->
+                    <div id="url-form" class="mb-8">
+                        <label for="url-input" class="block text-gray-700 text-sm font-bold mb-2">Website URL</label>
+                        <input type="text" id="url" [formControl]="formGroup.get('url')"
+                            class="min-w-0 block w-full px-3 py-2 rounded-md focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 border"
+                            placeholder="www.example.com">
+                        <p class="mt-2 text-sm text-gray-500">Enter the full URL including https:// for websites.</p>
+                    </div>
+                    }
+
+                    @if(selectedContentType() === 'text') {
+                        <!-- Text Content Form (hidden by default) -->
+                        <div id="text-form" class="mb-8">
+                            <label for="text-input" class="block text-gray-700 text-sm font-bold mb-2">Text Content</label>
+                            <textarea id="text-input" name="text-input" rows="4"
+                                [formControl]="formGroup.get('textInput')"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                placeholder="Enter any text you want encoded in the QR code"></textarea>
+                        </div>
+                    }
+
+                    @if(selectedContentType() === 'email') {
+                    <!-- Email Content Form (hidden by default) -->
+                    <div id="email-form" class="mb-8">
+                        <div class="mb-4">
+                            <label for="email-address" class="block text-gray-700 text-sm font-bold mb-2">Email
+                                Address</label>
+                            <input type="email" id="email-address" name="email-address" [formControl]="formGroup.get('emailAddress')"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                placeholder="recipient@example.com">
+                        </div>
+                        <div class="mb-4">
+                            <label for="email-subject" class="block text-gray-700 text-sm font-bold mb-2">Subject
+                                (optional)</label>
+                            <input type="text" id="email-subject" name="email-subject" [formControl]="formGroup.get('emailSubject')"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                placeholder="Email subject">
+                        </div>
+                        <div>
+                            <label for="email-body" class="block text-gray-700 text-sm font-bold mb-2">Body
+                                (optional)</label>
+                            <textarea id="email-body" name="email-body" rows="4" [formControl]="formGroup.get('emailBody')"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                placeholder="Email content"></textarea>
+                        </div>
+                    </div>
+                    }
+
+                    @if(selectedContentType() === 'phone') {
+                    <!-- Phone Content Form (hidden by default) -->
+                    <div id="phone-form" class="mb-8">
+                        <label for="phone-input" class="block text-gray-700 text-sm font-bold mb-2">Phone Number</label>
+                        <input type="tel" id="phone-input" name="phone-input" [formControl]="formGroup.get('phoneNumber')"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            placeholder="+1 555 123 4567">
+                    </div>
+                    }
+
+
+                    @if(selectedContentType() === 'sms') {
+                    <!-- SMS Content Form (hidden by default) -->
+                    <div id="sms-form" class="mb-8">
+                        <div class="mb-4">
+                            <label for="sms-phone" class="block text-gray-700 text-sm font-bold mb-2">Phone Number</label>
+                            <input type="tel" id="sms-phone" name="sms-phone" [formControl]="formGroup.get('smsPhoneNumber')"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                placeholder="+1 555 123 4567">
+                        </div>
+                        <div>
+                            <label for="sms-message" class="block text-gray-700 text-sm font-bold mb-2">Message
+                                (optional)</label>
+                            <textarea id="sms-message" name="sms-message" rows="4" [formControl]="formGroup.get('smsMessage')"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                placeholder="SMS content"></textarea>
+                        </div>
+                    </div>
+                    }
+
+
+                    @if(selectedContentType() === 'vcard') {
+                    <!-- vCard Content Form (hidden by default) -->
+                    <div id="vcard-form" class="mb-8">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label for="vcard-firstname" class="block text-gray-700 text-sm font-bold mb-2">First
+                                    Name</label>
+                                <input type="text" id="vcard-firstname" name="vcard-firstname" [formControl]="formGroup.get('vcardFirstName')"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            </div>
+                            <div>
+                                <label for="vcard-lastname" class="block text-gray-700 text-sm font-bold mb-2">Last
+                                    Name</label>
+                                <input type="text" id="vcard-lastname" name="vcard-lastname" [formControl]="formGroup.get('vcardLastName')"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="vcard-company" class="block text-gray-700 text-sm font-bold mb-2">Company
+                                (optional)</label>
+                            <input type="text" id="vcard-company" name="vcard-company" [formControl]="formGroup.get('vcardCompany')"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                        <div class="mb-4">
+                            <label for="vcard-phone" class="block text-gray-700 text-sm font-bold mb-2">Phone Number</label>
+                            <input type="tel" id="vcard-phone" name="vcard-phone" [formControl]="formGroup.get('vcardPhoneNumber')"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                        <div class="mb-4">
+                            <label for="vcard-email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                            <input type="email" id="vcard-email" name="vcard-email" [formControl]="formGroup.get('vcardEmail')"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                        <div class="mb-4">
+                            <label for="vcard-website" class="block text-gray-700 text-sm font-bold mb-2">Website
+                                (optional)</label>
+                            <input type="url" id="vcard-website" name="vcard-website" [formControl]="formGroup.get('vcardWebsite')"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                        <div>
+                            <label for="vcard-address" class="block text-gray-700 text-sm font-bold mb-2">Address
+                                (optional)</label>
+                            <textarea id="vcard-address" name="vcard-address" rows="2" [formControl]="formGroup.get('vcardAddress')"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+                        </div>
+                    </div>
+                    }
+
+                    @if(selectedContentType() === 'wifi') {
+                    <!-- WiFi Content Form (hidden by default) -->
+                    <div id="wifi-form" class="mb-8">
+                        <div class="mb-4">
+                            <label for="wifi-ssid" class="block text-gray-700 text-sm font-bold mb-2">Network Name (SSID)</label>
+                            <input type="text" id="wifi-ssid" name="wifi-ssid" [formControl]="formGroup.get('wifiSsid')"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Encryption Type</label>
+                            <div class="flex space-x-4">
+
+                                @for (encryptionType of encryptionTypes; track $index) {
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" name="wifi-encryption" [value]="encryptionType.id" [formControl]="formGroup.get('wifiEncryption')"
+                                            class="form-radio text-indigo-600" checked>
+                                        <span class="ml-2">{{ encryptionType.name }}</span>
+                                    </label>
+                                }
+                            </div>
+                        </div>
+                        @if(formGroup.get('wifiEncryption').value !== 'none') {
+                            <div>
+                                <label for="wifi-password" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                                <input type="password" id="wifi-password" name="wifi-password" [formControl]="formGroup.get('wifiPassword')"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            </div>
+                        }
+                    </div>
+                    }
+
+                    @if(selectedContentType() === 'geo') {
+                    <!-- Location Content Form (hidden by default) -->
+                    <div id="geo-form" class="mb-8">
+                        <div class="mb-4">
+                            <label for="geo-latitude" class="block text-gray-700 text-sm font-bold mb-2">Latitude</label>
+                            <input type="text" id="geo-latitude" name="geo-latitude" [formControl]="formGroup.get('geoLatitude')"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                placeholder="e.g. 37.7749">
+                        </div>
+                        <div>
+                            <label for="geo-longitude" class="block text-gray-700 text-sm font-bold mb-2">Longitude</label>
+                            <input type="text" id="geo-longitude" name="geo-longitude" [formControl]="formGroup.get('geoLongitude')"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                placeholder="e.g. -122.4194">
+                        </div>
+                        <div class="mt-4">
+                            <button id="get-current-location"
+                                type="button"
+                                class="text-indigo-600 hover:text-indigo-800 transition text-sm font-medium" (click)="getCurrentLocation()">
+                                <lucide-icon name="map-pin" class="inline-block"></lucide-icon> Use my current location
+                            </button>
+                        </div>
+                    </div>
+                    }
+
+
+                    <!-- QR Code Customization -->
+                    <div class="mb-6">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">Customize QR Code</h3>
+
+                        <!-- Size -->
+                        <div class="mb-6">
+                            <label for="qrSize" class="block text-gray-700 text-sm font-bold mb-2">Size</label>
+                            <div class="flex items-center">
+                                <input type="range" id="qrSize" name="qrSize" min="100" max="2000" [formControl]="formGroup.get('size')" #size
+                                    class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                                <span id="size-value" class="ml-4 text-gray-700 w-12 text-center">{{ size.value }}px</span>
+                            </div>
+                        </div>
+
+                        <!-- Error Correction -->
+                        <div class="mb-6">
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Error Correction Level</label>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+
+                                @for (errorCorrectionLevel of errorCorrectionLevels; track $index) {
+                                <label
+                                    class="border border-gray-300 rounded-md p-2 flex items-center justify-between cursor-pointer hover:bg-gray-50 transition">
+                                    <span>{{ errorCorrectionLevel.name }}</span>
+                                    <input type="radio" name="errorCorrectionLevel" [value]="errorCorrectionLevel.id" [formControl]="formGroup.get('errorCorrectionLevel')"
+                                        class="form-radio text-indigo-600">
+                                </label>
+                                }
+                            </div>
+                            <p class="mt-2 text-sm text-gray-500">Higher correction levels make your QR code more reliable
+                                but
+                                increase complexity.</p>
+                        </div>
+
+                        <!-- Colors -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="fg-color" class="block text-gray-700 text-sm font-bold mb-2">Foreground
+                                    Color</label>
+                                <div class="flex">
+                                    <input type="color" id="fg-color" name="foregroundColor" #fgColor value="#000000"
+                                        (input)="fgHexInput.value = fgColor.value"
+                                        [formControl]="formGroup.get('foregroundColor')"
+                                        class="h-10 w-10 rounded border border-gray-300">
+                                    <input type="text" id="fg-color-hex" #fgHexInput value="#000000"
+                                        (input)="fgColor.value = fgHexInput.value"
+                                        class="flex-1 ml-2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                                </div>
+                                @let errors = formGroup.get('foregroundColor').errors;
+                                @if(errors) {
+                                    <div class="text-sm text-red-600">
+                                    @for (error of errors | keyvalue; track $index) {
+                                        
+                                    }
+                                    </div>
+                                }
+                            </div>
+                            <div>
+                                <label for="bg-color" class="block text-gray-700 text-sm font-bold mb-2">Background
+                                    Color</label>
+                                <div class="flex">
+                                    <input type="color" id="bg-color" name="backgroundColor" value="#ffffff" #bgColor
+                                        (input)="bgHexInput.value = bgColor.value"
+                                        [formControl]="formGroup.get('backgroundColor')"
+                                        class="h-10 w-10 rounded border border-gray-300">
+                                    <input type="text" id="bg-color-hex" value="#ffffff" #bgHexInput
+                                        (input)="bgColor.value = bgHexInput.value"
+                                        class="flex-1 ml-2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center">
+                        <button id="generate-qr" type="submit"
+                            class="bg-indigo-600 text-white font-medium py-3 px-8 rounded-md hover:bg-indigo-700 transition focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            Generate QR Code
+                        </button>
+                    </div>
+                </ng-template>
+                
+            </app-zod-form>
+
+        </div>
+
+        <!-- QR Code Preview -->
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">QR Code</h2>
+
+            <div class="flex flex-col items-center space-y-6">
+                <div id="qr-code-container"
+                    [ngClass]="{'bg-gray-50': !lastQrGenerated(), 'bg-white': lastQrGenerated()}"
+                    class="flex justify-center items-center border border-gray-200 rounded-lg w-full h-64">
+                    @if(!lastQrGenerated()) {
+                        <div class="text-gray-400 text-center p-6">
+                            <i class="fas fa-qrcode text-5xl mb-4"></i>
+                            <p>Your QR code will appear here</p>
+                        </div>
+                    } @else {
+                        <img [src]="lastQrGenerated()" alt="QR Code" class="w-full h-64">
+                    }
+                </div>
+
+                <div id="download-container" class="w-full space-y-3">
+                    <button id="download-png"
+                        type="button"
+                        class="w-full gap-2 bg-indigo-600 text-white font-medium py-2 px-4 rounded hover:bg-indigo-700 transition flex items-center justify-center">
+                        <lucide-icon name="download"></lucide-icon> Download as PNG
+                    </button>
+                    <button id="download-svg"
+                        type="button"
+                        class="w-full gap-2 bg-white border border-indigo-600 text-indigo-600 font-medium py-2 px-4 rounded hover:bg-indigo-50 transition flex items-center justify-center">
+                        <lucide-icon name="download"></lucide-icon> Download as SVG
+                    </button>
+                    <button id="print-qr"
+                        type="button"
+                        class="w-full gap-2 bg-white border border-gray-300 text-gray-700 font-medium py-2 px-4 rounded hover:bg-gray-50 transition flex items-center justify-center">
+                        <lucide-icon name="download"></lucide-icon> Print QR Code
+                    </button>
+                </div>
+            </div>
+
+            <div class="mt-8">
+                <h3 class="text-lg font-semibold mb-4 text-gray-800">Test Your QR Code</h3>
+                <p class="text-gray-600 mb-4">Scan the QR code with your device to ensure it works correctly.
+                    Alternatively, you can copy and share the link below:</p>
+
+                <div id="share-link-container" class="hidden space-y-3">
+                    <div class="flex">
+                        <input type="text" id="share-link" readonly
+                            class="flex-1 min-w-0 block w-full px-3 py-2 rounded-l-md border-gray-300 bg-gray-50"
+                            value="">
+                        <button id="copy-link"
+                            class="inline-flex items-center px-4 py-2 border border-l-0 border-gray-300 bg-gray-50 text-gray-700 rounded-r-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+
+                    <div class="flex space-x-2">
+                        <button
+                            class="flex-1 bg-white border border-gray-300 text-gray-700 font-medium py-2 rounded hover:bg-gray-50 transition flex items-center justify-center">
+                            <i class="fab fa-facebook text-blue-600 mr-2"></i> Facebook
+                        </button>
+                        <button
+                            class="flex-1 bg-white border border-gray-300 text-gray-700 font-medium py-2 rounded hover:bg-gray-50 transition flex items-center justify-center">
+                            <i class="fab fa-twitter text-blue-400 mr-2"></i> Twitter
+                        </button>
+                        <button
+                            class="flex-1 bg-white border border-gray-300 text-gray-700 font-medium py-2 rounded hover:bg-gray-50 transition flex items-center justify-center">
+                            <i class="fab fa-linkedin text-blue-700 mr-2"></i> LinkedIn
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QR Code Information Section -->
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="md:col-span-2">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">About QR Codes</h2>
+
+            <div class="bg-white rounded-lg shadow-md p-6 space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">What are QR Codes?</h3>
+                    <p class="text-gray-600">QR (Quick Response) codes are two-dimensional barcodes that can be scanned
+                        using a smartphone camera. They store various types of information such as URLs, text, contact
+                        details, and more. Originally developed in Japan for tracking automotive parts, they've become
+                        ubiquitous for quickly sharing information.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

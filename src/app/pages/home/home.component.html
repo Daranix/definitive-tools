@@ -1,0 +1,271 @@
+<nav class="bg-white shadow-md py-4">
+    <div class="container mx-auto px-4 flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+            <lucide-icon name="bolt" class="w-8 h-8 text-indigo-600"></lucide-icon>
+            <h1 class="text-2xl font-bold text-gray-800">Definitive Tools</h1>
+        </div>
+        <div class="hidden md:flex space-x-6">
+            <a href="#" class="text-gray-700 hover:text-indigo-600 transition">Home</a>
+            <a href="#" class="text-gray-700 hover:text-indigo-600 transition">All Tools</a>
+            <a href="#" class="text-gray-700 hover:text-indigo-600 transition">About</a>
+        </div>
+        <div class="md:hidden">
+            <button class="text-gray-500 focus:outline-none">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="bg-indigo-600 text-white py-16">
+    <div class="container mx-auto px-4 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">Your Ultimate Digital Toolkit</h1>
+        <p class="text-xl md:text-2xl mb-8">Free, easy-to-use tools for all your digital needs</p>
+        <div class="max-w-2xl mx-auto">
+            <div class="relative">
+                <input type="text" placeholder="Search for tools..."
+                    class="w-full py-3 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 text-gray-800">
+                <button
+                    class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-indigo-800 text-white p-2 rounded-md hover:bg-indigo-900 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Popular Tools Section -->
+<section class="py-12 bg-white">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Popular Tools</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+
+
+            <!-- QR Code Generator -->
+
+            @for (tool of tools; track $index) {
+                <div [routerLink]="['/tool', tool.id]"
+                    class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow p-6 border border-gray-100 flex flex-col items-center cursor-pointer">
+                    <div [class]="'bg-'  + tool.color + '-100 p-4 rounded-full mb-4'">
+                        <lucide-icon name="qr-code" [class]="'text-3xl text-' + tool.color + '-600'"></lucide-icon>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">{{ tool.name }}</h3>
+                    <p class="text-gray-600 text-center mb-4">{{ tool.description }}</p>
+                    <a [routerLink]="['/tool', tool.id]" [class]="'mt-auto text-' + tool.color + '-600 hover:text-'+tool.color+'-800 font-medium'" >Try it →</a>
+                </div>
+            }
+        </div>
+
+        <!--
+        <div class="text-center mt-12">
+            <a href="#" class="inline-block bg-indigo-600 text-white py-3 px-8 rounded-lg hover:bg-indigo-700 transition">View All Tools</a>
+        </div>
+        -->
+    </div>
+</section>
+
+<!-- Categories Section -->
+ <!--
+<section class="py-12 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Tool Categories</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+                <div class="flex items-center mb-4">
+                    <div class="bg-indigo-100 p-3 rounded-full mr-4">
+                        <i class="fas fa-image text-indigo-600"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800">Image Tools</h3>
+                </div>
+                <ul class="text-gray-600 space-y-2">
+                    <li>• Image Compressor</li>
+                    <li>• Image Converter</li>
+                    <li>• Image Cropper</li>
+                    <li>• Image Resizer</li>
+                </ul>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+                <div class="flex items-center mb-4">
+                    <div class="bg-green-100 p-3 rounded-full mr-4">
+                        <i class="fas fa-file-alt text-green-600"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800">Text Tools</h3>
+                </div>
+                <ul class="text-gray-600 space-y-2">
+                    <li>• Text Case Converter</li>
+                    <li>• Lorem Ipsum Generator</li>
+                    <li>• Word Counter</li>
+                    <li>• Text Diff Checker</li>
+                </ul>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+                <div class="flex items-center mb-4">
+                    <div class="bg-red-100 p-3 rounded-full mr-4">
+                        <i class="fas fa-code text-red-600"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800">Developer Tools</h3>
+                </div>
+                <ul class="text-gray-600 space-y-2">
+                    <li>• JSON Formatter</li>
+                    <li>• HTML Formatter</li>
+                    <li>• CSS Minifier</li>
+                    <li>• Color Picker</li>
+                </ul>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+                <div class="flex items-center mb-4">
+                    <div class="bg-yellow-100 p-3 rounded-full mr-4">
+                        <i class="fas fa-unlock-alt text-yellow-600"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800">Security Tools</h3>
+                </div>
+                <ul class="text-gray-600 space-y-2">
+                    <li>• Password Generator</li>
+                    <li>• Hash Generator</li>
+                    <li>• Encryption Tool</li>
+                    <li>• SSL Checker</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+-->
+
+<!-- Features Section -->
+ <!--
+<section class="py-12 bg-white">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Why Choose Our Tools?</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center p-6">
+                <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-600" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold mb-3 text-gray-800">Fast & Efficient</h3>
+                <p class="text-gray-600">All tools are optimized for speed and performance, with processing done right
+                    in your browser.</p>
+            </div>
+
+            <div class="text-center p-6">
+                <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-600" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold mb-3 text-gray-800">100% Secure</h3>
+                <p class="text-gray-600">Your data never leaves your device. All processing happens locally for maximum
+                    privacy.</p>
+            </div>
+
+            <div class="text-center p-6">
+                <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-600" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold mb-3 text-gray-800">Always Free</h3>
+                <p class="text-gray-600">All our tools are completely free to use with no limitations or hidden costs.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+-->
+
+<!-- Newsletter Section -->
+ <!--
+<section class="bg-indigo-600 py-12">
+    <div class="container mx-auto px-4">
+        <div class="max-w-xl mx-auto text-center">
+            <h2 class="text-3xl font-bold text-white mb-4">Stay Updated</h2>
+            <p class="text-indigo-100 mb-6">Subscribe to our newsletter to get updates on new tools and features.</p>
+            <div class="flex flex-col md:flex-row gap-2">
+                <input type="email" placeholder="Your email address"
+                    class="flex-grow py-3 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                <button
+                    class="bg-white text-indigo-600 font-semibold py-3 px-6 rounded-lg hover:bg-indigo-50 transition">Subscribe</button>
+            </div>
+        </div>
+    </div>
+</section>
+-->
+
+<!-- Footer -->
+<footer class="bg-gray-800 text-white py-12">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h3 class="text-xl font-bold mb-4">Definitive Tools</h3>
+                <p class="text-gray-400 mb-4">Your one-stop destination for free, high-quality online tools.</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-gray-400 hover:text-white transition">Home</a></li>
+                    <!--
+                    <li><a href="#" class="text-gray-400 hover:text-white transition">All Tools</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition">Categories</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition">Blog</a></li>
+                    -->
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Legal</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition">Terms of Service</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition">Cookie Policy</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition">GDPR</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Contact</h3>
+                <ul class="space-y-2 text-gray-400">
+                    <li>
+                        <i class="fas fa-envelope mr-2"></i>
+                        <a href="mailto:contact@mpesteban.dev" class="hover:text-white transition">contact&#64;mpesteban.dev</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>

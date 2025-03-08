@@ -1,0 +1,27 @@
+<div class="h-full">
+
+    <div class="flex flex-col h-full max-h-full">
+
+        <nav class="lg:hidden w-full p-4 border border-gray-200 bg-gray-50 dark:border-gray-600 dark:bg-gray-700 sticky top-0 z-50 flex gap-2 align-middle items-center max-h-full">
+            <div class="flex align-middle">
+                <app-menu-icon [(toggleMenu)]="showMenu" />
+            </div>
+            <div class="flex align-middle items-center">
+                <div>{{ topNavbarService.title() }}</div>
+            </div>
+        </nav> 
+        
+    
+        <div class="block lg:flex flex-1 h-full max-h-full">
+                
+            <nav class="w-full lg:w-auto lg:flex-initial max-h-full lg:max-h-none overflow-y-auto lg:block fixed lg:static transition-transform lg:translate-x-0 z-40 pb-14 lg:pb-0" [ngClass]="{ '-translate-x-full': !showMenu(), 'translate-x-0': showMenu()  }">
+                <app-sidemenu />
+            </nav>
+    
+            <main class="lg:flex-1 w-full max-h-full overflow-y-auto">
+                <router-outlet />
+            </main>
+        </div>
+    </div>
+    
+</div>
