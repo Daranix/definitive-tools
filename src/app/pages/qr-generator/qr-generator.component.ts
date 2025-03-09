@@ -3,14 +3,13 @@ import { Component, computed, model, signal, viewChild } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
 import { ZodFormComponent } from "@app/components/zod-form/zod-form.component";
-import QRCode from 'qrcode';
 import { QrContentType, QrFormData, QrSchemas, QrZodSchema } from './qr-generator.schemas';
 import { RouterLink } from '@angular/router';
 import { asZodFormControls, svgToDataURL } from '@app/utils/functions';
 import { ZodFormControls } from '@app/utils/types';
 import { InputErrorsComponent } from '@app/components/input-errors/input-errors.component';
 import { qrContentProcessors } from './qr-generator-content-processor';
-import { generateSVG } from './qr-generator-custom-shape';
+import QRCodeStyling from 'qr-code-styling';
 
 
 const ERROR_CORRECTION_LEVELS = [
@@ -53,27 +52,57 @@ export class QrGeneratorComponent {
   readonly formSchema = computed(() => QrSchemas[this.selectedContentType()]);
   readonly generatorForm = viewChild.required<ZodFormComponent<QrZodSchema>>('generatorForm');
   readonly formGroup = computed(() => this.generatorForm().formGroup());
-  readonly lastQrGenerated = signal<{ url: string, svg: SVGElement, qr: QRCode.QRCode, data: QrFormData } | undefined>(undefined);
+  readonly lastQrGenerated = signal<{ url: string, qr: QRCodeStyling, data: QrFormData } | undefined>(undefined);
 
   changeContentType(contentType: QrContentType) {
     this.selectedContentType.set(contentType);
   }
 
-  generateQrCode<T extends QrContentType>(
+  async generateQrCode<T extends QrContentType>(
     data: Extract<QrFormData, { contentType: T }>
   ) {
     const processor = qrContentProcessors[data.contentType];
     const content = processor(data);
-    const qr = QRCode.create(content);
-    const svg = generateSVG(qr, data.foregroundColor, data.backgroundColor);
-    const url = svgToDataURL(svg);
-    this.lastQrGenerated.set({ url, svg, qr, data });
+
+    const qr = new QRCodeStyling({
+      width: data.size,
+      height: data.size,
+      type: "svg",
+      data: content,
+      image: undefined,
+      imageOptions: {
+        hideBackgroundDots: true,
+        imageSize: 0.4,
+        margin: 0,
+      },
+      dotsOptions: {
+        color: data.foregroundColor,
+        type: data.dotsType,
+      },
+      cornersSquareOptions: {
+        type: data.cornersStyle,
+      },
+      cornersDotOptions: {
+        type: data.cornersStyle,
+      },
+      backgroundOptions: {
+        color: data.backgroundColor,
+      }
+    });
+
+    const blob = await qr.getRawData("webp");
+    const url = URL.createObjectURL(blob as Blob);
+    this.lastQrGenerated.set({ url, qr, data });
   }
 
+  async downloadAsPng() {
+    const qr = this.lastQrGenerated()!.qr;
+    await qr.download("png");
+  }
 
-
-  downloadAsPng() {
-
+  async downloadAsSvg() {
+    const qr = this.lastQrGenerated()!.qr;
+    await qr.download("svg");
   }
 
   async getCurrentLocation() {

@@ -1,4 +1,4 @@
-import * as QRCode from 'qrcode';
+/*import * as QRCode from 'qrcode';
 
 export function generateSVG(qr: QRCode.QRCode, foregroundColor: string, backgroundColor: string) {
 
@@ -52,4 +52,4 @@ function createModule(x: number, y: number, color: string) {
     module.setAttribute("height", '1');
     module.setAttribute("fill", color);
     return module;
-}
+}*/
