@@ -2,13 +2,15 @@ import { NgClass } from '@angular/common';
 import { Component, computed, model, signal, viewChild } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
-import { ZodFormComponent } from "../../components/zod-form/zod-form.component";
+import { ZodFormComponent } from "@app/components/zod-form/zod-form.component";
 import QRCode from 'qrcode';
 import { QrContentType, QrFormData, QrSchemas, QrZodSchema } from './qr-generator.schemas';
 import { RouterLink } from '@angular/router';
-import { asZodFormControls } from '../../utils/functions';
-import { ZodFormControls } from '../../utils/types';
-import { InputErrorsComponent } from '../../components/input-errors/input-errors.component';
+import { asZodFormControls, svgToDataURL } from '@app/utils/functions';
+import { ZodFormControls } from '@app/utils/types';
+import { InputErrorsComponent } from '@app/components/input-errors/input-errors.component';
+import { qrContentProcessors } from './qr-generator-content-processor';
+import { generateSVG } from './qr-generator-custom-shape';
 
 
 const ERROR_CORRECTION_LEVELS = [
@@ -33,7 +35,7 @@ export const ENCRYPTION_TYPES = [
   { id: 'wpa', name: 'WPA/WPA2' },
   { id: 'wep', name: 'WEP' },
   { id: 'none', name: 'None' }
-]
+];
 
 @Component({
   selector: 'app-qr-generator',
@@ -47,93 +49,28 @@ export class QrGeneratorComponent {
   readonly errorCorrectionLevels = ERROR_CORRECTION_LEVELS;
   readonly encryptionTypes = ENCRYPTION_TYPES;
 
-  readonly selectedContentType = model<QrContentType>('url');
-  readonly lastQrGenerated = signal<string | undefined>(undefined);
-  readonly lastQrCodeSvgElement = signal<SVGElement | undefined>(undefined);
-  readonly lastQrObject = signal<QRCode.QRCode | undefined>(undefined);
-
+  readonly selectedContentType = signal<QrContentType>('url');
   readonly formSchema = computed(() => QrSchemas[this.selectedContentType()]);
   readonly generatorForm = viewChild.required<ZodFormComponent<QrZodSchema>>('generatorForm');
   readonly formGroup = computed(() => this.generatorForm().formGroup());
+  readonly lastQrGenerated = signal<{ url: string, svg: SVGElement, qr: QRCode.QRCode, data: QrFormData } | undefined>(undefined);
 
   changeContentType(contentType: QrContentType) {
     this.selectedContentType.set(contentType);
   }
 
-  generateQrCode(data: unknown) {
-    console.log(data);
-    const qr = QRCode.create('prueba');
-    const svg = this.generateSVG(qr);
-    const url = this.svgToDataURL(svg);
-    this.lastQrGenerated.set(url);
-    this.lastQrCodeSvgElement.set(svg);
-    this.lastQrObject.set(qr);
+  generateQrCode<T extends QrContentType>(
+    data: Extract<QrFormData, { contentType: T }>
+  ) {
+    const processor = qrContentProcessors[data.contentType];
+    const content = processor(data);
+    const qr = QRCode.create(content);
+    const svg = generateSVG(qr, data.foregroundColor, data.backgroundColor);
+    const url = svgToDataURL(svg);
+    this.lastQrGenerated.set({ url, svg, qr, data });
   }
 
-  private svgToText(svg: SVGElement) {
-    return svg.outerHTML;
-  }
 
-  private svgToDataURL(svg: SVGElement) {
-    const svgCode = this.svgToText(svg);
-    const blob = new Blob([svgCode], {type: 'image/svg+xml'});
-    const url = URL.createObjectURL(blob);
-    return url;
-  }
-
-  private generateSVG(qr: QRCode.QRCode) {
-
-    const size = qr.modules.size;
-    const data = qr.modules.data;
-
-    const matrix: number[][] = [];
-    for (let i = 0; i < data.length; i++) {
-      const col = Math.floor(i % size);
-      const row = Math.floor(i / size);
-
-      if(!matrix[row]) {
-        matrix[row] = [];
-      }
-      matrix[row][col] = data[i];
-    }
-
-    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-    svg.setAttribute("width", '100%');
-    svg.setAttribute("height", '100%');
-    svg.setAttribute("viewBox", `0 0 ${size} ${size}`);
-
-    // Background
-    const background = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-    background.setAttribute("width", "100%");
-    background.setAttribute("height", "100%");
-    background.setAttribute("fill", "white");
-    svg.appendChild(background);
-
-    // Draw modules based on style
-    matrix.forEach((row, y) => {
-      row.forEach((cell, x) => {
-        if (cell) {
-          const moduleElement = this.createModule(x, y);
-          if (moduleElement) {
-            svg.appendChild(moduleElement);
-          }
-        }
-      });
-    });
-
-    return svg;
-  }
-
-  private createModule(x: number, y: number) {
-    const module = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-    module.setAttribute("x", x.toString());
-    module.setAttribute("y", y.toString());
-    module.setAttribute("width", '1');
-    module.setAttribute("height", '1');
-    module.setAttribute("fill", "black");
-    return module;
-  }
 
   downloadAsPng() {
 

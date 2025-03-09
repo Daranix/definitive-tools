@@ -371,7 +371,7 @@
                             <p>Your QR code will appear here</p>
                         </div>
                     } @else {
-                        <img [src]="lastQrGenerated()" alt="QR Code" class="w-full h-64">
+                        <img [src]="lastQrGenerated()!.url" alt="QR Code" class="w-full h-64">
                     }
                 </div>
 
