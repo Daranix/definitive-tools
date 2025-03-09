@@ -97,3 +97,4 @@ export const QrSchemas = {
 } as const;
 
 export type QrZodSchema = typeof QrSchemas[keyof typeof QrSchemas];
+export type QrFormData = z.infer<QrZodSchema>;

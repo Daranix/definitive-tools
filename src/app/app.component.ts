@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { z } from 'zod';
+import { customErrorMap } from './utils/custom-zod-error-mapper';
 
 @Component({
   selector: 'app-root',
@@ -9,4 +11,10 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'definitive-tools';
+
+  constructor() {
+    // Set the custom error map as the default
+    z.setErrorMap(customErrorMap);
+  }
+
 }

@@ -1,12 +1,14 @@
-import { CommonModule, KeyValuePipe, NgClass } from '@angular/common';
-import { Component, computed, ElementRef, model, signal, viewChild } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Key, LucideAngularModule } from 'lucide-angular';
+import { NgClass } from '@angular/common';
+import { Component, computed, model, signal, viewChild } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { LucideAngularModule } from 'lucide-angular';
 import { ZodFormComponent } from "../../components/zod-form/zod-form.component";
-import { z } from 'zod';
 import QRCode from 'qrcode';
-import { QrContentType, QrSchemas, QrZodSchema } from './qr-generator.schemas';
+import { QrContentType, QrFormData, QrSchemas, QrZodSchema } from './qr-generator.schemas';
 import { RouterLink } from '@angular/router';
+import { asZodFormControls } from '../../utils/functions';
+import { ZodFormControls } from '../../utils/types';
+import { InputErrorsComponent } from '../../components/input-errors/input-errors.component';
 
 
 const ERROR_CORRECTION_LEVELS = [
@@ -35,7 +37,7 @@ export const ENCRYPTION_TYPES = [
 
 @Component({
   selector: 'app-qr-generator',
-  imports: [LucideAngularModule, NgClass, ReactiveFormsModule, ZodFormComponent, RouterLink, KeyValuePipe],
+  imports: [LucideAngularModule, NgClass, ReactiveFormsModule, ZodFormComponent, RouterLink, InputErrorsComponent],
   templateUrl: './qr-generator.component.html',
   styleUrl: './qr-generator.component.scss'
 })
@@ -53,6 +55,10 @@ export class QrGeneratorComponent {
   readonly formSchema = computed(() => QrSchemas[this.selectedContentType()]);
   readonly generatorForm = viewChild.required<ZodFormComponent<QrZodSchema>>('generatorForm');
   readonly formGroup = computed(() => this.generatorForm().formGroup());
+
+  changeContentType(contentType: QrContentType) {
+    this.selectedContentType.set(contentType);
+  }
 
   generateQrCode(data: unknown) {
     console.log(data);
@@ -146,6 +152,10 @@ export class QrGeneratorComponent {
     return new Promise<GeolocationPosition>((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(resolve, reject);
     });
+  }
+
+  asZodFormControls(formGroup: any): ZodFormControls<QrFormData> {
+    return asZodFormControls(formGroup);
   }
 
 }

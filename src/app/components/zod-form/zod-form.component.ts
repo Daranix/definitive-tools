@@ -22,12 +22,14 @@ export class ZodFormComponent<T extends ZodObject<any>> {
   
     for (const key in schema.shape) {
       const zodType = schema.shape[key];
-      const defaultValue = zodType._def.defaultValue ? zodType._def.defaultValue() : null;
+
+      let defaultValue = zodType._def.defaultValue ? zodType._def.defaultValue() : null;
   
       if (zodType instanceof z.ZodObject) {
         // Handle nested objects
         formControls[key] = this.zodToFormGroup(zodType);
       } else {
+        defaultValue = (zodType instanceof z.ZodLiteral ? zodType.value : defaultValue);
         // Assign default values
         formControls[key] = new FormControl(defaultValue);
       }
@@ -147,12 +149,14 @@ export class ZodFormComponent<T extends ZodObject<any>> {
   
   onSubmit(evt: Event) {
 
+    evt.preventDefault();
+    evt.stopPropagation();
+
     const form = this.formGroup();
     const { isValid, result } = this.validateForm(form);
     
     if (!isValid) {
-      evt.preventDefault();
-      evt.stopPropagation();
+
       // Form is valid according to Zod
       console.error('Form invalid!', { values: form.value, errors: form.errors, result });
       return;

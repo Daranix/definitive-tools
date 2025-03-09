@@ -56,18 +56,23 @@
 
             <app-zod-form #generatorForm [zodSchema]="formSchema()" (submit)="generateQrCode($event)">
                 <ng-template let-formGroup="formGroup">
+                   
                     <!-- Content Type Selection -->
                     <div class="mb-8">
                         <label class="block text-gray-700 text-sm font-bold mb-3">Content Type</label>
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
                             @for (contentType of contentTypes; track $index) {
-                            <button (click)="selectedContentType.set(contentType.id)" type="button"
+                            <label 
                                 [ngClass]="{'bg-indigo-600 text-white': selectedContentType() === contentType.id, 'bg-white hover:bg-gray-50 hover:text-gray-700': selectedContentType() !== contentType.id}"
-                                class="border border-gray-300 text-gray-700 px-4 py-3 rounded-md flex items-center justify-center text-sm font-medium transition">
+                                class="border border-gray-300 text-gray-700 px-4 py-3 rounded-md flex items-center justify-center text-sm font-medium transition cursor-pointer">
+                                <input 
+                                    type="radio" 
+                                    [formControl]="formGroup.get('contentType')" 
+                                    (change)="changeContentType(contentType.id)"
+                                    class="sr-only" />
                                 <lucide-icon [name]="contentType.icon" class="h-4 w-4 mr-2"></lucide-icon> {{ contentType.name }}
-                            </button>
+                            </label>
                             }
-                            <input type="hidden" name="contentType" [formControl]="formGroup.get('contentType')" />
                         </div>
                     </div>
 
@@ -78,6 +83,7 @@
                         <input type="text" id="url" [formControl]="formGroup.get('url')"
                             class="min-w-0 block w-full px-3 py-2 rounded-md focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 border"
                             placeholder="www.example.com">
+                        <app-input-errors [control]="formGroup.get('url')"></app-input-errors>
                         <p class="mt-2 text-sm text-gray-500">Enter the full URL including https:// for websites.</p>
                     </div>
                     }
@@ -90,6 +96,7 @@
                                 [formControl]="formGroup.get('textInput')"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                                 placeholder="Enter any text you want encoded in the QR code"></textarea>
+                                <app-input-errors [control]="formGroup.get('textInput')"></app-input-errors>
                         </div>
                     }
 
@@ -102,6 +109,7 @@
                             <input type="email" id="email-address" name="email-address" [formControl]="formGroup.get('emailAddress')"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                                 placeholder="recipient@example.com">
+                            <app-input-errors [control]="formGroup.get('emailAddress')"></app-input-errors>
                         </div>
                         <div class="mb-4">
                             <label for="email-subject" class="block text-gray-700 text-sm font-bold mb-2">Subject
@@ -109,6 +117,7 @@
                             <input type="text" id="email-subject" name="email-subject" [formControl]="formGroup.get('emailSubject')"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                                 placeholder="Email subject">
+                            <app-input-errors [control]="formGroup.get('emailSubject')"></app-input-errors>
                         </div>
                         <div>
                             <label for="email-body" class="block text-gray-700 text-sm font-bold mb-2">Body
@@ -116,6 +125,7 @@
                             <textarea id="email-body" name="email-body" rows="4" [formControl]="formGroup.get('emailBody')"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                                 placeholder="Email content"></textarea>
+                            <app-input-errors [control]="formGroup.get('emailBody')"></app-input-errors>
                         </div>
                     </div>
                     }
@@ -127,6 +137,7 @@
                         <input type="tel" id="phone-input" name="phone-input" [formControl]="formGroup.get('phoneNumber')"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                             placeholder="+1 555 123 4567">
+                        <app-input-errors [control]="formGroup.get('phoneNumber')"></app-input-errors>
                     </div>
                     }
 
@@ -139,13 +150,14 @@
                             <input type="tel" id="sms-phone" name="sms-phone" [formControl]="formGroup.get('smsPhoneNumber')"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                                 placeholder="+1 555 123 4567">
+                            <app-input-errors [control]="formGroup.get('smsPhoneNumber')"></app-input-errors>
                         </div>
                         <div>
-                            <label for="sms-message" class="block text-gray-700 text-sm font-bold mb-2">Message
-                                (optional)</label>
+                            <label for="sms-message" class="block text-gray-700 text-sm font-bold mb-2">Message (optional)</label>
                             <textarea id="sms-message" name="sms-message" rows="4" [formControl]="formGroup.get('smsMessage')"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                                 placeholder="SMS content"></textarea>
+                            <app-input-errors [control]="formGroup.get('smsMessage')"></app-input-errors>
                         </div>
                     </div>
                     }
@@ -160,12 +172,14 @@
                                     Name</label>
                                 <input type="text" id="vcard-firstname" name="vcard-firstname" [formControl]="formGroup.get('vcardFirstName')"
                                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                                <app-input-errors [control]="formGroup.get('smsMessage')"></app-input-errors>
                             </div>
                             <div>
                                 <label for="vcard-lastname" class="block text-gray-700 text-sm font-bold mb-2">Last
                                     Name</label>
                                 <input type="text" id="vcard-lastname" name="vcard-lastname" [formControl]="formGroup.get('vcardLastName')"
                                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                                <app-input-errors [control]="formGroup.get('smsMessage')"></app-input-errors>
                             </div>
                         </div>
                         <div class="mb-4">
@@ -173,28 +187,33 @@
                                 (optional)</label>
                             <input type="text" id="vcard-company" name="vcard-company" [formControl]="formGroup.get('vcardCompany')"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            <app-input-errors [control]="formGroup.get('vcardCompany')"></app-input-errors>
                         </div>
                         <div class="mb-4">
                             <label for="vcard-phone" class="block text-gray-700 text-sm font-bold mb-2">Phone Number</label>
                             <input type="tel" id="vcard-phone" name="vcard-phone" [formControl]="formGroup.get('vcardPhoneNumber')"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            <app-input-errors [control]="formGroup.get('vcardPhoneNumber')"></app-input-errors>
                         </div>
                         <div class="mb-4">
                             <label for="vcard-email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
                             <input type="email" id="vcard-email" name="vcard-email" [formControl]="formGroup.get('vcardEmail')"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            <app-input-errors [control]="formGroup.get('vcardEmail')"></app-input-errors>
                         </div>
                         <div class="mb-4">
                             <label for="vcard-website" class="block text-gray-700 text-sm font-bold mb-2">Website
                                 (optional)</label>
                             <input type="url" id="vcard-website" name="vcard-website" [formControl]="formGroup.get('vcardWebsite')"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            <app-input-errors [control]="formGroup.get('vcardWebsite')"></app-input-errors>
                         </div>
                         <div>
                             <label for="vcard-address" class="block text-gray-700 text-sm font-bold mb-2">Address
                                 (optional)</label>
                             <textarea id="vcard-address" name="vcard-address" rows="2" [formControl]="formGroup.get('vcardAddress')"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+                            <app-input-errors [control]="formGroup.get('vcardAddress')"></app-input-errors>
                         </div>
                     </div>
                     }
@@ -206,11 +225,11 @@
                             <label for="wifi-ssid" class="block text-gray-700 text-sm font-bold mb-2">Network Name (SSID)</label>
                             <input type="text" id="wifi-ssid" name="wifi-ssid" [formControl]="formGroup.get('wifiSsid')"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            <app-input-errors [control]="formGroup.get('wifiSsid')"></app-input-errors>
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2">Encryption Type</label>
                             <div class="flex space-x-4">
-
                                 @for (encryptionType of encryptionTypes; track $index) {
                                     <label class="inline-flex items-center">
                                         <input type="radio" name="wifi-encryption" [value]="encryptionType.id" [formControl]="formGroup.get('wifiEncryption')"
@@ -219,12 +238,14 @@
                                     </label>
                                 }
                             </div>
+                            <app-input-errors [control]="formGroup.get('wifiEncryption')"></app-input-errors>
                         </div>
                         @if(formGroup.get('wifiEncryption').value !== 'none') {
                             <div>
                                 <label for="wifi-password" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
                                 <input type="password" id="wifi-password" name="wifi-password" [formControl]="formGroup.get('wifiPassword')"
                                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                                <app-input-errors [control]="formGroup.get('wifiPassword')"></app-input-errors>
                             </div>
                         }
                     </div>
@@ -238,12 +259,14 @@
                             <input type="text" id="geo-latitude" name="geo-latitude" [formControl]="formGroup.get('geoLatitude')"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                                 placeholder="e.g. 37.7749">
+                            <app-input-errors [control]="formGroup.get('geoLatitude')"></app-input-errors>
                         </div>
                         <div>
                             <label for="geo-longitude" class="block text-gray-700 text-sm font-bold mb-2">Longitude</label>
                             <input type="text" id="geo-longitude" name="geo-longitude" [formControl]="formGroup.get('geoLongitude')"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                                 placeholder="e.g. -122.4194">
+                            <app-input-errors [control]="formGroup.get('geoLongitude')"></app-input-errors>
                         </div>
                         <div class="mt-4">
                             <button id="get-current-location"
@@ -284,6 +307,7 @@
                                 </label>
                                 }
                             </div>
+                            <app-input-errors [control]="formGroup.get('errorCorrectionLevel')"></app-input-errors>
                             <p class="mt-2 text-sm text-gray-500">Higher correction levels make your QR code more reliable
                                 but
                                 increase complexity.</p>
@@ -303,14 +327,7 @@
                                         (input)="fgColor.value = fgHexInput.value"
                                         class="flex-1 ml-2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
                                 </div>
-                                @let errors = formGroup.get('foregroundColor').errors;
-                                @if(errors) {
-                                    <div class="text-sm text-red-600">
-                                    @for (error of errors | keyvalue; track $index) {
-                                        
-                                    }
-                                    </div>
-                                }
+                                <app-input-errors [control]="formGroup.get('foregroundColor')"></app-input-errors>
                             </div>
                             <div>
                                 <label for="bg-color" class="block text-gray-700 text-sm font-bold mb-2">Background
@@ -379,35 +396,7 @@
 
             <div class="mt-8">
                 <h3 class="text-lg font-semibold mb-4 text-gray-800">Test Your QR Code</h3>
-                <p class="text-gray-600 mb-4">Scan the QR code with your device to ensure it works correctly.
-                    Alternatively, you can copy and share the link below:</p>
-
-                <div id="share-link-container" class="hidden space-y-3">
-                    <div class="flex">
-                        <input type="text" id="share-link" readonly
-                            class="flex-1 min-w-0 block w-full px-3 py-2 rounded-l-md border-gray-300 bg-gray-50"
-                            value="">
-                        <button id="copy-link"
-                            class="inline-flex items-center px-4 py-2 border border-l-0 border-gray-300 bg-gray-50 text-gray-700 rounded-r-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                            <i class="fas fa-copy"></i>
-                        </button>
-                    </div>
-
-                    <div class="flex space-x-2">
-                        <button
-                            class="flex-1 bg-white border border-gray-300 text-gray-700 font-medium py-2 rounded hover:bg-gray-50 transition flex items-center justify-center">
-                            <i class="fab fa-facebook text-blue-600 mr-2"></i> Facebook
-                        </button>
-                        <button
-                            class="flex-1 bg-white border border-gray-300 text-gray-700 font-medium py-2 rounded hover:bg-gray-50 transition flex items-center justify-center">
-                            <i class="fab fa-twitter text-blue-400 mr-2"></i> Twitter
-                        </button>
-                        <button
-                            class="flex-1 bg-white border border-gray-300 text-gray-700 font-medium py-2 rounded hover:bg-gray-50 transition flex items-center justify-center">
-                            <i class="fab fa-linkedin text-blue-700 mr-2"></i> LinkedIn
-                        </button>
-                    </div>
-                </div>
+                <p class="text-gray-600 mb-4">Scan the QR code with your device to ensure it works correctly.</p>
             </div>
         </div>
     </div>

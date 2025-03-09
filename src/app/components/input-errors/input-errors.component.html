@@ -1,0 +1,8 @@
+@let errors = control().errors;
+@if(errors) {
+    <div class="text-sm text-red-600">
+    @for(error of errors['zodErrors']; track $index) {
+        <small>{{ error }}</small>
+    }
+    </div>
+}
