@@ -1,4 +1,4 @@
-import { NgClass } from '@angular/common';
+import { NgClass, UpperCasePipe } from '@angular/common';
 import { Component, computed, model, signal, viewChild } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
@@ -9,8 +9,10 @@ import { asZodFormControls, svgToDataURL } from '@app/utils/functions';
 import { ZodFormControls } from '@app/utils/types';
 import { InputErrorsComponent } from '@app/components/input-errors/input-errors.component';
 import { qrContentProcessors } from './qr-generator-content-processor';
-import QRCodeStyling from 'qr-code-styling';
+import QRCodeStyling, { CornerDotType, CornerSquareType, DotType, FileExtension } from 'qr-code-styling';
 
+
+const EXTENSIONS = ["svg", "png", "jpeg", "webp"] as const satisfies Array<FileExtension>;
 
 const ERROR_CORRECTION_LEVELS = [
   { id: 'low', name: 'Low (L)' },
@@ -36,9 +38,28 @@ export const ENCRYPTION_TYPES = [
   { id: 'none', name: 'None' }
 ];
 
+export const DOT_TYPES: ReadonlyArray<{  id: DotType, name: string }> = [
+  { id: 'dots', name: 'Dots' },
+  { id: 'rounded', name: 'Rounded' },
+  { id: 'classy', name: 'Classy' },
+  { id: 'classy-rounded', name: 'Classy Rounded' },
+  { id: 'square', name: 'Square' },
+  { id: 'extra-rounded', name: 'Extra Rounded' }
+];
+
+export const CORNERS_SQUARE_STYLES: ReadonlyArray<{  id: CornerSquareType, name: string }> = [
+  ...DOT_TYPES,
+  { id: 'dot', name: 'Dot' },
+];
+
+export const CORNERS_INNER_DOT_STYLES:  ReadonlyArray<{  id: CornerSquareType, name: string }> = [
+  ...DOT_TYPES,
+  { id: 'dot', name: 'Dot' },
+];
+
 @Component({
   selector: 'app-qr-generator',
-  imports: [LucideAngularModule, NgClass, ReactiveFormsModule, ZodFormComponent, RouterLink, InputErrorsComponent],
+  imports: [LucideAngularModule, NgClass, ReactiveFormsModule, ZodFormComponent, RouterLink, InputErrorsComponent, UpperCasePipe],
   templateUrl: './qr-generator.component.html',
   styleUrl: './qr-generator.component.scss'
 })
@@ -47,6 +68,10 @@ export class QrGeneratorComponent {
   readonly contentTypes = CONTENT_TYPES;
   readonly errorCorrectionLevels = ERROR_CORRECTION_LEVELS;
   readonly encryptionTypes = ENCRYPTION_TYPES;
+  readonly extensions = EXTENSIONS;
+  readonly dotsTypes = DOT_TYPES;
+  readonly cornersSquareStyles = CORNERS_SQUARE_STYLES;
+  readonly cornersInnerDotStyles = CORNERS_INNER_DOT_STYLES;
 
   readonly selectedContentType = signal<QrContentType>('url');
   readonly formSchema = computed(() => QrSchemas[this.selectedContentType()]);
@@ -83,7 +108,7 @@ export class QrGeneratorComponent {
         type: data.cornersStyle,
       },
       cornersDotOptions: {
-        type: data.cornersStyle,
+        type: data.cornersInnerDotStyle,
       },
       backgroundOptions: {
         color: data.backgroundColor,
@@ -95,14 +120,9 @@ export class QrGeneratorComponent {
     this.lastQrGenerated.set({ url, qr, data });
   }
 
-  async downloadAsPng() {
+  async download(fileExtension: FileExtension) {
     const qr = this.lastQrGenerated()!.qr;
-    await qr.download("png");
-  }
-
-  async downloadAsSvg() {
-    const qr = this.lastQrGenerated()!.qr;
-    await qr.download("svg");
+    await qr.download({ name: "qr-code", extension: fileExtension });
   }
 
   async getCurrentLocation() {

@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { Prettify } from "../../utils/types";
-import { CornerDotType, DotType } from "qr-code-styling";
+import { CornerDotType, CornerSquareType, DotType } from "qr-code-styling";
 
 export const QR_CONTENT_TYPES = [
     'url',
@@ -22,11 +22,15 @@ export const DOT_TYPES = [
     "extra-rounded"
 ] as const satisfies Array<DotType>;
 
-export const CORNERS_STYLES = [
-    "square",
-    "rounded",
-    "extra-rounded"
+export const CORNERS_INNER_DOT_STYLES = [
+    ...DOT_TYPES,
+    "dot"
 ] as const satisfies Array<CornerDotType>;
+
+export const CORNERS_DOT_STYLES = [
+    ...DOT_TYPES,
+    "dot"
+] as const satisfies Array<CornerSquareType>;
 
 
 export const QrBaseSchema = z.object({
@@ -36,7 +40,8 @@ export const QrBaseSchema = z.object({
     foregroundColor: z.string().default('#000000'),
     backgroundColor: z.string().default('#ffffff'),
     dotsType: z.enum([...DOT_TYPES]).default('square'),
-    cornersStyle: z.enum([...CORNERS_STYLES]).default('square')
+    cornersInnerDotStyle: z.enum([...CORNERS_INNER_DOT_STYLES]).default('square'),
+    cornersStyle: z.enum(['dot', 'dots', 'rounded', 'classy', 'classy-rounded', 'square', 'extra-rounded']).default('square')
 });
 
 export type QrBase = z.infer<typeof QrBaseSchema>;
