@@ -1,5 +1,5 @@
 import { NgClass, UpperCasePipe } from '@angular/common';
-import { Component, computed, model, signal, viewChild } from '@angular/core';
+import { Component, computed, inject, model, signal, viewChild } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
 import { ZodFormComponent } from "@app/components/zod-form/zod-form.component";
@@ -10,6 +10,7 @@ import { ZodFormControls } from '@app/utils/types';
 import { InputErrorsComponent } from '@app/components/input-errors/input-errors.component';
 import { qrContentProcessors } from './qr-generator-content-processor';
 import QRCodeStyling, { CornerDotType, CornerSquareType, DotType, FileExtension } from 'qr-code-styling';
+import { MetadataService } from '@app/services/metadata.service';
 
 
 const EXTENSIONS = ["svg", "png", "jpeg", "webp"] as const satisfies Array<FileExtension>;
@@ -65,6 +66,8 @@ export const CORNERS_INNER_DOT_STYLES:  ReadonlyArray<{  id: CornerSquareType, n
 })
 export class QrGeneratorComponent {
 
+  private readonly metadataService = inject(MetadataService);
+
   readonly contentTypes = CONTENT_TYPES;
   readonly errorCorrectionLevels = ERROR_CORRECTION_LEVELS;
   readonly encryptionTypes = ENCRYPTION_TYPES;
@@ -78,6 +81,14 @@ export class QrGeneratorComponent {
   readonly generatorForm = viewChild.required<ZodFormComponent<QrZodSchema>>('generatorForm');
   readonly formGroup = computed(() => this.generatorForm().formGroup());
   readonly lastQrGenerated = signal<{ url: string, qr: QRCodeStyling, data: QrFormData } | undefined>(undefined);
+
+  constructor() {
+    this.metadataService.updateMetadata({
+      title: 'QR Code Generator - Definitive Tools',
+      description: 'Generate customized QR codes for URLs, text, contact information, and more. high-quality QR codes that work anywhere.',
+      keywords: 'qr code generator, qr code, qr codes, qr, qrcode, qrcodes, free qr code generator, free qrcode generator, free qr code, free qrcodes, online qr code generator, online qrcode generator, online qr code, online qrcodes, qr code generator online, qr code online, qr codes online, qr online, qrcode online, qrcodes online, free qr code online, free qrcode online, free qr codes online, free qrcodes online'
+    });
+  }
 
   changeContentType(contentType: QrContentType) {
     this.selectedContentType.set(contentType);
