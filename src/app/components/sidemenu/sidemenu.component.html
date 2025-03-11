@@ -14,7 +14,7 @@
             @for (tool of tools; track $index) {
                 <li>
                     <a [routerLink]="['/tool', tool.id]" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="bg-gray-100 text-gray-700" class="rounded-lg text-gray-500 px-4 py-2 text-sm font-medium hover:bg-gray-100 hover:text-gray-700 flex gap-2 justify-items-start items-center">
-                        <lucide-icon name="qr-code" [class]="'bg-'  + tool.color + '-100 p-1 w-7 h-7 rounded-full inline-block text-' + tool.color + '-600 block'"></lucide-icon>
+                        <lucide-icon [name]="tool.icon" [class]="'bg-'  + tool.color + '-100 p-1 w-7 h-7 rounded-full inline-block text-' + tool.color + '-600 block'"></lucide-icon>
                         {{ tool.name }}
                     </a>
                 </li>

@@ -24,6 +24,7 @@
     "@angular/router": "^19.1.7",
     "@angular/ssr": "^19.1.8",
     "express": "^4.18.2",
+    "image-compare-viewer": "^1.6.2",
     "lucide-angular": "^0.476.0",
     "qr-code-styling": "^1.9.1",
     "rxjs": "~7.8.2",

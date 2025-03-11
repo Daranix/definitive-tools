@@ -12,7 +12,15 @@ export const TOOLS: ReadonlyArray<Tool> = [
         id: 'qr-generator',
         name: 'QR Code Generator',
         description: 'Create customizable QR codes for websites, text, and more.',
-        icon: 'https://github.com/mpesteban/definitive-tools/blob/main/src/assets/qr-code-generator.png?raw=true',
+        icon: 'qr-code',
+        color: 'indigo',
+        category: 'Image Tools'
+    },
+    {
+        id: 'background-remover',
+        name: 'Background Remover',
+        description: 'Remove backgrounds from images instantly.',
+        icon: 'image-off',
         color: 'indigo',
         category: 'Image Tools'
     }

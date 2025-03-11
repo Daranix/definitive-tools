@@ -55,7 +55,7 @@
                 <div [routerLink]="['/tool', tool.id]"
                     class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow p-6 border border-gray-100 flex flex-col items-center cursor-pointer">
                     <div [class]="'bg-'  + tool.color + '-100 p-4 rounded-full mb-4'">
-                        <lucide-icon name="qr-code" [class]="'text-3xl text-' + tool.color + '-600'"></lucide-icon>
+                        <lucide-icon [name]="tool.icon" [class]="'text-3xl text-' + tool.color + '-600'"></lucide-icon>
                     </div>
                     <h3 class="text-xl font-semibold text-gray-800 mb-2">{{ tool.name }}</h3>
                     <p class="text-gray-600 text-center mb-4">{{ tool.description }}</p>
