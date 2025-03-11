@@ -1,0 +1,34 @@
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toast {
+    min-width: 250px;
+    padding: 15px 20px;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.success {
+    background-color: #4caf50;
+}
+
+.error {
+    background-color: #f44336;
+}
+
+.info {
+    background-color: #2196f3;
+}
+
+.warning {
+    background-color: #ff9800;
+}

@@ -1,0 +1,14 @@
+
+@for (position of positions; track $index) {
+    <ng-container>
+        <div class="toast-container" [ngClass]="position">
+            @for (toast of getToastsByPosition(position); track $index) {
+                <div class="toast" [ngClass]="toast.type"
+                    (click)="removeToast(toast.id)">
+                    {{ toast.message }}
+                </div>
+            }
+    
+        </div>
+    </ng-container>
+}

@@ -1,0 +1,37 @@
+@if(loading()) {
+<div class="w-full animate-pulse h-10 bg-gray-300 rounded mb-2"></div>
+} @else {
+<div class="flex justify-center w-full p-6 pb-4 pt-5 border-dashed border-gray-300 border-2 h-full"
+    [ngClass]="{ 'surface-50': hover(), 'bg-white': !hover() }">
+    <div class="align-items-center text-center">
+        @if(!file()) {
+        <i class="pi pi-file-import text-4xl"></i>
+        <p>
+            Drag And Drop your file or <label (click)="inputFile.click()" [for]="name()"
+                class="font-bold underline m-0 text-black cursor-pointer">click here</label>
+            <br />
+            @if(maxFileSize()) {
+            Max. {{ maxFileSize() | fileSize }}
+            }
+        </p>
+        }
+
+        @if(file()) {
+        <i class="pi pi-file text-4xl"></i>
+        <br />
+        {{ file()!.name }} - {{ file()!.size | fileSize }}
+        }
+        <input class="hidden" type="file" [disabled]="disabled()" #inputFile (change)="onFileChangedManual($event)"
+            #fileUploadInput>
+    </div>
+</div>
+@if(ngControl?.invalid && (ngControl?.touched)) {
+@for (error of getErrorMessages(ngControl?.errors); track $index) {
+@if(error) {
+<div class="pt-1 text-sm text-red-500 dark:text-red-400">
+    {{ error }}
+</div>
+}
+}
+}
+}
