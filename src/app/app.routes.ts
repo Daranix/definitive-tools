@@ -13,8 +13,8 @@ export const routes: Routes = [
         path: 'tool',
         children: [
             { path: '', redirectTo: 'home', pathMatch: 'full' },
-            { path: 'qr-generator', component: QrGeneratorComponent },
-            { path: 'background-remover', component: BackgroundRemoverComponent },
+            { path: 'qr-generator', loadComponent: () => import('./pages/qr-generator/qr-generator.component').then(m => m.QrGeneratorComponent) },
+            { path: 'background-remover', loadComponent: () => import('./pages/background-remover/background-remover.component').then(m => m.BackgroundRemoverComponent) },
         ],
         component: BaseComponent
     },

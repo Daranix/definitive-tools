@@ -31,3 +31,33 @@ export function formatBytes(bytes: number): string {
         return (bytes / gigabyte).toFixed(2) + ' GB';
     }
 }
+
+export function webgl_detect(return_context?: boolean) {
+    if (!!window.WebGLRenderingContext) {
+        let canvas = document.createElement("canvas"),
+             names = ["webgl2", "webgl", "experimental-webgl", "moz-webgl", "webkit-3d"],
+           context: RenderingContext | boolean | null = false;
+
+        for(var i=0;i< names.length;i++) {
+            try {
+                context = canvas.getContext(names[i]);
+                /** @ts-ignore */
+                if (context && typeof context.getParameter == "function") {
+                    // WebGL is enabled
+                    if (return_context) {
+                        // return WebGL object if the function's argument is present
+                        return {name:names[i], gl:context};
+                    }
+                    // else, return just true
+                    return true;
+                }
+            } catch(e) {}
+        }
+
+        // WebGL is supported, but disabled
+        return false;
+    }
+
+    // WebGL not supported
+    return false;
+}
