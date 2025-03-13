@@ -56,19 +56,23 @@
                     <app-drag-and-drop-file name="file" (onFileChange)="file.set($event)" class="h-full block"></app-drag-and-drop-file>
                 </div>
             } @else {
-                <div class="flex flex-col gap-4 mt-4">
-                    <div class="flex justify-center">
-                        <img [src]="file()! | blob" class="w-auto aspect-auto rounded-lg max-h-60">
-                        @if(imageOutput()) {
-                            <img [src]="imageOutput()! | blob" class="w-auto aspect-auto rounded-lg max-h-60">
+                <div class="mt-4">
+                    <div class="max-h-[600px] overflow-hidden relative flex items-center justify-center">
+                        @if(!imageOutput()) {
+                            <img [src]="file()! | blob" width="auto" class="rounded-lg object-contain max-h-[600px]">
+                        } @else {
+                            <app-image-comparison [beforeImage]="fileUrl()!" [afterImage]="imageOutputUrl()!" [maxHeight]="600"></app-image-comparison>
                         }
                     </div>
-                    <button (click)="removeBackground()" class="bg-indigo-700 text-white font-medium py-2 px-4 rounded hover:bg-indigo-800 transition">
-                        Remove Background
-                    </button>
-                    <button (click)="file.set(undefined)" class="bg-white border border-indigo-700 text-indigo-700 font-medium py-2 px-4 rounded hover:bg-indigo-200 hover:text-indigo-800 transition">
-                        Cancel
-                    </button>
+                    <div class="flex flex-col gap-4 mt-4 justify-center">
+                        <button (click)="removeBackground()" class="bg-indigo-700 text-white font-medium py-2 px-4 rounded hover:bg-indigo-800 transition">
+                            Remove Background
+                        </button>
+                        <button (click)="cancel()" class="bg-white border border-indigo-700 text-indigo-700 font-medium py-2 px-4 rounded hover:bg-indigo-200 hover:text-indigo-800 transition">
+                            Cancel
+                        </button>
+                    </div>
+
                 </div>
             }
         </div>

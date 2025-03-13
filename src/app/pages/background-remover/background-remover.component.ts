@@ -1,16 +1,21 @@
-import { Component, inject, model, output, signal } from '@angular/core';
+import { Component, computed, effect, ElementRef, inject, model, output, signal, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
 import { DragAndDropFileComponent } from "@/app/components/drag-and-drop-file/drag-and-drop-file.component";
 import { FormsModule } from '@angular/forms';
 import { MetadataService } from '@/app/services/metadata.service';
 import { BlobPipe } from '@/app/pipes/blob.pipe';
-import { pipeline, ImagePipelineInputs, ImageSegmentationPipelineOutput, env, AutoModel, PreTrainedModel, AutoProcessor, Processor, RawImage } from "@huggingface/transformers";
+import { pipeline, ImagePipelineInputs, ImageSegmentationPipelineOutput, env, AutoModel, PreTrainedModel, AutoProcessor, Processor, RawImage, ProgressInfo } from "@huggingface/transformers";
 import { webgl_detect } from '@/app/utils/functions';
+import ImageCompare from "image-compare-viewer";
+import { filter, tap } from 'rxjs';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { ImageComparisonComponent } from '@/app/components/image-comparison/image-comparison.component';
+
 
 @Component({
   selector: 'app-background-remover',
-  imports: [RouterLink, LucideAngularModule, DragAndDropFileComponent, FormsModule, BlobPipe],
+  imports: [RouterLink, LucideAngularModule, DragAndDropFileComponent, FormsModule, BlobPipe, ImageComparisonComponent],
   templateUrl: './background-remover.component.html',
   styleUrl: './background-remover.component.scss'
 })
@@ -21,10 +26,16 @@ export class BackgroundRemoverComponent {
   private model?: PreTrainedModel;
   private processor?: Processor;
 
+  // private readonly imageComparer = viewChild<ElementRef<HTMLDivElement>>('imageComparer');
   readonly file = signal<File | undefined>(undefined);
   readonly imageOutput = signal<Blob | undefined>(undefined);
   readonly loading = signal(false);
+  readonly downloadProgress = signal<ProgressInfo | undefined>(undefined);
 
+  readonly fileUrl = computed(() => this.file() ? URL.createObjectURL(this.file()!) : undefined);
+  readonly imageOutputUrl = computed(() => this.imageOutput() ? URL.createObjectURL(this.imageOutput()!) : undefined);
+
+  // private readonly renderImageComparer$ = this.setupImageComparer();
 
   constructor() {
     this.metadataService.updateMetadata({
@@ -33,6 +44,7 @@ export class BackgroundRemoverComponent {
       updateCanonical: true
     })
   }
+
 
   async removeBackground() {
 
@@ -43,37 +55,20 @@ export class BackgroundRemoverComponent {
       env.backends.onnx.wasm!.proxy = false;
 
       this.model = await AutoModel.from_pretrained('briaai/RMBG-1.4', {
-        device: isWebGlAvailable ? 'webgpu' : 'cpu'
+        device: isWebGlAvailable ? 'webgpu' : 'cpu',
+        progress_callback: (progress) => {
+          this.downloadProgress.set(progress);
+        }
       });
 
+      this.downloadProgress.set(undefined);
       this.processor = await AutoProcessor.from_pretrained('briaai/RMBG-1.4', {});
     }
 
     try {
 
-
-      const imageElement = URL.createObjectURL(this.file()!)
-
-      const image = new Image();
-      image.src = imageElement;
-
-      /*
-      // Get the segmentation pipeline
-      const segmenter = await pipeline("background-removal", "briaai/RMBG-2.0", {
-        device: isWebGlAvailable ? 'webgpu' : 'cpu'
-      });
-
-
-
-      // Process the image
-      const mask = await segmenter(imageElement);
-
-      // The result contains a segmentation mask
-      // You can use this mask to remove the background
-      const result = await this.applyMaskToImage(image, mask);*/
-
       // Load image
-      const img = await RawImage.fromURL(imageElement);
+      const img = await RawImage.fromBlob(this.file()!);
 
       // Pre-process image
       const { pixel_values } = await this.processor(img);
@@ -93,10 +88,8 @@ export class BackgroundRemoverComponent {
       canvas.width = img.width;
       canvas.height = img.height;
       const ctx = canvas.getContext("2d")!;
-
       // Draw original image output to canvas
       ctx.drawImage(img.toCanvas(), 0, 0);
-
       // Update alpha channel
       const pixelData = ctx.getImageData(0, 0, img.width, img.height);
       for (let i = 0; i < maskData.length; ++i) {
@@ -105,6 +98,7 @@ export class BackgroundRemoverComponent {
       ctx.putImageData(pixelData, 0, 0);
       const imageDataBlob = await this.canvasToBlob(canvas);
       this.imageOutput.set(imageDataBlob);
+
     } catch (error) {
       console.error('Error removing background:', error);
     }
@@ -169,6 +163,7 @@ export class BackgroundRemoverComponent {
 
   cancel() {
     this.file.set(undefined);
+    this.imageOutput.set(undefined);
   }
 
 }
