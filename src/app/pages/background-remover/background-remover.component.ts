@@ -5,16 +5,54 @@ import { DragAndDropFileComponent } from "@/app/components/drag-and-drop-file/dr
 import { FormsModule } from '@angular/forms';
 import { MetadataService } from '@/app/services/metadata.service';
 import { BlobPipe } from '@/app/pipes/blob.pipe';
-import { ImageSegmentationPipelineOutput, env, AutoModel, PreTrainedModel, AutoProcessor, Processor, RawImage, ProgressInfo } from "@huggingface/transformers";
+import { ImageSegmentationPipelineOutput, env, AutoModel, PreTrainedModel, AutoProcessor, Processor, RawImage } from "@huggingface/transformers";
 import { webgl_detect } from '@/app/utils/functions';
 import { ImageComparisonComponent } from '@/app/components/image-comparison/image-comparison.component';
 import { LoadingSpinnerSmallComponent } from '@/app/components/loading-spinner-small/loading-spinner-small.component';
 import { ToastService } from '@/app/services/toast.service';
+import { ProgressBarComponent } from '@/app/components/progress-bar/progress-bar.component';
+import { DecimalPipe } from '@angular/common';
+
+type ProgressBaseInfo = {
+  status: 'initiate' | 'download' | 'progress' | 'done';
+  name: string;
+  file: string;
+}
+
+type InitialProgressInfo =  ProgressBaseInfo & {
+  status: 'initiate';
+}
+
+type DownloadProgressInfo = ProgressBaseInfo & {
+  status: 'download';
+}
+
+type DownloadingProgressInfo = ProgressBaseInfo & {
+  status: 'progress';
+  progress: number;
+  loaded: number;
+  total: number;
+}
+
+type CompletedProgressInfo = ProgressBaseInfo & {
+  status: 'done';
+}
+
+export type ProgressInfo = InitialProgressInfo | DownloadingProgressInfo | DownloadProgressInfo | CompletedProgressInfo;
 
 
 @Component({
   selector: 'app-background-remover',
-  imports: [RouterLink, LucideAngularModule, DragAndDropFileComponent, FormsModule, BlobPipe, ImageComparisonComponent, LoadingSpinnerSmallComponent],
+  imports: [
+    RouterLink,
+    LucideAngularModule,
+    DragAndDropFileComponent,
+    FormsModule,
+    BlobPipe,
+    ImageComparisonComponent,
+    LoadingSpinnerSmallComponent,
+    ProgressBarComponent
+  ],
   templateUrl: './background-remover.component.html',
   styleUrl: './background-remover.component.scss'
 })
@@ -42,7 +80,7 @@ export class BackgroundRemoverComponent {
       title: 'Background Remover',
       description: 'Remove backgrounds from images instantly. Create professional-looking transparent images for your projects, products, and designs.',
       updateCanonical: true
-    })
+    });
   }
 
 
@@ -50,15 +88,15 @@ export class BackgroundRemoverComponent {
 
     this.loading.set(true);
     const isWebGlAvailable = webgl_detect();
-
     if(!this.model || !this.processor) {
       env.backends.onnx.wasm!.proxy = true;
 
       this.model = await AutoModel.from_pretrained('briaai/RMBG-1.4', {
         device: isWebGlAvailable ? 'webgpu' : 'cpu',
         progress_callback: (progress) => {
-          this.downloadProgress.set(progress);
-        }
+          this.downloadProgress.set(progress as unknown as ProgressInfo);
+        },
+        dtype: 'q8'
       });
 
       this.downloadProgress.set(undefined);
@@ -173,5 +211,7 @@ export class BackgroundRemoverComponent {
     link.download = 'output.png';
     link.click();
   }
+
+
 
 }

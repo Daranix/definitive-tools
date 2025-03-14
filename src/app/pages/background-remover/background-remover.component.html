@@ -57,15 +57,37 @@
                 </div>
             } @else {
                 <div class="mt-4">
-                    <div class="max-h-[600px] overflow-hidden relative flex items-center justify-center">
+                    <div class="max-h-[600px] overflow-hidden relative flex items-center justify-center ">
                         @if(!imageOutput()) {
-                            <img [src]="file()! | blob" width="auto" class="rounded-lg object-contain max-h-[600px]">
+                            <img [src]="file()! | blob" width="auto" class="rounded-lg object-contain max-h-[600px] ">
                         } @else {
                             <app-image-comparison [beforeImage]="fileUrl()!" [afterImage]="imageOutputUrl()!" [maxHeight]="600"></app-image-comparison>
                         }
                     </div>
                     <div class="flex flex-col gap-4 mt-4 justify-center">
                         @if(!imageOutput()) {
+
+                            
+                            @if(loading()) {
+                                <div>
+                                    @let progressInfo = downloadProgress();
+                                    @if(progressInfo) {
+                                        @if(progressInfo.status === 'progress' && progressInfo.file.endsWith('.onnx')) {
+                                            <div>Downloading model ...</div>
+                                            @let percent = progressInfo.status === 'progress' ? progressInfo.progress : 0;
+                                            <app-progress-bar [progress]="percent"></app-progress-bar>
+                                        } @else if(progressInfo.status === 'done') {
+                                            <div>Processing the image ...</div>
+                                        } @else if(progressInfo.status !== 'progress' && progressInfo.status !== undefined) {
+                                            <div>Loading model file ...</div>
+                                        }
+                                    }
+                                </div>
+
+                                
+                            }
+                            
+
                             <button (click)="removeBackground()" [disabled]="loading()" class="bg-indigo-700 text-white font-medium py-2 px-4 rounded hover:bg-indigo-800 transition disabled:cursor-not-allowed disabled:bg-indigo-300 flex items-center justify-center justify-items-center gap-1">
                                 @if(loading()) {
                                     <app-loading-spinner-small></app-loading-spinner-small>
@@ -77,10 +99,10 @@
                                 Cancel
                             </button>
                         } @else {
+                            
+
+                            
                             <button (click)="downloadImage()" class="bg-indigo-700 text-white font-medium py-2 px-4 rounded hover:bg-indigo-800 transition disabled:cursor-not-allowed disabled:bg-indigo-300 flex items-center justify-center justify-items-center gap-1">
-                                @if(loading()) {
-                                    <app-loading-spinner-small></app-loading-spinner-small>
-                                }
                                 Download Image
                             </button>
                             <button (click)="cancel()"

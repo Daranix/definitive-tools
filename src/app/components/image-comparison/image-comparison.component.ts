@@ -16,13 +16,4 @@ export class ImageComparisonComponent {
     readonly sliderValue = model<number>(50);
     readonly maxHeight = input.required<number>();
 
-
-    /*private readonly imageComparer = viewChild.required<ElementRef<HTMLDivElement>>('imageComparer');
-
-    ngAfterViewInit(): void {
-        const imageComparer = new ImageCompare(this.imageComparer()!.nativeElement);
-        imageComparer.mount();
-    }*/
-
-
 }
