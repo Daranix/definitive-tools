@@ -1,32 +1,30 @@
-import { Component, computed, effect, ElementRef, inject, model, output, signal, viewChild } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
 import { DragAndDropFileComponent } from "@/app/components/drag-and-drop-file/drag-and-drop-file.component";
 import { FormsModule } from '@angular/forms';
 import { MetadataService } from '@/app/services/metadata.service';
 import { BlobPipe } from '@/app/pipes/blob.pipe';
-import { pipeline, ImagePipelineInputs, ImageSegmentationPipelineOutput, env, AutoModel, PreTrainedModel, AutoProcessor, Processor, RawImage, ProgressInfo } from "@huggingface/transformers";
+import { ImageSegmentationPipelineOutput, env, AutoModel, PreTrainedModel, AutoProcessor, Processor, RawImage, ProgressInfo } from "@huggingface/transformers";
 import { webgl_detect } from '@/app/utils/functions';
-import ImageCompare from "image-compare-viewer";
-import { filter, tap } from 'rxjs';
-import { toObservable } from '@angular/core/rxjs-interop';
 import { ImageComparisonComponent } from '@/app/components/image-comparison/image-comparison.component';
+import { LoadingSpinnerSmallComponent } from '@/app/components/loading-spinner-small/loading-spinner-small.component';
+import { ToastService } from '@/app/services/toast.service';
 
 
 @Component({
   selector: 'app-background-remover',
-  imports: [RouterLink, LucideAngularModule, DragAndDropFileComponent, FormsModule, BlobPipe, ImageComparisonComponent],
+  imports: [RouterLink, LucideAngularModule, DragAndDropFileComponent, FormsModule, BlobPipe, ImageComparisonComponent, LoadingSpinnerSmallComponent],
   templateUrl: './background-remover.component.html',
   styleUrl: './background-remover.component.scss'
 })
 export class BackgroundRemoverComponent {
 
+  private readonly toastService = inject(ToastService);
   private readonly metadataService = inject(MetadataService);
 
-  private model?: PreTrainedModel;
-  private processor?: Processor;
+  readonly allowedExtensions = ['.png', '.jpg', '.jpeg', '.webp'];
 
-  // private readonly imageComparer = viewChild<ElementRef<HTMLDivElement>>('imageComparer');
   readonly file = signal<File | undefined>(undefined);
   readonly imageOutput = signal<Blob | undefined>(undefined);
   readonly loading = signal(false);
@@ -35,7 +33,9 @@ export class BackgroundRemoverComponent {
   readonly fileUrl = computed(() => this.file() ? URL.createObjectURL(this.file()!) : undefined);
   readonly imageOutputUrl = computed(() => this.imageOutput() ? URL.createObjectURL(this.imageOutput()!) : undefined);
 
-  // private readonly renderImageComparer$ = this.setupImageComparer();
+  private model?: PreTrainedModel;
+  private processor?: Processor;
+
 
   constructor() {
     this.metadataService.updateMetadata({
@@ -52,7 +52,7 @@ export class BackgroundRemoverComponent {
     const isWebGlAvailable = webgl_detect();
 
     if(!this.model || !this.processor) {
-      env.backends.onnx.wasm!.proxy = false;
+      env.backends.onnx.wasm!.proxy = true;
 
       this.model = await AutoModel.from_pretrained('briaai/RMBG-1.4', {
         device: isWebGlAvailable ? 'webgpu' : 'cpu',
@@ -100,6 +100,7 @@ export class BackgroundRemoverComponent {
       this.imageOutput.set(imageDataBlob);
 
     } catch (error) {
+      this.toastService.error('An error ocurred when trying to remove the background. Please try again.');
       console.error('Error removing background:', error);
     }
 
@@ -164,6 +165,13 @@ export class BackgroundRemoverComponent {
   cancel() {
     this.file.set(undefined);
     this.imageOutput.set(undefined);
+  }
+
+  downloadImage() {
+    const link = document.createElement('a');
+    link.href = this.imageOutputUrl()!
+    link.download = 'output.png';
+    link.click();
   }
 
 }

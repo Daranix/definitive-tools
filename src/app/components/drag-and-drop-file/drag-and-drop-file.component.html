@@ -3,7 +3,7 @@
 } @else {
 <div class="flex justify-center w-full p-6 pb-4 pt-5 border-dashed border-gray-300 border-2 h-full"
     [ngClass]="{ 'surface-50': hover(), 'bg-white': !hover() }">
-    <div class="align-items-center text-center">
+    <div class="align-items-center text-center flex justify-center items-center">
         @if(!file()) {
         <i class="pi pi-file-import text-4xl"></i>
         <p>
@@ -17,21 +17,21 @@
         }
 
         @if(file()) {
-        <i class="pi pi-file text-4xl"></i>
-        <br />
-        {{ file()!.name }} - {{ file()!.size | fileSize }}
+            <i class="pi pi-file text-4xl"></i>
+            <br />
+            {{ file()!.name }} - {{ file()!.size | fileSize }}
         }
         <input class="hidden" type="file" [disabled]="disabled()" #inputFile (change)="onFileChangedManual($event)"
             #fileUploadInput>
     </div>
 </div>
 @if(ngControl?.invalid && (ngControl?.touched)) {
-@for (error of getErrorMessages(ngControl?.errors); track $index) {
-@if(error) {
-<div class="pt-1 text-sm text-red-500 dark:text-red-400">
-    {{ error }}
-</div>
-}
-}
-}
+        @for (error of getErrorMessages(ngControl?.errors); track $index) {
+            @if(error) {
+            <div class="pt-1 text-sm text-red-500 dark:text-red-400">
+                {{ error }}
+            </div>
+            }
+        }
+    }
 }

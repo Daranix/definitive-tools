@@ -24,6 +24,7 @@ export class DragAndDropFileComponent implements ControlValueAccessor, OnInit, O
   readonly loading = input(false);
   readonly maxFileSize = input<number>();
   readonly name = input.required<string>();
+  readonly validExtensions = input<string[]>();
   private readonly fileUploadInput = viewChild<ElementRef<HTMLInputElement>>('fileUploadInput');
   private readonly toastService = inject(ToastService);
   readonly onFileChange = output<File | undefined>();
@@ -103,6 +104,12 @@ export class DragAndDropFileComponent implements ControlValueAccessor, OnInit, O
 
     if(this.maxFileSize() && file.size > this.maxFileSize()!) {
       this.toastService.error(`The file exceeds the maximun size limit ${formatBytes(this.maxFileSize()!)}`)
+      return;
+    }
+
+    const ext = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
+    if(this.validExtensions() && !this.validExtensions()!.includes(ext)) {
+      this.toastService.error(`The file type is not supported. Only ${this.validExtensions()?.join(', ')} are allowed.`)
       return;
     }
 

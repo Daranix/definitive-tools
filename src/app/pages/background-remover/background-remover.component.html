@@ -52,8 +52,8 @@
         <div class="bg-white rounded-lg shadow-md p-6">
             <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Image Upload & Processing</h2>
             @if(!file()) {
-                <div>
-                    <app-drag-and-drop-file name="file" (onFileChange)="file.set($event)" class="h-full block"></app-drag-and-drop-file>
+                <div class="flex flex-col h-32">
+                    <app-drag-and-drop-file name="file" [validExtensions]="allowedExtensions" (onFileChange)="file.set($event)" class="h-full flex-1"></app-drag-and-drop-file>
                 </div>
             } @else {
                 <div class="mt-4">
@@ -65,14 +65,31 @@
                         }
                     </div>
                     <div class="flex flex-col gap-4 mt-4 justify-center">
-                        <button (click)="removeBackground()" class="bg-indigo-700 text-white font-medium py-2 px-4 rounded hover:bg-indigo-800 transition">
-                            Remove Background
-                        </button>
-                        <button (click)="cancel()" class="bg-white border border-indigo-700 text-indigo-700 font-medium py-2 px-4 rounded hover:bg-indigo-200 hover:text-indigo-800 transition">
-                            Cancel
-                        </button>
-                    </div>
+                        @if(!imageOutput()) {
+                            <button (click)="removeBackground()" [disabled]="loading()" class="bg-indigo-700 text-white font-medium py-2 px-4 rounded hover:bg-indigo-800 transition disabled:cursor-not-allowed disabled:bg-indigo-300 flex items-center justify-center justify-items-center gap-1">
+                                @if(loading()) {
+                                    <app-loading-spinner-small></app-loading-spinner-small>
+                                }
+                                Remove Background
+                            </button>
+                            <button (click)="cancel()" [disabled]="loading()"
+                                class="bg-white border border-indigo-700 text-indigo-700 font-medium py-2 px-4 rounded hover:bg-indigo-200 hover:text-indigo-800 transition disabled:bg-gray-200 disabled:text-gray-400 disabled:border-gray-400">
+                                Cancel
+                            </button>
+                        } @else {
+                            <button (click)="downloadImage()" class="bg-indigo-700 text-white font-medium py-2 px-4 rounded hover:bg-indigo-800 transition disabled:cursor-not-allowed disabled:bg-indigo-300 flex items-center justify-center justify-items-center gap-1">
+                                @if(loading()) {
+                                    <app-loading-spinner-small></app-loading-spinner-small>
+                                }
+                                Download Image
+                            </button>
+                            <button (click)="cancel()"
+                                class="bg-white border border-indigo-700 text-indigo-700 font-medium py-2 px-4 rounded hover:bg-indigo-200 hover:text-indigo-800 transition disabled:bg-gray-200 disabled:text-gray-400 disabled:border-gray-400">
+                                Process Another Image
+                            </button>
+                        }
 
+                    </div>
                 </div>
             }
         </div>
