@@ -15,9 +15,9 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-builders/custom-esbuild:application",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "plugins": ["./esbuild/exclude-node-modules.ts"],
+            "externalDependencies": ["onnxruntime-node", "sharp"],
             "outputPath": "dist/definitive-tools",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -67,7 +67,7 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular-builders/custom-esbuild:dev-server",
+          "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
               "buildTarget": "definitive-tools:build:production"

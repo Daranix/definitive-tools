@@ -3,7 +3,7 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { AtSign, Bolt, Bookmark, CaseUpper, Download, IdCard, ImageOff, Link, LucideAngularModule, MapPin, Phone, QrCode, Scissors, TabletSmartphone, Wifi } from 'lucide-angular';
+import { AtSign, Bolt, Bookmark, CaseUpper, Download, House, IdCard, ImageOff, Link, LucideAngularModule, MapPin, Phone, QrCode, Scissors, TabletSmartphone, Wifi } from 'lucide-angular';
 import { CommonModule } from '@angular/common';
 
 export const appConfig: ApplicationConfig = {
@@ -23,7 +23,8 @@ export const appConfig: ApplicationConfig = {
         Bookmark,
         Download,
         Scissors,
-        ImageOff
+        ImageOff,
+        House
       }),
       CommonModule
     ),

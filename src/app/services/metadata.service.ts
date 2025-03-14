@@ -25,6 +25,7 @@ export class MetadataService {
     this.titleService.setTitle(title);
     this.metadataService.updateTag({ property: 'og:title', content: title });
     this.metadataService.updateTag({ property: 'og:description', content: description });
+    this.metadataService.updateTag({ property: 'twitter:description', content: description });
     this.metadataService.updateTag({ name: 'description', content: description });
 
     if(keywords) {

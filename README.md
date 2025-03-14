@@ -1,5 +1,8 @@
 # DefinitiveTools
 
+Ref about building custom builders: https://blog.devgenius.io/extending-angular-cli-f8b1abeb612a
+https://stackoverflow.com/questions/77508160/custom-webpack-config-in-angular-esbuild
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.8.
 
 ## Development server
