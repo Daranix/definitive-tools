@@ -1,8 +1,6 @@
-import { BlobPipe } from '@/app/pipes/blob.pipe';
 import { NgStyle } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, HostListener, input, Input, model, OnInit, signal, viewChild, ViewChild } from '@angular/core';
+import { Component, input, model } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import ImageCompare from 'image-compare-viewer';
 
 @Component({
     selector: 'app-image-comparison',
