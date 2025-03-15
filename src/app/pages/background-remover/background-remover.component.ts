@@ -151,54 +151,6 @@ export class BackgroundRemoverComponent {
     });
   }
 
-  async applyMaskToImage(originalImage: HTMLImageElement, segmentationResults: ImageSegmentationPipelineOutput[]) {
-    // Create a canvas to work with
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d')!;
-
-    // Set canvas dimensions to match the image
-    canvas.width = originalImage.width;
-    canvas.height = originalImage.height;
-
-    // Draw the original image
-    ctx.drawImage(originalImage, 0, 0);
-
-    // Get image data from the original image
-    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    const data = imageData.data;
-
-    // We assume the first result contains our foreground mask
-    // (RMBG-1.4 typically returns just one mask for the foreground)
-    const foregroundResult = segmentationResults[0];
-
-    // Convert the RawImage mask to usable data
-    const maskCanvas = document.createElement('canvas');
-    const maskCtx = maskCanvas.getContext('2d')!;
-    maskCanvas.width = canvas.width;
-    maskCanvas.height = canvas.height;
-
-    // Draw the mask onto the mask canvas
-    maskCtx.drawImage(foregroundResult.mask.toCanvas(), 0, 0, canvas.width, canvas.height);
-
-    // Get the mask data
-    const maskData = maskCtx.getImageData(0, 0, canvas.width, canvas.height).data;
-
-    // Apply the mask to the original image
-    for (let i = 0; i < data.length; i += 4) {
-      // In most segmentation masks, the alpha or grayscale value 
-      // represents the probability of being foreground
-      const maskIndex = i;
-
-      // Use the red channel of the mask as the alpha for the output image
-      // (this may need to be adjusted based on how the mask is structured)
-      data[i + 3] = maskData[maskIndex];
-    }
-
-    // Put the modified image data back on the canvas
-    ctx.putImageData(imageData, 0, 0);
-    return canvas;
-  }
-
 
   cancel() {
     this.file.set(undefined);
