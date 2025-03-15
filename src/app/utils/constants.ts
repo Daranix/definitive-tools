@@ -1,3 +1,5 @@
+import { ArrowRightLeft, AtSign, Bolt, Bookmark, CaseUpper, Code, Download, House, IdCard, ImageOff, Link, MapPin, Phone, QrCode, Scissors, TabletSmartphone, Wifi } from 'lucide-angular';
+
 export interface Tool {
     id: string;
     name: string;
@@ -23,6 +25,14 @@ export const TOOLS: ReadonlyArray<Tool> = [
         icon: 'image-off',
         color: 'indigo',
         category: 'Image Tools'
+    },
+    {
+        id: 'base64-encoder-decoder',
+        name: 'Base64 Encoder / Decoder',
+        description: 'Encode and decode text or files using Base64 encoding.',
+        icon: 'code',
+        color: 'indigo',
+        category: 'Text Tools'
     }
 ]
 
@@ -35,4 +45,24 @@ export const VALIDATION_CONSTANTS = {
     email: 'This field must be a valid email',
     pattern: 'This field must match the pattern {{ pattern }}',
     unique: 'This field must be unique'
+} as const;
+
+export const USED_ICONS = {
+    Bolt,
+    QrCode,
+    Link,
+    CaseUpper,
+    AtSign,
+    Phone,
+    TabletSmartphone,
+    IdCard,
+    Wifi,
+    MapPin,
+    Bookmark,
+    Download,
+    Scissors,
+    ImageOff,
+    House,
+    Code,
+    ArrowRightLeft
 } as const;

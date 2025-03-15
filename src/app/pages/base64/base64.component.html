@@ -1,0 +1,126 @@
+<div class="min-h-screen bg-gray-100">
+    <nav class="bg-white shadow-md py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <lucide-angular name="bolt" class="h-8 w-8 text-indigo-600"></lucide-angular>
+                <a href="/" class="text-2xl font-bold text-gray-800">Definitive Tools</a>
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <a href="index.html" class="text-gray-700 hover:text-indigo-600 transition">Home</a>
+                <a href="#" class="text-gray-700 hover:text-indigo-600 transition">All Tools</a>
+                <a href="#" class="text-gray-700 hover:text-indigo-600 transition">About</a>
+                <a href="#" class="text-gray-700 hover:text-indigo-600 transition">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="bg-indigo-600 text-white py-10">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
+            <div class="mb-6 md:mb-0 text-center md:text-left">
+                <div class="flex items-center justify-center md:justify-start mb-4">
+                    <div class="bg-white p-3 rounded-full mr-4">
+                        <lucide-angular name="code" class="h-8 w-8 text-indigo-600"></lucide-angular>
+                    </div>
+                    <h1 class="text-3xl md:text-4xl font-bold">Base64 Converter</h1>
+                </div>
+                <p class="text-xl text-indigo-100 max-w-2xl">
+                    Easily encode text to Base64 or decode Base64 to text. Perfect for data transfer, embedding images,
+                    or working with APIs.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-3">
+        <div class="text-sm text-gray-600">
+            <a href="/" class="hover:text-indigo-600 transition">Home</a> &gt;
+            <a href="/" class="hover:text-indigo-600 transition">All Tools</a> &gt;
+            <span class="text-gray-800 font-medium">Base64 Converter</span>
+        </div>
+    </div>
+
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Base64 Encoder/Decoder</h2>
+
+            <div class="flex justify-center mb-6">
+                <div class="inline-flex rounded-md shadow-sm">
+                    <button (click)="mode.set('encode')"
+                        class="px-4 py-2 text-sm font-medium rounded-l-md border border-gray-300"
+                        [ngClass]="{'bg-indigo-600 text-white': mode() === 'encode', 'bg-white text-gray-700 hover:bg-gray-100': mode() !== 'encode'}">
+                        Encode
+                    </button>
+                    <button (click)="mode.set('decode')"
+                        [ngClass]="{'bg-indigo-600 text-white': mode() === 'decode', 'bg-white text-gray-700 hover:bg-gray-100': mode() !== 'decode'}"
+                        class="px-4 py-2 text-sm font-medium rounded-r-md border border-gray-300">
+                        Decode
+                    </button>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <label htmlFor="input" class="block text-sm font-medium text-gray-700 mb-2">
+                    {{ mode() === 'encode' ? 'Text to Encode' : 'Base64 to Decode' }}
+                </label>
+                <textarea id="input" 
+                [ngModel]="inputText()" 
+                (ngModelChange)="inputText.set($event)"
+                [placeholder]="mode() === 'encode' ? 'Enter text to encode as Base64...' : 'Enter Base64 to decode...'"
+                class="w-full h-48 p-4 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+            ></textarea>
+            </div>
+
+            <div class="flex justify-center space-x-4 mb-6">
+                <button (click)="handleProcess()"
+                    class="bg-indigo-700 text-white font-medium py-2 px-6 rounded hover:bg-indigo-800 transition flex items-center gap-2">
+                    {{ mode() === 'encode' ? 'Encode to Base64' : 'Decode from Base64' }}
+                </button>
+                <button (click)="handleSwap()"
+                    class="bg-white border border-indigo-700 text-indigo-700 font-medium py-2 px-4 rounded hover:bg-indigo-50 transition flex items-center gap-2"
+                    [disabled]="!outputText()">
+                    <lucide-angular name="arrow-right-left" class="h-5 w-5"></lucide-angular>
+                    Swap
+                </button>
+            </div>
+
+            <div>
+                <label htmlFor="output" class="block text-sm font-medium text-gray-700 mb-2">
+                    {{ mode() === 'encode' ? 'Base64 Output' : 'Decoded Text' }}
+                </label>
+                <textarea id="output" [(ngModel)]="outputText" readonly
+                    class="w-full h-48 p-4 bg-gray-50 border border-gray-300 rounded-md shadow-sm"
+                    [placeholder]="mode() === 'encode' ? 'Base64 output will appear here...' : 'Decoded text will appear here...'"></textarea>
+            </div>
+
+            <div class="mt-4 flex justify-end">
+                <button (click)="handleCopy()" [disabled]="!outputText()"
+                    class="bg-indigo-600 text-white font-medium py-2 px-4 rounded hover:bg-indigo-700 transition disabled:bg-indigo-300">
+                    Copy to Clipboard
+                </button>
+            </div>
+        </div>
+
+        <div class="mt-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">About Base64 Encoding</h2>
+            <div class="bg-white rounded-lg shadow-md p-6 space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">What is Base64?</h3>
+                    <p class="text-gray-600">
+                        Base64 is a binary-to-text encoding scheme that represents binary data in an ASCII string
+                        format. It's commonly used when there's a need to encode binary data that needs to be stored and
+                        transferred over media that are designed to deal with text.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">Common Uses</h3>
+                    <ul class="list-disc pl-5 text-gray-600 space-y-2">
+                        <li>Embedding images in HTML, CSS, or JSON</li>
+                        <li>Encoding binary data in XML</li>
+                        <li>Sending binary data through email systems</li>
+                        <li>Storing complex data in simple text formats</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
