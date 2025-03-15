@@ -1,5 +1,6 @@
+import { MetadataService } from '@/app/services/metadata.service';
 import { NgClass } from '@angular/common';
-import { Component, model, signal } from '@angular/core';
+import { Component, inject, model, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
 
@@ -13,9 +14,19 @@ export type Mode = 'encode' | 'decode';
 })
 export class Base64Component {
 
+  private readonly metadataService = inject(MetadataService);
+
   readonly mode = signal<Mode>('encode');
   readonly inputText = model<string>('');
   readonly outputText = model<string>('');
+
+  constructor() {
+    this.metadataService.updateMetadata({
+      title: 'Base64 Converter',
+      description: 'Easily encode text to Base64 or decode Base64 to text. Perfect for data transfer, embedding images, or working with APIs.',
+      keywords: 'base64, encode, decode, converter, text, image, api, data transfer, embedding, images, api, data transfer, embedding, images'
+    });
+  }
 
   handleProcess() {
     if (this.mode() === 'encode') {
