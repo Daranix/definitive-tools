@@ -38,7 +38,7 @@ export class RandomPasswordGeneratorComponent {
     if (this.includeLowercase()) charset += 'abcdefghijklmnopqrstuvwxyz';
     if (this.includeUppercase()) charset += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     if (this.includeNumbers()) charset += '0123456789';
-    if (this.includeSymbols()) charset += '!@#$%^&*()_+~`|}{[]:;?><,./-=';
+    if (this.includeSymbols()) charset += '!@#$%&';
     
     if (charset === '') {
       this.password.set('Please select at least one character type');
