@@ -1,4 +1,4 @@
-import { ArrowRightLeft, AtSign, Bolt, Bookmark, CaseUpper, Code, Copy, Download, House, IdCard, ImageOff, Key, Link, MapPin, Phone, QrCode, RotateCw, Scissors, Settings, TabletSmartphone, Wifi } from 'lucide-angular';
+import { ArrowRightLeft, AtSign, Bolt, Bookmark, CaseUpper, Code, Copy, Download, Headphones, House, IdCard, ImageOff, Key, Link, MapPin, Phone, Play, QrCode, RotateCw, Scissors, Settings, Speech, StopCircle, TabletSmartphone, Wifi } from 'lucide-angular';
 
 export interface Tool {
     id: string;
@@ -41,6 +41,14 @@ export const TOOLS: ReadonlyArray<Tool> = [
         icon: 'key',
         color: 'indigo',
         category: 'Text Tools'
+    },
+    {
+        id: 'audio-speech-to-text',
+        name: 'Audio Speech to Text',
+        description: 'Convert spoken words into text efficiently.',
+        icon: 'speech',
+        color: 'indigo',
+        category: 'Text Tools'
     }
 ]
 
@@ -76,5 +84,9 @@ export const USED_ICONS = {
     Key,
     RotateCw,
     Settings,
-    Copy
+    Copy,
+    Speech,
+    Headphones,
+    StopCircle,
+    Play
 } as const;

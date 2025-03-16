@@ -15,6 +15,7 @@ export const routes: Routes = [
             { path: 'background-remover', loadComponent: () => import('./pages/background-remover/background-remover.component').then(m => m.BackgroundRemoverComponent) },
             { path: 'base64-encoder-decoder', loadComponent: () => import('./pages/base64/base64.component').then(m => m.Base64Component) },
             { path: 'random-password-generator', loadComponent: () => import('./pages/random-password-generator/random-password-generator.component').then(m => m.RandomPasswordGeneratorComponent) },
+            { path: 'audio-speech-to-text', loadComponent: () => import('./pages/audio-speech-to-text/audio-speech-to-text.component').then(m => m.AudioSpeechToTextComponent) },
         ],
         component: BaseComponent
     },

@@ -1,0 +1,13 @@
+<div class="inline-flex rounded-md shadow-sm">
+    @for (option of options(); track $index) {
+        <button (click)="selectOption(option.value)"
+            [ngClass]="{'bg-indigo-600 text-white': selectedOption() === option.value,
+                        'bg-white text-gray-700 hover:bg-gray-100': selectedOption() !== option.value,
+                        'rounded-r-md': $index === options().length - 1,
+                        'rounded-l-md': $index === 0,
+            }"
+            class="px-4 py-2 text-sm font-medium border border-gray-300">
+            {{ option.label }}
+        </button>
+    }
+</div>

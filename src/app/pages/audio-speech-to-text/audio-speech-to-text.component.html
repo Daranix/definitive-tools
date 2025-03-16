@@ -1,0 +1,152 @@
+<div class="min-h-screen bg-gray-100">
+    <nav class="bg-white shadow-md py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <lucide-angular name="bolt" class="h-8 w-8 text-indigo-600"></lucide-angular>
+                <a href="/" class="text-2xl font-bold text-gray-800">Definitive Tools</a>
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <a href="index.html" class="text-gray-700 hover:text-indigo-600 transition">Home</a>
+                <a href="#" class="text-gray-700 hover:text-indigo-600 transition">All Tools</a>
+                <a href="#" class="text-gray-700 hover:text-indigo-600 transition">About</a>
+                <a href="#" class="text-gray-700 hover:text-indigo-600 transition">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="bg-indigo-600 text-white py-10">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
+            <div class="mb-6 md:mb-0 text-center md:text-left">
+                <div class="flex items-center justify-center md:justify-start mb-4">
+                    <div class="bg-white p-3 rounded-full mr-4">
+                        <lucide-angular name="speech" class="h-8 w-8 text-indigo-600"></lucide-angular>
+                    </div>
+                    <h1 class="text-3xl md:text-4xl font-bold">Speech to Text</h1>
+                </div>
+                <p class="text-xl text-indigo-100 max-w-2xl">
+                    Convert your speech into text in real-time. Perfect for note-taking, transcription, or accessibility
+                    purposes.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-3">
+        <div class="text-sm text-gray-600">
+            <a href="/" class="hover:text-indigo-600 transition">Home</a> &gt;
+            <a href="/" class="hover:text-indigo-600 transition">All Tools</a> &gt;
+            <span class="text-gray-800 font-medium">Speech to Text</span>
+        </div>
+    </div>
+
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Convert Speech to Text</h2>
+
+
+            @if(recognitionApiList().length >= 2) {
+                <div class="flex justify-center mb-6">
+                    <app-select-button [options]="recognitionApiList()" [(ngModel)]="recognitionApi"></app-select-button>
+                </div>
+            }
+
+
+            <div class="flex justify-center mb-6">
+
+                @if(isRecording()) {
+                <button (click)="stopRecording()"
+                    class="bg-red-600 text-white font-medium py-3 px-6 rounded-full hover:bg-red-700 transition flex items-center gap-2">
+                    <lucide-angular name="stop-circle" class="h-5 w-5"></lucide-angular>
+                    Stop Recording
+                </button>
+                } @else {
+                <button (click)="startRecording()"
+                    class="bg-indigo-600 text-white font-medium py-3 px-6 rounded-full hover:bg-indigo-700 transition flex items-center gap-2">
+                    <lucide-angular name="play" class="h-5 w-5"></lucide-angular>
+                    Start Recording
+                </button>
+                }
+            </div>
+
+            <div class="text-center mb-6">
+
+                @if(isRecording()) {
+                <div class="flex items-center justify-center gap-2 text-indigo-600">
+                    <div class="relative">
+                        <div class="w-3 h-3 bg-red-600 rounded-full"></div>
+                        <div class="absolute top-0 left-0 w-3 h-3 bg-red-600 rounded-full animate-ping opacity-75">
+                        </div>
+                    </div>
+                    <span>Recording...</span>
+                </div>
+                } @else {
+                <div class="text-gray-500">
+                    Click "Start Recording" and speak into your microphone
+                </div>
+                }
+
+            </div>
+
+            @if(errorMessage()) {
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
+                {{ errorMessage() }}
+            </div>
+            }
+
+            <div class="mb-6">
+                <label htmlFor="transcript" class="block text-sm font-medium text-gray-700 mb-2">
+                    Transcript
+                </label>
+                <div class="relative">
+                    <textarea id="transcript" [(ngModel)]="transcript" readonly
+                        class="w-full h-48 p-4 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                        placeholder="Your speech will appear here..."></textarea>
+
+                    @if(transcript()) {
+                    <div class="absolute bottom-4 right-4 flex space-x-2">
+                        <button onClick={copyToClipboard}
+                            class="p-2 rounded-md bg-gray-100 text-gray-600 hover:bg-gray-200 transition"
+                            title="Copy to Clipboard">
+                            @if(copied()) {
+                            <lucide-angular name="check" class="h-5 w-5 text-green-600"></lucide-angular>
+                            } @else {
+                            <lucide-angular name="copy" class="h-5 w-5"></lucide-angular>
+                            }
+                        </button>
+                    </div>
+                    }
+                </div>
+            </div>
+
+            <div class="flex justify-end">
+                <button (click)="clearTranscript()" [disabled]="!transcript()"
+                    class="bg-white border border-indigo-600 text-indigo-600 font-medium py-2 px-4 rounded hover:bg-indigo-50 transition disabled:opacity-50">
+                    Clear Transcript
+                </button>
+            </div>
+        </div>
+
+        <div class="mt-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">About Speech to Text</h2>
+            <div class="bg-white rounded-lg shadow-md p-6 space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">How It Works</h3>
+                    <p class="text-gray-600">
+                        This tool uses your browser's built-in speech recognition capabilities to convert your spoken
+                        words into text in real-time. The audio is processed locally within your browser - no data is
+                        sent to external servers.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">Tips for Best Results</h3>
+                    <ul class="list-disc pl-5 text-gray-600 space-y-2">
+                        <li>Use a good quality microphone</li>
+                        <li>Speak clearly and at a moderate pace</li>
+                        <li>Minimize background noise</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
