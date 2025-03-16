@@ -12,7 +12,7 @@ Definitive Tools is a collection of free, easy-to-use online tools designed to m
 | ✅ | **QR Generator**          | Generate QR codes quickly and easily.           |
 | ✅ | **Base64 Encode / Decode** | Convert text or files to and from Base64 encoding. |
 | ✅ | **Background Removal Tool** | Remove backgrounds from images with ease.       |
-| ⏳ | **Random Password Generator** | Generate secure, randomized passwords.          |
+| ✅ | **Random Password Generator** | Generate secure, randomized passwords.          |
 | ⏳ | **Audio Speech to Text**    | Convert spoken words into text efficiently.     |
 | ⏳ | **JWT Decoder / Validator**       | Decode and validate JSON Web Tokens (JWTs). |
 | ⏳ | **Audio Format Converter** | Convert audio files to different formats.      |

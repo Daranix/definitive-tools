@@ -1,4 +1,4 @@
-import { ArrowRightLeft, AtSign, Bolt, Bookmark, CaseUpper, Code, Download, House, IdCard, ImageOff, Link, MapPin, Phone, QrCode, Scissors, TabletSmartphone, Wifi } from 'lucide-angular';
+import { ArrowRightLeft, AtSign, Bolt, Bookmark, CaseUpper, Code, Copy, Download, House, IdCard, ImageOff, Key, Link, MapPin, Phone, QrCode, RotateCw, Scissors, Settings, TabletSmartphone, Wifi } from 'lucide-angular';
 
 export interface Tool {
     id: string;
@@ -33,6 +33,14 @@ export const TOOLS: ReadonlyArray<Tool> = [
         icon: 'code',
         color: 'indigo',
         category: 'Text Tools'
+    },
+    {
+        id: 'random-password-generator',
+        name: 'Random Password Generator',
+        description: 'Generate secure, randomized passwords.',
+        icon: 'key',
+        color: 'indigo',
+        category: 'Text Tools'
     }
 ]
 
@@ -64,5 +72,9 @@ export const USED_ICONS = {
     ImageOff,
     House,
     Code,
-    ArrowRightLeft
+    ArrowRightLeft,
+    Key,
+    RotateCw,
+    Settings,
+    Copy
 } as const;
