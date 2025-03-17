@@ -61,8 +61,12 @@
                 </button>
                 } @else {
                 <button (click)="startRecording()"
+                    [disabled]="isloading()"
                     class="bg-indigo-600 text-white font-medium py-3 px-6 rounded-full hover:bg-indigo-700 transition flex items-center gap-2">
                     <lucide-angular name="play" class="h-5 w-5"></lucide-angular>
+                    @if(isloading()) {
+                        <app-loading-spinner-small></app-loading-spinner-small>
+                    }
                     Start Recording
                 </button>
                 }
@@ -86,6 +90,10 @@
                 }
 
             </div>
+
+            @if(isloading()) {
+                <app-model-download-progress [downloadProgress]="downloadProgress()"></app-model-download-progress>
+            }
 
             @if(errorMessage()) {
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">

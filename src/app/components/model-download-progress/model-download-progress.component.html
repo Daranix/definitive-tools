@@ -6,7 +6,7 @@
             @let percent = progressInfo.status === 'progress' ? progressInfo.progress : 0;
             <app-progress-bar [progress]="percent"></app-progress-bar>
         } @else if(progressInfo.status === 'done') {
-            <div>Processing the image ...</div>
+            <div>Loading ...</div>
         } @else if(progressInfo.status !== 'progress' && progressInfo.status !== undefined) {
             <div>Loading model file ...</div>
         }

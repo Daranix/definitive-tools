@@ -3,7 +3,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { Component, computed, inject, model, NgZone, OnDestroy, OnInit, output, PLATFORM_ID, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
-import { ProgressInfo } from '@/app/components/model-download-progress/model-download-progress.component';
+import { ModelDownloadProgressComponent, ProgressInfo } from '@/app/components/model-download-progress/model-download-progress.component';
+import { LoadingSpinnerSmallComponent } from '@/app/components/loading-spinner-small/loading-spinner-small.component';
 
 
 type WhisperStatus = 'loading' | 'ready' | 'processing';
@@ -48,7 +49,7 @@ type WhisperDoneEvent = {
 }
 @Component({
   selector: 'app-audio-speech-to-text',
-  imports: [LucideAngularModule, FormsModule, SelectButtonComponent],
+  imports: [LucideAngularModule, FormsModule, SelectButtonComponent, LoadingSpinnerSmallComponent, ModelDownloadProgressComponent],
   templateUrl: './audio-speech-to-text.component.html',
   styleUrl: './audio-speech-to-text.component.scss'
 })
@@ -66,7 +67,6 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
 
   readonly recognitionApiList = signal<Array<{ label: string, value: RecognitionApi }>>([]);
 
-  private readonly zone = inject(NgZone);
   private readonly platform = inject(PLATFORM_ID);
   private readonly WHISPER_SAMPLING_RATE = 16_000;
   private readonly MAX_AUDIO_LENGTH = 30; // seconds
@@ -78,9 +78,10 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
   readonly copied = signal(false);
   readonly speechApiAvailable = computed(() => (('webkitSpeechRecognition' in window) || ('SpeechRecognition' in window)) && !('brave' in navigator) && isPlatformBrowser(this.platform));
   readonly recognitionApi = model<RecognitionApi>('whisper');
-  readonly downloadProgress = signal<ProgressInfo | WhisperEvent | undefined>(undefined);
+  readonly downloadProgress = signal<ProgressInfo | undefined>(undefined);
   readonly isProcessing = signal(false);
   readonly whisperStatus = signal<WhisperStatus>('loading');
+  readonly isloading = signal(false);
 
   private speechRecognitionBrowserInstance?: SpeechRecognition;
   // private transcriber?: AutomaticSpeechRecognitionPipeline;
@@ -117,6 +118,7 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
   }
 
   async startRecording() {
+    this.isloading.set(true);
     try {
       if (this.recognitionApi() === 'browser') {
         await this.startTranscriptionWithBrowserApi();
@@ -211,26 +213,17 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
     switch (e.data.status) {
       case 'loading':
         this.whisperStatus.set('loading');
-        // this.loadingMessage = e.data.data;
         break;
         
       case 'initiate':
-        // this.progressItems = [...this.progressItems, e.data];
         this.downloadProgress.set(e.data as any);
         break;
         
       case 'progress':
-        /*this.progressItems = this.progressItems.map(item => {
-          if (item.file === e.data.file) {
-            return { ...item, ...e.data };
-          }
-          return item;
-        });*/
         this.downloadProgress.set(e.data as any);
         break;
         
       case 'done':
-        // this.progressItems = this.progressItems.filter(item => item.file !== e.data.file);
         this.downloadProgress.set(e.data as any);
         break;
         
@@ -245,9 +238,6 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
         break;
         
       case 'update':
-        // tps = tokens per second
-        // const { tps } = e.data;
-        // this.tps = tps;
         break;
         
       case 'complete':
@@ -270,6 +260,7 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
         
         this.recorder.onstart = () => {
             this.isRecording.set(true);
+            this.isloading.set(false);
             this.chunks = [];
         };
         
@@ -280,15 +271,16 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
             } else {
               // Empty chunk received, so we request new data after a short timeout
               setTimeout(() => {
-                this.recorder?.requestData();
+                try {
+                  this.recorder?.requestData();
+                } catch(ex) {
+                  console.warn("Handled exception while requesting data:", ex);
+                }
               }, 25);
             }
         };
         
         this.recorder.onstop = () => {
-          /*this.zone.run(() => {
-            this.isRecording.set(false);
-          });*/
           this.isRecording.set(false);
         };
         
