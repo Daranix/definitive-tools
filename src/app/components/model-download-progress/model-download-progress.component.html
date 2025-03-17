@@ -1,0 +1,14 @@
+<div>
+    @let progressInfo = downloadProgress();
+    @if(progressInfo) {
+        @if(progressInfo.status === 'progress' && progressInfo.file.endsWith('.onnx')) {
+            <div>Downloading model ...</div>
+            @let percent = progressInfo.status === 'progress' ? progressInfo.progress : 0;
+            <app-progress-bar [progress]="percent"></app-progress-bar>
+        } @else if(progressInfo.status === 'done') {
+            <div>Processing the image ...</div>
+        } @else if(progressInfo.status !== 'progress' && progressInfo.status !== undefined) {
+            <div>Loading model file ...</div>
+        }
+    }
+</div>
