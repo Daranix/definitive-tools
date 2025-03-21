@@ -1,9 +1,10 @@
-import { Component, model } from '@angular/core';
+import { Component, inject, model } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
 import { JwtDecoderComponent } from './components/jwt-decoder/jwt-decoder.component';
 import { SelectButtonComponent } from '@/app/components/select-button/select-button.component';
 import { FormsModule } from '@angular/forms';
 import { JwtEncoderComponent } from './components/jwt-encoder/jwt-encoder.component';
+import { MetadataService } from '@/app/services/metadata.service';
 
 
 type Mode = 'decode' | 'encode';
@@ -16,11 +17,22 @@ type Mode = 'decode' | 'encode';
 })
 export class JwtDecodeEncodeComponent {
 
+  private readonly metadataService = inject(MetadataService);
+
   readonly modes: Array<{ label: string, value: Mode }> = [
     { label: 'JWT Decode', value: 'decode' },
     { label: 'JWT Encode', value: 'encode' }
   ];
 
   readonly selectedMode = model<Mode>('decode');
+
+  constructor() {
+    this.metadataService.updateMetadata({
+      title: 'JWT Decode / Encode',
+      description: 'Easily decode and encode JSON Web Tokens (JWT) for secure, verifiable authentication and authorization.',
+      updateCanonical: true
+    });
+  }
+
 
 }
