@@ -51,49 +51,103 @@
                 </div>
             }
 
-            <div class="flex justify-center mb-6">
+            @if(!uploadedFile()) {
+                <div class="flex justify-center mb-6">
 
-                @if(isRecording()) {
-                <button (click)="stopRecording()"
-                    class="bg-red-600 text-white font-medium py-3 px-6 rounded-full hover:bg-red-700 transition flex items-center gap-2">
-                    <lucide-angular name="stop-circle" class="h-5 w-5"></lucide-angular>
-                    Stop Recording
-                </button>
-                } @else {
-                <button (click)="startRecording()"
-                    [disabled]="isloading()"
-                    class="bg-indigo-600 text-white font-medium py-3 px-6 rounded-full hover:bg-indigo-700 transition flex items-center gap-2">
-                    <lucide-angular name="play" class="h-5 w-5"></lucide-angular>
-                    @if(isloading()) {
-                        <app-loading-spinner-small></app-loading-spinner-small>
+                    @if(isRecording()) {
+                    <button (click)="stopRecording()"
+                        class="bg-red-600 text-white font-medium py-3 px-6 rounded-full hover:bg-red-700 transition flex items-center gap-2">
+                        <lucide-angular name="stop-circle" class="h-5 w-5"></lucide-angular>
+                        Stop Recording
+                    </button>
+                    } @else {
+                    <button (click)="startRecording()"
+                        [disabled]="isloading()"
+                        class="bg-indigo-600 text-white font-medium py-3 px-6 rounded-full hover:bg-indigo-700 transition flex items-center gap-2">
+                        @if(isloading()) {
+                            <app-loading-spinner-small></app-loading-spinner-small>
+                        } @else {
+                            <lucide-angular name="play" class="h-5 w-5"></lucide-angular>
+                        }
+                        Start Recording
+                    </button>
                     }
-                    Start Recording
-                </button>
-                }
-            </div>
+                </div>
 
-            <div class="text-center mb-6">
 
-                @if(isRecording()) {
-                <div class="flex items-center justify-center gap-2 text-indigo-600">
-                    <div class="relative">
-                        <div class="w-3 h-3 bg-red-600 rounded-full"></div>
-                        <div class="absolute top-0 left-0 w-3 h-3 bg-red-600 rounded-full animate-ping opacity-75">
+                <div class="text-center mb-6">
+                    @if(isRecording()) {
+                    <div class="flex items-center justify-center gap-2 text-indigo-600">
+                        <div class="relative">
+                            <div class="w-3 h-3 bg-red-600 rounded-full"></div>
+                            <div class="absolute top-0 left-0 w-3 h-3 bg-red-600 rounded-full animate-ping opacity-75">
+                            </div>
                         </div>
+                        <span>Recording...</span>
                     </div>
-                    <span>Recording...</span>
+                    } @else {
+                        <div class="text-gray-500">
+                            Click "Start Recording" and speak into your microphone
+                        </div>
+                    }
                 </div>
-                } @else {
-                <div class="text-gray-500">
-                    Click "Start Recording" and speak into your microphone
-                </div>
+
+            }
+
+            @if(recognitionApi() === 'whisper') {
+                @if(!isRecording() && !uploadedFile() && !isloadingWhisper()) {
+                    <div class="text-center mb-6">- or -</div>
+                    <div class="mb-6 h-32">
+                        <app-drag-and-drop-file name="speechFile" [validExtensions]="VALID_EXTENSIONS" [(ngModel)]="uploadedFile"></app-drag-and-drop-file>
+                    </div>
+                }
+    
+                @if(uploadedFile()) {
+                    <div class="text-center mb-6 flex items-center flex-col">
+                        <div class=" mb-6">
+                            Selected file: <span class="font-bold">{{ uploadedFile()?.name }}</span>
+                        </div>
+
+                        @if(uploadedFile() && !transcript()) {
+                            <button (click)="startWhisperTranscriptionFromFile()"
+                                [disabled]="isloading()"
+                                class="bg-indigo-600 self-center text-white font-medium py-3 px-6 rounded-full hover:bg-indigo-700 transition flex items-center gap-2">
+                                @if(isloading()) {
+                                    <app-loading-spinner-small></app-loading-spinner-small>
+                                } @else {
+                                    <lucide-angular name="play" class="h-5 w-5"></lucide-angular>
+                                }
+                                Start Transcription
+                            </button>
+                        } @else {
+                            <button (click)="clearFileUpload()"
+                                class="bg-indigo-600 self-center text-white font-medium py-3 px-6 rounded-full hover:bg-indigo-700 transition flex items-center gap-2">
+                                New Transcription
+                            </button>
+                        }
+
+
+                    </div>
                 }
 
-            </div>
-
-            @if(isloading()) {
-                <app-model-download-progress [downloadProgress]="downloadProgress()"></app-model-download-progress>
+                <div class="mb-6">
+                    <label for="language" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Choose audio language</label>
+                    <select 
+                        id="language"
+                        [(ngModel)]="language"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        @for (lang of WHISPER_LANGUAGES | keyvalue; track $index) {
+                            <option [value]="lang.key">{{ lang.value | titlecase }}</option>
+                        }
+                    </select>
+                </div>
+    
+                @if(isloading()) {
+                    <app-model-download-progress [downloadProgress]="downloadProgress()"></app-model-download-progress>
+                }
             }
+
+            
 
             @if(errorMessage()) {
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">

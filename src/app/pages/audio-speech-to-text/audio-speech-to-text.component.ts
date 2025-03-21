@@ -1,10 +1,12 @@
 import { SelectButtonComponent } from '@/app/components/select-button/select-button.component';
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, KeyValuePipe, TitleCasePipe } from '@angular/common';
 import { Component, computed, inject, model, NgZone, OnDestroy, OnInit, output, PLATFORM_ID, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
 import { ModelDownloadProgressComponent, ProgressInfo } from '@/app/components/model-download-progress/model-download-progress.component';
 import { LoadingSpinnerSmallComponent } from '@/app/components/loading-spinner-small/loading-spinner-small.component';
+import { DragAndDropFileComponent } from '@/app/components/drag-and-drop-file/drag-and-drop-file.component';
+import { WHISPER_LANGUAGES, WhisperLanguage } from '@/app/utils/constants';
 
 
 type WhisperStatus = 'loading' | 'ready' | 'processing';
@@ -49,7 +51,16 @@ type WhisperDoneEvent = {
 }
 @Component({
   selector: 'app-audio-speech-to-text',
-  imports: [LucideAngularModule, FormsModule, SelectButtonComponent, LoadingSpinnerSmallComponent, ModelDownloadProgressComponent],
+  imports: [
+    LucideAngularModule,
+    FormsModule,
+    SelectButtonComponent,
+    LoadingSpinnerSmallComponent,
+    ModelDownloadProgressComponent,
+    DragAndDropFileComponent,
+    KeyValuePipe,
+    TitleCasePipe
+  ],
   templateUrl: './audio-speech-to-text.component.html',
   styleUrl: './audio-speech-to-text.component.scss'
 })
@@ -67,10 +78,15 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
 
   readonly recognitionApiList = signal<Array<{ label: string, value: RecognitionApi }>>([]);
 
+  private readonly ngZone = inject(NgZone);
   private readonly platform = inject(PLATFORM_ID);
   private readonly WHISPER_SAMPLING_RATE = 16_000;
   private readonly MAX_AUDIO_LENGTH = 30; // seconds
   private readonly MAX_SAMPLES = this.WHISPER_SAMPLING_RATE * this.MAX_AUDIO_LENGTH;
+
+  readonly VALID_EXTENSIONS = ['.mp3', '.wav', '.ogg', '.flac', '.aac', '.m4a', '.opus'];
+  readonly WHISPER_LANGUAGES = WHISPER_LANGUAGES;
+  readonly uploadedFile = model<File>();
 
   readonly isRecording = signal(false);
   readonly errorMessage = signal<string | undefined>(undefined);
@@ -82,9 +98,10 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
   readonly isProcessing = signal(false);
   readonly whisperStatus = signal<WhisperStatus>('loading');
   readonly isloading = signal(false);
+  readonly isloadingWhisper = signal(false);
+  readonly language = model<WhisperLanguage>('en');
 
   private speechRecognitionBrowserInstance?: SpeechRecognition;
-  // private transcriber?: AutomaticSpeechRecognitionPipeline;
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platform) && this.speechApiAvailable()) {
@@ -112,7 +129,6 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
     if (this.recognitionApi() === 'browser') {
       this.speechRecognitionBrowserInstance!.stop();
     } else {
-      // TODO: Implement stopRecording for whisper
       this.stopWhisperTranscription();
     }
   }
@@ -146,6 +162,7 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
 
       this.speechRecognitionBrowserInstance.onstart = () => {
         this.isRecording.set(true);
+        this.isloading.set(false);
       };
 
       let previousTranscript = this.transcript() || '';
@@ -187,10 +204,37 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
 
   // --- WHISPER PART ---- //
 
+  async startWhisperTranscriptionFromFile() {
+    const file = this.uploadedFile();
+    if(!file) return;
+    
+    this.isloading.set(true);
+    this.isloadingWhisper.set(true);
+
+    if(!this.worker) {
+      this.initWhisperWorker('file');
+      this.setupAudioContext();
+      this.loadModel();
+    } else {
+      await this.processAudioFile(this.uploadedFile()!);
+    }
+
+  }
+
+  clearFileUpload() {
+    this.uploadedFile.set(undefined);
+    this.transcript.set(undefined);
+  }
+
   private async startTranscriptionWithWhisper() {
-    this.initWhisperWorker();
-    this.loadModel();
-    this.setupMediaRecorder();
+
+    this.ngZone.runOutsideAngular(() => {
+      this.initWhisperWorker('realtime');
+      this.loadModel();
+      this.setupAudioContext();
+      this.setupMediaRecorder();
+    });
+
   }
 
   private async stopWhisperTranscription() {
@@ -199,17 +243,20 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
     if (this.stream) {
       this.stream.getTracks().forEach(track => track.stop());
     }
+    this.recorder = null;
+    this.worker = null;
   }
 
-  private initWhisperWorker(): void {
+  private initWhisperWorker(mode: 'realtime' | 'file'): void {
     if (!this.worker) {
       this.worker = new Worker(new URL('./audio-speech-to-text.worker', import.meta.url), { type: 'module' });
     }
     
-    this.worker.addEventListener('message', this.handleWorkerMessage);
+    const handler = mode === 'realtime' ? this.handleWorkerMessageWhisperRealTime : this.handleWorkerMessageWhisperAudioFile;
+    this.worker.addEventListener('message', handler);
   }
   
-  private handleWorkerMessage = (e: MessageEvent<WhisperEvent>): void => {
+  private handleWorkerMessageWhisperRealTime = (e: MessageEvent<WhisperEvent>): void => {
     switch (e.data.status) {
       case 'loading':
         this.whisperStatus.set('loading');
@@ -230,11 +277,11 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
       case 'ready':
         this.whisperStatus.set('ready');
         this.recorder?.start();
+        this.recorder?.requestData();
         break;
         
       case 'start':
         this.isProcessing.set(true);
-        this.recorder?.requestData();
         break;
         
       case 'update':
@@ -244,10 +291,51 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
         this.isProcessing.set(false);
         const text = e.data.output;
         this.transcript.set(text);
+        this.recorder?.requestData();
         break;
     }
   }
-  
+
+  private handleWorkerMessageWhisperAudioFile = (e: MessageEvent<WhisperEvent>): void => {
+    switch (e.data.status) {
+      case 'loading':
+        this.whisperStatus.set('loading');
+        break;
+        
+      case 'initiate':
+        this.downloadProgress.set(e.data as any);
+        break;
+        
+      case 'progress':
+        this.downloadProgress.set(e.data as any);
+        break;
+        
+      case 'done':
+        this.downloadProgress.set(e.data as any);
+        break;
+        
+      case 'ready':
+        this.whisperStatus.set('ready');
+        this.isloadingWhisper.set(false);
+        this.processAudioFile(this.uploadedFile()!);
+        break;
+        
+      case 'start':
+        this.isProcessing.set(true);
+        break;
+        
+      case 'update':
+        break;
+        
+      case 'complete':
+        this.isProcessing.set(false);
+        this.isloading.set(false);
+        const text = e.data.output;
+        this.transcript.set(text);
+        break;
+    }
+  }
+
   private async setupMediaRecorder(): Promise<void> {
     if (this.recorder) return; // Already set
     
@@ -256,7 +344,6 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
         this.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
         
         this.recorder = new MediaRecorder(this.stream);
-        this.audioContext = new AudioContext({ sampleRate: this.WHISPER_SAMPLING_RATE });
         
         this.recorder.onstart = () => {
             this.isRecording.set(true);
@@ -266,16 +353,15 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
         
         this.recorder.ondataavailable = (e) => {
             if (e.data.size > 0) {
-              this.chunks = [...this.chunks, e.data];
-              this.processAudioChunks()            
+              this.ngZone.runOutsideAngular(() => {
+                this.chunks.push(e.data);
+                this.processAudioChunks(this.chunks);            
+              });
             } else {
-              // Empty chunk received, so we request new data after a short timeout
               setTimeout(() => {
-                try {
+                this.ngZone.runOutsideAngular(() => {
                   this.recorder?.requestData();
-                } catch(ex) {
-                  console.warn("Handled exception while requesting data:", ex);
-                }
+                });
               }, 25);
             }
         };
@@ -285,11 +371,15 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
         };
         
         // Set up a periodic check for data
+        /*
         setInterval(() => {
-          if (this.recorder && this.isRecording() && !this.isProcessing() && this.whisperStatus() === 'ready') {
-            this.recorder.requestData();
-          }
-        }, 100);
+          this.ngZone.runOutsideAngular(() => {
+            if (this.recorder && this.isRecording() && !this.isProcessing() && this.whisperStatus() === 'ready') {
+              this.recorder.requestData();
+            }
+          });
+
+        }, 500);*/
         
       } catch (err) {
         console.error("The following error occurred: ", err);
@@ -299,16 +389,15 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
     }
   }
   
-  private async processAudioChunks(): Promise<void> {
+  private async processAudioChunks(chunks: Blob[]): Promise<void> {
     if (!this.recorder) return;
     if (!this.isRecording()) return;
     if (this.isProcessing()) return;
     if (this.whisperStatus() !== 'ready') return;
     
-    if (this.chunks.length > 0) {
+    if (chunks.length > 0) {
       // Generate from data
-      const blob = new Blob(this.chunks, { type: this.recorder.mimeType });
-      
+      const blob = new Blob(chunks, { type: this.recorder.mimeType });
       const arrayBuffer = await blob.arrayBuffer();
       const decoded = await this.audioContext!.decodeAudioData(arrayBuffer);
       let audio = decoded.getChannelData(0);
@@ -317,15 +406,39 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
         audio = audio.slice(-this.MAX_SAMPLES);
       }
       
-      this.worker?.postMessage({ type: 'generate', data: { audio } });
+      this.worker?.postMessage({ type: 'generate', data: { audio, language: this.language() } });
     } else {
-      this.recorder?.requestData();
+      // this.recorder?.requestData();
     }
   }
   
-  loadModel(): void {
+  private loadModel(): void {
     this.worker?.postMessage({ type: 'load' });
     this.whisperStatus.set('loading');
+  }
+
+  private setupAudioContext(): void {
+    this.audioContext = new AudioContext({ sampleRate: this.WHISPER_SAMPLING_RATE });
+  }
+
+  private async processAudioFile(blob: Blob) {
+    const buffer = await blob.arrayBuffer();
+    const audioBuffer = await this.audioContext!.decodeAudioData(buffer);
+    let audio;
+    if (audioBuffer.numberOfChannels === 2) {
+      // Merge channels
+      const SCALING_FACTOR = Math.sqrt(2);
+      const left = audioBuffer.getChannelData(0);
+      const right = audioBuffer.getChannelData(1);
+      audio = new Float32Array(left.length);
+      for (let i = 0; i < audioBuffer.length; ++i) {
+        audio[i] = (SCALING_FACTOR * (left[i] + right[i])) / 2;
+      }
+    } else {
+      audio = audioBuffer.getChannelData(0);
+    }
+
+    this.worker?.postMessage({ type: 'generate', data: { audio, language: this.language() } });
   }
 
 }
