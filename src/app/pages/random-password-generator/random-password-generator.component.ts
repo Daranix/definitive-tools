@@ -62,7 +62,7 @@ export class RandomPasswordGeneratorComponent {
     }
 
     navigator.clipboard.writeText(password);
-    this.toastService.success('Password copied to clipboard');
+    this.toastService.success({ message: 'Password copied to clipboard' });
   }
 
 }

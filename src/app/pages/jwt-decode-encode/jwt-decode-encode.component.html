@@ -2,7 +2,7 @@
     <nav class="bg-white shadow-md py-4">
         <div class="container mx-auto px-4 flex justify-between items-center">
             <div class="flex items-center space-x-2">
-                <lucide-angular name="lock-keyhole-open" class="h-8 w-8 text-indigo-600"></lucide-angular>
+                <lucide-angular name="bolt" class="h-8 w-8 text-indigo-600"></lucide-angular>
                 <a href="/" class="text-2xl font-bold text-gray-800">Definitive Tools</a>
             </div>
             <div class="hidden md:flex space-x-6">
@@ -19,9 +19,7 @@
             <div class="mb-6 md:mb-0 text-center md:text-left">
                 <div class="flex items-center justify-center md:justify-start mb-4">
                     <div class="bg-white p-3 rounded-full mr-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
+                        <lucide-angular name="lock-keyhole-open" class="h-8 w-8 text-indigo-600"></lucide-angular>
                     </div>
                     <h1 class="text-3xl md:text-4xl font-bold">JWT Decoder</h1>
                 </div>
@@ -42,8 +40,15 @@
 
     <main class="flex-grow container mx-auto px-4 py-8">
         <div class="bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">JWT Decoder</h2>
-            <app-jwt-decoder></app-jwt-decoder>
+            <div class="flex items-center justify-center">
+                <app-select-button [options]="modes" [(ngModel)]="selectedMode"></app-select-button>
+            </div>
+
+            @if(selectedMode() === 'decode') {
+                <app-jwt-decoder></app-jwt-decoder>
+            } @else {
+                <app-jwt-encoder></app-jwt-encoder>
+            }
         </div>
 
         <div class="mt-8">

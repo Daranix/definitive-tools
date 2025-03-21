@@ -1,8 +1,9 @@
 import { JsonPipe, NgClass } from '@angular/common';
-import { Component, computed, model, resource, signal } from '@angular/core';
+import { Component, computed, inject, model, resource, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
 import * as jose from 'jose'
+import { ToastService } from '@/app/services/toast.service';
 
 
 @Component({
@@ -12,6 +13,8 @@ import * as jose from 'jose'
   styleUrl: './jwt-decoder.component.scss'
 })
 export class JwtDecoderComponent {
+
+  private readonly toastService = inject(ToastService);
 
   readonly secret = model<string>();
   readonly jwtEncoded = model<string>();
@@ -44,7 +47,7 @@ export class JwtDecoderComponent {
     this.jwtEncoded.set(result);
   }
 
-  private decodeJwt(): { header: any, payload: any, error?: boolean, errorMessage?: string }  {
+  private decodeJwt(): { header: Object, payload: Object, error?: boolean, errorMessage?: string }  {
 
     const jwt = this.jwtEncoded();
     if (!jwt) return { header: {}, payload: {} };
@@ -76,6 +79,17 @@ export class JwtDecoderComponent {
 
   }
 
+  async copyToClipboard(text?: string) {
+
+    if(!text || text === '') return;
+
+    await navigator.clipboard.writeText(text);
+    this.toastService.info({ message: 'Copied to clipboard', position: 'bottom-center' });
+  }
+
+  toJson(obj: any) {
+    return JSON.stringify(obj, null, 2);
+  }
 
 
 }
