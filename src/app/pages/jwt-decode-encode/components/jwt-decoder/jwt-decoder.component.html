@@ -1,0 +1,115 @@
+<div class="space-y-6">
+    <div class="flex justify-end">
+        <button (click)="generateExample()" class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium hover:bg-gray-50">
+            Generate example
+        </button>
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-2">
+        <div class="space-y-4">
+            <label htmlFor="encoded-jwt" class="block text-sm font-medium text-gray-700">
+                ENCODED VALUE
+            </label>
+            <div class="relative">
+                <textarea id="encoded-jwt" class="w-full min-h-[200px] p-3 border rounded-md font-mono text-sm"
+                    [(ngModel)]="jwtEncoded"
+                    placeholder="Paste a JWT token here"></textarea>
+                <div class="absolute top-2 right-2 flex space-x-1">
+                    <button class="p-1 hover:bg-gray-100 rounded-md" title="Copy to clipboard">
+                        <lucide-angular name="copy" class="h-4 w-4 text-gray-500" />
+                    </button>
+                    <button class="p-1 hover:bg-gray-100 rounded-md" title="Clear">
+                        <lucide-angular name="x" class="h-4 w-4 text-gray-500" />
+                    </button>
+                </div>
+            </div>
+
+
+            @if(jwtEncoded()) {
+                <div class="p-3 rounded-md"
+                    [ngClass]="{ 'bg-green-50 text-green-800 border border-green-200': !jwtDecoded().error, 'bg-red-50 text-red-800 border border-red-200': jwtDecoded().error }">
+                    {{ !jwtDecoded().error ? "Valid JWT" : "Invalid JWT format" }}
+                </div>
+            }
+
+
+
+
+            <div class="space-y-2">
+                <label htmlFor="secret" class="block text-sm font-medium text-gray-700">
+                    JWT SIGNATURE VERIFICATION (OPTIONAL)
+                </label>
+                <p class="text-sm text-gray-500">Enter the secret used to sign the JWT below:</p>
+                <div class="relative">
+                    <input id="secret" [(ngModel)]="secret" type="text" class="w-full p-2 border rounded-md font-mono text-sm"
+                        placeholder="Secret key" />
+                    <div class="absolute top-2 right-2 flex space-x-1">
+                        <button class="p-1 hover:bg-gray-100 rounded-md" title="Copy to clipboard">
+                            <lucide-angular name="copy" class="h-4 w-4 text-gray-500" />
+                        </button>
+                        <button class="p-1 hover:bg-gray-100 rounded-md" title="Clear">
+                            <lucide-angular name="x" class="h-4 w-4 text-gray-500" />
+                        </button>
+                    </div>
+                </div>
+
+                @if(secret()) {
+
+                    @if(isSecretValid.isLoading()) {
+                        <div class="p-3 rounded-md bg-green-50 text-green-800 border border-green-200">
+                            Valid secret
+                        </div>
+                    } @else {
+                        @if(isSecretValid.value()) {
+                            <div class="p-3 rounded-md bg-green-50 text-green-800 border border-green-200">
+                                Valid secret
+                            </div>
+                        } @else {
+                            <div class="p-3 rounded-md bg-red-50 text-red-800 border border-red-200">
+                                Invalid token for the specified secret
+                            </div>
+                        }
+                    }
+
+                }
+
+            </div>
+        </div>
+
+        <div class="space-y-6">
+            <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">DECODED HEADER</label>
+                <div class="border rounded-md overflow-hidden">
+                    <div class="bg-gray-100 border-b px-4 py-2 flex justify-between items-center">
+                        <div class="flex space-x-2">
+                            <span class="py-1 text-xs hover:bg-gray-200 rounded">JSON</span>
+                        </div>
+                        <div class="flex space-x-1">
+                            <button class="p-1 hover:bg-gray-200 rounded-md" title="Copy to clipboard">
+                                <lucide-angular name="copy" class="h-3 w-3 text-gray-500" />
+                            </button>
+                        </div>
+                    </div>
+                    <pre class="p-4 text-sm font-mono overflow-auto max-h-[200px]">{{ jwtDecoded().header | json }}</pre>
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">DECODED PAYLOAD</label>
+                <div class="border rounded-md overflow-hidden">
+                    <div class="bg-gray-100 border-b px-4 py-2 flex justify-between items-center">
+                        <div class="flex space-x-2">
+                            <span class="py-1 text-xs hover:bg-gray-200 rounded">JSON</span>
+                        </div>
+                        <div class="flex space-x-1">
+                            <button class="p-1 hover:bg-gray-200 rounded-md" title="Copy to clipboard">
+                                <lucide-angular name="copy" class="h-3 w-3 text-gray-500" />
+                            </button>
+                        </div>
+                    </div>
+                    <pre class="p-4 text-sm font-mono overflow-auto max-h-[200px]">{{ jwtDecoded().payload| json }}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
