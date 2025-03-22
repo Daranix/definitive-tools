@@ -45,9 +45,15 @@
                         </button>
                     </div>
                 </div>
+                <!--
                 <textarea id="encoded-jwt" class="w-full h-full p-3 min-h-[200px] rounded-md font-mono text-sm"
                     [(ngModel)]="payload"
                     placeholder="Paste JSON payload here."></textarea>
+                -->
+                
+                <app-code-editor [(ngModel)]="payload" language="json"></app-code-editor>
+
+                
             </div>
 
             <!-- Secret -->

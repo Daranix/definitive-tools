@@ -5,11 +5,12 @@ import { ToastService } from '@/app/services/toast.service';
 import { JsonPipe, NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { JwtHighlightComponent } from '../jwt-highlight/jwt-highlight.component';
+import { CodeEditorComponent } from '@/app/components/code-editor/code-editor.component';
 
 
 @Component({
   selector: 'app-jwt-encoder',
-  imports: [LucideAngularModule, FormsModule, JwtHighlightComponent],
+  imports: [LucideAngularModule, FormsModule, JwtHighlightComponent, CodeEditorComponent],
   templateUrl: './jwt-encoder.component.html',
   styleUrl: './jwt-encoder.component.scss'
 })
