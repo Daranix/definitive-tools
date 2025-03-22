@@ -85,7 +85,7 @@
                         </button>
                     </div>
                 </div>
-                <pre class="p-4 text-sm font-mono overflow-auto min-h-[400px]">{{ jwt.value()?.token }}</pre>
+                <app-jwt-highlight [jwt]="jwt.value()?.token" class="min-h-[400px]"></app-jwt-highlight>
             </div>
 
             @if(jwt.value()?.error) {
