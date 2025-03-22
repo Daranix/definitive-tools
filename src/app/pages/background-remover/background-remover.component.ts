@@ -138,7 +138,7 @@ export class BackgroundRemoverComponent {
       this.imageOutput.set(imageDataBlob);
 
     } catch (error) {
-      this.toastService.error('An error ocurred when trying to remove the background. Please try again.');
+      this.toastService.error({ message: 'An error ocurred when trying to remove the background. Please try again.' });
       console.error('Error removing background:', error);
     }
 

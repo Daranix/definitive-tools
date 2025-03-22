@@ -14,9 +14,10 @@ Definitive Tools is a collection of free, easy-to-use online tools designed to m
 | ✅ | **Background Removal Tool** | Remove backgrounds from images with ease.       |
 | ✅ | **Random Password Generator** | Generate secure, randomized passwords.          |
 | ⏳ | **Audio Speech to Text**    | Convert spoken words into text efficiently.     |
-| ⏳ | **JWT Decoder / Validator**       | Decode and validate JSON Web Tokens (JWTs). |
+| ✅ | **JWT Encode / Decoder & Validator**       | Encode / Decode and validate JSON Web Tokens (JWTs). |
 | ⏳ | **Audio Format Converter** | Convert audio files to different formats.      |
-
+| ⏳ | **Image Format Converter** | Convert images to different formats. |
+| ⏳ | **Video Format Converter** | Convert videos to different formats. |
 
 
 ## How to Use

@@ -1,4 +1,4 @@
-import { ArrowRightLeft, AtSign, Bolt, Bookmark, CaseUpper, Code, Copy, Download, House, IdCard, ImageOff, Key, Link, MapPin, Phone, QrCode, RotateCw, Scissors, Settings, TabletSmartphone, Wifi } from 'lucide-angular';
+import { ArrowRightLeft, AtSign, Bolt, Bookmark, CaseUpper, Code, Copy, Download, House, IdCard, ImageOff, Key, Link, LockKeyholeOpen, MapPin, Phone, QrCode, RotateCw, Scissors, Settings, TabletSmartphone, Wifi, X } from 'lucide-angular';
 
 export interface Tool {
     id: string;
@@ -41,6 +41,14 @@ export const TOOLS: ReadonlyArray<Tool> = [
         icon: 'key',
         color: 'indigo',
         category: 'Text Tools'
+    },
+    {
+        id: 'jwt-decode-encode',
+        name: 'JWT Decoder / Encoder',
+        description: 'Decode and encode JSON Web Tokens (JWTs) easily.',
+        icon: 'lock-keyhole-open',
+        color: 'indigo',
+        category: 'Text Tools'
     }
 ]
 
@@ -76,5 +84,7 @@ export const USED_ICONS = {
     Key,
     RotateCw,
     Settings,
-    Copy
+    Copy,
+    LockKeyholeOpen,
+    X
 } as const;

@@ -12,6 +12,15 @@ export interface Toast {
   position: ToastPosition;
 }
 
+export interface ToastSimpleMessage {
+  message: string,
+  duration?: number,
+  position?: ToastPosition
+}
+
+export interface ToastMessage extends ToastSimpleMessage {
+  type: ToastType,
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -24,7 +33,7 @@ export class ToastService {
     return this.toastSubject.asObservable();
   }
 
-  show(message: string, type: ToastType = 'info', duration: number = 3000, position: ToastPosition = 'top-right'): void {
+  show({ type, message, duration = 3000, position = 'top-right' }: ToastMessage /*message: string, type: ToastType = 'info', duration: number = 3000, position: ToastPosition = 'top-right'*/): void {
     const toast: Toast = {
       id: this.counter++,
       message,
@@ -46,19 +55,19 @@ export class ToastService {
     this.toastSubject.next([...this.toasts]);
   }
 
-  success(message: string, duration: number = 3000, position: ToastPosition = 'top-right'): void {
-    this.show(message, 'success', duration, position);
+  success({ message, duration, position }: ToastSimpleMessage): void {
+    this.show({ message, type: 'success', duration, position });
   }
 
-  error(message: string, duration: number = 3000, position?: ToastPosition): void {
-    this.show(message, 'error', duration, position);
+  error({ message, duration, position }: ToastSimpleMessage): void {
+    this.show({ message, type: 'error', duration, position });
   }
 
-  info(message: string, duration: number = 3000, position?: ToastPosition): void {
-    this.show(message, 'info', duration, position);
+  info({ message, duration, position }: ToastSimpleMessage): void {
+    this.show({ message, type: 'info', duration, position });
   }
 
-  warning(message: string, duration: number = 3000, position?: ToastPosition): void {
-    this.show(message, 'warning', duration, position);
+  warning({ message, duration, position }: ToastSimpleMessage): void {
+    this.show({ message, type: 'warning', duration, position });
   }
 }

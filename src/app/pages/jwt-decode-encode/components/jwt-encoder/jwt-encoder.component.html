@@ -1,0 +1,102 @@
+<div class="space-y-6">
+    <div class="flex justify-end">
+        <button (click)="generateExample()" class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium hover:bg-gray-50">
+            Generate example
+        </button>
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-2">
+        <div class="space-y-4">
+            
+            <!-- Header -->
+            <label class="block text-sm font-medium text-gray-700">DECODED HEADER</label>
+            <div class="border rounded-md overflow-hidden">
+                <div class="bg-gray-100 border-b px-4 py-2 flex justify-between items-center">
+                    <div class="flex space-x-2">
+                        <span class="py-1 text-xs">HEADER (JSON)</span>
+                    </div>
+                    <div class="flex space-x-1">
+                        <button class="p-1 hover:bg-gray-200 rounded-md" title="Copy to clipboard" (click)="copyToClipboard(header())">
+                            <lucide-angular name="copy" class="h-3 w-3 text-gray-500" />
+                        </button>
+                        <button class="p-1 hover:bg-gray-200 rounded-md" title="Clear field" (click)="header.set(undefined)" >
+                            <lucide-angular name="x" class="h-3 w-3 text-gray-500" />
+                        </button>
+                    </div>
+                </div>
+                <textarea id="encoded-jwt" class="w-full h-full p-3 min-h-[200px] rounded-md font-mono text-sm"
+                    [(ngModel)]="header"
+                    placeholder="Paste JSON header here."></textarea>
+            </div>
+
+            <!-- Payload -->
+            <label class="block text-sm font-medium text-gray-700">DECODED VALUE</label>
+            <div class="border rounded-md overflow-hidden">
+                <div class="bg-gray-100 border-b px-4 py-2 flex justify-between items-center">
+                    <div class="flex space-x-2">
+                        <span class="py-1 text-xs">PAYLOAD (JSON)</span>
+                    </div>
+                    <div class="flex space-x-1">
+                        <button class="p-1 hover:bg-gray-200 rounded-md" title="Copy to clipboard" (click)="copyToClipboard(payload())">
+                            <lucide-angular name="copy" class="h-3 w-3 text-gray-500" />
+                        </button>
+                        <button class="p-1 hover:bg-gray-200 rounded-md" title="Clear field" (click)="payload.set(undefined)" >
+                            <lucide-angular name="x" class="h-3 w-3 text-gray-500" />
+                        </button>
+                    </div>
+                </div>
+                <textarea id="encoded-jwt" class="w-full h-full p-3 min-h-[200px] rounded-md font-mono text-sm"
+                    [(ngModel)]="payload"
+                    placeholder="Paste JSON payload here."></textarea>
+            </div>
+
+            <!-- Secret -->
+            <div class="space-y-2">
+                <label htmlFor="secret" class="block text-sm font-medium text-gray-700">
+                    JWT SIGNATURE VERIFICATION
+                </label>
+                <p class="text-sm text-gray-500">Enter the secret used to sign the JWT below:</p>
+                <div class="relative">
+                    <input id="secret" [(ngModel)]="secret" type="text" class="w-full p-2 border rounded-md font-mono text-sm"
+                        placeholder="Secret key" />
+                    <div class="absolute top-2 right-2 flex space-x-1">
+                        <button class="p-1 hover:bg-gray-100 rounded-md" title="Copy to clipboard" (click)="copyToClipboard(secret())">
+                            <lucide-angular name="copy" class="h-4 w-4 text-gray-500" />
+                        </button>
+                        <button class="p-1 hover:bg-gray-100 rounded-md" title="Clear" (click)="secret.set(undefined)">
+                            <lucide-angular name="x" class="h-4 w-4 text-gray-500" />
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Output Encoded JWT -->
+        <div class="space-y-4">
+            <label class="block text-sm font-medium text-gray-700">ENCODED VALUE</label>
+            <div class="border rounded-md overflow-hidden">
+                <div class="bg-gray-100 border-b px-4 py-2 flex justify-between items-center">
+                    <div class="flex space-x-2">
+                        <span class="py-1 text-xs">JSON WEB TOKEN (JWT)</span>
+                    </div>
+                    <div class="flex space-x-1">
+                        <button class="p-1 hover:bg-gray-200 rounded-md" title="Copy to clipboard">
+                            <lucide-angular name="copy" class="h-3 w-3 text-gray-500" />
+                        </button>
+                    </div>
+                </div>
+                <pre class="p-4 text-sm font-mono overflow-auto min-h-[400px]">{{ jwt.value()?.token }}</pre>
+            </div>
+
+            @if(jwt.value()?.error) {
+                <div class="p-3 rounded-md bg-red-50 text-red-800 border border-red-200">
+                    Invalid token for the specified secret<br />
+                    {{ jwt.value()?.errorMessage }}
+                </div>
+            }
+
+
+        </div>
+
+    </div>
+</div>

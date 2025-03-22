@@ -1,0 +1,74 @@
+<div class="min-h-screen bg-gray-100">
+    <nav class="bg-white shadow-md py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <lucide-angular name="bolt" class="h-8 w-8 text-indigo-600"></lucide-angular>
+                <a href="/" class="text-2xl font-bold text-gray-800">Definitive Tools</a>
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <a href="index.html" class="text-gray-700 hover:text-indigo-600 transition">Home</a>
+                <a href="#" class="text-gray-700 hover:text-indigo-600 transition">All Tools</a>
+                <a href="#" class="text-gray-700 hover:text-indigo-600 transition">About</a>
+                <a href="#" class="text-gray-700 hover:text-indigo-600 transition">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="bg-indigo-600 text-white py-10">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
+            <div class="mb-6 md:mb-0 text-center md:text-left">
+                <div class="flex items-center justify-center md:justify-start mb-4">
+                    <div class="bg-white p-3 rounded-full mr-4">
+                        <lucide-angular name="lock-keyhole-open" class="h-8 w-8 text-indigo-600"></lucide-angular>
+                    </div>
+                    <h1 class="text-3xl md:text-4xl font-bold">JWT Decoder</h1>
+                </div>
+                <p class="text-xl text-indigo-100 max-w-2xl">
+                    Easily decode JSON Web Tokens and verify signatures. Perfect for API development, authentication debugging, and token inspection.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-3">
+        <div class="text-sm text-gray-600">
+            <a href="/" class="hover:text-indigo-600 transition">Home</a> &gt;
+            <a href="/" class="hover:text-indigo-600 transition">All Tools</a> &gt;
+            <span class="text-gray-800 font-medium">JWT Encode / Decode & Validator</span>
+        </div>
+    </div>
+
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="flex items-center justify-center">
+                <app-select-button [options]="modes" [(ngModel)]="selectedMode"></app-select-button>
+            </div>
+
+            @if(selectedMode() === 'decode') {
+                <app-jwt-decoder></app-jwt-decoder>
+            } @else {
+                <app-jwt-encoder></app-jwt-encoder>
+            }
+        </div>
+
+        <div class="mt-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">About JWT Tokens</h2>
+            <div class="bg-white rounded-lg shadow-md p-6 space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">What is JWT?</h3>
+                    <p class="text-gray-600">
+                        JSON Web Token (JWT) is an open standard that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">Common Uses</h3>
+                    <ul class="list-disc pl-5 text-gray-600 space-y-2">
+                        <li>Authentication and authorization in web applications</li>
+                        <li>Information exchange between parties</li>
+                        <li>Securing API endpoints</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

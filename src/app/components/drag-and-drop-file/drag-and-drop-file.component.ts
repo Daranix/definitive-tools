@@ -103,13 +103,13 @@ export class DragAndDropFileComponent implements ControlValueAccessor, OnInit, O
     }
 
     if(this.maxFileSize() && file.size > this.maxFileSize()!) {
-      this.toastService.error(`The file exceeds the maximun size limit ${formatBytes(this.maxFileSize()!)}`)
+      this.toastService.error({ message: `The file exceeds the maximun size limit ${formatBytes(this.maxFileSize()!)}` })
       return;
     }
 
     const ext = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
     if(this.validExtensions() && !this.validExtensions()!.includes(ext)) {
-      this.toastService.error(`The file type is not supported. Only ${this.validExtensions()?.join(', ')} are allowed.`)
+      this.toastService.error({ message: `The file type is not supported. Only ${this.validExtensions()?.join(', ')} are allowed.` })
       return;
     }
 
