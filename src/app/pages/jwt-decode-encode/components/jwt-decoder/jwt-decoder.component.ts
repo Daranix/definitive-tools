@@ -1,14 +1,15 @@
-import { JsonPipe, NgClass } from '@angular/common';
+import { JsonPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, computed, inject, model, resource, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
 import * as jose from 'jose'
 import { ToastService } from '@/app/services/toast.service';
+import { JwtHighlightComponent } from '../jwt-highlight/jwt-highlight.component';
 
 
 @Component({
   selector: 'app-jwt-decoder',
-  imports: [LucideAngularModule, NgClass, FormsModule, JsonPipe],
+  imports: [LucideAngularModule, NgClass, FormsModule, JsonPipe, JwtHighlightComponent],
   templateUrl: './jwt-decoder.component.html',
   styleUrl: './jwt-decoder.component.scss'
 })
@@ -23,7 +24,6 @@ export class JwtDecoderComponent {
     loader: ({ request }) => this.validateToken(request),
     request: () => ({ token: this.jwtEncoded(), secret: this.secret() }),
   })
-
 
   async generateExample() {
 
@@ -90,6 +90,5 @@ export class JwtDecoderComponent {
   toJson(obj: any) {
     return JSON.stringify(obj, null, 2);
   }
-
 
 }
