@@ -4,11 +4,12 @@ import * as jose from 'jose'
 import { ToastService } from '@/app/services/toast.service';
 import { JsonPipe, NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { JwtHighlightComponent } from '../jwt-highlight/jwt-highlight.component';
 
 
 @Component({
   selector: 'app-jwt-encoder',
-  imports: [LucideAngularModule, FormsModule],
+  imports: [LucideAngularModule, FormsModule, JwtHighlightComponent],
   templateUrl: './jwt-encoder.component.html',
   styleUrl: './jwt-encoder.component.scss'
 })
