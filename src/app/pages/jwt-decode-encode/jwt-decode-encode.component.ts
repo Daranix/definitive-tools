@@ -5,13 +5,14 @@ import { SelectButtonComponent } from '@/app/components/select-button/select-but
 import { FormsModule } from '@angular/forms';
 import { JwtEncoderComponent } from './components/jwt-encoder/jwt-encoder.component';
 import { MetadataService } from '@/app/services/metadata.service';
+import { TopNavbarComponent } from '@/app/components/top-navbar/top-navbar.component';
 
 
 type Mode = 'decode' | 'encode';
 
 @Component({
   selector: 'app-jwt-decode-encode',
-  imports: [LucideAngularModule, JwtDecoderComponent, JwtEncoderComponent, SelectButtonComponent, FormsModule],
+  imports: [LucideAngularModule, JwtDecoderComponent, JwtEncoderComponent, SelectButtonComponent, FormsModule, TopNavbarComponent],
   templateUrl: './jwt-decode-encode.component.html',
   styleUrl: './jwt-decode-encode.component.scss'
 })

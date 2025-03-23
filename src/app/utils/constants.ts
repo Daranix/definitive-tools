@@ -1,4 +1,4 @@
-import { ArrowRightLeft, AtSign, Bolt, Bookmark, CaseUpper, Code, Copy, Download, House, IdCard, ImageOff, Key, Link, LockKeyholeOpen, MapPin, Phone, QrCode, RotateCw, Scissors, Settings, TabletSmartphone, Wifi, X } from 'lucide-angular';
+import { ArrowRightLeft, AtSign, Bolt, Bookmark, CaseUpper, Code, Copy, Download, House, IdCard, Image, ImageOff, Info, Key, Link, LockKeyholeOpen, MapPin, Phone, QrCode, RotateCw, Scissors, Settings, Shuffle, TabletSmartphone, Wifi, X } from 'lucide-angular';
 
 export interface Tool {
     id: string;
@@ -13,7 +13,7 @@ export const TOOLS: ReadonlyArray<Tool> = [
     {
         id: 'qr-generator',
         name: 'QR Code Generator',
-        description: 'Create customizable QR codes for websites, text, and more.',
+        description: 'Create customized QR codes for URLs, text, contact information, and more. high-quality QR codes that work anywhere.',
         icon: 'qr-code',
         color: 'indigo',
         category: 'Image Tools'
@@ -21,7 +21,7 @@ export const TOOLS: ReadonlyArray<Tool> = [
     {
         id: 'background-remover',
         name: 'Background Remover',
-        description: 'Remove backgrounds from images instantly.',
+        description: 'Remove backgrounds from images instantly. Create professional-looking transparent images for your projects, products, and designs.',
         icon: 'image-off',
         color: 'indigo',
         category: 'Image Tools'
@@ -29,26 +29,34 @@ export const TOOLS: ReadonlyArray<Tool> = [
     {
         id: 'base64-encoder-decoder',
         name: 'Base64 Encoder / Decoder',
-        description: 'Encode and decode text or files using Base64 encoding.',
+        description: 'Easily encode text to Base64 or decode Base64 to text. Perfect for data transfer, embedding images, or working with APIs.',
         icon: 'code',
         color: 'indigo',
-        category: 'Text Tools'
+        category: 'Dev Tools'
     },
     {
         id: 'random-password-generator',
         name: 'Random Password Generator',
-        description: 'Generate secure, randomized passwords.',
+        description: 'Create strong, secure, and random passwords instantly. Customize complexity to meet different security requirements.',
         icon: 'key',
         color: 'indigo',
         category: 'Text Tools'
     },
     {
         id: 'jwt-decode-encode',
-        name: 'JWT Decoder / Encoder',
-        description: 'Decode and encode JSON Web Tokens (JWTs) easily.',
+        name: 'JWT Decoder / Encoder & Validator',
+        description: 'Easily encode / decode JSON Web Tokens (JWTs) and verify their signatures. Perfect for API development, authentication debugging, and token inspection.',
         icon: 'lock-keyhole-open',
         color: 'indigo',
-        category: 'Text Tools'
+        category: 'Dev Tools'
+    },
+    {
+        id: 'opengraph-generator',
+        name: 'Opengraph Generator',
+        description: 'Create Opengraph and Twitter Cards for your websites.',
+        icon: 'bolt',
+        color: 'indigo',
+        category: 'Image Tools'
     }
 ]
 
@@ -86,5 +94,8 @@ export const USED_ICONS = {
     Settings,
     Copy,
     LockKeyholeOpen,
-    X
+    X,
+    Shuffle,
+    Info,
+    Image
 } as const;

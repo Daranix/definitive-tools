@@ -1,3 +1,4 @@
+import { TopNavbarComponent } from '@/app/components/top-navbar/top-navbar.component';
 import { MetadataService } from '@/app/services/metadata.service';
 import { ToastService } from '@/app/services/toast.service';
 import { Component, inject, model, signal } from '@angular/core';
@@ -6,7 +7,7 @@ import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-random-password-generator',
-  imports: [LucideAngularModule, FormsModule],
+  imports: [LucideAngularModule, FormsModule, TopNavbarComponent],
   templateUrl: './random-password-generator.component.html',
   styleUrl: './random-password-generator.component.scss'
 })

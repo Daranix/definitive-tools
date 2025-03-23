@@ -11,6 +11,7 @@ import { InputErrorsComponent } from '@app/components/input-errors/input-errors.
 import { qrContentProcessors } from './qr-generator-content-processor';
 import QRCodeStyling, { CornerDotType, CornerSquareType, DotType, FileExtension } from 'qr-code-styling';
 import { MetadataService } from '@app/services/metadata.service';
+import { TopNavbarComponent } from '@/app/components/top-navbar/top-navbar.component';
 
 
 const EXTENSIONS = ["svg", "png", "jpeg", "webp"] as const satisfies Array<FileExtension>;
@@ -60,7 +61,7 @@ export const CORNERS_INNER_DOT_STYLES:  ReadonlyArray<{  id: CornerSquareType, n
 
 @Component({
   selector: 'app-qr-generator',
-  imports: [LucideAngularModule, NgClass, ReactiveFormsModule, ZodFormComponent, RouterLink, InputErrorsComponent, UpperCasePipe],
+  imports: [LucideAngularModule, NgClass, ReactiveFormsModule, ZodFormComponent, RouterLink, InputErrorsComponent, UpperCasePipe, TopNavbarComponent],
   templateUrl: './qr-generator.component.html',
   styleUrl: './qr-generator.component.scss'
 })

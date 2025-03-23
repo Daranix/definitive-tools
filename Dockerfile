@@ -3,13 +3,13 @@ FROM node:22-alpine AS app
 
 WORKDIR /app
 
-# Copy built files from the builder stage
-COPY ./package*.json /app
-COPY ./dist /app/dist
-RUN npm install --configuration=production
+# Copy package files and install production dependencies
+COPY ./package*.json ./
+RUN npm ci --production && npm cache clean --force
 
-# Expose port 80
+# Copy built files
+COPY ./dist ./dist
+
+# Expose port and run the app
 EXPOSE 4000
-
-# Command to run nginx in the foreground
 CMD ["npm", "run", "start:prod"]

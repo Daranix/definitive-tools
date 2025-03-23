@@ -1,44 +1,5 @@
 <div class="min-h-screen bg-gray-100">
-    <nav class="bg-white shadow-md py-4">
-        <div class="container mx-auto px-4 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <lucide-angular name="bolt" class="h-8 w-8 text-indigo-600"></lucide-angular>
-                <a href="/" class="text-2xl font-bold text-gray-800">Definitive Tools</a>
-            </div>
-            <div class="hidden md:flex space-x-6">
-                <a href="index.html" class="text-gray-700 hover:text-indigo-600 transition">Home</a>
-                <a href="#" class="text-gray-700 hover:text-indigo-600 transition">All Tools</a>
-                <a href="#" class="text-gray-700 hover:text-indigo-600 transition">About</a>
-                <a href="#" class="text-gray-700 hover:text-indigo-600 transition">Contact</a>
-            </div>
-        </div>
-    </nav>
-
-    <div class="bg-indigo-600 text-white py-10">
-        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
-            <div class="mb-6 md:mb-0 text-center md:text-left">
-                <div class="flex items-center justify-center md:justify-start mb-4">
-                    <div class="bg-white p-3 rounded-full mr-4">
-                        <lucide-angular name="code" class="h-8 w-8 text-indigo-600"></lucide-angular>
-                    </div>
-                    <h1 class="text-3xl md:text-4xl font-bold">Base64 Converter</h1>
-                </div>
-                <p class="text-xl text-indigo-100 max-w-2xl">
-                    Easily encode text to Base64 or decode Base64 to text. Perfect for data transfer, embedding images,
-                    or working with APIs.
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <div class="container mx-auto px-4 py-3">
-        <div class="text-sm text-gray-600">
-            <a href="/" class="hover:text-indigo-600 transition">Home</a> &gt;
-            <a href="/" class="hover:text-indigo-600 transition">All Tools</a> &gt;
-            <span class="text-gray-800 font-medium">Base64 Converter</span>
-        </div>
-    </div>
-
+    <app-top-navbar></app-top-navbar>
     <main class="flex-grow container mx-auto px-4 py-8">
         <div class="bg-white rounded-lg shadow-md p-6">
             <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Base64 Encoder/Decoder</h2>

@@ -1,3 +1,4 @@
+import { TopNavbarComponent } from '@/app/components/top-navbar/top-navbar.component';
 import { MetadataService } from '@/app/services/metadata.service';
 import { NgClass } from '@angular/common';
 import { Component, inject, model, signal } from '@angular/core';
@@ -8,7 +9,7 @@ export type Mode = 'encode' | 'decode';
 
 @Component({
   selector: 'app-base64',
-  imports: [LucideAngularModule, NgClass, FormsModule],
+  imports: [LucideAngularModule, NgClass, FormsModule, TopNavbarComponent],
   templateUrl: './base64.component.html',
   styleUrl: './base64.component.scss'
 })

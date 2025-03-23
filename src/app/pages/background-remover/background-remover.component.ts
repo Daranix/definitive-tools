@@ -12,6 +12,7 @@ import { LoadingSpinnerSmallComponent } from '@/app/components/loading-spinner-s
 import { ToastService } from '@/app/services/toast.service';
 import { ProgressBarComponent } from '@/app/components/progress-bar/progress-bar.component';
 import { DecimalPipe } from '@angular/common';
+import { TopNavbarComponent } from '@/app/components/top-navbar/top-navbar.component';
 
 type ProgressBaseInfo = {
   status: 'initiate' | 'download' | 'progress' | 'done';
@@ -44,14 +45,14 @@ export type ProgressInfo = InitialProgressInfo | DownloadingProgressInfo | Downl
 @Component({
   selector: 'app-background-remover',
   imports: [
-    RouterLink,
     LucideAngularModule,
     DragAndDropFileComponent,
     FormsModule,
     BlobPipe,
     ImageComparisonComponent,
     LoadingSpinnerSmallComponent,
-    ProgressBarComponent
+    ProgressBarComponent,
+    TopNavbarComponent
   ],
   templateUrl: './background-remover.component.html',
   styleUrl: './background-remover.component.scss'
