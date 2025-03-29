@@ -1,7 +1,7 @@
 
 <div class="flex flex-row h-32 gap-3 justify-center">
     @for (template of TEMPLATES; track $index) {
-    <button [ngClass]="{'border-indigo-600 border-2': selectedTemplate() === template }"
+    <button (click)="selectedTemplate.set(template)" [ngClass]="{'border-indigo-600 border-2': selectedTemplate() === template }"
         class="aspect-video border rounded-md p-4 flex items-center justify-center hover:border-indigo-300 transition">
         <div class="w-full h-full">
             @if(template === 'image-right') {

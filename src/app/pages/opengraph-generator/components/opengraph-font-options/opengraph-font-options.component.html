@@ -1,0 +1,63 @@
+<div class="grid gap-4" [formGroup]="fontFormOptions">
+    <div class="space-y-2">
+        <h4 class="font-medium leading-none">Font Settings</h4>
+        <p class="text-sm text-gray-400">Customize the tag font.</p>
+    </div>
+    <div class="grid gap-4">
+        <div class="grid gap-2">
+            <div class="grid grid-cols-3 items-center gap-4">
+                <label
+                    class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    for="font-family">Font family</label>
+                    <select
+                        formControlName="fontFamily"
+                        class="bg-gray-50 px-2 py-1 border border-gray-300 rounded-md text-gray-900 col-span-2">
+                        @for (fontType of FONT_TYPES; track $index) {
+                            <option [ngValue]="fontType">{{fontType.label}}</option>
+                        }
+                    </select>
+            </div>
+            <div class="grid grid-cols-3 items-center gap-4">
+                <label
+                    class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    for="font-weight">Font weight</label>
+                <select
+                    formControlName="fontWeight"
+                    class="bg-gray-50 px-2 py-1 border border-gray-300 rounded-md text-gray-900 col-span-2">
+                    @for (fontWeight of FONT_WEIGHT; track $index) {
+                        <option [value]="fontWeight.key">{{fontWeight.label}}</option>
+                    }
+                </select>
+            </div>
+            <div class="grid grid-cols-3 items-center gap-4">
+                <label
+                    class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    for="font-size">Font size</label>
+                <input type="number" formControlName="fontSize"
+                    class="w-full px-2 py-1 border border-gray-300 rounded-md bg-white text-gray-900 col-span-2" />
+            </div>
+            <div class="grid grid-cols-3 items-center gap-4">
+                <label
+                    class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    for="text-color">Text Color</label>
+                <div class="grid gap-2 col-span-2 outline-none">
+                    <div class="flex flex-wrap gap-1">
+                        @for (fontColor of FONT_COLORS; track $index) {
+                        <div class="h-9 min-h-9 w-9 min-w-9">
+                            <button type="button" role="radio" aria-checked="false" data-state="unchecked"
+                                [value]="fontColor"
+                                class="aspect-square h-4 w-4 rounded-full border border-primary text-primary shadow focus:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 peer sr-only">
+                            </button>
+                            <label
+                                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 block aspect-square cursor-pointer rounded-md border-2"
+                                [for]="fontColor" [ngStyle]="{ 'background': fontColor }">
+                            </label>
+                        </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

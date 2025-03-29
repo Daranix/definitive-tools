@@ -1,6 +1,6 @@
 import { NgClass } from '@angular/common';
-import { Component, signal } from '@angular/core';
-import { TEMPLATES_TYPES } from '../../constants';
+import { Component, model, signal } from '@angular/core';
+import { TEMPLATES_TYPES, TemplateType } from '../../constants';
 
 @Component({
   selector: 'app-opengraph-template-selector',
@@ -10,7 +10,7 @@ import { TEMPLATES_TYPES } from '../../constants';
 })
 export class OpengraphTemplateSelectorComponent {
 
-  readonly selectedTemplate = signal<string>('image-right');
+  readonly selectedTemplate = model<TemplateType>();
   readonly TEMPLATES = TEMPLATES_TYPES;
 
 }

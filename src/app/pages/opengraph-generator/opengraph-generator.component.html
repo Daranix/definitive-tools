@@ -9,7 +9,7 @@
         <div class="bg-white rounded-lg shadow-md p-6 mb-6">
             <h2 class="text-xl font-bold mb-6 text-gray-800 text-center">Choose template</h2>
             <div>
-                <app-opengraph-template-selector></app-opengraph-template-selector>
+                <app-opengraph-template-selector [(selectedTemplate)]="templateSelected"></app-opengraph-template-selector>
             </div>
         </div>
 
@@ -17,7 +17,7 @@
             <div class="lg:col-span-1">
                 <div class="bg-white rounded-lg shadow-md p-6">
                     <h2 class="text-xl font-bold mb-6 text-gray-800">Template Properties</h2>
-                    <app-opengraph-template-properties></app-opengraph-template-properties>
+                    <app-opengraph-template-properties [selectedTemplate]="templateSelected()"></app-opengraph-template-properties>
                 </div>
             </div>
 
