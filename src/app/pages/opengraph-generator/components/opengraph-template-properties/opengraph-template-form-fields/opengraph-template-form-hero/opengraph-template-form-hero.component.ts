@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { OpenGraphTemplateHero } from '@/app/pages/opengraph-generator/types';
+import { Component, output } from '@angular/core';
 
 @Component({
   selector: 'app-opengraph-template-form-hero',
@@ -7,5 +8,8 @@ import { Component } from '@angular/core';
   styleUrl: './opengraph-template-form-hero.component.scss'
 })
 export class OpengraphTemplateFormHeroComponent {
+
+    readonly onFormUpdated = output<OpenGraphTemplateHero>();
+
 
 }

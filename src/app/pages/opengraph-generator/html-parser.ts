@@ -136,3 +136,15 @@ import {
   
     return root;
   }
+
+export function createTemplateStringsArray(str: string) {
+    // Create an array with a single string
+    const strings = [str];
+    
+    // Add the 'raw' property to make it compatible with TemplateStringsArray
+    Object.defineProperty(strings, 'raw', {
+      value: [str]
+    });
+    
+    return strings as unknown as TemplateStringsArray;
+}

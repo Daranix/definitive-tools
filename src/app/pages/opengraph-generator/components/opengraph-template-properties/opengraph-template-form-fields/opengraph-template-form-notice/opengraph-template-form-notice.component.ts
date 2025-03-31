@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { OpenGraphTemplateNotice } from '@/app/pages/opengraph-generator/types';
+import { Component, output } from '@angular/core';
 
 @Component({
   selector: 'app-opengraph-template-form-notice',
@@ -7,5 +8,7 @@ import { Component } from '@angular/core';
   styleUrl: './opengraph-template-form-notice.component.scss'
 })
 export class OpengraphTemplateFormNoticeComponent {
+
+  readonly onFormUpdated = output<OpenGraphTemplateNotice>();
 
 }

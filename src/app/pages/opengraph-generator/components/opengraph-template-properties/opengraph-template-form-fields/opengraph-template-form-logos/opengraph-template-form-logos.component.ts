@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { OpenGraphTemplateLogos } from '@/app/pages/opengraph-generator/types';
+import { Component, output } from '@angular/core';
 
 @Component({
   selector: 'app-opengraph-template-form-logos',
@@ -7,5 +8,8 @@ import { Component } from '@angular/core';
   styleUrl: './opengraph-template-form-logos.component.scss'
 })
 export class OpengraphTemplateFormLogosComponent {
+
+    readonly onFormUpdated = output<OpenGraphTemplateLogos>();
+
 
 }

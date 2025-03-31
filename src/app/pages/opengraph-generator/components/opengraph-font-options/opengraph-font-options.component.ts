@@ -1,12 +1,8 @@
 import { NgStyle } from '@angular/common';
-import { Component, input, model, OnInit, signal, Signal, WritableSignal } from '@angular/core';
-import { ControlValueAccessor, FormControl, FormGroup, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule, Validators } from '@angular/forms';
-
-export interface FontTypesDefinition {
-  key: string;
-  label: string;
-  lang?: string;
-}
+import { Component, effect, input, model, output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { FontTypesDefinition, OpenGraphFontWeight, OpenGraphTemplateFormInputFontOptions } from '../../types';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 
 export const FONT_TYPES = [
   { key: 'inter', label: 'Inter' },
@@ -57,66 +53,46 @@ export const FONT_COLORS = [
   "#f9fafb"
 ];
 
-export interface FontOptions {
-  fontFamily: FontTypesDefinition;
-  fontWeight: FontWeight;
-  fontSize: number;
-  fontColor: string;
-}
-
-
 @Component({
   selector: 'app-opengraph-font-options',
-  imports: [ReactiveFormsModule, NgStyle],
+  imports: [FormsModule, NgStyle],
   templateUrl: './opengraph-font-options.component.html',
-  styleUrl: './opengraph-font-options.component.scss',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: OpengraphFontOptionsComponent,
-      multi: true
-    }
-  ]
+  styleUrl: './opengraph-font-options.component.scss'
 })
-export class OpengraphFontOptionsComponent implements OnInit, ControlValueAccessor {
-
-  private onChanged: (value: FontOptions) => void = () => {};
-  private onTouched: () => void = () => {};
+export class OpengraphFontOptionsComponent {
 
   readonly FONT_COLORS = FONT_COLORS;
   readonly FONT_WEIGHT = FONT_WEIGHTS;
   readonly FONT_TYPES = FONT_TYPES;
 
-  readonly fontFormOptions = new FormGroup({
-    fontFamily: new FormControl(FONT_TYPES[0] as FontTypesDefinition),
-    fontWeight: new FormControl(FONT_WEIGHTS[0].key as string),
-    fontSize: new FormControl(20, [Validators.required, Validators.min(10), Validators.max(100)]),
-    fontColor: new FormControl(FONT_COLORS[0])
-  });
+  readonly defaultFontOptions = input.required<OpenGraphTemplateFormInputFontOptions>();
+  readonly onFontOptionsUpdated = output<OpenGraphTemplateFormInputFontOptions>();
+  
+  readonly fontWeight = model<OpenGraphFontWeight>();
+  readonly fontSize = model<number>();
+  readonly fontColor = model<string>();
+  readonly fontFamily = model<FontTypesDefinition>();
 
-  ngOnInit() {
-    this.fontFormOptions.valueChanges.subscribe((value) => {
-      this.onChanged(value as any);
-      this.onTouched();
+  constructor() {
+    effect(() => {
+      this.onFontOptionsUpdated.emit(this.getFontOptions());
+    });
+
+    toObservable(this.defaultFontOptions).pipe(takeUntilDestroyed()).subscribe((value) => {
+      this.fontFamily.set(value.fontFamily);
+      this.fontWeight.set(value.fontWeight);
+      this.fontSize.set(value.fontSize);
+      this.fontColor.set(value.fontColor);
     });
   }
 
-  readonly disabled = signal(false);
-
-  writeValue(obj: FontOptions): void {
-   this.fontFormOptions.patchValue(obj);
-  }
-
-  registerOnChange(fn: any): void {
-    this.onChanged = fn;
-  }
-
-  registerOnTouched(fn: any): void {
-    this.onTouched = fn;
-  }
-
-  setDisabledState(isDisabled: boolean): void {
-    this.disabled.set(isDisabled);
+  private getFontOptions(): OpenGraphTemplateFormInputFontOptions {
+    return {
+      fontFamily: this.fontFamily()!,
+      fontWeight: this.fontWeight()!,
+      fontSize: this.fontSize()!,
+      fontColor: this.fontColor()!
+    };
   }
 
 }

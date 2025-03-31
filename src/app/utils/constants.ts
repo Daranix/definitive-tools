@@ -105,5 +105,5 @@ export const USED_ICONS = {
     MoveDownLeft,
     MoveDownRight,
     MoveRight,
-    MoveLeft,
+    MoveLeft
 } as const;

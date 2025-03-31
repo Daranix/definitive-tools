@@ -9,7 +9,8 @@
         <div class="bg-white rounded-lg shadow-md p-6 mb-6">
             <h2 class="text-xl font-bold mb-6 text-gray-800 text-center">Choose template</h2>
             <div>
-                <app-opengraph-template-selector [(selectedTemplate)]="templateSelected"></app-opengraph-template-selector>
+                <app-opengraph-template-selector
+                    [(selectedTemplate)]="templateSelected"></app-opengraph-template-selector>
             </div>
         </div>
 
@@ -17,7 +18,8 @@
             <div class="lg:col-span-1">
                 <div class="bg-white rounded-lg shadow-md p-6">
                     <h2 class="text-xl font-bold mb-6 text-gray-800">Template Properties</h2>
-                    <app-opengraph-template-properties [selectedTemplate]="templateSelected()"></app-opengraph-template-properties>
+                    <app-opengraph-template-properties [selectedTemplate]="templateSelected()"
+                        (propertiesUpdated)="onPropertiesUpdated($event)"></app-opengraph-template-properties>
                 </div>
             </div>
 
@@ -25,12 +27,13 @@
                 <div class="bg-white rounded-lg shadow-md p-6">
                     <h2 class="text-xl font-bold mb-6 text-gray-800 text-center">Image Preview</h2>
 
-                    <!--
-                    <div class="w-full aspect-video rounded-lg flex items-center justify-center mb-6" style={{
-                        background: `linear-gradient(to right, ${selectedColor}, ${secondaryColor})`, }}>
-                        <h2 class="text-3xl font-bold text-white">Loading...</h2>
+                    <app-opengraph-template-builder [data]="data()" (previewUpdated)="onPreviewUpdated($event)"></app-opengraph-template-builder>
+
+                    <div class="w-full mb-6">
+                        @if(outputSvgUrl()) {
+                            <img [src]="outputSvgUrl()!" alt="" class="h-full">
+                        }
                     </div>
-                    -->
 
                     <div class="flex flex-col gap-4">
                         <button

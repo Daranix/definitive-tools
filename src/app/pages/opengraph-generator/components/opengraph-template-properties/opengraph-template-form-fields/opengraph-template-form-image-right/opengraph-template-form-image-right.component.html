@@ -3,13 +3,14 @@
         <label class="block text-sm font-medium text-gray-700 mb-2">Tag</label>
         <div class="relative">
             <input type="text"
+                [(ngModel)]="tag"
                 class="w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-900 focus:ring-indigo-500 focus:border-indigo-500" />
             <button class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-indigo-600"
                 appContextMenu>
                 <lucide-angular name="shuffle" class="w-4 h-4"></lucide-angular>
                 <ng-template #contextMenuContent>
                     <div class="bg-white z-50 rounded-md border outline-none shadow-md p-4">
-                        <app-opengraph-font-options></app-opengraph-font-options>
+                        <app-opengraph-font-options (onFontOptionsUpdated)="tagFontOptions.set($event)" [defaultFontOptions]="TAG_DEFAULT_FONT_OPTIONS"></app-opengraph-font-options>
                     </div>
                 </ng-template>
             </button>
@@ -19,13 +20,14 @@
         <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
         <div class="relative">
             <input type="text"
+                [(ngModel)]="title"
                 class="w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-900 focus:ring-indigo-500 focus:border-indigo-500" />
             <button class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-indigo-600"
                 appContextMenu>
                 <lucide-angular name="shuffle" class="w-4 h-4"></lucide-angular>
                 <ng-template #contextMenuContent>
                     <div class="bg-white z-50 rounded-md border outline-none shadow-md p-4">
-                        <app-opengraph-font-options></app-opengraph-font-options>
+                        <app-opengraph-font-options (onFontOptionsUpdated)="titleFontOptions.set($event)" [defaultFontOptions]="TITLE_DEFAULT_FONT_OPTIONS"></app-opengraph-font-options>
                     </div>
                 </ng-template>
             </button>
@@ -35,14 +37,34 @@
     <div>
         <label class="block text-sm font-medium text-gray-700 mb-2">Logo</label>
         <div class="relative">
-            <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-900" />
+            @let logoRef = logo();
+            @if(!logoRef) {
+                <app-drag-and-drop-file name="logo" (onFileChange)="onImageFileChanged('logo', $event)"></app-drag-and-drop-file>
+            } @else {
+                <div class="w-full px-3 py-2 flex border border-gray-300 rounded-md bg-white text-gray-900 focus:ring-indigo-500 focus:border-indigo-500">
+                    <div><span class="font-bold">File:</span>&nbsp;<span>{{ logoRef.name }}</span></div>
+                    <button (click)="logo.set(undefined)" class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-indigo-600">
+                        <lucide-angular name="x" class="w-4 h-4"></lucide-angular>
+                    </button>
+                </div>
+            }
         </div>
     </div>
 
     <div>
         <label class="block text-sm font-medium text-gray-700 mb-2">Image</label>
         <div class="relative">
-            <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-900" />
+            @let imageRef = image();
+            @if(!imageRef) {
+                <app-drag-and-drop-file name="image" (onFileChange)="onImageFileChanged('image', $event)"></app-drag-and-drop-file>
+            } @else {
+                <div class="w-full px-3 py-2 flex border border-gray-300 rounded-md bg-white text-gray-900 focus:ring-indigo-500 focus:border-indigo-500">
+                    <div><span class="font-bold">File:</span>&nbsp;<span>{{ imageRef.name }}</span></div>
+                    <button (click)="image.set(undefined)" class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-indigo-600">
+                        <lucide-angular name="x" class="w-4 h-4"></lucide-angular>
+                    </button>
+                </div>
+            }
         </div>
     </div>
 </div>

@@ -1,0 +1,18 @@
+
+@switch (templateSelected()) {
+    @case ('image-right') {
+        <app-opengraph-template-form-image-right (onFormUpdated)="templatePropertiesChanged.emit($event)"></app-opengraph-template-form-image-right>
+    }
+    @case ('hero') {
+        <app-opengraph-template-form-hero (onFormUpdated)="templatePropertiesChanged.emit($event)"></app-opengraph-template-form-hero>
+    }
+    @case ('logos') {
+        <app-opengraph-template-form-logos (onFormUpdated)="templatePropertiesChanged.emit($event)"></app-opengraph-template-form-logos>
+    }
+    @case ('basic') {
+        <app-opengraph-template-form-basic (onFormUpdated)="templatePropertiesChanged.emit($event)"></app-opengraph-template-form-basic>
+    }
+    @case ('notice') {
+        <app-opengraph-template-form-notice (onFormUpdated)="templatePropertiesChanged.emit($event)"></app-opengraph-template-form-notice>
+    }
+}

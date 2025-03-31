@@ -1,45 +1,47 @@
 <div class="space-y-6">
     <!-- Dynamic fields based on template selected -->
 
-    <ng-template [cdkPortalOutlet]="templateSelectedFormPortal()"></ng-template>
+    <!--
+    <ng-template [cdkPortalOutlet]="templateSelectedFormPortal()" (attached)="onTemplateAttached($event)"></ng-template>
+    -->
 
+    <app-opengraph-template-form [templateSelected]="selectedTemplate()" (templatePropertiesChanged)="templateProperties.set($event)"></app-opengraph-template-form>
+    
     <div>
         <label class="block text-sm font-medium text-gray-700 mb-2">Background</label>
         <p class="text-sm text-gray-500 mb-2">Set a custom background for your image.</p>
 
         <div class="flex space-x-2 mb-4 w-full">
-
             @for (backgroundType of BACKGROUND_TYPES; track $index) {
-
-            <button (click)="backgroundTypeSelected.set(backgroundType.key)" [ngClass]="{ 
-                    'bg-indigo-100 text-indigo-700 font-medium': backgroundTypeSelected() === backgroundType.key,
-                    'bg-white text-gray-700 border border-gray-300 hover:border-indigo-500 hover:text-indigo-600': backgroundTypeSelected() !== backgroundType.key 
-                }" class="px-4 py-2 text-sm rounded-md flex-grow">
-                {{ backgroundType.value }}
-            </button>
+                <button (click)="backgroundTypeSelected.set(backgroundType.key)" [ngClass]="{ 
+                        'bg-indigo-100 text-indigo-700 font-medium': backgroundTypeSelected() === backgroundType.key,
+                        'bg-white text-gray-700 border border-gray-300 hover:border-indigo-500 hover:text-indigo-600': backgroundTypeSelected() !== backgroundType.key 
+                    }" class="px-4 py-2 text-sm rounded-md flex-grow">
+                    {{ backgroundType.value }}
+                </button>
             }
         </div>
 
         <div class="grid grid-cols-8 gap-2">
 
             @switch (backgroundTypeSelected()) {
-            @case ('gradient') {
-            @for (item of BACKGROUND_GRADIENT_COMBINATIONS; track $index) {
-            <button (click)="backgroundColorSelected.set(item)" type="button" class="w-8 h-8 rounded-md border"
-                [ngClass]="{ 'border-2 border-indigo-500': item === backgroundColorSelected() }"
-                [ngStyle]="{ 'background': gradientStyle(item) }"></button>
-            }
-            }
-            @case ('solid') {
-            @for (item of BACKGROUND_SOLID_COLORS; track $index) {
-            <button (click)="backgroundColorSelected.set(item)" type="button" class="w-8 h-8 rounded-md border"
-                [ngClass]="{ 'border-2 border-indigo-500': item === backgroundColorSelected() }"
-                [ngStyle]="{ 'background-color': item }"></button>
-            }
-            }
-            @case ('image') {
+                @case ('gradient') {
+                    @for (item of BACKGROUND_GRADIENT_COMBINATIONS; track $index) {
+                    <button (click)="backgroundColorSelected.set(item)" type="button" class="w-8 h-8 rounded-md border"
+                        [ngClass]="{ 'border-2 border-indigo-500': item === backgroundColorSelected() }"
+                        [ngStyle]="{ 'background': gradientStyle(item) }"></button>
+                    }
+                }
+                @case ('solid') {
+                    @for (item of BACKGROUND_SOLID_COLORS; track $index) {
+                    <button (click)="backgroundColorSelected.set(item)" type="button" class="w-8 h-8 rounded-md border"
+                        [ngClass]="{ 'border-2 border-indigo-500': item === backgroundColorSelected() }"
+                        [ngStyle]="{ 'background-color': item }"></button>
+                    }
+                }
+                @case ('image') {
 
-            }
+                }
             }
         </div>
     </div>

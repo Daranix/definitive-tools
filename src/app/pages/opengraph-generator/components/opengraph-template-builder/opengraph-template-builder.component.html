@@ -1,0 +1,24 @@
+@let templateSel = templateSelected();
+
+<div [ngClass]="{ 'hidden': DEBUG }" class="aspect-video mb-6">
+    <div #previewDrawer [ngStyle]="{ background: background() }" class="w-full h-full flex">
+        @switch (templateSel) {
+            @case ('image-right') {
+                <app-opengraph-template-image-right [data]="data()"></app-opengraph-template-image-right>
+            }
+            @case ('hero') {
+                <app-opengraph-template-hero [data]="data()"></app-opengraph-template-hero>
+            }
+            @case ('logos') {
+                <app-opengraph-template-logos [data]="data()"></app-opengraph-template-logos>
+            }
+            @case ('basic') {
+                <app-opengraph-template-basic [data]="data()"></app-opengraph-template-basic>
+            }
+            @case ('notice') {
+                <app-opengraph-template-notice [data]="data()"></app-opengraph-template-notice>
+            }
+        }
+    </div>
+</div>
+
