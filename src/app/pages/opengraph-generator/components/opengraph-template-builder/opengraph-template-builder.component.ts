@@ -1,21 +1,12 @@
-import { afterNextRender, AfterViewInit, Component, computed, ElementRef, inject, Injector, input, output, PLATFORM_ID, runInInjectionContext, signal, viewChild, ViewEncapsulation } from '@angular/core';
-import { FontData, FontTypesDefinition, OpenGraphData, SatoriFontOptions } from '../../types';
-import { OpengraphTemplateBasicComponent } from './templates/opengraph-template-basic/opengraph-template-basic.component';
-import { OpengraphTemplateHeroComponent } from './templates/opengraph-template-hero/opengraph-template-hero.component';
-import { OpengraphTemplateLogosComponent } from './templates/opengraph-template-logos/opengraph-template-logos.component';
-import { OpengraphTemplateImageRightComponent } from './templates/opengraph-template-image-right/opengraph-template-image-right.component';
-import { OpengraphTemplateNoticeComponent } from './templates/opengraph-template-notice/opengraph-template-notice.component';
-import { ComponentPortal, ComponentType, PortalModule } from '@angular/cdk/portal';
+import { AfterViewInit, Component, computed, inject, Injector, input, PLATFORM_ID, runInInjectionContext, signal, ViewEncapsulation } from '@angular/core';
+import { FontData, OpenGraphData, SatoriFontOptions } from '../../types';
 import { TemplateType } from '../../constants';
 import { environment } from '@/environments/environment';
-import { isPlatformBrowser, NgClass, NgStyle } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
-import { createTemplateStringsArray, html } from '../../html-parser';
 import satori from 'satori';
-import { debounce, debounceTime, delay, Subject } from 'rxjs';
-import { RenderFunction } from './templates/v2';
-import ImageRightRenderFn from './templates/v2/image-right';
-
+import { debounceTime } from 'rxjs';
+import { ImageRightRenderFn, RenderFunction } from './templates';
 @Component({
   selector: 'app-opengraph-template-builder',
   imports: [],
@@ -87,7 +78,7 @@ export class OpengraphTemplateBuilderComponent implements AfterViewInit {
 
     const fontMap = new Map<string, FontData>();
     for (const font of fontData) {
-      fontMap.set(font.fontFamily.key, font);
+      fontMap.set(`${font.fontFamily.key}-${font.fontWeight}`, font);
     }
     const fontsToLoad = Array.from(fontMap.values());
     // ---

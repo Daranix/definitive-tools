@@ -1,5 +1,4 @@
-import { FontData, FontTypesDefinition, OpenGraphBackground, OpenGraphData, OpenGraphTemplateFormInputFontOptions } from "@/app/pages/opengraph-generator/types";
-import satori from "satori";
+import { FontData, OpenGraphBackground, OpenGraphData, OpenGraphTemplateFormInputFontOptions } from "../../../types";
 
 
 export interface VNode {

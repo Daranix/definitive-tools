@@ -1,7 +1,7 @@
 import { FontData, OpenGraphData, OpenGraphTemplateImageRight } from "@/app/pages/opengraph-generator/types";
-import { getBackground, getStylesFromFontOptions, RenderFunction } from ".";
+import { getBackground, getStylesFromFontOptions, RenderFunction } from "./utils";
 
-const ImageRightRenderFn: RenderFunction = (data: Partial<OpenGraphData>) => {
+export const ImageRightRenderFn: RenderFunction = (data: Partial<OpenGraphData>) => {
 
     const templateProperties = data.templateProperties as OpenGraphTemplateImageRight;
 
@@ -96,7 +96,5 @@ const ImageRightRenderFn: RenderFunction = (data: Partial<OpenGraphData>) => {
     return { vdom, fontsData };
 
 };
-
-export default ImageRightRenderFn;
 
 
