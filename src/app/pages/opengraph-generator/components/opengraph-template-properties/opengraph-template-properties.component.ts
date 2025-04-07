@@ -34,15 +34,6 @@ export class OpengraphTemplatePropertiesComponent {
   readonly BACKGROUND_SOLID_COLORS = SOLID_COLORS;
   readonly GRADIENT_DIRECTIONS = GRADIENT_DIRECTIONS;
 
-  /*
-  private readonly TEMPLATE_FIELDS_COMPONENT = {
-    'basic': OpengraphTemplateFormBasicComponent,
-    'hero': OpengraphTemplateFormHeroComponent,
-    'logos': OpengraphTemplateFormLogosComponent,
-    'image-right': OpengraphTemplateFormImageRightComponent,
-    'notice': OpengraphTemplateFormNoticeComponent
-  } as const satisfies Record<TemplateType, ComponentType<any>>;*/
-
   readonly BACKGROUND_TYPES = [
     { key: 'gradient', value: 'Gradient' },
     { key: 'solid', value: 'Solid Color' },
@@ -62,20 +53,13 @@ export class OpengraphTemplatePropertiesComponent {
 
   readonly propertiesUpdated = output<OpenGraphData>();
 
-  /*
-  readonly templateSelectedFormPortal = computed(() => {
-    const component = this.TEMPLATE_FIELDS_COMPONENT[this.selectedTemplate()];
-    const portal = new ComponentPortal(component);
-    return portal;
-  });*/
-
   readonly templateProperties = signal<OpenGraphData['templateProperties']>({
     type: 'image-right',
     tag: {
       value: '',
       fontOptions: {
         fontFamily: FONT_TYPES[0],
-        fontWeight: '400',
+        fontWeight: 400,
         fontSize: 20,
         fontColor: '#030712'
       }
@@ -84,13 +68,13 @@ export class OpengraphTemplatePropertiesComponent {
       value: '',
       fontOptions: {
         fontFamily: FONT_TYPES[0],
-        fontWeight: '400',
-        fontSize: 20,
+        fontWeight: 400,
+        fontSize: 48,
         fontColor: '#030712'
       }
     },
-    logo: { name: 'logo.png', url: '/img/examples/logo.png' },
-    image: { name: 'image.png', url: '/img/examples/image-right-example.png' }
+    logo: { name: 'logo.png', url: '/img/opengraph-examples/logo.png' },
+    image: { name: 'image.png', url: '/img/opengraph-examples/img-right-example.png' }
   });
 
   readonly selectedTemplate = model<TemplateType>('image-right');
@@ -119,19 +103,6 @@ export class OpengraphTemplatePropertiesComponent {
         } satisfies OpenGraphBackgroundImage;
     }
   }
-
-  /*onTemplateAttached(ref: CdkPortalOutletAttachedRef) {
-    this.valueChangesSubscription?.unsubscribe();
-    const selectedTemplate = this.selectedTemplate();
-    const component = this.TEMPLATE_FIELDS_COMPONENT[selectedTemplate];
-    type SelectedComponentType = typeof component;
-    ref = ref as ComponentRef<SelectedComponentType>;
-    const formGroup =  this.getTemplateDataFormGroup();
-    ref.instance['formGroup'] = formGroup;
-    this.valueChangesSubscription = (formGroup.valueChanges as any).subscribe((value: any) => {
-      this.templateProperties.set(formGroup.value as unknown as OpenGraphData['templateProperties']);
-    });
-  }*/
   
   gradientStyle(gradient: string[]) {
     return `linear-gradient(to ${this.gradientDirectionSelected()}, ${gradient.join(', ')})`;

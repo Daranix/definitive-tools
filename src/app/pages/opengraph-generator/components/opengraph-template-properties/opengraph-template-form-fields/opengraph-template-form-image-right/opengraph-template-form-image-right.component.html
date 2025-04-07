@@ -10,7 +10,7 @@
                 <lucide-angular name="shuffle" class="w-4 h-4"></lucide-angular>
                 <ng-template #contextMenuContent>
                     <div class="bg-white z-50 rounded-md border outline-none shadow-md p-4">
-                        <app-opengraph-font-options (onFontOptionsUpdated)="tagFontOptions.set($event)" [defaultFontOptions]="TAG_DEFAULT_FONT_OPTIONS"></app-opengraph-font-options>
+                        <app-opengraph-font-options [(fontOptions)]="tagFontOptions"></app-opengraph-font-options>
                     </div>
                 </ng-template>
             </button>
@@ -27,7 +27,7 @@
                 <lucide-angular name="shuffle" class="w-4 h-4"></lucide-angular>
                 <ng-template #contextMenuContent>
                     <div class="bg-white z-50 rounded-md border outline-none shadow-md p-4">
-                        <app-opengraph-font-options (onFontOptionsUpdated)="titleFontOptions.set($event)" [defaultFontOptions]="TITLE_DEFAULT_FONT_OPTIONS"></app-opengraph-font-options>
+                        <app-opengraph-font-options [(fontOptions)]="titleFontOptions"></app-opengraph-font-options>
                     </div>
                 </ng-template>
             </button>

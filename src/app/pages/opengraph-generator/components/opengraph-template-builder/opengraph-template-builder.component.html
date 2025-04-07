@@ -1,10 +1,11 @@
-@let templateSel = templateSelected();
 
+<!--
+@let templateSel = templateSelected();
 <div [ngClass]="{ 'hidden': DEBUG }" class="aspect-video mb-6">
     <div #previewDrawer [ngStyle]="{ background: background() }" class="w-full h-full flex">
         @switch (templateSel) {
             @case ('image-right') {
-                <app-opengraph-template-image-right [data]="data()"></app-opengraph-template-image-right>
+                <app-opengraph-template-image-right class="w-full h-full flex" [data]="data()"></app-opengraph-template-image-right>
             }
             @case ('hero') {
                 <app-opengraph-template-hero [data]="data()"></app-opengraph-template-hero>
@@ -21,4 +22,10 @@
         }
     </div>
 </div>
+-->
 
+<div class="w-full mb-6">
+    @if(outputSvgUrl()) {
+        <img [src]="outputSvgUrl()!" class="h-full">
+    }
+</div>

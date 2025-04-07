@@ -26,15 +26,7 @@
             <div class="lg:col-span-2">
                 <div class="bg-white rounded-lg shadow-md p-6">
                     <h2 class="text-xl font-bold mb-6 text-gray-800 text-center">Image Preview</h2>
-
-                    <app-opengraph-template-builder [data]="data()" (previewUpdated)="onPreviewUpdated($event)"></app-opengraph-template-builder>
-
-                    <div class="w-full mb-6">
-                        @if(outputSvgUrl()) {
-                            <img [src]="outputSvgUrl()!" alt="" class="h-full">
-                        }
-                    </div>
-
+                    <app-opengraph-template-builder [data]="data()" ngSkipHydration></app-opengraph-template-builder>
                     <div class="flex flex-col gap-4">
                         <button
                             class="bg-indigo-700 text-white font-medium py-2 px-4 rounded hover:bg-indigo-800 transition flex items-center justify-center gap-2">

@@ -3,6 +3,18 @@ import { Component, effect, input, model, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FontTypesDefinition, OpenGraphFontWeight, OpenGraphTemplateFormInputFontOptions } from '../../types';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { combineLatest, distinctUntilChanged, filter, map, merge, Observable } from 'rxjs';
+
+export const DEFAULT_VALUES: OpenGraphTemplateFormInputFontOptions = {
+  fontFamily: {
+    key: 'inter',
+    label: 'Inter',
+    lang: 'latin'
+  },
+  fontWeight: 400,
+  fontSize: 20,
+  fontColor: '#030712'
+}
 
 export const FONT_TYPES = [
   { key: 'inter', label: 'Inter' },
@@ -65,7 +77,7 @@ export class OpengraphFontOptionsComponent {
   readonly FONT_WEIGHT = FONT_WEIGHTS;
   readonly FONT_TYPES = FONT_TYPES;
 
-  readonly defaultFontOptions = input.required<OpenGraphTemplateFormInputFontOptions>();
+  // readonly defaultFontOptions = input.required<OpenGraphTemplateFormInputFontOptions>();
   readonly onFontOptionsUpdated = output<OpenGraphTemplateFormInputFontOptions>();
   
   readonly fontWeight = model<OpenGraphFontWeight>();
@@ -73,17 +85,44 @@ export class OpengraphFontOptionsComponent {
   readonly fontColor = model<string>();
   readonly fontFamily = model<FontTypesDefinition>();
 
+  readonly fontOptions = model<OpenGraphTemplateFormInputFontOptions>(DEFAULT_VALUES);
+
+  private readonly updateFontOptions$: Observable<OpenGraphTemplateFormInputFontOptions> = combineLatest([
+    toObservable(this.fontFamily),
+    toObservable(this.fontWeight),
+    toObservable(this.fontSize),
+    toObservable(this.fontColor)
+  ]).pipe(
+    filter((v) => !(v.some((v) => v === undefined))),
+    map(([fontFamily, fontWeight, fontSize, fontColor]) => ({ 
+      fontFamily: fontFamily!,
+      fontWeight: fontWeight!,
+      fontSize: fontSize!,
+      fontColor: fontColor!
+    })),
+    distinctUntilChanged((prev, curr) => 
+      JSON.stringify(prev) === JSON.stringify(curr)
+    )
+  );
+
   constructor() {
-    effect(() => {
-      this.onFontOptionsUpdated.emit(this.getFontOptions());
+
+    this.updateFontOptions$.subscribe((value) => {
+      this.fontOptions.set(value);
     });
 
-    toObservable(this.defaultFontOptions).pipe(takeUntilDestroyed()).subscribe((value) => {
+    toObservable(this.fontOptions).pipe(
+      takeUntilDestroyed(),
+      distinctUntilChanged((prev, curr) => 
+        JSON.stringify(prev) === JSON.stringify(curr)
+      )
+    ).subscribe((value) => {
       this.fontFamily.set(value.fontFamily);
       this.fontWeight.set(value.fontWeight);
       this.fontSize.set(value.fontSize);
       this.fontColor.set(value.fontColor);
     });
+
   }
 
   private getFontOptions(): OpenGraphTemplateFormInputFontOptions {

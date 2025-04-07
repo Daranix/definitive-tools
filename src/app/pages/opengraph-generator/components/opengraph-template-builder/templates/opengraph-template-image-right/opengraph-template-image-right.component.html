@@ -1,4 +1,19 @@
-<div class="flex items-center justify-center">
-    <div>A</div>
-    <div>B</div>
+<div class="w-full h-full flex grow p-4">
+    <div class="grow flex flex-col gap-4 max-w-[50%]">
+
+        @let templatePropertiesData = templateProperties();
+
+        @if(templatePropertiesData.logo) {
+            <img [src]="templatePropertiesData.logo.url" width="64" height="64">
+        }
+        <div class="flex flex-col">
+            <h1 [ngStyle]="getFontStyles(templatePropertiesData.tag.fontOptions)">
+                {{templatePropertiesData.tag.value }}
+            </h1>
+            <h1 [ngStyle]="getFontStyles(templatePropertiesData.title.fontOptions)">
+                {{templatePropertiesData.title.value}}
+            </h1>
+        </div>
+    </div>
+    <div class="grow">B</div>
 </div>

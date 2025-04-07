@@ -106,10 +106,23 @@ export type OpenGraphBackgroundImage = {
     url: string;
 };
 
-export type OpenGraphFontWeight = '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900';
+export type OpenGraphFontWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
 
 export interface FontTypesDefinition {
     key: string;
     label: string;
+    lang?: string;
+}
+
+export interface FontData {
+    fontFamily: FontTypesDefinition;
+    fontWeight: OpenGraphFontWeight;
+}
+
+export interface SatoriFontOptions {
+    data: Buffer | ArrayBuffer;
+    name: string;
+    weight?: OpenGraphFontWeight;
+    style?: "normal" | "italic";
     lang?: string;
 }

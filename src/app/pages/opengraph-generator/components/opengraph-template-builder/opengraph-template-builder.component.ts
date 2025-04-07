@@ -1,5 +1,5 @@
-import { afterNextRender, Component, computed, ElementRef, inject, Injector, input, output, PLATFORM_ID, viewChild, ViewEncapsulation } from '@angular/core';
-import { OpenGraphData } from '../../types';
+import { afterNextRender, AfterViewInit, Component, computed, ElementRef, inject, Injector, input, output, PLATFORM_ID, runInInjectionContext, signal, viewChild, ViewEncapsulation } from '@angular/core';
+import { FontData, FontTypesDefinition, OpenGraphData, SatoriFontOptions } from '../../types';
 import { OpengraphTemplateBasicComponent } from './templates/opengraph-template-basic/opengraph-template-basic.component';
 import { OpengraphTemplateHeroComponent } from './templates/opengraph-template-hero/opengraph-template-hero.component';
 import { OpengraphTemplateLogosComponent } from './templates/opengraph-template-logos/opengraph-template-logos.component';
@@ -12,102 +12,92 @@ import { isPlatformBrowser, NgClass, NgStyle } from '@angular/common';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { createTemplateStringsArray, html } from '../../html-parser';
 import satori from 'satori';
+import { debounce, debounceTime, delay, Subject } from 'rxjs';
+import { RenderFunction } from './templates/v2';
+import ImageRightRenderFn from './templates/v2/image-right';
 
 @Component({
   selector: 'app-opengraph-template-builder',
-  imports: [
-    OpengraphTemplateBasicComponent,
-    OpengraphTemplateHeroComponent,
-    OpengraphTemplateLogosComponent,
-    OpengraphTemplateImageRightComponent,
-    OpengraphTemplateNoticeComponent,
-    PortalModule,
-    NgClass,
-    NgStyle
-  ],
+  imports: [],
   templateUrl: './opengraph-template-builder.component.html',
   styleUrl: './opengraph-template-builder.component.scss',
   encapsulation: ViewEncapsulation.None
 })
-export class OpengraphTemplateBuilderComponent {
+export class OpengraphTemplateBuilderComponent implements AfterViewInit {
 
   readonly DEBUG = environment.production;
 
   private readonly platformId = inject(PLATFORM_ID);
   private readonly injector = inject(Injector);
 
-  private readonly previewDrawer = viewChild<ElementRef<HTMLDivElement>>('previewDrawer');
-  
   readonly data = input.required<Partial<OpenGraphData>>();
-
-  readonly previewUpdated = output<string>();
 
   readonly templateSelected = computed(() => this.data().templateProperties?.type);
 
-  readonly background = computed(() => {
-    return this.getBackground();
-  });
+  readonly outputSvgUrl = signal<string | undefined>(undefined);
 
-  readonly TEMPLATE_COMPONENTS = {
-    'image-right': new ComponentPortal(OpengraphTemplateImageRightComponent),
-    'hero': new ComponentPortal(OpengraphTemplateHeroComponent),
-    'logos': new ComponentPortal(OpengraphTemplateLogosComponent),
-    'basic': new ComponentPortal(OpengraphTemplateBasicComponent),
-    'notice': new ComponentPortal(OpengraphTemplateNoticeComponent)
-  } as const satisfies Record<TemplateType, ComponentPortal<any>>;
-
-  readonly selectedPortal = computed(() => this.TEMPLATE_COMPONENTS[this.templateSelected()!]);
+  readonly RENDER_FUNCTIONS = {
+    'image-right': ImageRightRenderFn,
+    'hero': ImageRightRenderFn,
+    'logos': ImageRightRenderFn,
+    'basic': ImageRightRenderFn,
+    'notice': ImageRightRenderFn
+  } as const satisfies Record<TemplateType, RenderFunction>;
 
   constructor() {
-    if (isPlatformBrowser(this.platformId)) {
-      toObservable(this.data).pipe(takeUntilDestroyed()).subscribe(async (data) => {
-        afterNextRender(async () => {
-          const previewDrawer = this.previewDrawer()!.nativeElement;
-          const htmlStr = previewDrawer.outerHTML;
-          const svgStr = await this.generateSvgStringFromHtml(htmlStr);
-          this.previewUpdated.emit(svgStr);
-          // const blob = new Blob([svgStr], { type: 'image/svg+xml' });
-          // const url = URL.createObjectURL(blob);
-          //this.outputSvg.set(url);
-        }, { injector: this.injector });
-      });
-    }
+
   }
 
-  private async generateSvgStringFromHtml(htmlStr: string) {
-    const content = html(createTemplateStringsArray(htmlStr));
-    const response = await fetch('/fonts/OpenSans-Regular.ttf');
-    const fontData = await response.arrayBuffer();
-    const svg = await satori(content as any, {
+  ngAfterViewInit(): void {
+    runInInjectionContext(this.injector, () => {
+      if (isPlatformBrowser(this.platformId)) {
+        toObservable(this.data).pipe(debounceTime(100), takeUntilDestroyed()).subscribe(async (data) => {
+          const svgStr = await this.generateSvgStringFromHtml(data);
+          const blob = new Blob([svgStr], { type: 'image/svg+xml' });
+          const url = URL.createObjectURL(blob);
+          this.outputSvgUrl.set(url);
+        });
+      }
+    });
+  }
+
+
+
+
+  private async generateSvgStringFromHtml(data: Partial<OpenGraphData>) {
+    const { vdom, fontsData } = this.renderVDom(data);
+    const fonts = await this.fontLoader(fontsData);
+    const svg = await satori(vdom, {
       width: 1200,
       height: 600,
-      
-      fonts: [
-        {
-          name: 'Open Sans',
-          data: fontData,
-          weight: 400,
-          style: 'normal',
-        },
-      ]
+      fonts
     });
     return svg;
   }
 
-  private getBackground(): string {
-    const bg = this.data().background;
-    switch (bg?.type) {
-      case 'gradient':
-        return `linear-gradient(to ${bg.direction}, ${bg.color})`;
-      case 'solid':
-        return bg.color;
-      case 'image':
-        // return `url(${this.data().background?.url})`;
-        return ``;
-      default:
-        return '';
-    }
+  private renderVDom(data: Partial<OpenGraphData>) {
+    const renderFn = this.RENDER_FUNCTIONS[this.templateSelected()!];
+    const vdom = renderFn(data);
+    return vdom;
   }
 
+  private async fontLoader(fontData: FontData[]): Promise<SatoriFontOptions[]> {
 
+    // Avoid duplicate requests
+
+    const fontMap = new Map<string, FontData>();
+    for (const font of fontData) {
+      fontMap.set(font.fontFamily.key, font);
+    }
+    const fontsToLoad = Array.from(fontMap.values());
+    // ---
+
+    const result = fontsToLoad.map(async (font) => {
+      const response = await fetch(`https://cdn.jsdelivr.net/fontsource/fonts/${font.fontFamily.key}@latest/${font.fontFamily.lang ?? 'latin'}-${font.fontWeight}-normal.woff`);
+      const buffer = await response.arrayBuffer();
+      return { data: buffer, name: font.fontFamily.label, weight: font.fontWeight } satisfies SatoriFontOptions;
+    });
+
+    return await Promise.all(result);
+  }
 }

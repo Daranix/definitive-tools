@@ -37,7 +37,8 @@ import {
     `border`,
     `elevation-`,
     `tracking-`,
-    `z-`
+    `z-`,
+    `grow`
   ]);
   const inliner = inlineCSS({ useObjectSyntax: true });
   const tw = (doc: DoctypeNode) => {
