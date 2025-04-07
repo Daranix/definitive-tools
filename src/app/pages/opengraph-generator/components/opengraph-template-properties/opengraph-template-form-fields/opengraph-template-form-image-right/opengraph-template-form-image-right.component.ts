@@ -16,8 +16,8 @@ const TAG_DEFAULT_FONT_OPTIONS: OpenGraphTemplateFormInputFontOptions = {
 
 const TITLE_DEFAULT_FONT_OPTIONS: OpenGraphTemplateFormInputFontOptions = {
   fontFamily: FONT_TYPES[0],
-  fontWeight: 400,
-  fontSize: 48,
+  fontWeight: 600,
+  fontSize: 58,
   fontColor: '#030712'
 } as const satisfies OpenGraphTemplateFormInputFontOptions;
 

@@ -5,7 +5,7 @@ import { environment } from '@/environments/environment';
 import { isPlatformBrowser } from '@angular/common';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import satori from 'satori';
-import { debounceTime } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { ImageRightRenderFn, RenderFunction } from './templates';
 @Component({
   selector: 'app-opengraph-template-builder',
@@ -15,8 +15,6 @@ import { ImageRightRenderFn, RenderFunction } from './templates';
   encapsulation: ViewEncapsulation.None
 })
 export class OpengraphTemplateBuilderComponent implements AfterViewInit {
-
-  readonly DEBUG = environment.production;
 
   private readonly platformId = inject(PLATFORM_ID);
   private readonly injector = inject(Injector);
@@ -34,7 +32,7 @@ export class OpengraphTemplateBuilderComponent implements AfterViewInit {
     'basic': ImageRightRenderFn,
     'notice': ImageRightRenderFn
   } as const satisfies Record<TemplateType, RenderFunction>;
-
+  
   constructor() {
 
   }
@@ -42,7 +40,11 @@ export class OpengraphTemplateBuilderComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     runInInjectionContext(this.injector, () => {
       if (isPlatformBrowser(this.platformId)) {
-        toObservable(this.data).pipe(debounceTime(100), takeUntilDestroyed()).subscribe(async (data) => {
+        toObservable(this.data).pipe(
+          debounceTime(100),
+          distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)),
+          takeUntilDestroyed()
+        ).subscribe(async (data) => {
           const svgStr = await this.generateSvgStringFromHtml(data);
           const blob = new Blob([svgStr], { type: 'image/svg+xml' });
           const url = URL.createObjectURL(blob);
