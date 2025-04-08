@@ -1,5 +1,7 @@
 <button class="block" aria-label="Menu">
     <label for="menu-hamburger" class="hamburger-menu">
-        <input type="checkbox" aria-label="Menu" id="menu-hamburger" [(ngModel)]="toggleMenu" />
+        <input type="checkbox" aria-hidden="true" class="hidden" aria-label="Menu" id="menu-hamburger" [(ngModel)]="toggleMenu" />
+        <lucide-icon name="menu"></lucide-icon>
     </label>
+    
 </button>

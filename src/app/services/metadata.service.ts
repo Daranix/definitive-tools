@@ -1,6 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { inject, Injectable } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
+import { TopNavbarService } from './top-navbar.service';
 
 
 interface MetaInfo {
@@ -19,9 +20,11 @@ export class MetadataService {
   private readonly titleService = inject(Title);
   private readonly metadataService = inject(Meta);
   private readonly document = inject(DOCUMENT);
+  private readonly topNavbarService = inject(TopNavbarService)
 
   updateMetadata({ title, description, updateCanonical = true, keywords, thumbnail }: MetaInfo) {
 
+    this.topNavbarService.title.set(title);
     this.titleService.setTitle(title);
     this.metadataService.updateTag({ property: 'og:title', content: title });
     this.metadataService.updateTag({ property: 'og:description', content: description });

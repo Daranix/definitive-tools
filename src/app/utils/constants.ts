@@ -1,4 +1,4 @@
-import { ArrowRightLeft, AtSign, Bolt, Bookmark, CaseUpper, Code, Copy, Download, House, IdCard, Image, ImageOff, Info, Key, Link, LockKeyholeOpen, MapPin, MoveDown, MoveDownLeft, MoveDownRight, MoveLeft, MoveRight, MoveUp, MoveUpLeft, MoveUpRight, Phone, QrCode, RotateCw, Scissors, Settings, Shuffle, TabletSmartphone, Wifi, X } from 'lucide-angular';
+import { ArrowRightLeft, AtSign, Bolt, Bookmark, CaseUpper, Code, Copy, Download, House, IdCard, Image, ImageOff, Info, Key, Link, LockKeyholeOpen, MapPin, Menu, MoveDown, MoveDownLeft, MoveDownRight, MoveLeft, MoveRight, MoveUp, MoveUpLeft, MoveUpRight, Phone, QrCode, RotateCw, Scissors, Settings, Shuffle, TabletSmartphone, Wifi, X } from 'lucide-angular';
 
 export interface Tool {
     id: string;
@@ -105,5 +105,6 @@ export const USED_ICONS = {
     MoveDownLeft,
     MoveDownRight,
     MoveRight,
-    MoveLeft
+    MoveLeft,
+    Menu
 } as const;

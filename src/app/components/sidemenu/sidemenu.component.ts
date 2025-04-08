@@ -11,7 +11,5 @@ import { NgClass } from '@angular/common';
   styleUrl: './sidemenu.component.scss'
 })
 export class SidemenuComponent {
-
   readonly tools = TOOLS;
-
 }

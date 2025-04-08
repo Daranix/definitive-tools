@@ -1,4 +1,4 @@
-import { Component, model, signal } from '@angular/core';
+import { Component, inject, model, signal } from '@angular/core';
 
 import { LucideAngularModule } from 'lucide-angular';
 import { TopNavbarComponent } from '@/app/components/top-navbar/top-navbar.component';
@@ -7,6 +7,7 @@ import { OpengraphTemplatePropertiesComponent } from './components/opengraph-tem
 import { TemplateType } from './constants';
 import { OpenGraphData } from './types';
 import { OpengraphTemplateBuilderComponent } from './components/opengraph-template-builder/opengraph-template-builder.component';
+import { MetadataService } from '@/app/services/metadata.service';
 
 @Component({
   selector: 'app-opengraph-generator',
@@ -24,57 +25,19 @@ export class OpengraphGeneratorComponent {
 
 
 
+  private readonly metadataService = inject(MetadataService);
   readonly templateSelected = model<TemplateType>('image-right');
   readonly data = signal<Partial<OpenGraphData>>({});
-
   readonly outputSvgUrl = signal<string | undefined>(undefined);
 
   constructor() {
-    /*if (isPlatformBrowser(this.platformId)) {
-      toObservable(this.data).pipe(takeUntilDestroyed()).subscribe(async (data) => {
-        afterNextRender(async () => {
-          if(this.outputSvg()) {
-            URL.revokeObjectURL(this.outputSvg()!);
-          }
-          const previewDrawer = this.previewDrawer()!.nativeElement;
-          const htmlStr = previewDrawer.outerHTML;
-          const svgStr = await this.generateSvgStringFromHtml(htmlStr);
-          const blob = new Blob([svgStr], { type: 'image/svg+xml' });
-          const url = URL.createObjectURL(blob);
-          this.outputSvg.set(url);
-        }, { injector: this.injector });
-      });
-    }*/
-
+    this.metadataService.updateMetadata({
+      title: 'Opengraph Generator',
+      description: `Create professional Opengraph images and Twitter Cards that boost your website's visibility on social media platforms. Easy-to-use tool for generating custom social previews.`, 
+      keywords: 'opengraph generator, twitter cards, social media preview, meta tags, social share images, open graph protocol, social media optimization, website metadata, custom social images'
+    })
   }
 
-  /*
-  async generateExample() {
-    const content = `<div class="w-full rounded-lg flex items-center justify-center mb-6" style="background: linear-gradient(to right, rgb(255, 77, 77), rgb(255, 213, 128));"><h2 class="text-3xl font-bold text-white">Loading...</h2></div>`;
-    const svgStr = await this.generateSvgStringFromHtml(content);
-    this.content.set(svgStr);
-  }*/
-  
-  /*private async generatePreviewImage() {
-    const previewDrawer = this.previewDrawer()!.nativeElement;
-    const htmlStr = previewDrawer.outerHTML;
-    const svgStr = await this.generateSvgStringFromHtml(htmlStr);
-    const blob = new Blob([svgStr], { type: 'image/svg+xml' });
-    const url = URL.createObjectURL(blob);
-    this.outputSvg.set(url);
-  }*/
-
-  private svgStringToElement(svgString: string) {
-    // Create a DOM parser
-    const parser = new DOMParser();
-    
-    // Parse the SVG string to a document
-    const doc = parser.parseFromString(svgString, "image/svg+xml");
-    
-    // Get the SVG element from the document
-    const svgElement = doc.documentElement;
-    return svgElement;
-  }
 
   onPropertiesUpdated(data: OpenGraphData) {
     this.data.set(data);
