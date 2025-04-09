@@ -64,4 +64,22 @@
     </div>
     }
 
+    <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Background Overlay </label>
+        <button appContextMenu
+            type="button"
+            class="flex items-center justify-start gap-2 rounded-md border px-4 py-2 w-full text-left font-semibold hover:bg-gray-100 hover:text-gray-700 transition">
+            @let gridOverlayPatternData = gridOverlayPattern();
+            @if(gridOverlayPatternData) {
+                <lucide-angular [name]="BACKGROUND_OVERLAY_PATTERNS_VIEW[gridOverlayPatternData.pattern].icon" class="block w-4 h-4"></lucide-angular>
+                {{ BACKGROUND_OVERLAY_PATTERNS_VIEW[gridOverlayPatternData.pattern].label }}
+            }
+            <ng-template #contextMenuContent>
+                <div class="lg:bg-white z-50 lg:rounded-md lg:border outline-none lg:shadow-md p-4">
+                    <app-opengraph-background-overlay-options [(overlayOptions)]="gridOverlayPattern"></app-opengraph-background-overlay-options>
+                </div>
+            </ng-template>
+        </button>
+    </div>
+
 </div>

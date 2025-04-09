@@ -29,14 +29,29 @@ export const GRADIENT_DIRECTIONS = [
 
 export type GradientDirection = typeof GRADIENT_DIRECTIONS[number];
 
-export const GRID_OVERLAY_PATTERNS = [
+export const BACKGROUND_OVERLAY_PATTERNS = [
     'none',
     'grid',
     'graph',
     'dots'
 ] as const;
 
-export const GRADIENT_COMBINATIONS =[
+export type BackgroundOverlayPattern = typeof BACKGROUND_OVERLAY_PATTERNS[number];
+
+export const BACKGROUND_OVERLAY_PATTERNS_VIEW = {
+    'none': { icon: 'circle-off', label: 'None' },
+    'grid': { icon: 'grid-2-x-2', label: 'Grid' },
+    'graph': { icon: 'grid-3-x-3', label: 'Graph' },
+    'dots': { icon: 'circle-ellipsis', label: 'Dots' }
+} as const satisfies Record<BackgroundOverlayPattern, { icon: string, label: string }>;
+
+export const BACKGROUND_OVERLAY_COLORS = [
+    'rgb(3, 7, 18)',
+    'rgb(107, 114, 128)',
+    'rgb(249, 250, 251)'
+];
+
+export const GRADIENT_COMBINATIONS = [
     [
         "rgb(236, 72, 153)",
         "rgb(239, 68, 68)",
@@ -222,3 +237,4 @@ export const SOLID_COLORS = [
     "#000000",
     "#FFFFFF"
 ] as const;
+

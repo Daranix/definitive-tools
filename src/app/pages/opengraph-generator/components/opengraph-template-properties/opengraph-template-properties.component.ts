@@ -1,15 +1,17 @@
 import { NgClass, NgStyle } from '@angular/common';
 import { Component, effect, model, output, signal } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
-import { BackgroundType, GRADIENT_DIRECTIONS, GRADIENT_COMBINATIONS, SOLID_COLORS, GradientDirection, TemplateType } from '../../constants';
+import { BackgroundType, GRADIENT_DIRECTIONS, GRADIENT_COMBINATIONS, SOLID_COLORS, GradientDirection, TemplateType, BACKGROUND_OVERLAY_PATTERNS_VIEW, BACKGROUND_OVERLAY_COLORS } from '../../constants';
 import { FormsModule } from '@angular/forms';
 import { FONT_TYPES } from '../opengraph-font-options/opengraph-font-options.component';
-import { OpenGraphBackgroundGradient, OpenGraphBackgroundImage, OpenGraphBackgroundSolid, OpenGraphData } from '../../types';
+import { OpenGraphBackgroundGradient, OpenGraphBackgroundImage, OpenGraphBackgroundOverlay, OpenGraphBackgroundSolid, OpenGraphData } from '../../types';
 import { OpengraphTemplateFormComponent } from './opengraph-template-form/opengraph-template-form.component';
+import { ContextMenuDirective } from '@/app/directives/context-menu.directive';
+import { OpengraphBackgroundOverlayOptionsComponent } from '../opengraph-background-overlay-options/opengraph-background-overlay-options.component';
 
 @Component({
   selector: 'app-opengraph-template-properties',
-  imports: [LucideAngularModule, NgClass, NgStyle, FormsModule, OpengraphTemplateFormComponent],
+  imports: [LucideAngularModule, NgClass, NgStyle, FormsModule, OpengraphTemplateFormComponent, ContextMenuDirective, OpengraphBackgroundOverlayOptionsComponent],
   templateUrl: './opengraph-template-properties.component.html',
   styleUrl: './opengraph-template-properties.component.scss'
 })
@@ -33,6 +35,8 @@ export class OpengraphTemplatePropertiesComponent {
   readonly BACKGROUND_GRADIENT_COMBINATIONS = GRADIENT_COMBINATIONS;
   readonly BACKGROUND_SOLID_COLORS = SOLID_COLORS;
   readonly GRADIENT_DIRECTIONS = GRADIENT_DIRECTIONS;
+  readonly BACKGROUND_OVERLAY_PATTERNS_VIEW = BACKGROUND_OVERLAY_PATTERNS_VIEW;
+
 
   readonly BACKGROUND_TYPES = [
     { key: 'gradient', value: 'Gradient' },
@@ -81,6 +85,12 @@ export class OpengraphTemplatePropertiesComponent {
   readonly backgroundTypeSelected = signal<BackgroundType>('gradient');
   readonly backgroundColorSelected = signal<string | string[]>(GRADIENT_COMBINATIONS[0]);
   readonly gradientDirectionSelected = signal<GradientDirection>(GRADIENT_DIRECTIONS[0]);
+  readonly gridOverlayPattern = model<OpenGraphBackgroundOverlay>({
+    pattern: 'grid',
+    color: BACKGROUND_OVERLAY_COLORS[0],
+    opacity: 1,
+    blurRadius: 0
+  });
 
 
   private getBackgroundData(): OpenGraphData['background'] {
@@ -103,7 +113,7 @@ export class OpengraphTemplatePropertiesComponent {
         } satisfies OpenGraphBackgroundImage;
     }
   }
-  
+
   gradientStyle(gradient: string[]) {
     return `linear-gradient(to ${this.gradientDirectionSelected()}, ${gradient.join(', ')})`;
   }

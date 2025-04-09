@@ -1,14 +1,9 @@
-import { GradientDirection } from "./constants";
+import { BackgroundOverlayPattern, GradientDirection } from "./constants";
 
 export interface OpenGraphData {
     background: OpenGraphBackground;
     templateProperties: OpenGraphTemplate;
-    gridOverlayPattern: {
-        pattern: string;
-        color: string;
-        opacity: number;
-        blurRadius: number;
-    }
+    gridOverlayPattern: OpenGraphBackgroundOverlay;
 }
 
 export type OpenGraphTemplate = OpenGraphTemplateImageRight | OpenGraphTemplateHero | OpenGraphTemplateLogos | OpenGraphTemplateBasic | OpenGraphTemplateNotice;
@@ -105,6 +100,13 @@ export type OpenGraphBackgroundImage = {
     type: 'image';
     url: string;
 };
+
+export type OpenGraphBackgroundOverlay = {
+    pattern: BackgroundOverlayPattern;
+    color: string;
+    opacity: number;
+    blurRadius: number;
+}
 
 export type OpenGraphFontWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
 

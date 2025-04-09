@@ -6,7 +6,7 @@ import { contentChild, Directive, ElementRef, HostListener, inject, Input, OnIni
 })
 export class ContextMenuDirective implements OnInit {
   // Mobile breakpoint (in pixels)
-  private readonly MOBILE_BREAKPOINT = 768;
+  private readonly MOBILE_BREAKPOINT = 1024;
 
   private readonly document = inject(DOCUMENT);
   private readonly platformId = inject(PLATFORM_ID);
@@ -79,9 +79,12 @@ export class ContextMenuDirective implements OnInit {
     this.renderer.setStyle(this.overlayElement, 'z-index', '999');
     this.renderer.setStyle(this.overlayElement, 'display', 'none');
     
+
+    const parent = this.isMobileView() ? this.document.body : this.getScrollParent(this.el.nativeElement);
+
     // Add elements to the body
-    this.renderer.appendChild(this.document.body, this.overlayElement);
-    this.renderer.appendChild(this.document.body, this.menuElement);
+    this.renderer.appendChild(parent, this.overlayElement);
+    this.renderer.appendChild(parent, this.menuElement);
   }
 
   private openMenu() {
@@ -114,6 +117,7 @@ export class ContextMenuDirective implements OnInit {
     if (!this.menuElement) return;
     
     // Set positioning as regular context menu
+    this.renderer.setStyle(this.menuElement, 'display', 'block');
     this.renderer.setStyle(this.menuElement, 'position', 'absolute');
     this.renderer.setStyle(this.menuElement, 'bottom', null);
     this.renderer.setStyle(this.menuElement, 'left', null);
@@ -124,15 +128,19 @@ export class ContextMenuDirective implements OnInit {
     this.renderer.setStyle(this.menuElement, 'max-height', null);
     this.renderer.setStyle(this.menuElement, 'overflow-y', null);
     this.renderer.setStyle(this.menuElement, 'z-index', '1000');
-    
-    // Position the menu near the button
-    const buttonRect = this.el.nativeElement.getBoundingClientRect();
-    
-    this.renderer.setStyle(this.menuElement, 'top', `${buttonRect.bottom + window.scrollY}px`);
-    this.renderer.setStyle(this.menuElement, 'left', `${buttonRect.left + window.scrollX}px`);
-    this.renderer.setStyle(this.menuElement, 'display', 'block');
 
-    this.scrollListener = this.renderer.listen('window', 'scroll', () => this.positionContextMenu(), { capture: true });
+
+    setTimeout(() => {
+      this.positionContextMenu();
+    }, 10);
+    
+
+    this.scrollListener = this.renderer.listen('window', 'scroll', () => {
+      this.positionContextMenu();
+      /*if(this.isMenuOpen) {
+        this.closeMenu();
+      }*/
+    }, { capture: true });
   }
 
   private openBottomSheet() {
@@ -225,17 +233,27 @@ export class ContextMenuDirective implements OnInit {
 
   private positionContextMenu() {
     if (!this.menuElement || !this.el.nativeElement) return;
+    // Position the menu near the button
+    const buttonRect = this.el.nativeElement.getBoundingClientRect();
+    const menuRect = this.menuElement!.getBoundingClientRect();
 
-    // Get the bounding rectangle of the trigger element
-    const triggerRect = this.el.nativeElement.getBoundingClientRect();
+    const scrollableParent = this.getScrollParent(this.el.nativeElement);
+    const scrolledParent = scrollableParent?.offsetTop ?? 0
 
-    // Calculate the position
-    const left = triggerRect.left + window.scrollX;
-    const top = triggerRect.bottom + window.scrollY;
+    const hasSpaceBottom = (buttonRect.bottom + menuRect.height) - scrolledParent < window.innerHeight;
 
-    // Set the position of the menu
-    this.renderer.setStyle(this.menuElement, 'left', `${left}px`);
-    this.renderer.setStyle(this.menuElement, 'top', `${top}px`);
+    if(hasSpaceBottom) {
+      const top = buttonRect.bottom + scrollY;
+      this.renderer.setStyle(this.menuElement, 'top', `${top}px`);
+    } else {
+      const top = (buttonRect.top + scrollY) - menuRect.height;
+      // this.renderer.setStyle(this.menuElement, 'top', `0px`);
+      this.renderer.setStyle(this.menuElement, 'top', `${top}px`);
+    }
+
+
+    // this.renderer.setStyle(this.menuElement, 'top', `${buttonRect.bottom + window.scrollY}px`);
+    this.renderer.setStyle(this.menuElement, 'left', `${buttonRect.left + window.scrollX}px`);
   }
 
   ngOnDestroy() {
@@ -257,6 +275,22 @@ export class ContextMenuDirective implements OnInit {
     
     if (this.resizeListener) {
       this.resizeListener();
+    }
+  }
+
+  private getScrollParent(node: HTMLElement | Node | null): HTMLElement | null {
+    if (node == null) {
+      return null;
+    }
+  
+    if(!(node instanceof HTMLElement)) {
+      return null;
+    }
+
+    if (node.scrollHeight > node.clientHeight) {
+      return node;
+    } else {
+      return this.getScrollParent(node.parentNode);
     }
   }
 }
