@@ -1,4 +1,4 @@
-import { NgStyle } from '@angular/common';
+import { NgClass, NgStyle } from '@angular/common';
 import { Component, effect, input, model, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FontTypesDefinition, OpenGraphFontWeight, OpenGraphTemplateFormInputFontOptions } from '../../types';
@@ -67,7 +67,7 @@ export const FONT_COLORS = [
 
 @Component({
   selector: 'app-opengraph-font-options',
-  imports: [FormsModule, NgStyle],
+  imports: [FormsModule, NgStyle, NgClass],
   templateUrl: './opengraph-font-options.component.html',
   styleUrl: './opengraph-font-options.component.scss'
 })
@@ -123,15 +123,6 @@ export class OpengraphFontOptionsComponent {
       this.fontColor.set(value.fontColor);
     });
 
-  }
-
-  private getFontOptions(): OpenGraphTemplateFormInputFontOptions {
-    return {
-      fontFamily: this.fontFamily()!,
-      fontWeight: this.fontWeight()!,
-      fontSize: this.fontSize()!,
-      fontColor: this.fontColor()!
-    };
   }
 
 }

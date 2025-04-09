@@ -47,9 +47,11 @@
                             <div class="h-9 min-h-9 w-9 min-w-9">
                                 <button type="button" role="radio"
                                     (click)="fontColor.set(fontColorOpt)"
-                                    class="aspect-square h-4 w-4 rounded-full border border-primary text-primary shadow focus:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 peer sr-only">
+                                    [id]="fontColorOpt"
+                                    class="aspect-square h-4 w-4 rounded-full border shadow focus:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 peer sr-only">
                                 </button>
                                 <label
+                                    [ngClass]="{ 'border-indigo-600 border-2': fontColor() === fontColorOpt }"
                                     class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 block aspect-square cursor-pointer rounded-md border-2"
                                     [for]="fontColorOpt" [ngStyle]="{ 'background': fontColorOpt }">
                                 </label>

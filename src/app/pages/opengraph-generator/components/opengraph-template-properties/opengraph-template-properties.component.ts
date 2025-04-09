@@ -22,12 +22,7 @@ export class OpengraphTemplatePropertiesComponent {
       this.propertiesUpdated.emit({
         background: this.getBackgroundData(),
         templateProperties: this.templateProperties(),
-        gridOverlayPattern: {
-          pattern: 'none',
-          color: '#000000',
-          opacity: 1,
-          blurRadius: 0
-        }
+        gridOverlayPattern: this.gridOverlayPattern()
       });
     });
   }
@@ -88,7 +83,7 @@ export class OpengraphTemplatePropertiesComponent {
   readonly gridOverlayPattern = model<OpenGraphBackgroundOverlay>({
     pattern: 'grid',
     color: BACKGROUND_OVERLAY_COLORS[0],
-    opacity: 1,
+    opacity: 50,
     blurRadius: 0
   });
 

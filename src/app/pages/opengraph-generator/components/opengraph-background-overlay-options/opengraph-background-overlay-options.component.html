@@ -11,6 +11,7 @@
                 @for(pattern of BACKGROUND_OVERLAY_PATTERNS; track $index) {
                 @let patternView = BACKGROUND_OVERLAY_PATTERNS_VIEW[pattern];
                 <button type="button" [ngClass]="{ 'border-indigo-600 border-2': overlayPattern() === pattern }"
+                    (click)="overlayPattern.set(pattern)"
                     class="flex flex-col justify-center align-middle items-center rounded-md border px-4 py-2 w-full text-left font-semibold hover:bg-gray-100 hover:text-gray-700 transition">
                     <lucide-angular [name]="patternView.icon" class="block w-6 h-6"></lucide-angular>
                     {{ patternView.label }}
@@ -25,10 +26,10 @@
                 <div class="flex flex-wrap gap-1">
                     @for (overlayColorOpt of BACKGROUND_OVERLAY_COLORS; track $index) {
                     <div class="h-9 min-h-9 w-9 min-w-9">
-                        <button type="button" role="radio" (click)="overlayColor.set(overlayColorOpt)"
-                            class="aspect-square h-4 w-4 rounded-full border border-primary text-primary shadow focus:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 peer sr-only">
+                        <button type="button" role="radio" (click)="overlayColor.set(overlayColorOpt)" [id]="overlayColorOpt"
+                            class="aspect-square h-4 w-4 rounded-full border shadow focus:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 peer sr-only">
                         </button>
-                        <label
+                        <label [ngClass]="{ 'border-indigo-600 border-2': overlayColor() === overlayColorOpt }"
                             class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 block aspect-square cursor-pointer rounded-md border-2"
                             [for]="overlayColorOpt" [ngStyle]="{ 'background': overlayColorOpt }">
                         </label>
@@ -37,13 +38,12 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Overlay Opacity -->
         <div class="mb-6">
             <label for="qrSize" class="block text-gray-700 text-sm font-bold mb-2">Opacity</label>
             <div class="flex items-center">
-                <input type="range" min="0" max="100"
-                    [(ngModel)]="overlayOpacity" #overlayOpacityRef
+                <input type="range" min="0" max="100" [(ngModel)]="overlayOpacity" #overlayOpacityRef
                     class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
                 <span class="ml-4 text-gray-700 w-12 text-center">{{ overlayOpacityRef.value }}%</span>
             </div>
@@ -53,8 +53,7 @@
         <div class="mb-6">
             <label for="blurRadius" class="block text-gray-700 text-sm font-bold mb-2">Blur Radius</label>
             <div class="flex items-center">
-                <input type="range" min="0" max="100"
-                    [(ngModel)]="overlayBlurRadius" #overlayBlurRadiusRef
+                <input type="range" min="0" max="100" [(ngModel)]="overlayBlurRadius" #overlayBlurRadiusRef
                     class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
                 <span class="ml-4 text-gray-700 w-12 text-center">{{ overlayBlurRadiusRef.value }}%</span>
             </div>

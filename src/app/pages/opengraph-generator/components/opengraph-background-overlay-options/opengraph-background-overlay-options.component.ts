@@ -19,10 +19,10 @@ export class OpengraphBackgroundOverlayOptionsComponent {
   readonly BACKGROUND_OVERLAY_COLORS = BACKGROUND_OVERLAY_COLORS;
   readonly BACKGROUND_OVERLAY_PATTERNS_VIEW = BACKGROUND_OVERLAY_PATTERNS_VIEW;
 
-  readonly overlayPattern = model<BackgroundOverlayPattern>('none');
-  readonly overlayColor = model<string>(BACKGROUND_OVERLAY_COLORS[0]);
-  readonly overlayOpacity = model<number>(1);
-  readonly overlayBlurRadius = model<number>(0);
+  readonly overlayPattern = model<BackgroundOverlayPattern>();
+  readonly overlayColor = model<string>();
+  readonly overlayOpacity = model<number>();
+  readonly overlayBlurRadius = model<number>();
   readonly overlayOptions = model<OpenGraphBackgroundOverlay>();
 
 
