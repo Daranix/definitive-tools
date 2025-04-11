@@ -7,6 +7,7 @@ import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import satori from 'satori';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { ImageRightRenderFn, RenderFunction } from './templates';
+import { HeroRenderFn } from './templates/hero';
 @Component({
   selector: 'app-opengraph-template-builder',
   imports: [],
@@ -27,7 +28,7 @@ export class OpengraphTemplateBuilderComponent implements AfterViewInit {
 
   readonly RENDER_FUNCTIONS = {
     'image-right': ImageRightRenderFn,
-    'hero': ImageRightRenderFn,
+    'hero': HeroRenderFn,
     'logos': ImageRightRenderFn,
     'basic': ImageRightRenderFn,
     'notice': ImageRightRenderFn

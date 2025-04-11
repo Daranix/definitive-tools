@@ -34,7 +34,7 @@ export type OpenGraphTemplateHero = {
         value: string;
         fontOptions: OpenGraphTemplateFormInputFontOptions;
     };
-    image: string;
+    image?: OpenGraphImage;
 };
 
 export type OpenGraphTemplateLogos = {

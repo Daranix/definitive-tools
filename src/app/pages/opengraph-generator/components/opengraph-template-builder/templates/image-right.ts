@@ -39,10 +39,11 @@ export const ImageRightRenderFn: RenderFunction = (data: Partial<OpenGraphData>)
                                                     type: "h1",
                                                     props: {
                                                         children: templateProperties.tag.value ?? '',
-                                                        "tw": "rounded-full border border-black px-4 py-2 mb-6",
                                                         style: {
-                                                            ...getStylesFromFontOptions(templateProperties.tag.fontOptions)
-                                                        }
+                                                            ...getStylesFromFontOptions(templateProperties.tag.fontOptions),
+                                                            "borderColor": templateProperties.tag.fontOptions.fontColor
+                                                        },
+                                                        "tw": "rounded-full border px-4 py-2 mb-6",
                                                     }
                                                 } : undefined,
                                                 "tw": "flex"
