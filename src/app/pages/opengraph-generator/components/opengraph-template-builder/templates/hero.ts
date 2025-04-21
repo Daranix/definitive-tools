@@ -1,5 +1,5 @@
 import { FontData, OpenGraphData, OpenGraphTemplateHero } from "../../../types";
-import { getBackground, getStylesFromFontOptions, RenderFunction } from "./utils";
+import { getBackground, getBackgroundOverlayPattern, getBlurBackgroundOverlay, getStylesFromFontOptions, RenderFunction } from "./utils";
 
 export const HeroRenderFn: RenderFunction = (data: Partial<OpenGraphData>) => {
 
@@ -13,8 +13,7 @@ export const HeroRenderFn: RenderFunction = (data: Partial<OpenGraphData>) => {
                     type: "div",
                     props: {
                         "style": {
-                            // "background": "conic-gradient(at calc(100% - 2px) calc(100% - 2px), #366 270deg, #0000 0), conic-gradient(at calc(100% - 1px) calc(100% - 1px),#a9a9a9 270deg, #0000 0)",
-                            "backgroundSize": "100px 100px, 20px 20px",
+                            ...getBackgroundOverlayPattern(data.gridOverlayPattern!),
                             "filter": "blur(0.5px)",
                             "backgroundPosition": "0 0, 0.65rem 0.65rem"
                         },
@@ -25,7 +24,7 @@ export const HeroRenderFn: RenderFunction = (data: Partial<OpenGraphData>) => {
                     type: "div",
                     props: {
                         "style": {
-                            "boxShadow": "inset 0 0 40px 80px rgba(255, 255, 255, 0.3)",
+                            ...getBlurBackgroundOverlay(data.gridOverlayPattern?.blurRadius ?? 0),
                             "pointerEvents": "none"
                         },
                         "tw": "flex absolute inset-0 z-0"

@@ -46,9 +46,9 @@ export const BACKGROUND_OVERLAY_PATTERNS_VIEW = {
 } as const satisfies Record<BackgroundOverlayPattern, { icon: string, label: string }>;
 
 export const BACKGROUND_OVERLAY_COLORS = [
-    'rgb(3, 7, 18)',
-    'rgb(107, 114, 128)',
-    'rgb(249, 250, 251)'
+    'rgba(3, 7, 18, 0.5)',
+    'rgba(107, 114, 128, 0.5)',
+    'rgba(249, 250, 251, 0.5)'
 ];
 
 export const GRADIENT_COMBINATIONS = [

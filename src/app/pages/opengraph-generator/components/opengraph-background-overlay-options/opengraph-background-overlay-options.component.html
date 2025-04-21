@@ -29,8 +29,8 @@
                         <button type="button" role="radio" (click)="overlayColor.set(overlayColorOpt)" [id]="overlayColorOpt"
                             class="aspect-square h-4 w-4 rounded-full border shadow focus:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 peer sr-only">
                         </button>
-                        <label [ngClass]="{ 'border-indigo-600 border-2': overlayColor() === overlayColorOpt }"
-                            class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 block aspect-square cursor-pointer rounded-md border-2"
+                        <label [ngClass]="{ 'border-indigo-600 border-2': overlayColor() === overlayColorOpt, 'border-gray-400': overlayColor() !== overlayColorOpt }"
+                            class="border text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 block aspect-square cursor-pointer rounded-md"
                             [for]="overlayColorOpt" [ngStyle]="{ 'background': overlayColorOpt }">
                         </label>
                     </div>
