@@ -112,5 +112,7 @@ export function getBackgroundOverlayPattern(backgroundOverlay: OpenGraphBackgrou
     return {
         ...PATTERN_CONFIGURATION_PROPERTIES[backgroundOverlay.pattern],
         backgroundImage,
+        backgroundOpacity: backgroundOverlay.opacity,
+        maskImage: `radial-gradient(circle, black ${100 - backgroundOverlay.blurRadius}%, transparent 80%)`
     };
 }

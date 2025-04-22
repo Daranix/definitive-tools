@@ -23,16 +23,6 @@ export const HeroRenderFn: RenderFunction = (data: Partial<OpenGraphData>) => {
                 {
                     type: "div",
                     props: {
-                        "style": {
-                            ...getBlurBackgroundOverlay(data.gridOverlayPattern?.blurRadius ?? 0),
-                            "pointerEvents": "none"
-                        },
-                        "tw": "flex absolute inset-0 z-0"
-                    }
-                },
-                {
-                    type: "div",
-                    props: {
                         children: [
                             {
                                 type: "div",
