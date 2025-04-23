@@ -13,9 +13,7 @@ export const HeroRenderFn: RenderFunction = (data: Partial<OpenGraphData>) => {
                     type: "div",
                     props: {
                         "style": {
-                            ...getBackgroundOverlayPattern(data.gridOverlayPattern!),
-                            "filter": "blur(0.5px)",
-                            "backgroundPosition": "0 0, 0.65rem 0.65rem"
+                            ...getBackgroundOverlayPattern(data.gridOverlayPattern!)
                         },
                         "tw": "flex absolute inset-0 z-0"
                     }

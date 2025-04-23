@@ -51,7 +51,7 @@ type BackgroundOverlaySomePattern = Exclude<BackgroundOverlayPattern, 'none'>;
 
 
 const GRID_PATTERN = (color: string) => `linear-gradient(to right, ${color} 1px, transparent 1px), linear-gradient(to bottom, ${color} 1px, transparent 1px)`;
-const DOTS_PATTERN = (color: string) => {
+const DOTS_PATTERN = (color: string, opacity: number) => {
     const svg = `<svg
         width="20px"
         height="20px"
@@ -62,7 +62,7 @@ const DOTS_PATTERN = (color: string) => {
     >
         <defs></defs>
         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-            <g id="dots" fill="${color}" fill-opacity="0.55">
+            <g id="dots" fill="${color}" fill-opacity="${opacity / 100}">
             <circle cx="3" cy="3" r="3"></circle>
             <circle cx="13" cy="13" r="3"></circle>
             </g>
@@ -72,9 +72,9 @@ const DOTS_PATTERN = (color: string) => {
     return `url(data:image/svg+xml;base64,${btoa(svg)})`;
 };
 
-const GRAPH_PATTERN = (color: string) => {
+const GRAPH_PATTERN = (color: string, opacity: number) => {
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
-            <g fill-rule="evenodd" fill="${color}" fill-opacity="0.5">
+            <g fill-rule="evenodd" fill="${color}" fill-opacity="${opacity / 100}">
                 <g>
                     <path opacity=".5" d="M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z"/>
                     <path d="M6 5V0H5v5H0v1h5v94h1V6h94V5H6z"/>
@@ -108,7 +108,7 @@ export function getBackgroundOverlayPattern(backgroundOverlay: OpenGraphBackgrou
         return {};
     }
 
-    const backgroundImage = PATTERN_CONFIGURATION_PROPERTIES[backgroundOverlay.pattern].backgroundImage(backgroundOverlay.color);
+    const backgroundImage = PATTERN_CONFIGURATION_PROPERTIES[backgroundOverlay.pattern].backgroundImage(backgroundOverlay.color, backgroundOverlay.opacity);
     return {
         ...PATTERN_CONFIGURATION_PROPERTIES[backgroundOverlay.pattern],
         backgroundImage,
