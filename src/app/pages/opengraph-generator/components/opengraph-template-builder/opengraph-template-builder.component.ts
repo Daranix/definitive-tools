@@ -8,6 +8,7 @@ import satori from 'satori';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { ImageRightRenderFn, RenderFunction } from './templates';
 import { HeroRenderFn } from './templates/hero';
+import { LogosRenderFn } from './templates/logos';
 @Component({
   selector: 'app-opengraph-template-builder',
   imports: [],
@@ -29,14 +30,10 @@ export class OpengraphTemplateBuilderComponent implements AfterViewInit {
   readonly RENDER_FUNCTIONS = {
     'image-right': ImageRightRenderFn,
     'hero': HeroRenderFn,
-    'logos': ImageRightRenderFn,
+    'logos': LogosRenderFn,
     'basic': ImageRightRenderFn,
     'notice': ImageRightRenderFn
   } as const satisfies Record<TemplateType, RenderFunction>;
-  
-  constructor() {
-
-  }
 
   ngAfterViewInit(): void {
     runInInjectionContext(this.injector, () => {
@@ -60,6 +57,7 @@ export class OpengraphTemplateBuilderComponent implements AfterViewInit {
 
   private async generateSvgStringFromHtml(data: Partial<OpenGraphData>) {
     const { vdom, fontsData } = this.renderVDom(data);
+    console.log(vdom);
     const fonts = await this.fontLoader(fontsData);
     const svg = await satori(vdom, {
       width: 1200,
@@ -71,8 +69,8 @@ export class OpengraphTemplateBuilderComponent implements AfterViewInit {
 
   private renderVDom(data: Partial<OpenGraphData>) {
     const renderFn = this.RENDER_FUNCTIONS[this.templateSelected()!];
-    const vdom = renderFn(data);
-    return vdom;
+    const renderData = renderFn(data);
+    return renderData;
   }
 
   private async fontLoader(fontData: FontData[]): Promise<SatoriFontOptions[]> {

@@ -47,9 +47,9 @@ export type OpenGraphTemplateLogos = {
         value: string;
         fontOptions: OpenGraphTemplateFormInputFontOptions;
     };
-    firstLogo: string;
-    secondLogo: string;
-    thirdLogo: string;
+    firstLogo?: OpenGraphImage;
+    secondLogo?: OpenGraphImage;
+    thirdLogo?: OpenGraphImage;
 };
 
 export type OpenGraphTemplateBasic = {
