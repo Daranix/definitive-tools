@@ -50,7 +50,17 @@ export function getBlurBackgroundOverlay(blurRadius: OpenGraphBackgroundOverlay[
 type BackgroundOverlaySomePattern = Exclude<BackgroundOverlayPattern, 'none'>;
 
 
-const GRID_PATTERN = (color: string) => `linear-gradient(to right, ${color} 1px, transparent 1px), linear-gradient(to bottom, ${color} 1px, transparent 1px)`;
+const GRID_PATTERN = (color: string, opacity: number) => {
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+            <g fill="none" opacity="${opacity / 100}">
+            <path d="M48 47.5001L0 47.5001" stroke="${color}"/>
+            <path d="M47.5 0V48" stroke="${color}"/>
+        </g>
+        </svg>`.trim();
+
+    return `url(data:image/svg+xml;base64,${btoa(svg)})`;
+};
+
 const DOTS_PATTERN = (color: string, opacity: number) => {
     const svg = `<svg
         width="20px"

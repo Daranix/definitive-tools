@@ -9,6 +9,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { ImageRightRenderFn, RenderFunction } from './templates';
 import { HeroRenderFn } from './templates/hero';
 import { LogosRenderFn } from './templates/logos';
+import { BasicRenderFn } from './templates/basic';
 @Component({
   selector: 'app-opengraph-template-builder',
   imports: [],
@@ -31,7 +32,7 @@ export class OpengraphTemplateBuilderComponent implements AfterViewInit {
     'image-right': ImageRightRenderFn,
     'hero': HeroRenderFn,
     'logos': LogosRenderFn,
-    'basic': ImageRightRenderFn,
+    'basic': BasicRenderFn,
     'notice': ImageRightRenderFn
   } as const satisfies Record<TemplateType, RenderFunction>;
 

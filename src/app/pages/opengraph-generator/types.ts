@@ -54,7 +54,7 @@ export type OpenGraphTemplateLogos = {
 
 export type OpenGraphTemplateBasic = {
     type: 'basic';
-    tag: {
+    description: {
         value: string;
         fontOptions: OpenGraphTemplateFormInputFontOptions;
     };
@@ -62,7 +62,7 @@ export type OpenGraphTemplateBasic = {
         value: string;
         fontOptions: OpenGraphTemplateFormInputFontOptions;
     };
-    image: string;
+    image?: OpenGraphImage;
 };
 
 export type OpenGraphTemplateNotice = {
