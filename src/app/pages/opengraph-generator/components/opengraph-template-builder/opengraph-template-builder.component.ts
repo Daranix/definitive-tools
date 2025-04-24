@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, computed, inject, Injector, input, PLATFORM_ID, runInInjectionContext, signal, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, computed, inject, Injector, input, output, PLATFORM_ID, runInInjectionContext, signal, ViewEncapsulation } from '@angular/core';
 import { FontData, OpenGraphData, SatoriFontOptions } from '../../types';
 import { TemplateType } from '../../constants';
 import { environment } from '@/environments/environment';
@@ -19,6 +19,7 @@ export class OpengraphTemplateBuilderComponent implements AfterViewInit {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly injector = inject(Injector);
 
+  readonly previewUpdated = output<string>();
   readonly data = input.required<Partial<OpenGraphData>>();
 
   readonly templateSelected = computed(() => this.data().templateProperties?.type);
@@ -45,6 +46,7 @@ export class OpengraphTemplateBuilderComponent implements AfterViewInit {
           const blob = new Blob([svgStr], { type: 'image/svg+xml' });
           const url = URL.createObjectURL(blob);
           this.outputSvgUrl.set(url);
+          this.previewUpdated.emit(url);
         });
       }
     });

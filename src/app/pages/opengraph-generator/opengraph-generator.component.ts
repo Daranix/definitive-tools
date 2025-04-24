@@ -17,7 +17,7 @@ import { MetadataService } from '@/app/services/metadata.service';
     OpengraphTemplateSelectorComponent,
     OpengraphTemplatePropertiesComponent,
     OpengraphTemplateBuilderComponent
-],
+  ],
   templateUrl: './opengraph-generator.component.html',
   styleUrl: './opengraph-generator.component.scss'
 })
@@ -33,7 +33,7 @@ export class OpengraphGeneratorComponent {
   constructor() {
     this.metadataService.updateMetadata({
       title: 'Opengraph Generator',
-      description: `Create professional Opengraph images and Twitter Cards that boost your website's visibility on social media platforms. Easy-to-use tool for generating custom social previews.`, 
+      description: `Create professional Opengraph images and Twitter Cards that boost your website's visibility on social media platforms. Easy-to-use tool for generating custom social previews.`,
       keywords: 'opengraph generator, twitter cards, social media preview, meta tags, social share images, open graph protocol, social media optimization, website metadata, custom social images'
     })
   }
@@ -43,15 +43,42 @@ export class OpengraphGeneratorComponent {
     this.data.set(data);
   }
 
-  onPreviewUpdated(svgStr: string) {
-    
-    if(this.outputSvgUrl()) {
-      URL.revokeObjectURL(this.outputSvgUrl()!);
-    }
-
-    const blob = new Blob([svgStr], { type: 'image/svg+xml' });
-    const url = URL.createObjectURL(blob);
-    this.outputSvgUrl.set(url);
+  onPreviewUpdated(blobSvgUrl: string) {
+    this.outputSvgUrl.set(blobSvgUrl);
   }
 
+  async downloadImage() {
+
+    // Create a canvas element
+    const canvas = document.createElement('canvas');
+
+    canvas.width = 1200;
+    canvas.height = 630;
+
+    // Set canvas context
+    const ctx = canvas.getContext('2d')!;
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+
+    const img = new Image();
+    img.onload = function() {
+      // Draw image to canvas
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+      // Convert canvas to JPG data URL
+      const quality = 0.9;
+      canvas.toBlob((blob) => {
+        const blobUrl = URL.createObjectURL(blob!);
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = 'opengraph-image.png';
+        a.click();
+        URL.revokeObjectURL(blobUrl)
+      }, 'image/png');
+
+    }
+
+    img.src = this.outputSvgUrl()!;
+  }
 }

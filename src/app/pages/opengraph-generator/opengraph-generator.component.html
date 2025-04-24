@@ -26,9 +26,11 @@
             <div class="lg:col-span-2">
                 <div class="bg-white rounded-lg shadow-md p-6">
                     <h2 class="text-xl font-bold mb-6 text-gray-800 text-center">Image Preview</h2>
-                    <app-opengraph-template-builder [data]="data()" ngSkipHydration></app-opengraph-template-builder>
+                    <app-opengraph-template-builder (previewUpdated)="onPreviewUpdated($event)" [data]="data()" ngSkipHydration></app-opengraph-template-builder>
                     <div class="flex flex-col gap-4">
                         <button
+                        type="button"
+                            (click)="downloadImage()"
                             class="bg-indigo-700 text-white font-medium py-2 px-4 rounded hover:bg-indigo-800 transition flex items-center justify-center gap-2">
                             <lucide-angular name="download" class="inline" />
                             Download Image
