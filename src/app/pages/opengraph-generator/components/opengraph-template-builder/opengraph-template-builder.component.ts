@@ -6,10 +6,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import satori from 'satori';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
-import { ImageRightRenderFn, RenderFunction } from './templates';
-import { HeroRenderFn } from './templates/hero';
-import { LogosRenderFn } from './templates/logos';
-import { BasicRenderFn } from './templates/basic';
+import { BasicRenderFn, HeroRenderFn, ImageRightRenderFn, LogosRenderFn, NoticeRenderFn, RenderFunction } from './templates';
 @Component({
   selector: 'app-opengraph-template-builder',
   imports: [],
@@ -33,7 +30,7 @@ export class OpengraphTemplateBuilderComponent implements AfterViewInit {
     'hero': HeroRenderFn,
     'logos': LogosRenderFn,
     'basic': BasicRenderFn,
-    'notice': ImageRightRenderFn
+    'notice': NoticeRenderFn
   } as const satisfies Record<TemplateType, RenderFunction>;
 
   ngAfterViewInit(): void {

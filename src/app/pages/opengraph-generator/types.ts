@@ -75,7 +75,7 @@ export type OpenGraphTemplateNotice = {
         value: string;
         fontOptions: OpenGraphTemplateFormInputFontOptions;
     };
-    logo: string;
+    logo?: OpenGraphImage;
 };
 
 export type OpenGraphTemplateFormInputFontOptions = {
