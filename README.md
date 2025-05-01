@@ -18,7 +18,9 @@ Definitive Tools is a collection of free, easy-to-use online tools designed to m
 | ⏳ | **Audio Format Converter** | Convert audio files to different formats.      |
 | ⏳ | **Image Format Converter** | Convert images to different formats. |
 | ⏳ | **Video Format Converter** | Convert videos to different formats. |
-
+| ✅ | **Open Graph Generator** | Generate professional Opengraph images and Twitter Cards that boost your website's visibility on social media platforms. |
+| ⏳ | **Image to SVG Converter** | Convert images to SVG (vector graphics) format. |
+| ⏳ | **Image Upscaler** | Upscale images to higher resolutions and more details. |
 
 ## How to Use
 
