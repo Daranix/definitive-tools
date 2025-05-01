@@ -7,6 +7,16 @@
     <main class="flex-grow container mx-auto px-4 py-8">
 
         <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+
+            <div class="flex flex-col justify-center mb-4 gap-4">
+                <div class="flex items-center justify-center">
+                    <app-select-button [options]="platforms" [(ngModel)]="selectedPlatform"></app-select-button>
+                </div>
+                <div class="text-sm text-gray-600 text-center">
+                    Dimensions: {{ dimensionsByPlatform[selectedPlatform()].width }}x{{ dimensionsByPlatform[selectedPlatform()].height }}  
+                </div>
+            </div>
+
             <h2 class="text-xl font-bold mb-6 text-gray-800 text-center">Choose template</h2>
             <div>
                 <app-opengraph-template-selector
@@ -19,6 +29,7 @@
                 <div class="bg-white rounded-lg shadow-md p-6">
                     <h2 class="text-xl font-bold mb-6 text-gray-800">Template Properties</h2>
                     <app-opengraph-template-properties [selectedTemplate]="templateSelected()"
+                        [dimensions]="dimensions()"
                         (propertiesUpdated)="onPropertiesUpdated($event)"></app-opengraph-template-properties>
                 </div>
             </div>
@@ -29,7 +40,7 @@
                     <app-opengraph-template-builder (previewUpdated)="onPreviewUpdated($event)" [data]="data()" ngSkipHydration></app-opengraph-template-builder>
                     <div class="flex flex-col gap-4">
                         <button
-                        type="button"
+                            type="button"
                             (click)="downloadImage()"
                             class="bg-indigo-700 text-white font-medium py-2 px-4 rounded hover:bg-indigo-800 transition flex items-center justify-center gap-2">
                             <lucide-angular name="download" class="inline" />

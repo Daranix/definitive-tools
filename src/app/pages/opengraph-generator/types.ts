@@ -4,6 +4,7 @@ export interface OpenGraphData {
     background: OpenGraphBackground;
     templateProperties: OpenGraphTemplate;
     gridOverlayPattern: OpenGraphBackgroundOverlay;
+    dimensions: { width: number, height: number };
 }
 
 export type OpenGraphTemplate = OpenGraphTemplateImageRight | OpenGraphTemplateHero | OpenGraphTemplateLogos | OpenGraphTemplateBasic | OpenGraphTemplateNotice;

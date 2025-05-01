@@ -40,7 +40,19 @@
                     }
                 }
                 @case ('image') {
-
+                    <div class="relative col-span-8">
+                        @let imageRef = backgroundImage();
+                        @if(!imageRef) {
+                            <app-drag-and-drop-file name="image" (onFileChange)="onImageFileChanged($event)"></app-drag-and-drop-file>
+                        } @else {
+                            <div class="w-full px-3 py-2 flex border border-gray-300 rounded-md bg-white text-gray-900 focus:ring-indigo-500 focus:border-indigo-500">
+                                <div><span class="font-bold">File:</span>&nbsp;<span>{{ imageRef.name }}</span></div>
+                                <button (click)="backgroundImage.set(undefined)" class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-indigo-600">
+                                    <lucide-angular name="x" class="w-4 h-4"></lucide-angular>
+                                </button>
+                            </div>
+                        }
+                    </div>
                 }
             }
         </div>

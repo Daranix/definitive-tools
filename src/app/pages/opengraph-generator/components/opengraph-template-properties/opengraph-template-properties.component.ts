@@ -1,5 +1,5 @@
 import { NgClass, NgStyle } from '@angular/common';
-import { Component, effect, model, output, signal } from '@angular/core';
+import { Component, effect, input, linkedSignal, model, output, signal } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
 import { BackgroundType, GRADIENT_DIRECTIONS, GRADIENT_COMBINATIONS, SOLID_COLORS, GradientDirection, TemplateType, BACKGROUND_OVERLAY_PATTERNS_VIEW, BACKGROUND_OVERLAY_COLORS } from '../../constants';
 import { FormsModule } from '@angular/forms';
@@ -8,10 +8,12 @@ import { OpenGraphBackgroundGradient, OpenGraphBackgroundImage, OpenGraphBackgro
 import { OpengraphTemplateFormComponent } from './opengraph-template-form/opengraph-template-form.component';
 import { ContextMenuDirective } from '@/app/directives/context-menu.directive';
 import { OpengraphBackgroundOverlayOptionsComponent } from '../opengraph-background-overlay-options/opengraph-background-overlay-options.component';
+import { DragAndDropFileComponent } from '@/app/components/drag-and-drop-file/drag-and-drop-file.component';
+import { getChecksumSha256 } from '@/app/utils/functions';
 
 @Component({
   selector: 'app-opengraph-template-properties',
-  imports: [LucideAngularModule, NgClass, NgStyle, FormsModule, OpengraphTemplateFormComponent, ContextMenuDirective, OpengraphBackgroundOverlayOptionsComponent],
+  imports: [LucideAngularModule, NgClass, NgStyle, FormsModule, OpengraphTemplateFormComponent, ContextMenuDirective, OpengraphBackgroundOverlayOptionsComponent, DragAndDropFileComponent],
   templateUrl: './opengraph-template-properties.component.html',
   styleUrl: './opengraph-template-properties.component.scss'
 })
@@ -22,7 +24,8 @@ export class OpengraphTemplatePropertiesComponent {
       this.propertiesUpdated.emit({
         background: this.getBackgroundData(),
         templateProperties: this.templateProperties(),
-        gridOverlayPattern: this.gridOverlayPattern()
+        gridOverlayPattern: this.gridOverlayPattern(),
+        dimensions: this.dimensions()
       });
     });
   }
@@ -49,6 +52,13 @@ export class OpengraphTemplatePropertiesComponent {
     'bottom left': 'move-down-left',
     'bottom right': 'move-down-right',
   } as const satisfies Record<GradientDirection, string>;
+
+  readonly dimensions = input.required<{ width: number, height: number }>();
+  readonly backgroundImage = signal<File | undefined>(undefined);
+  readonly backgroundImageUrl = signal<{ url?: string, checksum?: string | undefined }>({
+    url: undefined,
+    checksum: undefined
+  }, { equal: (a, b) => a.checksum === b.checksum });
 
   readonly propertiesUpdated = output<OpenGraphData>();
 
@@ -104,7 +114,7 @@ export class OpengraphTemplatePropertiesComponent {
       case 'image':
         return {
           type: 'image',
-          url: ''
+          url: this.backgroundImageUrl().url || ''
         } satisfies OpenGraphBackgroundImage;
     }
   }
@@ -112,5 +122,29 @@ export class OpengraphTemplatePropertiesComponent {
   gradientStyle(gradient: string[]) {
     return `linear-gradient(to ${this.gradientDirectionSelected()}, ${gradient.join(', ')})`;
   }
+
+  async onImageFileChanged(file: File | undefined) {
+    if(file) {
+      const checksum = await getChecksumSha256(file);
+      if(checksum !== this.backgroundImageUrl().checksum) {
+        const oldUrl = this.backgroundImageUrl().url;
+        this.backgroundImageUrl.set({
+          url: URL.createObjectURL(file),
+          checksum
+        });
+        if(oldUrl) {
+          URL.revokeObjectURL(oldUrl);
+        }
+      }
+    } else {
+      this.backgroundImageUrl.set({
+        url: undefined,
+        checksum: undefined
+      })
+    }
+
+    this.backgroundImage.set(file);
+  }
+
 
 }

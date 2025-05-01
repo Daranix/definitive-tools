@@ -57,11 +57,10 @@ export class OpengraphTemplateBuilderComponent implements AfterViewInit {
 
   private async generateSvgStringFromHtml(data: Partial<OpenGraphData>) {
     const { vdom, fontsData } = this.renderVDom(data);
-    console.log(vdom);
     const fonts = await this.fontLoader(fontsData);
     const svg = await satori(vdom, {
-      width: 1200,
-      height: 600,
+      width: data.dimensions?.width || 1200,
+      height: data.dimensions?.height || 630,
       fonts
     });
     return svg;
