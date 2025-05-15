@@ -124,7 +124,12 @@ export class QrGeneratorComponent {
       },
       backgroundOptions: {
         color: data.backgroundColor,
+      },
+      qrOptions: {
+        mode: 'Byte',
+        typeNumber: 2
       }
+
     });
 
     const blob = await qr.getRawData("webp");
