@@ -127,7 +127,7 @@ export class QrGeneratorComponent {
       },
       qrOptions: {
         mode: 'Byte',
-        typeNumber: 2
+        typeNumber: 0
       }
 
     });
