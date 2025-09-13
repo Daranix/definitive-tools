@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, computed, inject, model, PLATFORM_ID, signal, viewChild } from '@angular/core';
+import { Component, computed, inject, PLATFORM_ID, signal, viewChild } from '@angular/core';
 import { MonacoEditorComponent } from "@/app/components/monaco-editor/monaco-editor.component";
 import { isPlatformBrowser } from '@angular/common';
 
@@ -16,13 +16,16 @@ export class SwaggerEditorComponent {
   readonly editorContainer = viewChild(MonacoEditorComponent);
   readonly editorOptions = signal<monaco.editor.IStandaloneEditorConstructionOptions | undefined>({
     language: 'yaml',
-    theme: 'vs-dark'
+    theme: 'vs-dark',
+    contextmenu: false
   });
 
   handleEditorLoaded(editor: monaco.editor.IStandaloneCodeEditor) {
-    if(this.isBrowser()) {
+    if (this.isBrowser()) {
 
-      editor.getContribution('editor.contrib.contextmenu')?.dispose();
+      this.editorContainer()!.removeContextMenuElement();
+
+      // editor.getContribution('editor.contrib.contextmenu')?.dispose();
       /*// @ts-ignore
       const realMethod = contextmenu!._getMenuActions!;
       // @ts-ignore
@@ -40,14 +43,14 @@ export class SwaggerEditorComponent {
     console.log(pasteEvent);
     try {
       JSON.parse(pasteEvent.fullText!);
-      this.editorOptions.update((options) => {
-        return Object.assign(options ?? {}, { language: 'yaml' });
-      });
+      (window as any).monaco.editor.setModelLanguage((window as any).monaco.editor.getModels()[0], 'json');
     } catch (e) {
-      this.editorOptions.update((options) => {
-        return Object.assign(options ?? {}, { language: 'yaml' });
-      });
+      (window as any).monaco.editor.setModelLanguage((window as any).monaco.editor.getModels()[0], 'yaml');
     }
+
+    setTimeout(() => {
+        this.editorContainer()?.formatCode();
+    }, 250);
   }
 
 }

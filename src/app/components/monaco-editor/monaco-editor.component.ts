@@ -1,7 +1,5 @@
 /// <reference path="../../../../node_modules/monaco-editor/monaco.d.ts" />
-import { Component, Input, AfterViewInit, ElementRef, ViewChild, Output, EventEmitter, OnChanges, OnDestroy, viewChild, model, output } from '@angular/core';
-import { toObservable } from '@angular/core/rxjs-interop';
-import { configureMonacoYaml } from 'monaco-yaml';
+import { Component, Input, AfterViewInit, ElementRef, Output, EventEmitter, OnChanges, OnDestroy, viewChild, model, output } from '@angular/core';
 
 let loadedMonaco = false;
 let loadPromise: Promise<void>;
@@ -125,11 +123,28 @@ export class MonacoEditorComponent implements AfterViewInit, OnChanges, OnDestro
       this.onPaste.emit({ event: pasteEvent, pastedText: pastedText, fullText: this.codeEditorInstance!.getValue() });
     });
 
-    this.onEditorLoaded.emit(this.codeEditorInstance);
   }
 
   getEditorInstance(): monaco.editor.IStandaloneCodeEditor | undefined {
     return this.codeEditorInstance;
+  }
+
+  removeContextMenuElement() {
+    // const keepIds = [];
+    const contextmenu = this.codeEditorInstance!.getContribution('editor.contrib.contextmenu')! as any;
+    const realMethod = contextmenu._getMenuActions;
+    console.log(realMethod())
+    contextmenu._getMenuActions = function () {
+      const items = realMethod.apply(contextmenu, arguments);
+      /*return items.filter(function (item) {
+        return keepIds.includes(item.id);
+      });*/
+      return items;
+    };
+  }
+
+  formatCode() {
+    this.codeEditorInstance?.getAction('editor.action.formatDocument')?.run();
   }
 
 }
