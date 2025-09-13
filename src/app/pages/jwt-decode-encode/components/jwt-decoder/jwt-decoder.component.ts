@@ -21,8 +21,8 @@ export class JwtDecoderComponent {
   readonly jwtEncoded = model<string>();
   readonly jwtDecoded = computed(() => this.decodeJwt());
   readonly isSecretValid = resource({
-    loader: ({ request }) => this.validateToken(request),
-    request: () => ({ token: this.jwtEncoded(), secret: this.secret() }),
+    loader: ({ params }) => this.validateToken(params),
+    params: () => ({ token: this.jwtEncoded(), secret: this.secret() }),
   })
 
   async generateExample() {

@@ -4,7 +4,6 @@ import { TemplateType } from '../../constants';
 import { environment } from '@/environments/environment';
 import { isPlatformBrowser } from '@angular/common';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
-import satori from 'satori';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { BasicRenderFn, HeroRenderFn, ImageRightRenderFn, LogosRenderFn, NoticeRenderFn, RenderFunction } from './templates';
 @Component({
@@ -18,6 +17,7 @@ export class OpengraphTemplateBuilderComponent implements AfterViewInit {
 
   private readonly platformId = inject(PLATFORM_ID);
   private readonly injector = inject(Injector);
+  private readonly cachedFonts = new Map<string, SatoriFontOptions>();
 
   readonly previewUpdated = output<string>();
   readonly data = input.required<Partial<OpenGraphData>>();
@@ -58,6 +58,10 @@ export class OpengraphTemplateBuilderComponent implements AfterViewInit {
   private async generateSvgStringFromHtml(data: Partial<OpenGraphData>) {
     const { vdom, fontsData } = this.renderVDom(data);
     const fonts = await this.fontLoader(fontsData);
+    (window as any).process = {
+      env: { DEBUG: undefined },
+    };
+    const { default: satori } = await import('satori');
     const svg = await satori(vdom, {
       width: data.dimensions?.width || 1200,
       height: data.dimensions?.height || 630,
@@ -74,21 +78,30 @@ export class OpengraphTemplateBuilderComponent implements AfterViewInit {
 
   private async fontLoader(fontData: FontData[]): Promise<SatoriFontOptions[]> {
 
-    // Avoid duplicate requests
-
+    // Avoid duplicate requests and preload fonts
+    // FIXME: Save the map of cachedFonts outside of the component
     const fontMap = new Map<string, FontData>();
+    const preloadedFonts = new Map<string, SatoriFontOptions>();
     for (const font of fontData) {
-      fontMap.set(`${font.fontFamily.key}-${font.fontWeight}`, font);
+      const key = `${font.fontFamily.key}-${font.fontWeight}`;
+      if(!this.cachedFonts.has(key)) {
+        fontMap.set(key, font);
+      } else {
+        preloadedFonts.set(key, this.cachedFonts.get(key)!);
+      }
     }
-    const fontsToLoad = Array.from(fontMap.values());
+    const fontsToLoad = Array.from(fontMap.entries());
     // ---
 
-    const result = fontsToLoad.map(async (font) => {
+    const result = fontsToLoad.map(async ([key, font]) => {
       const response = await fetch(`https://cdn.jsdelivr.net/fontsource/fonts/${font.fontFamily.key}@latest/${font.fontFamily.lang ?? 'latin'}-${font.fontWeight}-normal.woff`);
       const buffer = await response.arrayBuffer();
-      return { data: buffer, name: font.fontFamily.label, weight: font.fontWeight } satisfies SatoriFontOptions;
+      const fontData = { data: buffer, name: font.fontFamily.label, weight: font.fontWeight } satisfies SatoriFontOptions;
+      this.cachedFonts.set(key, fontData);
+      return fontData;
     });
 
-    return await Promise.all(result);
+    const externalFonts = await Promise.all(result);
+    return [...preloadedFonts.values(), ...externalFonts];
   }
 }
