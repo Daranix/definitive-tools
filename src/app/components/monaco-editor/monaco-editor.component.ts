@@ -23,7 +23,7 @@ export class MonacoEditorComponent implements AfterViewInit, OnChanges, OnDestro
   readonly onEditorLoaded = output<monaco.editor.IStandaloneCodeEditor>();
 
   @Input() code = '';
-  @Output() codeChange = new EventEmitter<String>();
+  @Output() codeChange = new EventEmitter<string>();
 
   private resizeObserver?: ResizeObserver;
 
@@ -122,6 +122,8 @@ export class MonacoEditorComponent implements AfterViewInit, OnChanges, OnDestro
         : '';
       this.onPaste.emit({ event: pasteEvent, pastedText: pastedText, fullText: this.codeEditorInstance!.getValue() });
     });
+
+    this.onEditorLoaded.emit(this.codeEditorInstance!);
 
   }
 
