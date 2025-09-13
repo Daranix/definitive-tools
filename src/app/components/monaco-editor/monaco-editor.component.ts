@@ -1,5 +1,7 @@
 /// <reference path="../../../../node_modules/monaco-editor/monaco.d.ts" />
-import { Component, Input, AfterViewInit, ElementRef, ViewChild, Output, EventEmitter, OnChanges, OnDestroy, viewChild, model } from '@angular/core';
+import { Component, Input, AfterViewInit, ElementRef, ViewChild, Output, EventEmitter, OnChanges, OnDestroy, viewChild, model, output } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { configureMonacoYaml } from 'monaco-yaml';
 
 let loadedMonaco = false;
 let loadPromise: Promise<void>;
@@ -19,17 +21,22 @@ export class MonacoEditorComponent implements AfterViewInit, OnChanges, OnDestro
 
   private monacoScriptTag?: HTMLScriptElement;
 
+  readonly onPaste = output<{ event: monaco.editor.IPasteEvent, pastedText?: string, fullText?: string }>();
+  readonly onEditorLoaded = output<monaco.editor.IStandaloneCodeEditor>();
+
   @Input() code = '';
   @Output() codeChange = new EventEmitter<String>();
 
   private resizeObserver?: ResizeObserver;
 
   // Holds instance of the current code editor
-  codeEditorInstance?: monaco.editor.IStandaloneCodeEditor;
+  private codeEditorInstance?: monaco.editor.IStandaloneCodeEditor;
 
   constructor() { }
   ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
+    this.monacoScriptTag?.remove();
+    this.resizeObserver?.disconnect();
+    this.codeEditorInstance?.dispose();
   }
 
   // supports two-way binding
@@ -89,7 +96,13 @@ export class MonacoEditorComponent implements AfterViewInit, OnChanges, OnDestro
     // monaco.languages.setMonarchTokensProvider('CustomLang', this.configService.getCustomLangTokenProviders());
     // monaco.editor.defineTheme('customLangTheme', this.configService.getCustomLangTheme());   // add your custom theme here
 
-    this.codeEditorInstance = monaco.editor.create(this.editorContainer()!.nativeElement, this.options());
+    /*
+    const monaco = (<any>window).monaco;
+    configureMonacoYaml(monaco);*/
+
+    const options = this.options();
+
+    this.codeEditorInstance = monaco.editor.create(this.editorContainer()!.nativeElement, options);
 
     // To support two-way binding of the code
     this.codeEditorInstance!.getModel()!.onDidChangeContent(e => {
@@ -102,6 +115,21 @@ export class MonacoEditorComponent implements AfterViewInit, OnChanges, OnDestro
     });
 
     this.resizeObserver.observe(this.editorContainer()!.nativeElement);
+
+    this.codeEditorInstance.onDidPaste((pasteEvent) => {
+      pasteEvent.clipboardEvent?.preventDefault();
+      // Monaco gives you the range + pasted text
+      const pastedText = pasteEvent.range
+        ? this.codeEditorInstance!.getModel()!.getValueInRange(pasteEvent.range)
+        : '';
+      this.onPaste.emit({ event: pasteEvent, pastedText: pastedText, fullText: this.codeEditorInstance!.getValue() });
+    });
+
+    this.onEditorLoaded.emit(this.codeEditorInstance);
+  }
+
+  getEditorInstance(): monaco.editor.IStandaloneCodeEditor | undefined {
+    return this.codeEditorInstance;
   }
 
 }
