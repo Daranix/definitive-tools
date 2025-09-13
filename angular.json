@@ -17,6 +17,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "loader": {
+              ".ttf": "binary"
+            },
             "externalDependencies": ["onnxruntime-node", "sharp"],
             "outputPath": "dist/definitive-tools",
             "index": "src/index.html",
@@ -30,7 +33,8 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              }
+              },
+              { "glob": "**/*", "input": "node_modules/monaco-editor/min", "output": "./assets/monaco/" }
             ],
             "styles": [
               "src/styles.scss"
@@ -40,7 +44,8 @@
             "outputMode": "server",
             "ssr": {
               "entry": "src/server.ts"
-            }
+            },
+            "webWorkerTsConfig": "tsconfig.worker.json"
           },
           "configurations": {
             "production": {
@@ -105,10 +110,14 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "webWorkerTsConfig": "tsconfig.worker.json"
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

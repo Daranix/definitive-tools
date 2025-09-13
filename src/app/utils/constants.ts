@@ -57,6 +57,14 @@ export const TOOLS: ReadonlyArray<Tool> = [
         icon: 'bolt',
         color: 'indigo',
         category: 'Image Tools'
+    },
+    {
+        id: 'swagger-editor',
+        name: 'Swagger Editor',
+        description: 'Edit and visualize Swagger API specifications.',
+        icon: 'bolt',
+        color: 'indigo',
+        category: 'Dev Tools'
     }
 ]
 

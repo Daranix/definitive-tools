@@ -17,6 +17,7 @@ export const routes: Routes = [
             { path: 'random-password-generator', loadComponent: () => import('./pages/random-password-generator/random-password-generator.component').then(m => m.RandomPasswordGeneratorComponent), data: { id: 'random-password-generator' } },
             { path: 'jwt-decode-encode', loadComponent: () => import('./pages/jwt-decode-encode/jwt-decode-encode.component').then(m => m.JwtDecodeEncodeComponent), data: { id: 'jwt-decode-encode' } },
             { path: 'opengraph-generator', loadComponent: () => import('./pages/opengraph-generator/opengraph-generator.component').then(m => m.OpengraphGeneratorComponent), data: { id: 'opengraph-generator' } },
+            { path: 'swagger-editor', loadComponent: () => import('./pages/swagger-editor/swagger-editor.component').then(m => m.SwaggerEditorComponent), data: { id: 'swagger-editor' } },
         ],
         component: BaseComponent
     },
