@@ -1,16 +1,25 @@
-@if(isBrowser()) {
-    <div class="flex w-full h-full">
-        <div class="flex-1">
-            <app-monaco-editor [options]="editorOptions()" (onPaste)="handleOnPaste($event)" (onEditorLoaded)="handleEditorLoaded($event)" [(code)]="definitionSpec" (codeChange)="onContentChanges($event)"></app-monaco-editor>
-        </div>
-        <div class="flex-1">
-            <div class="h-full overflow-hidden">
-                <div class="h-full overflow-y-auto">
-                    <div #custApiDocElement></div>
+<div class="flex flex-col h-full">
+    <div>
+        <app-swagger-editor-toolbar></app-swagger-editor-toolbar>
+    </div>
+    <div class="flex-1">
+        @if(isBrowser()) {
+            <div class="flex w-full h-full">
+                <div class="flex-1">
+                    <app-monaco-editor [options]="editorOptions()" (onPaste)="handleOnPaste($event)" (onEditorLoaded)="handleEditorLoaded($event)" [(code)]="definitionSpec" (codeChange)="onContentChanges($event)"></app-monaco-editor>
+                </div>
+                <div class="flex-1">
+                    <div class="h-full overflow-hidden">
+                        <div class="h-full overflow-y-auto">
+                            <div #custApiDocElement></div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
     </div>
-}
+</div>
+
+
 
 

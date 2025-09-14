@@ -1,0 +1,47 @@
+<nav class="border-b swagger-toolbar-nav">
+    <ul class="flex flex-row px-4">
+        <li class="nav-item">
+            <span class="nav-item-title">File</span>
+            <ul class="nav-subsection">
+                <li>
+                    <button>Import URL</button>
+                </li>
+                <li>
+                    <button>Import file</button>
+                </li>
+                <li>
+                    <button>Save as YAML</button>
+                </li>
+                <li>
+                    <button>Convert and save as JSON</button>
+                </li>
+                <li>
+                    <button>Load Petstore example</button>
+                </li>
+                <li>
+                    Clear editor
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <span class="nav-item-title">Generate Server</span>
+            <ul class="nav-subsection">
+                @for (generator of serverGenerators; track $index) {
+                    <li>
+                        <button>{{ generator }}</button>
+                    </li>
+                }
+            </ul>
+        </li>
+        <li class="nav-item">
+            <span class="nav-item-title">Generate Client</span>
+            <ul class="nav-subsection">
+                @for (generator of clientGenerators; track $index) {
+                    <li>
+                        <button>{{ generator }}</button>
+                    </li>
+                }
+            </ul>
+        </li>
+    </ul>
+</nav>

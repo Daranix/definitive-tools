@@ -1,0 +1,49 @@
+
+
+.swagger-toolbar-nav {
+
+    .nav-item {
+
+        position: relative;
+        @apply py-4 px-2;
+
+        .nav-item-title {
+            @apply px-2 py-4 text-xl;
+        }
+
+        & > .nav-subsection {
+            display: none;
+            min-width: 200px;
+        }
+
+        & > .nav-subsection > li > button {
+            @apply px-2 py-1 text-sm;
+        }
+
+        & > .nav-subsection > li:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 0.5rem;
+        }
+
+        &:hover {
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        &:hover > .nav-subsection {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            // top: 0;
+            // left: 10px;
+            background: rgb(240, 240, 240);
+            z-index: 10;
+            border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+            max-height: 50vh;
+        }
+    }
+
+}
+
+

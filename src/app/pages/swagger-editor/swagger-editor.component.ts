@@ -5,11 +5,12 @@ import { SwaggerUIBundle, SwaggerUIStandalonePreset } from 'swagger-ui-dist';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
 import YAML from 'yaml';
+import { SwaggerEditorToolbarComponent } from './components/swagger-editor-toolbar/swagger-editor-toolbar.component';
 
 const PETSTORE_API_DEFINITION = '/examples/swagger/petstore.yaml';
 @Component({
   selector: 'app-swagger-editor',
-  imports: [MonacoEditorComponent],
+  imports: [MonacoEditorComponent, SwaggerEditorToolbarComponent],
   templateUrl: './swagger-editor.component.html',
   styleUrl: './swagger-editor.component.scss'
 })
@@ -26,6 +27,7 @@ export class SwaggerEditorComponent implements AfterContentInit {
     contextmenu: false
   });
   readonly definitionSpec = model<string>('');
+  readonly hasSpec = signal<boolean>(false);
 
   ngAfterContentInit(): void {
     /*const ui = SwaggerUI({
@@ -79,15 +81,17 @@ export class SwaggerEditorComponent implements AfterContentInit {
     }
 
     if(!spec) {
+      this.hasSpec.set(false);
       return;
     }
-    
+
+    this.hasSpec.set(true);
     const result = SwaggerUIBundle({
       spec,
       domNode: this.custApiDocElement()?.nativeElement,
       deepLinking: true,
     });
-    console.log(result);
+
   }
 
 }
