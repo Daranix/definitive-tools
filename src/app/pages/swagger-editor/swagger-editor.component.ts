@@ -1,7 +1,6 @@
 import { AfterContentInit, Component, computed, ElementRef, inject, model, PLATFORM_ID, signal, viewChild } from '@angular/core';
 import { MonacoEditorComponent } from "@/app/components/monaco-editor/monaco-editor.component";
 import { isPlatformBrowser } from '@angular/common';
-import { SwaggerUIBundle, SwaggerUIStandalonePreset } from 'swagger-ui-dist';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
 import YAML from 'yaml';
@@ -30,10 +29,6 @@ export class SwaggerEditorComponent implements AfterContentInit {
   readonly hasSpec = signal<boolean>(false);
 
   ngAfterContentInit(): void {
-    /*const ui = SwaggerUI({
-      // spec: apiDocumentation,
-      domNode: this.custApiDocElement()?.nativeElement,
-    })*/
    
   }
 
@@ -66,7 +61,7 @@ export class SwaggerEditorComponent implements AfterContentInit {
     }
   }
 
-  onContentChanges(content: string) {
+  async onContentChanges(content: string) {
     
     let spec: Record<string, any> | null = null;
 
@@ -86,7 +81,8 @@ export class SwaggerEditorComponent implements AfterContentInit {
     }
 
     this.hasSpec.set(true);
-    const result = SwaggerUIBundle({
+    const { SwaggerUIBundle } = await import('swagger-ui-dist');
+    SwaggerUIBundle({
       spec,
       domNode: this.custApiDocElement()?.nativeElement,
       deepLinking: true,

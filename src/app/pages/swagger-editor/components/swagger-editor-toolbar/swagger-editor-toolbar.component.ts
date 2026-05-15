@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-swagger-editor-toolbar',
-  imports: [],
+  imports: [LucideAngularModule],
   templateUrl: './swagger-editor-toolbar.component.html',
   styleUrl: './swagger-editor-toolbar.component.scss'
 })

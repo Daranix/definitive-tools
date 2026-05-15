@@ -20,7 +20,7 @@
             "loader": {
               ".ttf": "binary"
             },
-            "externalDependencies": ["onnxruntime-node", "sharp"],
+            "externalDependencies": ["onnxruntime-node", "sharp", "swagger-ui-dist"],
             "outputPath": "dist/definitive-tools",
             "index": "src/index.html",
             "browser": "src/main.ts",
