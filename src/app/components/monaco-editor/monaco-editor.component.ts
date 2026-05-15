@@ -39,7 +39,7 @@ export class MonacoEditorComponent implements AfterViewInit, OnChanges, OnDestro
 
   // supports two-way binding
   ngOnChanges() {
-    if (this.codeEditorInstance) {
+    if (this.codeEditorInstance && this.code !== this.codeEditorInstance.getValue()) {
       this.codeEditorInstance.setValue(this.code);
     }
   }

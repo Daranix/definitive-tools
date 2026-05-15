@@ -1,4 +1,4 @@
-import { ArrowRightLeft, AtSign, Bolt, Bookmark, CaseUpper, CircleEllipsis, CircleOff, Code, Copy, Download, Grid, Grid2X2, Grid3X3, House, IdCard, Image, ImageOff, Info, Key, Link, LockKeyholeOpen, MapPin, Menu, MoveDown, MoveDownLeft, MoveDownRight, MoveLeft, MoveRight, MoveUp, MoveUpLeft, MoveUpRight, Phone, QrCode, RotateCw, Scissors, Settings, Shuffle, TabletSmartphone, Wifi, X } from 'lucide-angular';
+import { ArrowRightLeft, AtSign, Bolt, Bookmark, BookOpen, CaseUpper, ChevronDown, CircleEllipsis, CircleOff, Code, Copy, Download, FileText, Grid, Grid2X2, Grid3X3, House, IdCard, Image, ImageOff, Info, Key, Link, LockKeyholeOpen, MapPin, Menu, Monitor, MoveDown, MoveDownLeft, MoveDownRight, MoveLeft, MoveRight, MoveUp, MoveUpLeft, MoveUpRight, Phone, QrCode, RotateCw, Scissors, Server, Settings, Shuffle, TabletSmartphone, Trash2, Upload, Wifi, X } from 'lucide-angular';
 
 export interface Tool {
     id: string;
@@ -119,5 +119,12 @@ export const USED_ICONS = {
     Grid2X2,
     Grid,
     CircleEllipsis,
-    CircleOff
+    CircleOff,
+    FileText,
+    ChevronDown,
+    Server,
+    Monitor,
+    Upload,
+    BookOpen,
+    Trash2
 } as const;
