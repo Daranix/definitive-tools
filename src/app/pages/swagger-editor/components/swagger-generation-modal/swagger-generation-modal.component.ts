@@ -1,8 +1,13 @@
-import { Component, effect, ElementRef, inject, input, output, signal, viewChild } from '@angular/core';
+import { Component, effect, ElementRef, inject, input, output, signal, viewChild, untracked } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CheerpjService } from '@/app/core/services/cheerpj.service';
 
 const OPENAPI_GENERATOR_JAR = '/swagger-editor/openapi-generator-cli-7.22.0.jar';
+
+interface GeneratorConfig {
+  type: 'client' | 'server';
+  lang: string;
+}
 
 @Component({
   selector: 'app-swagger-generation-modal',
@@ -15,15 +20,17 @@ export class SwaggerGenerationModalComponent {
   private readonly cheerpjService = inject(CheerpjService);
 
   spec = input.required<string>();
-  generator = input.required<string>();
+  generator = input.required<GeneratorConfig>();
   
   onClose = output<void>();
 
-  readonly isGenerating = signal<boolean>(false);
-  readonly isMinimized = signal<boolean>(false);
+  readonly isGenerating = this.cheerpjService.isGenerating;
+  readonly isMinimized = this.cheerpjService.isMinimized;
   readonly generationStatus = signal<string>('Initializing...');
   readonly consoleLogs = signal<{message: string, type: 'info' | 'error'}[]>([]);
   readonly isInitialized = this.cheerpjService.isInitialized;
+
+  readonly cancelRequested = signal<boolean>(false);
 
   private originalLog = console.log;
   private originalError = console.error;
@@ -40,8 +47,22 @@ export class SwaggerGenerationModalComponent {
       }
     });
 
-    // Start generation automatically when component is initialized
-    this.startGeneration();
+    // Reactively start generation whenever the generator selection changes
+    effect(() => {
+      const gen = this.generator();
+      if (gen) {
+        // Always maximize when a new generator is selected to show the process
+        this.isMinimized.set(false);
+        untracked(() => this.startGeneration());
+      }
+    }, { allowSignalWrites: true });
+  }
+
+  cancelGeneration() {
+    if (!this.isGenerating()) return;
+    this.cancelRequested.set(true);
+    this.addConsoleLog('Cancellation requested by user. Aborting...', 'error');
+    this.generationStatus.set('Cancellation in progress...');
   }
 
   private setupConsoleInterception() {
@@ -68,39 +89,55 @@ export class SwaggerGenerationModalComponent {
   }
 
   async startGeneration() {
+    if (this.isGenerating()) return;
+    this.cancelRequested.set(false);
     this.setupConsoleInterception();
-    this.isGenerating.set(true);
-    this.generationStatus.set('Starting CheerpJ runtime...');
-
     try {
-      // 1. Ensure runtime is ready
-      await this.cheerpjService.initializeRuntime();
+      // 0. Reset state for new run
+      this.clearConsole();
+      this.isGenerating.set(true);
 
-      // 2. Prepare files
+      // 1. Ensure runtime is ready
+      this.generationStatus.set('Preparing CheerpJ runtime...');
+      await this.cheerpjService.initializeRuntime();
+      if (this.cancelRequested()) return;
+
+      // 2. Clear previous output to prevent bundling old files
+      this.generationStatus.set('Cleaning virtual filesystem...');
+      await this.clearOutputDirectory();
+      if (this.cancelRequested()) return;
+
+      // 3. Prepare files
       this.generationStatus.set('Preparing OpenAPI specification...');
       (window as any).cheerpOSAddStringFile('/str/openapi.yaml', this.spec());
+      if (this.cancelRequested()) return;
 
-      // 3. Run generator
-      this.generationStatus.set(`Generating ${this.generator()}...`);
-      // Using cheerpjRunJar is more robust as it uses the JAR's manifest for the main class and classpath
+      // 4. Run generator
+      this.generationStatus.set(`Generating ${this.generator().lang}...`);
       const jarPath = `/app${OPENAPI_GENERATOR_JAR}`;
       const exitCode = await (window as any).cheerpjRunJar(
         jarPath,
         'generate',
-        '-g', this.generator(),
+        '-g', this.generator().lang,
         '-i', '/str/openapi.yaml',
         '-o', '/files/out'
       );
+
+      if (this.cancelRequested()) {
+        this.addConsoleLog('Process finished after cancellation. Output discarded.', 'info');
+        return;
+      }
 
       if (exitCode !== 0) {
         throw new Error(`Generator exited with code ${exitCode}`);
       }
 
-      // 4. Bundle and download
+      // 5. Bundle and download
       await this.downloadGeneratedZip();
       this.generationStatus.set('Generation complete!');
 
     } catch (ex) {
+      if (this.cancelRequested()) return;
       console.error('Generation failed', ex);
       this.generationStatus.set('Generation failed.');
     } finally {
@@ -108,7 +145,25 @@ export class SwaggerGenerationModalComponent {
       this.restoreConsole();
     }
   }
-
+  private async clearOutputDirectory() {
+    try {
+      const dbName = await this.cheerpjService.findDatabaseName();
+      const db = await this.openIndexedDB(dbName);
+      const transaction = db.transaction(['files'], 'readwrite');
+      const store = transaction.objectStore('files');
+      
+      // Delete all entries in the /files/out/ range
+      const range = IDBKeyRange.bound('/files/out/', '/files/out/' + '\uffff');
+      const request = store.delete(range);
+      
+      await new Promise<void>((resolve, reject) => {
+        transaction.oncomplete = () => resolve();
+        transaction.onerror = () => reject(transaction.error);
+      });
+    } catch (e) {
+      console.warn('Failed to clear output directory, proceeding anyway...', e);
+    }
+  }
   private async downloadGeneratedZip() {
     try {
       const JSZip = (await import('jszip')).default;

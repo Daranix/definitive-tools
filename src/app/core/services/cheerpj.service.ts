@@ -2,13 +2,13 @@ import { Injectable, signal } from '@angular/core';
 
 const CHEERPJ_LOADER_URL = 'https://cjrtnc.leaningtech.com/4.3/loader.js';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class CheerpjService {
 
   readonly isInitialized = signal<boolean>(false);
-  private isLoaderInjected = false;
+  readonly isGenerating = signal<boolean>(false);
+  readonly isMinimized = signal<boolean>(false);
+  private static isLoaderInjected = false;
 
   constructor() { }
 
@@ -17,14 +17,20 @@ export class CheerpjService {
    * Uses loader isolation to prevent conflicts with Monaco's AMD loader.
    */
   async ensureLoaderLoaded(): Promise<void> {
-    if (this.isLoaderInjected && (window as any).cheerpjInit) return;
+    if (CheerpjService.isLoaderInjected || (window as any).cheerpjInit) {
+      CheerpjService.isLoaderInjected = true;
+      return;
+    }
 
     return new Promise((resolve, reject) => {
       // 1. Temporarily isolate Monaco's AMD loader
-      const originalDefine = (window as any).define;
-      const originalRequire = (window as any).require;
-      (window as any).define = undefined;
-      (window as any).require = undefined;
+      const win = window as any;
+      const originalDefine = win.define;
+      const originalRequire = win.require;
+      
+      // Use assignment instead of delete as window properties can be non-configurable
+      if (win.define) win.define = undefined;
+      if (win.require) win.require = undefined;
 
       // 2. Inject CheerpJ loader
       const script = document.createElement('script');
@@ -33,15 +39,15 @@ export class CheerpjService {
 
       script.onload = () => {
         // 3. Restore Monaco's loader
-        (window as any).define = originalDefine;
-        (window as any).require = originalRequire;
+        if (originalDefine) win.define = originalDefine;
+        if (originalRequire) win.require = originalRequire;
         
-        this.isLoaderInjected = true;
+        CheerpjService.isLoaderInjected = true;
         console.log('CheerpJ 4.3 loader injected and isolated.');
         
         // Wait a small bit for CheerpJ to fully register on window
         const check = setInterval(() => {
-          if ((window as any).cheerpjInit) {
+          if (win.cheerpjInit) {
             clearInterval(check);
             resolve();
           }
@@ -71,14 +77,17 @@ export class CheerpjService {
     }
 
     // Isolate global namespace during the entire initialization process
-    const originalDefine = (window as any).define;
-    const originalRequire = (window as any).require;
-    (window as any).define = undefined;
-    (window as any).require = undefined;
+    const win = window as any;
+    const originalDefine = win.define;
+    const originalRequire = win.require;
+    
+    // Use assignment instead of delete as window properties can be non-configurable
+    if (win.define) win.define = undefined;
+    if (win.require) win.require = undefined;
 
     try {
       console.log('Starting CheerpJ 4.3 runtime (Java 17) with isolation...');
-      await (window as any).cheerpjInit({ 
+      await win.cheerpjInit({ 
         version: 17,
         status: "none" // Suppress splash screen for better integration
       });
@@ -89,8 +98,8 @@ export class CheerpjService {
       throw err;
     } finally {
       // Restore Monaco's AMD loader immediately after CheerpJ is ready
-      if (originalDefine) (window as any).define = originalDefine;
-      if (originalRequire) (window as any).require = originalRequire;
+      if (originalDefine) win.define = originalDefine;
+      if (originalRequire) win.require = originalRequire;
     }
   }
 

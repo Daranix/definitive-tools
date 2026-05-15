@@ -24,7 +24,7 @@
             </svg>
           </button>
 
-          @if (!isGenerating()) {
+          @if (!isGenerating() || cancelRequested()) {
             <button (click)="close()" class="flex items-center gap-2 px-3 py-1.5 bg-white/5 hover:bg-white/10 text-white rounded-lg transition-all text-[10px] font-bold uppercase tracking-wider">
               <span>Close</span>
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -32,9 +32,14 @@
               </svg>
             </button>
           } @else {
-            <div class="flex items-center gap-2 px-3 py-1.5 bg-emerald-500/10 text-emerald-400 rounded-lg border border-emerald-500/20">
-              <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-              <span class="text-[10px] font-bold uppercase tracking-wider">Active</span>
+            <div class="flex items-center gap-2">
+              <button (click)="cancelGeneration()" class="px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-lg border border-red-500/20 text-[10px] font-bold uppercase tracking-wider transition-all">
+                Cancel
+              </button>
+              <div class="flex items-center gap-2 px-3 py-1.5 bg-emerald-500/10 text-emerald-400 rounded-lg border border-emerald-500/20">
+                <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                <span class="text-[10px] font-bold uppercase tracking-wider">Active</span>
+              </div>
             </div>
           }
         </div>

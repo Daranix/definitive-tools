@@ -2,14 +2,22 @@
 /// <reference path="../../../types/cheerpj.d.ts" />
 import { AfterContentInit, Component, computed, effect, ElementRef, inject, model, PLATFORM_ID, signal, viewChild } from '@angular/core';
 import { MonacoEditorComponent } from "@/app/components/monaco-editor/monaco-editor.component";
-import { isPlatformBrowser } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { lastValueFrom, Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import YAML from 'yaml';
 import { FormsModule } from '@angular/forms';
-import { SwaggerEditorToolbarComponent } from './components/swagger-editor-toolbar/swagger-editor-toolbar.component';
 import { SwaggerGenerationModalComponent } from './components/swagger-generation-modal/swagger-generation-modal.component';
+import { ToastService } from '@/app/services/toast.service';
+
+import { CheerpjService } from '@/app/core/services/cheerpj.service';
+import { SwaggerEditorToolbarComponent } from './components/swagger-editor-toolbar/swagger-editor-toolbar.component';
+
+interface GeneratorConfig {
+  type: 'client' | 'server';
+  lang: string;
+}
 
 const PETSTORE_API_DEFINITION = '/swagger-editor/examples/petstore.yaml';
 const OPENAPI_GENERATOR_JAR = '/swagger-editor/openapi-generator-cli-7.22.0.jar';
@@ -18,7 +26,8 @@ const RENDER_DEBOUNCE_MS = 500;
 
 @Component({
   selector: 'app-swagger-editor',
-  imports: [MonacoEditorComponent, SwaggerEditorToolbarComponent, SwaggerGenerationModalComponent, FormsModule],
+  imports: [MonacoEditorComponent, SwaggerEditorToolbarComponent, SwaggerGenerationModalComponent, FormsModule, CommonModule],
+  providers: [CheerpjService],
   templateUrl: './swagger-editor.component.html',
   styleUrl: './swagger-editor.component.scss'
 })
@@ -26,6 +35,8 @@ export class SwaggerEditorComponent implements AfterContentInit {
 
   private readonly platformId = inject(PLATFORM_ID);
   private readonly httpClient = inject(HttpClient);
+  private readonly cheerpjService = inject(CheerpjService);
+  private readonly toastService = inject(ToastService);
 
   readonly isBrowser = computed(() => isPlatformBrowser(this.platformId));
   readonly editorContainer = viewChild(MonacoEditorComponent);
@@ -35,15 +46,16 @@ export class SwaggerEditorComponent implements AfterContentInit {
     theme: 'vs-dark',
     contextmenu: false
   });
+
   readonly definitionSpec = model<string>('');
   readonly hasSpec = signal<boolean>(false);
   readonly isLoading = signal<boolean>(true);
   readonly isImportModalOpen = signal<boolean>(false);
   readonly importUrlInput = signal<string>('');
-  
-  readonly activeGenerator = signal<string | null>(null);
 
-  constructor() {}
+  readonly activeGenerator = signal<GeneratorConfig | null>(null);
+
+  constructor() { }
 
   /** Debounce subject — prevents re-rendering on every keystroke */
   private readonly contentChange$ = new Subject<string>();
@@ -142,7 +154,7 @@ export class SwaggerEditorComponent implements AfterContentInit {
         alert('Editor is empty. Nothing to save.');
         return;
       }
-      
+
       let jsonContent: string;
       try {
         const parsed = JSON.parse(content);
@@ -151,7 +163,7 @@ export class SwaggerEditorComponent implements AfterContentInit {
         const parsed = YAML.parse(content);
         jsonContent = JSON.stringify(parsed, null, 2);
       }
-      
+
       const blob = new Blob([jsonContent], { type: 'application/json' });
       this.downloadFile(blob, 'swagger.json');
     } catch (ex) {
@@ -168,7 +180,7 @@ export class SwaggerEditorComponent implements AfterContentInit {
     link.style.display = 'none';
     document.body.appendChild(link);
     link.click();
-    
+
     // Use a small timeout to ensure the browser has started the download
     // before revoking the URL and removing the element.
     setTimeout(() => {
@@ -189,9 +201,21 @@ export class SwaggerEditorComponent implements AfterContentInit {
     }
   }
 
-  async handleGenerateClient(generator: string) {
-    if (!this.isBrowser()) return;
-    this.activeGenerator.set(generator);
+  async handleGenerateClient(lang: string) {
+    if (this.cheerpjService.isGenerating()) {
+      // If already generating, maximize the modal so the user sees the active process
+      this.cheerpjService.isMinimized.set(false);
+      this.toastService.warning({
+        message: `A generation process is already active. Please wait or cancel it.`
+      });
+      return;
+    }
+    // Ensure modal is maximized for new generation
+    this.cheerpjService.isMinimized.set(false);
+    this.activeGenerator.set({
+      type: 'client',
+      lang: lang
+    });
   }
 
   private async renderSwaggerUI(content: string) {
