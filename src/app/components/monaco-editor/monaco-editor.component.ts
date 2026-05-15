@@ -39,8 +39,16 @@ export class MonacoEditorComponent implements AfterViewInit, OnChanges, OnDestro
 
   // supports two-way binding
   ngOnChanges() {
-    if (this.codeEditorInstance && this.code !== this.codeEditorInstance.getValue()) {
-      this.codeEditorInstance.setValue(this.code);
+    if (this.codeEditorInstance) {
+      const currentEditorValue = this.codeEditorInstance.getValue();
+      // Normalize line endings to prevent false-positive inequality that triggers setValue
+      const normalizedNewCode = (this.code || '').replace(/\r\n/g, '\n');
+      const normalizedEditorValue = currentEditorValue.replace(/\r\n/g, '\n');
+
+      if (normalizedNewCode !== normalizedEditorValue) {
+        // If we really must update the editor from the outside
+        this.codeEditorInstance.setValue(this.code);
+      }
     }
   }
 

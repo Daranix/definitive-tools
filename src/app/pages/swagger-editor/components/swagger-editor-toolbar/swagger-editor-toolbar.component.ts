@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, output } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
@@ -8,6 +8,16 @@ import { LucideAngularModule } from 'lucide-angular';
   styleUrl: './swagger-editor-toolbar.component.scss'
 })
 export class SwaggerEditorToolbarComponent {
+
+  readonly onImportUrl = output<void>();
+  readonly onImportFile = output<void>();
+  readonly onSaveYaml = output<void>();
+  readonly onSaveJson = output<void>();
+  readonly onLoadExample = output<void>();
+  readonly onClear = output<void>();
+
+  readonly onGenerateServer = output<string>();
+  readonly onGenerateClient = output<string>();
 
   readonly serverGenerators = [
     'aspnetcore',

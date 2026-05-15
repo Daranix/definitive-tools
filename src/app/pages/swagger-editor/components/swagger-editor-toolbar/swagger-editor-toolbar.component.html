@@ -1,51 +1,64 @@
 <nav class="flex items-center h-12 px-2 bg-white border-b border-gray-200 shadow-sm shrink-0">
     <div class="flex items-center gap-1">
         <span class="text-sm font-semibold text-gray-700 mr-4">Swagger Editor</span>
+        
+        <!-- File Menu -->
         <div class="relative group">
             <button class="flex items-center gap-1 px-3 py-1.5 text-sm text-gray-600 rounded hover:bg-gray-100 transition-colors">
                 <lucide-angular name="file-text" class="w-4 h-4" />
                 <span>File</span>
                 <lucide-angular name="chevron-down" class="w-3 h-3 ml-1 opacity-50" />
             </button>
-            <div class="hidden group-hover:flex absolute top-full left-0 mt-1 w-56 bg-white border border-gray-200 rounded-lg shadow-lg py-1 z-50">
-                <ul class="w-full">
-                    <li><button class="w-full text-left px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"><lucide-angular name="link" class="w-3.5 h-3.5" />Import URL</button></li>
-                    <li><button class="w-full text-left px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"><lucide-angular name="upload" class="w-3.5 h-3.5" />Import file</button></li>
-                    <li class="border-t border-gray-100 my-1"></li>
-                    <li><button class="w-full text-left px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"><lucide-angular name="download" class="w-3.5 h-3.5" />Save as YAML</button></li>
-                    <li><button class="w-full text-left px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"><lucide-angular name="download" class="w-3.5 h-3.5" />Convert and save as JSON</button></li>
-                    <li class="border-t border-gray-100 my-1"></li>
-                    <li><button class="w-full text-left px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"><lucide-angular name="book-open" class="w-3.5 h-3.5" />Load Petstore example</button></li>
-                    <li><button class="w-full text-left px-3 py-1.5 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2"><lucide-angular name="trash-2" class="w-3.5 h-3.5" />Clear editor</button></li>
-                </ul>
+            <!-- Dropdown Container with invisible bridge to prevent closing on gap hover -->
+            <div class="invisible group-hover:visible absolute top-[80%] left-0 pt-3 w-56 z-50 transition-all opacity-0 group-hover:opacity-100 group-hover:top-full">
+                <div class="bg-white border border-gray-200 rounded-lg shadow-xl py-1 overflow-hidden">
+                    <ul class="w-full">
+                        <li><button (click)="onImportUrl.emit()" class="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"><lucide-angular name="link" class="w-3.5 h-3.5" />Import URL</button></li>
+                        <li><button (click)="onImportFile.emit()" class="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"><lucide-angular name="upload" class="w-3.5 h-3.5" />Import file</button></li>
+                        <li class="border-t border-gray-100 my-1"></li>
+                        <li><button (click)="onSaveYaml.emit()" class="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"><lucide-angular name="download" class="w-3.5 h-3.5" />Save as YAML</button></li>
+                        <li><button (click)="onSaveJson.emit()" class="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"><lucide-angular name="download" class="w-3.5 h-3.5" />Convert and save as JSON</button></li>
+                        <li class="border-t border-gray-100 my-1"></li>
+                        <li><button (click)="onLoadExample.emit()" class="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"><lucide-angular name="book-open" class="w-3.5 h-3.5" />Load Petstore example</button></li>
+                        <li><button (click)="onClear.emit()" class="w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2"><lucide-angular name="trash-2" class="w-3.5 h-3.5" />Clear editor</button></li>
+                    </ul>
+                </div>
             </div>
         </div>
+
+        <!-- Generate Server Menu -->
         <div class="relative group">
             <button class="flex items-center gap-1 px-3 py-1.5 text-sm text-gray-600 rounded hover:bg-gray-100 transition-colors">
                 <lucide-angular name="server" class="w-4 h-4" />
                 <span>Generate Server</span>
                 <lucide-angular name="chevron-down" class="w-3 h-3 ml-1 opacity-50" />
             </button>
-            <div class="hidden group-hover:flex absolute top-full left-0 mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg py-1 z-50">
-                <ul class="w-full">
-                    @for (generator of serverGenerators; track generator) {
-                        <li><button class="w-full text-left px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50">{{ generator }}</button></li>
-                    }
-                </ul>
+            <div class="invisible group-hover:visible absolute top-[80%] left-0 pt-3 w-48 z-50 transition-all opacity-0 group-hover:opacity-100 group-hover:top-full">
+                <div class="bg-white border border-gray-200 rounded-lg shadow-xl py-1 overflow-hidden">
+                    <ul class="w-full">
+                        @for (generator of serverGenerators; track generator) {
+                            <li><button (click)="onGenerateServer.emit(generator)" class="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">{{ generator }}</button></li>
+                        }
+                    </ul>
+                </div>
             </div>
         </div>
+
+        <!-- Generate Client Menu -->
         <div class="relative group">
             <button class="flex items-center gap-1 px-3 py-1.5 text-sm text-gray-600 rounded hover:bg-gray-100 transition-colors">
                 <lucide-angular name="monitor" class="w-4 h-4" />
                 <span>Generate Client</span>
                 <lucide-angular name="chevron-down" class="w-3 h-3 ml-1 opacity-50" />
             </button>
-            <div class="hidden group-hover:flex absolute top-full left-0 mt-1 w-56 bg-white border border-gray-200 rounded-lg shadow-lg py-1 z-50">
-                <ul class="w-full">
-                    @for (generator of clientGenerators; track generator) {
-                        <li><button class="w-full text-left px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50">{{ generator }}</button></li>
-                    }
-                </ul>
+            <div class="invisible group-hover:visible absolute top-[80%] left-0 pt-3 w-56 z-50 transition-all opacity-0 group-hover:opacity-100 group-hover:top-full">
+                <div class="bg-white border border-gray-200 rounded-lg shadow-xl py-1 overflow-hidden">
+                    <ul class="w-full">
+                        @for (generator of clientGenerators; track generator) {
+                            <li><button (click)="onGenerateClient.emit(generator)" class="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">{{ generator }}</button></li>
+                        }
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
