@@ -1,79 +1,110 @@
-<div class="fixed inset-0 z-[150] flex items-center justify-center p-8 bg-gray-950/40 backdrop-blur-md animate-in fade-in duration-300">
-  <div class="relative w-full max-w-5xl h-[80vh] bg-gray-900 border border-white/10 rounded-2xl shadow-3xl overflow-hidden flex flex-col shadow-[0_0_100px_rgba(79,70,229,0.2)]">
-    
-    <!-- Terminal Header -->
-    <div class="flex items-center justify-between px-6 py-4 bg-black/40 border-b border-white/5">
-      <div class="flex items-center gap-4">
-        <div class="flex gap-1.5">
-          <div class="w-3 h-3 rounded-full bg-red-500/50"></div>
-          <div class="w-3 h-3 rounded-full bg-amber-500/50"></div>
-          <div class="w-3 h-3 rounded-full bg-emerald-500/50"></div>
-        </div>
-        <div class="h-4 w-px bg-white/10 mx-2"></div>
-        <div class="flex flex-col">
-          <span class="text-[10px] font-bold text-indigo-400 uppercase tracking-widest leading-none mb-1">OpenAPI Generator CLI</span>
-          <h3 class="text-xs font-medium text-white/90 leading-none">{{ generationStatus() }}</h3>
-        </div>
-      </div>
+@if (!isMinimized()) {
+  <div class="fixed inset-0 z-[150] flex items-center justify-center p-8 bg-gray-950/40 backdrop-blur-md animate-in fade-in duration-300">
+    <div class="relative w-full max-w-5xl h-[80vh] bg-gray-900 border border-white/10 rounded-2xl shadow-3xl overflow-hidden flex flex-col shadow-[0_0_100px_rgba(79,70,229,0.2)]">
       
-      <div class="flex items-center gap-3">
-        @if (!isGenerating()) {
-          <button (click)="close()" class="flex items-center gap-2 px-3 py-1.5 bg-white/5 hover:bg-white/10 text-white rounded-lg transition-all text-[10px] font-bold uppercase tracking-wider">
-            <span>Close Console</span>
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      <!-- Terminal Header -->
+      <div class="flex items-center justify-between px-6 py-4 bg-black/40 border-b border-white/5">
+        <div class="flex items-center gap-4">
+          <div class="flex gap-1.5">
+            <div class="w-3 h-3 rounded-full bg-red-500/50"></div>
+            <div class="w-3 h-3 rounded-full bg-amber-500/50"></div>
+            <div class="w-3 h-3 rounded-full bg-emerald-500/50"></div>
+          </div>
+          <div class="h-4 w-px bg-white/10 mx-2"></div>
+          <div class="flex flex-col">
+            <span class="text-[10px] font-bold text-indigo-400 uppercase tracking-widest leading-none mb-1">OpenAPI Generator CLI</span>
+            <h3 class="text-xs font-medium text-white/90 leading-none">{{ generationStatus() }}</h3>
+          </div>
+        </div>
+        
+        <div class="flex items-center gap-3">
+          <button (click)="toggleMinimize()" class="p-2 text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-all" title="Minimize">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
             </svg>
           </button>
-        } @else {
-          <div class="flex items-center gap-2 px-3 py-1.5 bg-emerald-500/10 text-emerald-400 rounded-lg border border-emerald-500/20">
-            <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-            <span class="text-[10px] font-bold uppercase tracking-wider">Generation in Progress</span>
+
+          @if (!isGenerating()) {
+            <button (click)="close()" class="flex items-center gap-2 px-3 py-1.5 bg-white/5 hover:bg-white/10 text-white rounded-lg transition-all text-[10px] font-bold uppercase tracking-wider">
+              <span>Close</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          } @else {
+            <div class="flex items-center gap-2 px-3 py-1.5 bg-emerald-500/10 text-emerald-400 rounded-lg border border-emerald-500/20">
+              <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+              <span class="text-[10px] font-bold uppercase tracking-wider">Active</span>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Terminal Content -->
+      <div class="flex-1 overflow-y-auto p-6 font-mono text-xs leading-relaxed selection:bg-indigo-500/40" #consoleScroll>
+        @if (consoleLogs().length === 0) {
+          <div class="h-full flex flex-col items-center justify-center text-gray-600 gap-4 opacity-40">
+            <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+            </svg>
+            <p class="text-sm font-medium">Terminal initialized. Awaiting process start...</p>
+          </div>
+        }
+        @for (log of consoleLogs(); track $index) {
+          <div class="flex gap-4 mb-2 group">
+            <span class="text-gray-700 select-none shrink-0 w-8 text-right">{{ $index + 1 }}</span>
+            <span [class.text-red-400]="log.type === 'error'" [class.text-indigo-300]="log.type === 'info'" class="break-all whitespace-pre-wrap">
+              {{ log.message }}
+            </span>
           </div>
         }
       </div>
-    </div>
 
-    <!-- Terminal Content -->
-    <div class="flex-1 overflow-y-auto p-6 font-mono text-xs leading-relaxed selection:bg-indigo-500/40" #consoleScroll>
-      @if (consoleLogs().length === 0) {
-        <div class="h-full flex flex-col items-center justify-center text-gray-600 gap-4 opacity-40">
-          <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
-          </svg>
-          <p class="text-sm font-medium">Terminal initialized. Awaiting process start...</p>
+      <!-- Terminal Footer -->
+      <div class="px-6 py-3 bg-black/60 border-t border-white/5 flex items-center justify-between">
+        <div class="flex items-center gap-6">
+          <div class="flex items-center gap-2">
+            <span class="text-[9px] uppercase tracking-widest font-bold text-gray-500">Java:</span>
+            <span class="text-[9px] uppercase tracking-widest font-bold text-indigo-400">17</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-[9px] uppercase tracking-widest font-bold text-gray-500">Engine:</span>
+            <span class="text-[9px] uppercase tracking-widest font-bold text-indigo-400">CheerpJ 4.3</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-[9px] uppercase tracking-widest font-bold text-gray-500">Status:</span>
+            <span class="text-[9px] uppercase tracking-widest font-bold" [class.text-emerald-400]="isInitialized()" [class.text-amber-400]="!isInitialized()">
+              {{ isInitialized() ? 'Ready' : 'Wait' }}
+            </span>
+          </div>
         </div>
-      }
-      @for (log of consoleLogs(); track $index) {
-        <div class="flex gap-4 mb-2 group">
-          <span class="text-gray-700 select-none shrink-0 w-8 text-right">{{ $index + 1 }}</span>
-          <span [class.text-red-400]="log.type === 'error'" [class.text-indigo-300]="log.type === 'info'" class="break-all whitespace-pre-wrap">
-            {{ log.message }}
-          </span>
+        <div class="text-[10px] font-mono text-gray-500">
+          {{ consoleLogs().length }} events
         </div>
-      }
-    </div>
-
-    <!-- Terminal Footer -->
-    <div class="px-6 py-3 bg-black/60 border-t border-white/5 flex items-center justify-between">
-      <div class="flex items-center gap-6">
-        <div class="flex items-center gap-2">
-          <span class="text-[9px] uppercase tracking-widest font-bold text-gray-500">Java Version:</span>
-          <span class="text-[9px] uppercase tracking-widest font-bold text-indigo-400">17 (LTS)</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <span class="text-[9px] uppercase tracking-widest font-bold text-gray-500">Engine:</span>
-          <span class="text-[9px] uppercase tracking-widest font-bold text-indigo-400">CheerpJ 4.3</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <span class="text-[9px] uppercase tracking-widest font-bold text-gray-500">Status:</span>
-          <span class="text-[9px] uppercase tracking-widest font-bold" [class.text-emerald-400]="isInitialized()" [class.text-amber-400]="!isInitialized()">
-            {{ isInitialized() ? 'Runtime Ready' : 'Initializing' }}
-          </span>
-        </div>
-      </div>
-      <div class="text-[10px] font-mono text-gray-500">
-        {{ consoleLogs().length }} events logged
       </div>
     </div>
   </div>
-</div>
+} @else {
+  <!-- Floating Toggle Button when Minimized -->
+  <div class="fixed bottom-6 right-6 z-[200] animate-in slide-in-from-bottom-4 duration-300">
+    <button (click)="toggleMinimize()" 
+      class="group relative flex items-center gap-3 px-5 py-3 bg-gray-900 border border-white/10 rounded-2xl shadow-2xl hover:bg-gray-800 transition-all hover:scale-105 active:scale-95 shadow-indigo-500/20">
+      
+      <!-- Pulsing Dot Indicator -->
+      <div class="relative flex h-3 w-3">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" [class.bg-emerald-400]="isGenerating()" [class.bg-indigo-400]="!isGenerating()"></span>
+        <span class="relative inline-flex rounded-full h-3 w-3" [class.bg-emerald-500]="isGenerating()" [class.bg-indigo-500]="!isGenerating()"></span>
+      </div>
+
+      <div class="flex flex-col items-start">
+        <span class="text-[10px] font-bold text-white/40 uppercase tracking-widest leading-none mb-1">Generator CLI</span>
+        <span class="text-xs font-semibold text-white/90 leading-none">Show Console</span>
+      </div>
+
+      <!-- Arrow Icon -->
+      <svg class="w-4 h-4 text-gray-400 group-hover:text-white transition-colors ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path>
+      </svg>
+    </button>
+  </div>
+}

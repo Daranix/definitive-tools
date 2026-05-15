@@ -70,10 +70,28 @@ export class CheerpjService {
       throw new Error('CheerpJ loader loaded but cheerpjInit not found on window.');
     }
 
-    // CheerpJ 4.3 initialization.
-    await (window as any).cheerpjInit({ version: 17 });
-    this.isInitialized.set(true);
-    console.log('CheerpJ 4.3 runtime (Java 17) initialized.');
+    // Isolate global namespace during the entire initialization process
+    const originalDefine = (window as any).define;
+    const originalRequire = (window as any).require;
+    (window as any).define = undefined;
+    (window as any).require = undefined;
+
+    try {
+      console.log('Starting CheerpJ 4.3 runtime (Java 17) with isolation...');
+      await (window as any).cheerpjInit({ 
+        version: 17,
+        status: "none" // Suppress splash screen for better integration
+      });
+      this.isInitialized.set(true);
+      console.log('CheerpJ 4.3 runtime initialized successfully.');
+    } catch (err) {
+      console.error('CheerpJ initialization failed:', err);
+      throw err;
+    } finally {
+      // Restore Monaco's AMD loader immediately after CheerpJ is ready
+      if (originalDefine) (window as any).define = originalDefine;
+      if (originalRequire) (window as any).require = originalRequire;
+    }
   }
 
   /**

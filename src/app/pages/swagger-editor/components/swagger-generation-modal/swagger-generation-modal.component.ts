@@ -20,6 +20,7 @@ export class SwaggerGenerationModalComponent {
   onClose = output<void>();
 
   readonly isGenerating = signal<boolean>(false);
+  readonly isMinimized = signal<boolean>(false);
   readonly generationStatus = signal<string>('Initializing...');
   readonly consoleLogs = signal<{message: string, type: 'info' | 'error'}[]>([]);
   readonly isInitialized = this.cheerpjService.isInitialized;
@@ -177,6 +178,10 @@ export class SwaggerGenerationModalComponent {
 
   clearConsole() {
     this.consoleLogs.set([]);
+  }
+
+  toggleMinimize() {
+    this.isMinimized.update(v => !v);
   }
 
   close() {
