@@ -18,6 +18,7 @@ export const routes: Routes = [
             { path: 'jwt-decode-encode', loadComponent: () => import('./pages/jwt-decode-encode/jwt-decode-encode.component').then(m => m.JwtDecodeEncodeComponent), data: { id: 'jwt-decode-encode' } },
             { path: 'opengraph-generator', loadComponent: () => import('./pages/opengraph-generator/opengraph-generator.component').then(m => m.OpengraphGeneratorComponent), data: { id: 'opengraph-generator' } },
             { path: 'swagger-editor', loadComponent: () => import('./pages/swagger-editor/swagger-editor.component').then(m => m.SwaggerEditorComponent), data: { id: 'swagger-editor' } },
+            { path: 'markdown-to-excel', loadComponent: () => import('./pages/markdown-to-excel/markdown-to-excel.component').then(m => m.MarkdownToExcelComponent), data: { id: 'markdown-to-excel' } },
         ],
         component: BaseComponent
     },

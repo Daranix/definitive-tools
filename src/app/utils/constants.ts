@@ -1,4 +1,4 @@
-import { ArrowRightLeft, AtSign, Bolt, Bookmark, BookOpen, CaseUpper, ChevronDown, CircleEllipsis, CircleOff, Code, Copy, Download, FileText, Grid, Grid2X2, Grid3X3, House, IdCard, Image, ImageOff, Info, Key, Link, LockKeyholeOpen, MapPin, Menu, Monitor, MoveDown, MoveDownLeft, MoveDownRight, MoveLeft, MoveRight, MoveUp, MoveUpLeft, MoveUpRight, Phone, QrCode, RotateCw, Scissors, Server, Settings, Shuffle, TabletSmartphone, Trash2, Upload, Wifi, X } from 'lucide-angular';
+import { ArrowRightLeft, AtSign, Bolt, Bookmark, BookOpen, CaseUpper, Check, ChevronDown, CircleEllipsis, CircleOff, Code, Copy, Download, FileText, Grid, Grid2X2, Grid3X3, House, IdCard, Image, ImageOff, Info, Key, Link, LockKeyholeOpen, MapPin, Menu, Monitor, MousePointer2, MoveDown, MoveDownLeft, MoveDownRight, MoveLeft, MoveRight, MoveUp, MoveUpLeft, MoveUpRight, Phone, QrCode, RotateCw, Scissors, Server, Settings, Shuffle, TabletSmartphone, Trash2, Upload, Wifi, X } from 'lucide-angular';
 
 export interface Tool {
     id: string;
@@ -65,6 +65,14 @@ export const TOOLS: ReadonlyArray<Tool> = [
         icon: 'bolt',
         color: 'indigo',
         category: 'Dev Tools'
+    },
+    {
+        id: 'markdown-to-excel',
+        name: 'Markdown to Excel',
+        description: 'Convert Markdown tables to Excel-compatible formats easily. Copy and paste your data directly into your favorite spreadsheet software.',
+        icon: 'file-text',
+        color: 'indigo',
+        category: 'Text Tools'
     }
 ]
 
@@ -101,6 +109,7 @@ export const USED_ICONS = {
     RotateCw,
     Settings,
     Copy,
+    Check,
     LockKeyholeOpen,
     X,
     Shuffle,
@@ -124,6 +133,7 @@ export const USED_ICONS = {
     ChevronDown,
     Server,
     Monitor,
+    MousePointer2,
     Upload,
     BookOpen,
     Trash2
