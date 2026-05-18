@@ -20,6 +20,7 @@ export const routes: Routes = [
             { path: 'swagger-editor', loadComponent: () => import('./pages/swagger-editor/swagger-editor.component').then(m => m.SwaggerEditorComponent), data: { id: 'swagger-editor' } },
             { path: 'markdown-to-excel', loadComponent: () => import('./pages/markdown-to-excel/markdown-to-excel.component').then(m => m.MarkdownToExcelComponent), data: { id: 'markdown-to-excel' } },
             { path: 'markdown-to-pdf', loadComponent: () => import('./pages/markdown-to-pdf/markdown-to-pdf.component').then(m => m.MarkdownToPdfComponent), data: { id: 'markdown-to-pdf' } },
+            { path: 'markdown-to-html', loadComponent: () => import('./pages/markdown-to-html/markdown-to-html.component').then(m => m.MarkdownToHtmlComponent), data: { id: 'markdown-to-html' } },
         ],
         component: BaseComponent
     },

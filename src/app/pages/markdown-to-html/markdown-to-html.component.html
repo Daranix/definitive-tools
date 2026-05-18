@@ -1,0 +1,229 @@
+<div class="flex flex-col h-screen bg-[#0f172a] text-slate-200">
+  <main class="flex-1 flex overflow-hidden relative">
+    
+    <!-- Left Column: Markdown Editor -->
+    <div class="flex-1 flex flex-col bg-[#1e293b] overflow-hidden border-r border-slate-700/50">
+      <div class="px-4 py-2.5 bg-slate-800/50 border-b border-slate-700/50 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <lucide-icon name="code" class="w-4 h-4 text-indigo-400"></lucide-icon>
+          <span class="text-sm font-semibold tracking-wide text-slate-300 uppercase">Markdown Editor</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button (click)="handleClear()" 
+                  class="p-1.5 hover:bg-slate-700/80 rounded-lg transition-colors text-slate-400 hover:text-red-400"
+                  title="Clear Editor">
+            <lucide-icon name="trash-2" class="w-4 h-4"></lucide-icon>
+          </button>
+          <button (click)="handleCopyMarkdown()" 
+                  [disabled]="!markdownText()"
+                  class="p-1.5 hover:bg-slate-700/80 rounded-lg transition-colors text-slate-400 hover:text-indigo-400 disabled:opacity-30 disabled:cursor-not-allowed"
+                  title="Copy Markdown">
+            <lucide-icon name="copy" class="w-4 h-4"></lucide-icon>
+          </button>
+        </div>
+      </div>
+      
+      <div class="flex-1 overflow-hidden">
+        @if (isBrowser()) {
+          <app-monaco-editor 
+            #leftEditor
+            class="h-full w-full"
+            [code]="markdownText()"
+            [options]="markdownOptions()"
+            (codeChange)="onMarkdownChanges($event)">
+          </app-monaco-editor>
+        } @else {
+          <div class="h-full w-full flex items-center justify-center bg-[#1e293b]">
+            <div class="animate-pulse text-slate-500">Loading editor...</div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Right Column: Code & Preview Tabs -->
+    <div class="flex-1 flex flex-col bg-[#1e293b] overflow-hidden relative">
+      <div class="px-4 py-2.5 bg-slate-800/50 border-b border-slate-700/50 flex items-center justify-between">
+        
+        <!-- Left Side: Tabs -->
+        <div class="flex bg-slate-900/60 p-0.5 rounded-lg border border-slate-700/30">
+          <button (click)="activeTab.set('preview')"
+                  [class.bg-slate-800]="activeTab() === 'preview'"
+                  [class.text-white]="activeTab() === 'preview'"
+                  [class.text-slate-400]="activeTab() !== 'preview'"
+                  class="flex items-center gap-1.5 px-3.5 py-1 rounded-md text-xs font-semibold tracking-wide uppercase transition-all duration-200">
+            <lucide-icon name="book-open" class="w-3.5 h-3.5"></lucide-icon>
+            Preview
+          </button>
+          <button (click)="activeTab.set('code')"
+                  [class.bg-slate-800]="activeTab() === 'code'"
+                  [class.text-white]="activeTab() === 'code'"
+                  [class.text-slate-400]="activeTab() !== 'code'"
+                  class="flex items-center gap-1.5 px-3.5 py-1 rounded-md text-xs font-semibold tracking-wide uppercase transition-all duration-200">
+            <lucide-icon name="file-text" class="w-3.5 h-3.5"></lucide-icon>
+            Code
+          </button>
+        </div>
+
+        <!-- Right Side: Custom Actions -->
+        <div class="flex items-center gap-2">
+          @if (activeTab() === 'code') {
+            <button (click)="handleCopyHtml()" 
+                    [disabled]="!previewHtml()"
+                    class="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700 hover:bg-slate-600 disabled:opacity-40 disabled:cursor-not-allowed text-slate-200 rounded-lg transition-all text-xs font-medium border border-slate-600/40">
+              <lucide-icon name="copy" class="w-3.5 h-3.5"></lucide-icon>
+              Copy HTML
+            </button>
+          }
+          <button (click)="toggleStylesDrawer()" 
+                  class="flex items-center gap-1.5 px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition-all text-xs font-semibold uppercase tracking-wider shadow-lg shadow-indigo-500/20 border border-indigo-500/30">
+            <lucide-icon name="palette" class="w-3.5 h-3.5"></lucide-icon>
+            Styles
+          </button>
+        </div>
+      </div>
+      
+      <!-- Tab Content Area -->
+      <div class="flex-1 overflow-hidden relative bg-[#0f172a]">
+        
+        <!-- Tab 1: Rendered Preview -->
+        @if (activeTab() === 'preview') {
+          <div class="h-full overflow-y-auto bg-white shadow-inner p-6" id="preview-viewport">
+            
+            @if (previewHtml()) {
+              <app-markdown-preview [html]="previewHtml()" [css]="customCss()"></app-markdown-preview>
+            }
+            
+            @if (!previewHtml()) {
+              <div class="h-full flex flex-col items-center justify-center text-slate-400 py-20 bg-slate-900/10">
+                <lucide-icon name="file-text" class="w-12 h-12 mb-4 opacity-20 text-indigo-400"></lucide-icon>
+                <p class="text-lg font-medium opacity-50">Nothing to preview yet</p>
+                <p class="text-sm opacity-40">Draft standard Markdown on the left to review HTML output</p>
+              </div>
+            }
+          </div>
+        }
+
+        <!-- Tab 2: HTML Source Code Code Editor -->
+        @if (activeTab() === 'code') {
+          <div class="h-full w-full">
+            @if (isBrowser()) {
+              <app-monaco-editor 
+                #codeEditor
+                class="h-full w-full"
+                [code]="previewHtml()"
+                [options]="htmlOptions()">
+              </app-monaco-editor>
+            } @else {
+              <div class="h-full w-full flex items-center justify-center bg-[#1e293b]">
+                <div class="animate-pulse text-slate-500">Loading HTML preview...</div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Live Styles Sidebar Customization Sheet -->
+    @if (isStylesDrawerOpen()) {
+      <div class="fixed inset-0 z-50 flex justify-end transition-opacity duration-300">
+      
+      <!-- Backdrop click boundary -->
+      <div class="absolute inset-0 bg-slate-950/70 backdrop-blur-sm"
+           (click)="toggleStylesDrawer()"></div>
+      
+      <!-- Drawer body container -->
+      <div class="relative w-[480px] h-full bg-[#111827]/98 border-l border-slate-800/80 shadow-2xl flex flex-col z-10 animate-slide-in">
+        
+        <!-- Drawer Header -->
+        <div class="px-5 py-4 bg-slate-900/80 border-b border-slate-800 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <lucide-icon name="sliders" class="w-4 h-4 text-indigo-400"></lucide-icon>
+            <span class="text-sm font-semibold tracking-wider text-slate-200 uppercase">Styles Customization</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <button (click)="resetStyles()" 
+                    class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded text-xs transition-colors flex items-center gap-1 border border-slate-700/50"
+                    title="Reset to default template">
+              <lucide-icon name="rotate-cw" class="w-3 h-3"></lucide-icon>
+              Reset
+            </button>
+            <button (click)="toggleStylesDrawer()" 
+                    class="p-1 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-white transition-colors">
+              <lucide-icon name="x" class="w-4 h-4"></lucide-icon>
+            </button>
+          </div>
+        </div>
+
+        <!-- Drawer Content scroll area -->
+        <div class="flex-1 overflow-y-auto p-5 space-y-5">
+          
+          <!-- Presets select options -->
+          <div class="space-y-2">
+            <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider block">Theme Presets</label>
+            <div class="grid grid-cols-3 gap-2">
+              <button (click)="applyPreset('github')"
+                      [class.border-indigo-500]="selectedPreset() === 'github'"
+                      [class.border-slate-800]="selectedPreset() !== 'github'"
+                      [class.bg-indigo-600/10]="selectedPreset() === 'github'"
+                      [class.text-indigo-400]="selectedPreset() === 'github'"
+                      class="py-2.5 px-3 bg-slate-900 hover:bg-slate-800 border rounded-lg text-xs font-medium text-slate-300 transition-all text-center">
+                GitHub Light
+              </button>
+              <button (click)="applyPreset('indigo')"
+                      [class.border-indigo-500]="selectedPreset() === 'indigo'"
+                      [class.border-slate-800]="selectedPreset() !== 'indigo'"
+                      [class.bg-indigo-600/10]="selectedPreset() === 'indigo'"
+                      [class.text-indigo-400]="selectedPreset() === 'indigo'"
+                      class="py-2.5 px-3 bg-slate-900 hover:bg-slate-800 border rounded-lg text-xs font-medium text-slate-300 transition-all text-center">
+                Modern Indigo
+              </button>
+              <button (click)="applyPreset('warm')"
+                      [class.border-indigo-500]="selectedPreset() === 'warm'"
+                      [class.border-slate-800]="selectedPreset() !== 'warm'"
+                      [class.bg-indigo-600/10]="selectedPreset() === 'warm'"
+                      [class.text-indigo-400]="selectedPreset() === 'warm'"
+                      class="py-2.5 px-3 bg-slate-900 hover:bg-slate-800 border rounded-lg text-xs font-medium text-slate-300 transition-all text-center">
+                Warm Serif
+              </button>
+            </div>
+          </div>
+
+          <!-- File Upload drop boundary -->
+          <div class="space-y-2">
+            <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider block">Upload Stylesheet</label>
+            <div class="relative group cursor-pointer border border-dashed border-slate-800 hover:border-indigo-500/60 bg-slate-950 p-4 rounded-xl flex flex-col items-center justify-center transition-all duration-200">
+              <lucide-icon name="upload" class="w-6 h-6 mb-2 text-slate-500 group-hover:text-indigo-400 transition-colors"></lucide-icon>
+              <span class="text-xs font-medium text-slate-300">Drop local CSS file here, or <span class="text-indigo-400 hover:underline">browse</span></span>
+              <span class="text-[10px] text-slate-500 mt-1">Accepts raw styles (*.css) files</span>
+              <input type="file" 
+                     (change)="onCssFileUpload($event)" 
+                     accept=".css" 
+                     class="absolute inset-0 opacity-0 cursor-pointer w-full h-full">
+            </div>
+          </div>
+
+          <!-- CSS Text box Editor -->
+          <div class="flex-1 flex flex-col space-y-2" style="height: calc(100% - 220px); min-height: 300px;">
+            <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider block">CSS Source Code</label>
+            <div class="flex-1 border border-slate-800 rounded-xl overflow-hidden bg-slate-950" style="min-height: 250px;">
+              @if (isBrowser()) {
+                <app-monaco-editor 
+                  #cssEditor
+                  class="h-full w-full"
+                  [code]="customCss()"
+                  [options]="cssOptions()"
+                  (codeChange)="onCssChanges($event)">
+                </app-monaco-editor>
+              } @else {
+                <div class="h-full w-full flex items-center justify-center bg-[#1e293b]">
+                  <div class="animate-pulse text-slate-500">Loading styles...</div>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  </main>
+</div>

@@ -34,7 +34,7 @@
     "lucide-angular": "^1.0.0",
     "marked": "^18.0.3",
     "marked-highlight": "^2.2.4",
-    "monaco-editor": "^0.53.0",
+    "monaco-editor": "^0.52.2",
     "monaco-yaml": "^5.4.0",
     "qr-code-styling": "^1.9.2",
     "rxjs": "~7.8.2",

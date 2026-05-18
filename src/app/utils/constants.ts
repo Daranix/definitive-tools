@@ -1,4 +1,4 @@
-import { ArrowRightLeft, AtSign, Bolt, Bookmark, BookOpen, CaseUpper, Check, ChevronDown, CircleEllipsis, CircleOff, Code, Copy, Download, FileText, Grid, Grid2X2, Grid3X3, House, IdCard, Image, ImageOff, Info, Key, Link, LockKeyholeOpen, MapPin, Menu, Monitor, MousePointer2, MoveDown, MoveDownLeft, MoveDownRight, MoveLeft, MoveRight, MoveUp, MoveUpLeft, MoveUpRight, Phone, QrCode, RotateCw, Scissors, Server, Settings, Shuffle, TabletSmartphone, Trash2, Upload, Wifi, X } from 'lucide-angular';
+import { ArrowRightLeft, AtSign, Bolt, Bookmark, BookOpen, CaseUpper, Check, ChevronDown, CircleEllipsis, CircleOff, Code, Copy, Download, FileText, Grid, Grid2X2, Grid3X3, House, IdCard, Image, ImageOff, Info, Key, Link, LockKeyholeOpen, MapPin, Menu, Monitor, MousePointer2, MoveDown, MoveDownLeft, MoveDownRight, MoveLeft, MoveRight, MoveUp, MoveUpLeft, MoveUpRight, Palette, Phone, QrCode, RotateCw, Scissors, Server, Settings, Shuffle, Sliders, TabletSmartphone, Trash2, Upload, Wifi, X } from 'lucide-angular';
 
 export interface Tool {
     id: string;
@@ -81,6 +81,14 @@ export const TOOLS: ReadonlyArray<Tool> = [
         icon: 'file-text',
         color: 'indigo',
         category: 'Text Tools'
+    },
+    {
+        id: 'markdown-to-html',
+        name: 'Markdown to HTML',
+        description: 'Convert Markdown text to clean HTML code with a live preview. Style the HTML instantly using custom CSS, stylesheets, or premium design presets.',
+        icon: 'code',
+        color: 'indigo',
+        category: 'Text Tools'
     }
 ]
 
@@ -144,5 +152,7 @@ export const USED_ICONS = {
     MousePointer2,
     Upload,
     BookOpen,
-    Trash2
+    Trash2,
+    Palette,
+    Sliders
 } as const;

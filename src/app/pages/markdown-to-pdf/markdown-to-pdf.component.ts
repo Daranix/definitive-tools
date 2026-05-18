@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
 import { MonacoEditorComponent } from "@/app/components/monaco-editor/monaco-editor.component";
-import { TopNavbarComponent } from '@/app/components/top-navbar/top-navbar.component';
 import { MetadataService } from '@/app/services/metadata.service';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -26,7 +25,7 @@ marked.use(
 @Component({
   selector: 'app-markdown-to-pdf',
   standalone: true,
-  imports: [CommonModule, FormsModule, LucideAngularModule, MonacoEditorComponent, TopNavbarComponent],
+  imports: [CommonModule, FormsModule, LucideAngularModule, MonacoEditorComponent],
   templateUrl: './markdown-to-pdf.component.html',
   styleUrl: './markdown-to-pdf.component.scss'
 })

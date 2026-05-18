@@ -108,7 +108,10 @@ export class MonacoEditorComponent implements AfterViewInit, OnChanges, OnDestro
 
     const options = this.options();
 
-    this.codeEditorInstance = monaco.editor.create(this.editorContainer()!.nativeElement, options);
+    this.codeEditorInstance = monaco.editor.create(this.editorContainer()!.nativeElement, {
+      ...options,
+      value: this.code || ''
+    });
 
     // To support two-way binding of the code
     this.codeEditorInstance!.getModel()!.onDidChangeContent(e => {
