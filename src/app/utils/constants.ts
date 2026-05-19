@@ -1,4 +1,4 @@
-import { ArrowRightLeft, AtSign, Bolt, Bookmark, BookOpen, CaseUpper, Check, ChevronDown, CircleEllipsis, CircleOff, Code, Copy, Download, FileText, Grid, Grid2X2, Grid3X3, House, IdCard, Image, ImageOff, Info, Key, Link, LockKeyholeOpen, MapPin, Menu, Monitor, MousePointer2, MoveDown, MoveDownLeft, MoveDownRight, MoveLeft, MoveRight, MoveUp, MoveUpLeft, MoveUpRight, Palette, Phone, QrCode, RotateCw, Scissors, Server, Settings, Shuffle, Sliders, TabletSmartphone, Trash2, Upload, Wifi, X } from 'lucide-angular';
+import { ArrowRightLeft, AtSign, Bolt, Bookmark, BookOpen, CaseUpper, Check, ChevronDown, CircleEllipsis, CircleOff, Code, Columns2, Copy, Download, FileText, Grid, Grid2X2, Grid3X3, House, IdCard, Image, ImageOff, Info, Key, Link, LockKeyholeOpen, MapPin, Menu, Monitor, MousePointer2, MoveDown, MoveDownLeft, MoveDownRight, MoveLeft, MoveRight, Split, MoveUp, MoveUpLeft, MoveUpRight, Palette, Phone, QrCode, RotateCw, Scissors, Server, Settings, Shuffle, Sliders, TabletSmartphone, Trash2, Upload, Wifi, X } from 'lucide-angular';
 
 export interface Tool {
     id: string;
@@ -23,6 +23,14 @@ export const TOOLS: ReadonlyArray<Tool> = [
         name: 'Background Remover',
         description: 'Remove backgrounds from images instantly. Create professional-looking transparent images for your projects, products, and designs.',
         icon: 'image-off',
+        color: 'indigo',
+        category: 'Image Tools'
+    },
+    {
+        id: 'image-converter',
+        name: 'Image Converter',
+        description: 'Convert images between different formats (PNG, JPEG, WEBP, GIF, BMP) client-side with quality and dimensions controls.',
+        icon: 'image',
         color: 'indigo',
         category: 'Image Tools'
     },
@@ -154,5 +162,7 @@ export const USED_ICONS = {
     BookOpen,
     Trash2,
     Palette,
-    Sliders
+    Sliders,
+    Columns2,
+    Split
 } as const;

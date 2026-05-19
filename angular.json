@@ -20,7 +20,10 @@
             "loader": {
               ".ttf": "binary"
             },
-            "externalDependencies": ["onnxruntime-node", "sharp"],
+            "externalDependencies": [
+              "onnxruntime-node",
+              "sharp"
+            ],
             "allowedCommonJsDependencies": [
               "yaml",
               "swagger-ui-dist",
@@ -50,7 +53,21 @@
                 "glob": "**/*",
                 "input": "public"
               },
-              { "glob": "**/*", "input": "node_modules/monaco-editor/min", "output": "./assets/monaco/" }
+              {
+                "glob": "**/*",
+                "input": "node_modules/monaco-editor/min",
+                "output": "./assets/monaco/"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/@ffmpeg/core/dist/esm",
+                "output": "./assets/ffmpeg/"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/@ffmpeg/ffmpeg/dist/esm",
+                "output": "./assets/ffmpeg/"
+              }
             ],
             "styles": [
               "src/styles.scss"
@@ -97,7 +114,16 @@
         "serve": {
           "builder": "@angular/build:dev-server",
           "options": {
-            "allowedHosts": ["localhost", "127.0.0.1"]
+            "allowedHosts": [
+              "localhost",
+              "127.0.0.1"
+            ],
+            "prebundle": {
+              "exclude": [
+                "@ffmpeg/ffmpeg",
+                "@ffmpeg/util"
+              ]
+            }
           },
           "configurations": {
             "production": {
