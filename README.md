@@ -21,6 +21,9 @@ Definitive Tools is a collection of free, easy-to-use online tools designed to m
 | ✅ | **Open Graph Generator** | Generate professional Opengraph images and Twitter Cards that boost your website's visibility on social media platforms. |
 | ⏳ | **Image to SVG Converter** | Convert images to SVG (vector graphics) format. |
 | ⏳ | **Image Upscaler** | Upscale images to higher resolutions and more details. |
+| ✅ | **Swagger Editor & Generator** | Edit, preview, and generate client/server SDKs locally in-browser using OpenAPI Generator CLI. |
+| ✅ | **Markdown to HTML** | Convert Markdown to styled HTML with real-time preview and custom CSS/presets. |
+| ✅ | **Markdown to Excel** | Convert Markdown tables to Excel-compatible formats easily. |
 
 ## How to Use
 
