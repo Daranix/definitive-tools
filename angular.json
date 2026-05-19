@@ -21,6 +21,22 @@
               ".ttf": "binary"
             },
             "externalDependencies": ["onnxruntime-node", "sharp"],
+            "allowedCommonJsDependencies": [
+              "yaml",
+              "swagger-ui-dist",
+              "html2pdf.js",
+              "qr-code-styling",
+              "jszip",
+              "satori",
+              "linebreak",
+              "base64-js",
+              "color-name",
+              "hex-rgb",
+              "readable-stream",
+              "lie",
+              "setimmediate",
+              "pako"
+            ],
             "outputPath": "dist/definitive-tools",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -37,8 +53,7 @@
               { "glob": "**/*", "input": "node_modules/monaco-editor/min", "output": "./assets/monaco/" }
             ],
             "styles": [
-              "src/styles.scss",
-              "./node_modules/swagger-ui-dist/swagger-ui.css"
+              "src/styles.scss"
             ],
             "scripts": [],
             "server": "src/main.server.ts",
@@ -59,8 +74,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "200kB",
+                  "maximumError": "250kB"
                 }
               ],
               "outputHashing": "all",
