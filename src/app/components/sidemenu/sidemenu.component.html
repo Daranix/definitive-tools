@@ -1,21 +1,43 @@
-<div class="flex h-full flex-col justify-between border-r bg-white z-30">
-    <div class="px-4 py-6 z-30">
+<div class="flex h-full w-64 flex-col justify-between border-r border-slate-100 bg-white shadow-sm z-30">
+    <div class="px-4 py-6 z-30 overflow-y-auto max-h-full">
+        <!-- Sidebar Brand / Logo (Optional extra branding but keep it subtle) -->
+        <div class="mb-6 px-2">
+            <a routerLink="/" class="flex items-center gap-2 text-slate-800 hover:text-indigo-600 transition-colors">
+                <lucide-icon name="bolt" class="w-6 h-6 text-indigo-600"></lucide-icon>
+                <span class="font-bold tracking-tight text-lg">Definitive Tools</span>
+            </a>
+        </div>
 
-        <ul class="flex flex-col first">
+        <ul class="flex flex-col gap-5">
+            <!-- Home Link -->
             <li>
-                <a routerLink="/" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="bg-gray-100 text-gray-700" class="flex gap-1 justify-start items-center rounded-lg text-gray-500 px-4 py-2 text-sm font-medium hover:bg-gray-100 hover:text-gray-700">
-                    <lucide-icon name="house" class="h-5 w-5"></lucide-icon> Home
+                <a routerLink="/" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="bg-indigo-50 text-indigo-700 font-semibold border-l-4 border-indigo-600" class="flex gap-2.5 justify-start items-center rounded-r-lg text-slate-600 px-4 py-2.5 text-sm font-medium hover:bg-slate-50 hover:text-slate-900 transition-all border-l-4 border-transparent">
+                    <lucide-icon name="house" class="h-4 w-4"></lucide-icon> 
+                    <span>Home</span>
                 </a>
             </li>
-            <li>
-                <hr class="mt-2 mb-2 bg-gray-600"/>
-            </li>
-            @for (tool of tools; track $index) {
-                <li [ngClass]="{ 'mt-0': $index === 0, 'mt-2': $index >= 1 }">
-                    <a [routerLink]="['/tool', tool.id]" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="bg-gray-100 text-gray-700" class="rounded-lg text-gray-500 px-4 py-2 text-sm font-medium hover:bg-gray-100 hover:text-gray-700 flex gap-2 justify-items-start items-center">
-                        <lucide-icon [name]="tool.icon" [class]="'bg-'  + tool.color + '-100 p-1 w-7 h-7 rounded-full inline-block text-' + tool.color + '-600 block'"></lucide-icon>
-                        {{ tool.name }}
-                    </a>
+
+            <!-- Categorized Tools List -->
+            @for (cat of categorizedTools(); track cat.name) {
+                <li>
+                    <span class="px-4 text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-2">
+                        {{ cat.name }}
+                    </span>
+                    <ul class="flex flex-col gap-1">
+                        @for (tool of cat.tools; track tool.id) {
+                            <li>
+                                <a [routerLink]="['/tool', tool.id]" 
+                                   [routerLinkActiveOptions]="{exact: true}" 
+                                   routerLinkActive="bg-indigo-50 text-indigo-700 font-semibold border-l-4 border-indigo-600" 
+                                   class="rounded-r-lg text-slate-600 px-4 py-2 text-sm font-medium hover:bg-slate-50 hover:text-slate-900 transition-all flex gap-3 justify-start items-center border-l-4 border-transparent group">
+                                    <div [class]="'bg-' + tool.color + '-100 p-1 w-6 h-6 rounded-md flex items-center justify-center text-' + tool.color + '-600 group-hover:scale-105 transition-transform duration-200'">
+                                        <lucide-icon [name]="tool.icon" class="w-3.5 h-3.5"></lucide-icon>
+                                    </div>
+                                    <span class="truncate">{{ tool.name }}</span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
                 </li>
             }
         </ul>

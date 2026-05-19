@@ -5,9 +5,11 @@ import { Component, inject, model, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
 
+import { FooterComponent } from '../../components/footer/footer.component';
+
 @Component({
   selector: 'app-random-password-generator',
-  imports: [LucideAngularModule, FormsModule, TopNavbarComponent],
+  imports: [LucideAngularModule, FormsModule, TopNavbarComponent, FooterComponent],
   templateUrl: './random-password-generator.component.html',
   styleUrl: './random-password-generator.component.scss'
 })

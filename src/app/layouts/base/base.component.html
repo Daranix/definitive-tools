@@ -1,10 +1,18 @@
 <div class="flex flex-col h-full max-h-full">
 
-    <nav class="lg:hidden w-full p-4 border border-gray-200 bg-gray-50 dark:border-gray-600 dark:bg-gray-700 z-50 flex gap-2">
-        <app-menu-icon [(toggleMenu)]="showMenu" />
-        <div class="flex align-middle items-center">
-            <div>{{ topNavbarService.title() }}</div>
+    <nav class="lg:hidden w-full p-4 border-b border-slate-200 bg-white z-50 flex items-center justify-between shadow-sm">
+        <div class="flex items-center gap-3">
+            <app-menu-icon [(toggleMenu)]="showMenu" />
+            <a routerLink="/" class="flex items-center gap-1.5 font-bold text-slate-800">
+                <lucide-icon name="bolt" class="w-5 h-5 text-indigo-600"></lucide-icon>
+                <span>Definitive Tools</span>
+            </a>
         </div>
+        @if (topNavbarService.title()) {
+            <div class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-full uppercase tracking-wider">
+                {{ topNavbarService.title() }}
+            </div>
+        }
     </nav>
     
 

@@ -12,6 +12,8 @@ import { SelectButtonComponent } from '@/app/components/select-button/select-but
 import { FormsModule } from '@angular/forms';
 import { toObservable } from '@angular/core/rxjs-interop';
 
+import { FooterComponent } from '../../components/footer/footer.component';
+
 type Platform = 'opengraph' | 'twitter';
 @Component({
   selector: 'app-opengraph-generator',
@@ -22,7 +24,8 @@ type Platform = 'opengraph' | 'twitter';
     OpengraphTemplatePropertiesComponent,
     OpengraphTemplateBuilderComponent,
     SelectButtonComponent,
-    FormsModule
+    FormsModule,
+    FooterComponent
   ],
   templateUrl: './opengraph-generator.component.html',
   styleUrl: './opengraph-generator.component.scss'

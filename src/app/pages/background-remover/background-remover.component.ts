@@ -42,6 +42,8 @@ type CompletedProgressInfo = ProgressBaseInfo & {
 export type ProgressInfo = InitialProgressInfo | DownloadingProgressInfo | DownloadProgressInfo | CompletedProgressInfo;
 
 
+import { FooterComponent } from '../../components/footer/footer.component';
+
 @Component({
   selector: 'app-background-remover',
   imports: [
@@ -52,7 +54,8 @@ export type ProgressInfo = InitialProgressInfo | DownloadingProgressInfo | Downl
     ImageComparisonComponent,
     LoadingSpinnerSmallComponent,
     ProgressBarComponent,
-    TopNavbarComponent
+    TopNavbarComponent,
+    FooterComponent
   ],
   templateUrl: './background-remover.component.html',
   styleUrl: './background-remover.component.scss'

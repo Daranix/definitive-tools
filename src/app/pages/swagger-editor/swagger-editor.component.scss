@@ -1,12 +1,12 @@
 @import "swagger-ui-dist/swagger-ui.css";
 
-:host {
+app-swagger-editor {
   display: block;
   height: 100%;
   width: 100%;
 }
 
-::ng-deep .swagger-ui {
+.swagger-ui {
   .scheme-container {
     box-shadow: none;
     padding: 0;

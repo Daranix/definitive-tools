@@ -59,9 +59,11 @@ export const CORNERS_INNER_DOT_STYLES:  ReadonlyArray<{  id: CornerSquareType, n
   { id: 'dot', name: 'Dot' },
 ];
 
+import { FooterComponent } from '../../components/footer/footer.component';
+
 @Component({
   selector: 'app-qr-generator',
-  imports: [LucideAngularModule, NgClass, ReactiveFormsModule, ZodFormComponent, InputErrorsComponent, UpperCasePipe, TopNavbarComponent],
+  imports: [LucideAngularModule, NgClass, ReactiveFormsModule, ZodFormComponent, InputErrorsComponent, UpperCasePipe, TopNavbarComponent, FooterComponent],
   templateUrl: './qr-generator.component.html',
   styleUrl: './qr-generator.component.scss'
 })

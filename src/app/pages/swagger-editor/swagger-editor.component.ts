@@ -1,6 +1,6 @@
 /// <reference path="../../../types/swagger-ui-dist.d.ts" />
 /// <reference path="../../../types/cheerpj.d.ts" />
-import { AfterContentInit, Component, computed, effect, ElementRef, inject, model, PLATFORM_ID, signal, viewChild } from '@angular/core';
+import { AfterContentInit, Component, computed, effect, ElementRef, inject, model, PLATFORM_ID, signal, viewChild, ViewEncapsulation } from '@angular/core';
 import { MonacoEditorComponent } from "@/app/components/monaco-editor/monaco-editor.component";
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
@@ -29,7 +29,8 @@ const RENDER_DEBOUNCE_MS = 500;
   imports: [MonacoEditorComponent, SwaggerEditorToolbarComponent, SwaggerGenerationModalComponent, FormsModule, CommonModule],
   providers: [CheerpjService],
   templateUrl: './swagger-editor.component.html',
-  styleUrl: './swagger-editor.component.scss'
+  styleUrl: './swagger-editor.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class SwaggerEditorComponent implements AfterContentInit {
 

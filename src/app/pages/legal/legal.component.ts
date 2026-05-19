@@ -19,9 +19,11 @@ interface LegalMetadata {
   [key: string]: unknown;
 }
 
+import { FooterComponent } from '../../components/footer/footer.component';
+
 @Component({
   selector: 'app-legal',
-  imports: [CommonModule, RouterLink, LucideAngularModule],
+  imports: [CommonModule, RouterLink, LucideAngularModule, FooterComponent],
   templateUrl: './legal.component.html',
   styleUrl: './legal.component.scss'
 })
@@ -89,7 +91,7 @@ export class LegalComponent {
 
       const meta = docValue.metadata;
       const description = meta.description || `${meta.title} - Definitive Tools. Free, secure, client-side online tools.`;
-      
+
       this.metadataService.updateMetadata({
         title: meta.title,
         description,

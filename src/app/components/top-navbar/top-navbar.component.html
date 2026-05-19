@@ -1,50 +1,75 @@
 @let toolInfo = info();
 @if(toolInfo) {
     <!-- Navigation Bar -->
-    <nav class="bg-white shadow-md py-4">
-        <div class="container mx-auto px-4 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <lucide-angular name="bolt" class="h-8 w-8 text-indigo-600"></lucide-angular>
-                <a routerLink="/" class="text-2xl font-bold text-gray-800">Definitive Tools</a>
-            </div>
-            <div class="hidden md:flex space-x-6">
-                <a routerLink="/" class="text-gray-700 hover:text-indigo-600 transition">Home</a>
-                <a routerLink="/" class="text-gray-700 hover:text-indigo-600 transition">All Tools</a>
-                <a routerLink="/" class="text-gray-700 hover:text-indigo-600 transition">About</a>
-                <a routerLink="/" class="text-gray-700 hover:text-indigo-600 transition">Contact</a>
-            </div>
+    <nav class="bg-white shadow-sm border-b border-slate-200 py-4 sticky top-0 z-50">
+      <div class="container mx-auto px-4 flex justify-between items-center">
+        <a routerLink="/" class="flex items-center space-x-2">
+          <lucide-icon name="bolt" class="w-8 h-8 text-indigo-600"></lucide-icon>
+          <span class="text-2xl font-bold text-gray-800">Definitive Tools</span>
+        </a>
+        <div class="hidden md:flex space-x-6 items-center">
+          <a routerLink="/" class="text-slate-600 hover:text-indigo-600 transition-colors font-medium">Home</a>
+          <a routerLink="/legal/about" class="text-slate-600 hover:text-indigo-600 transition-colors font-medium">About</a>
+          <a href="https://github.com/Daranix/definitive-tools" target="_blank" rel="noopener noreferrer" class="text-slate-600 hover:text-indigo-600 transition-colors font-medium flex items-center gap-1">
+            GitHub
+            <svg class="w-4 h-4 text-slate-500" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/></svg>
+          </a>
         </div>
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden">
+          <button (click)="isMobileMenuOpen.set(!isMobileMenuOpen())" class="text-slate-500 hover:text-indigo-600 focus:outline-none p-1.5 rounded-lg hover:bg-slate-100 transition-colors">
+            <lucide-icon name="menu" class="w-6 h-6"></lucide-icon>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Menu Drawer -->
+      @if (isMobileMenuOpen()) {
+        <div class="md:hidden px-4 pt-2 pb-4 border-t border-slate-100 bg-white space-y-3 shadow-inner">
+          <a routerLink="/" (click)="isMobileMenuOpen.set(false)" class="block text-slate-700 hover:text-indigo-600 font-medium py-2">Home</a>
+          <a routerLink="/legal/about" (click)="isMobileMenuOpen.set(false)" class="block text-slate-700 hover:text-indigo-600 font-medium py-2">About</a>
+          <a href="https://github.com/Daranix/definitive-tools" target="_blank" rel="noopener noreferrer" (click)="isMobileMenuOpen.set(false)" class="block text-slate-700 hover:text-indigo-600 font-medium py-2">GitHub</a>
+        </div>
+      }
     </nav>
 
-    <!-- Tool Header -->
-    <div class="bg-indigo-600 text-white py-10">
-        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
+    <!-- Tool Header Section with Premium Gradient -->
+    <div class="relative bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white py-12 overflow-hidden border-b border-indigo-900/40">
+        <!-- Decorative Glow Effects -->
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between relative z-10">
             <div class="mb-6 md:mb-0 text-center md:text-left">
-                <div class="flex items-center justify-center md:justify-start mb-4">
-                    <div class="bg-white p-3 rounded-full mr-4">
-                        <lucide-angular name="image-off" class="text-3xl text-indigo-600"></lucide-angular>
+                <div class="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 mb-3">
+                    <div [class]="'bg-' + toolInfo.color + '-100 p-3 rounded-full shadow-sm flex items-center justify-center bg-indigo-500/10 border border-indigo-500/20'">
+                        <lucide-icon [name]="toolInfo.icon" [class]="'text-3xl text-' + toolInfo.color + '-300'"></lucide-icon>
                     </div>
-                    <h1 class="text-3xl md:text-4xl font-bold">{{ toolInfo.name }}</h1>
+                    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">{{ toolInfo.name }}</h1>
                 </div>
-                <p class="text-xl text-indigo-100 max-w-2xl">{{ toolInfo.description }}</p>
+                <p class="text-lg text-slate-300 max-w-2xl">{{ toolInfo.description }}</p>
             </div>
             <div class="flex space-x-3">
-                <button class="bg-white text-indigo-600 font-medium py-2 px-4 rounded hover:bg-indigo-50 transition flex items-center justify-center justify-items-center gap-1">
-                    <lucide-angular name="bookmark" class="w-6 h-6"></lucide-angular>Save to Favorites
+                <button (click)="toggleFavorite()" 
+                        [class]="'font-medium py-2.5 px-5 rounded-lg border transition-all flex items-center justify-center gap-2 shadow-sm text-sm ' + 
+                                 (isFavorite() ? 'bg-indigo-600 hover:bg-indigo-700 text-white border-indigo-500' : 'bg-white/10 hover:bg-white/15 backdrop-blur-sm text-white border-white/10 hover:border-white/20')">
+                    <lucide-icon [name]="isFavorite() ? 'check' : 'bookmark'" class="w-4 h-4"></lucide-icon>
+                    {{ isFavorite() ? 'Favorited' : 'Save to Favorites' }}
                 </button>
-                <button class="bg-indigo-700 text-white font-medium py-2 px-4 rounded hover:bg-indigo-800 transition">
-                    <i class="fas fa-share-alt mr-2"></i>Share
+                <button (click)="shareTool()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-5 rounded-lg transition-all flex items-center justify-center gap-2 shadow-md text-sm border border-indigo-500">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 10.742l4.632-2.316m0 0a3 3 0 10-2.222-2.518m2.222 2.518a3 3 0 102.222 2.518m-2.222-2.518a3 3 0 102.222 2.518m-2.222-2.518a3 3 0 11-2.222-.224m-2.222-.224A3 3 0 118 14.316m-2 0a3 3 0 102.222 2.518m-2.222-2.518l4.632 2.316" /></svg>
+                    Share
                 </button>
             </div>
         </div>
     </div>
 
     <!-- Breadcrumbs -->
-    <div class="container mx-auto px-4 py-3">
-        <div class="text-sm text-gray-600">
-            <a routerLink="/" class="hover:text-indigo-600 transition">Home</a> &gt;
-            <a routerLink="/" class="hover:text-indigo-600 transition">All Tools</a> &gt;
-            <span class="text-gray-800 font-medium">{{ toolInfo.name }}</span>
+    <div class="container mx-auto px-4 py-4">
+        <div class="text-sm text-slate-500 flex items-center gap-1.5">
+            <a routerLink="/" class="hover:text-indigo-600 transition">Home</a>
+            <span class="text-slate-400">/</span>
+            <span class="text-slate-800 font-medium">{{ toolInfo.name }}</span>
         </div>
     </div>
 }

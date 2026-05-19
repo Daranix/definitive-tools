@@ -10,9 +10,11 @@ import { TopNavbarComponent } from '@/app/components/top-navbar/top-navbar.compo
 
 type Mode = 'decode' | 'encode';
 
+import { FooterComponent } from '../../components/footer/footer.component';
+
 @Component({
   selector: 'app-jwt-decode-encode',
-  imports: [LucideAngularModule, JwtDecoderComponent, JwtEncoderComponent, SelectButtonComponent, FormsModule, TopNavbarComponent],
+  imports: [LucideAngularModule, JwtDecoderComponent, JwtEncoderComponent, SelectButtonComponent, FormsModule, TopNavbarComponent, FooterComponent],
   templateUrl: './jwt-decode-encode.component.html',
   styleUrl: './jwt-decode-encode.component.scss'
 })

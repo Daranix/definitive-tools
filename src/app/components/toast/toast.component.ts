@@ -1,5 +1,4 @@
 import { Toast, ToastPosition, ToastService } from '@app/services/toast.service';
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { NgClass } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
@@ -8,21 +7,7 @@ import { Subscription } from 'rxjs';
     selector: 'app-toast',
     imports: [NgClass],
     templateUrl: './toast.component.html',
-    styleUrl: './toast.component.scss',
-    animations: [
-        trigger('toastAnimation', [
-            state('void', style({
-                transform: 'translateX(100%)',
-                opacity: 0
-            })),
-            state('*', style({
-                transform: 'translateX(0)',
-                opacity: 1
-            })),
-            transition('void => *', animate('300ms ease-in')),
-            transition('* => void', animate('300ms ease-out'))
-        ])
-    ]
+    styleUrl: './toast.component.scss'
 })
 export class ToastComponent implements OnInit, OnDestroy{
   toasts: Toast[] = [];

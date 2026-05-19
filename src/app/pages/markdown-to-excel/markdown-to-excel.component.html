@@ -1,132 +1,135 @@
-<app-top-navbar title="Markdown to Excel" icon="file-text" />
+<div class="min-h-screen flex flex-col bg-gray-50">
+    <app-top-navbar title="Markdown to Excel" icon="file-text" />
 
-<div class="container mx-auto px-4 py-8">
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-    
-    <!-- Input Section -->
-    <div class="flex flex-col space-y-4">
-      <div class="flex items-center justify-between">
-        <label for="markdown-input" class="text-lg font-semibold text-gray-700 flex items-center gap-2">
-          <lucide-icon name="code" class="w-5 h-5 text-indigo-600"></lucide-icon>
-          Markdown Table
-        </label>
-        <button (click)="handleClear()" class="text-sm text-gray-500 hover:text-red-500 transition-colors flex items-center gap-1">
-          <lucide-icon name="trash-2" class="w-4 h-4"></lucide-icon>
-          Clear
-        </button>
-      </div>
-      <textarea
-        id="markdown-input"
-        [(ngModel)]="inputText"
-        placeholder="| Column 1 | Column 2 |\n| --- | --- |\n| Row 1 | Row 2 |"
-        class="w-full h-[400px] p-4 bg-white border border-gray-200 rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none font-mono text-sm resize-none transition-all"
-      ></textarea>
-    </div>
-
-    <!-- Preview Section -->
-    <div class="flex flex-col space-y-4">
-      <div class="flex items-center justify-between">
-        <h2 class="text-lg font-semibold text-gray-700 flex items-center gap-2">
-          <lucide-icon name="grid" class="w-5 h-5 text-indigo-600"></lucide-icon>
-          Excel Preview
-        </h2>
-        <span *ngIf="tableData()" class="text-xs text-indigo-500 font-medium animate-pulse flex items-center gap-1">
-          <lucide-icon name="mouse-pointer-2" class="w-3 h-3"></lucide-icon>
-          Select and copy the table below
-        </span>
-      </div>
-
-      <div class="w-full h-[450px] bg-white border border-gray-300 rounded-xl shadow-inner overflow-auto selection:bg-transparent grid-container">
-        @if (!tableData()) {
-          <div class="h-full flex flex-col items-center justify-center text-gray-400 space-y-2 p-8 text-center">
-            <lucide-icon name="file-text" class="w-12 h-12 opacity-20"></lucide-icon>
-            <p>Paste a valid Markdown table to see the preview.</p>
+    <div class="flex-grow container mx-auto px-4 py-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        
+        <!-- Input Section -->
+        <div class="flex flex-col space-y-4">
+          <div class="flex items-center justify-between">
+            <label for="markdown-input" class="text-lg font-semibold text-gray-700 flex items-center gap-2">
+              <lucide-icon name="code" class="w-5 h-5 text-indigo-600"></lucide-icon>
+              Markdown Table
+            </label>
+            <button (click)="handleClear()" class="text-sm text-gray-500 hover:text-red-500 transition-colors flex items-center gap-1">
+              <lucide-icon name="trash-2" class="w-4 h-4"></lucide-icon>
+              Clear
+            </button>
           </div>
-        } @else {
-          <div class="relative">
-            <table class="min-w-full border-collapse bg-white cursor-text table-fixed border-l border-t border-gray-200">
-              <colgroup>
-                <col class="w-12">
-                @for (_ of columnLetters(); track $index) {
-                  <col class="col-data">
-                }
-              </colgroup>
-              <thead class="sticky top-0 z-20">
-                <!-- Excel Column Headers (A, B, C...) -->
-                <tr class="bg-gray-100 border-b border-gray-300 h-8">
-                  <th class="bg-gray-200 border-r border-gray-300 sticky left-0 z-30"></th>
-                  @for (letter of columnLetters(); track $index) {
-                    <th class="px-4 py-1 text-center text-[10px] font-bold text-gray-500 uppercase select-none border-r border-gray-300">
-                      {{ letter }}
-                    </th>
-                  }
-                </tr>
-                <!-- Markdown Table Headers (Fila 1) -->
-                <tr class="bg-white h-12">
-                  <td class="bg-gray-50 border-r border-b border-gray-200 sticky left-0 z-30 text-center text-xs font-bold text-gray-500 select-none">
-                    1
-                  </td>
-                  @for (header of tableData()?.headers; track $index) {
-                    <th
-                      (mousedown)="startSelection(-1, $index, $event)"
-                      (mouseenter)="updateSelection(-1, $index)"
-                      [ngClass]="getSelectionClasses(-1, $index)"
-                      class="px-4 py-3 text-left text-sm font-bold text-gray-700 uppercase tracking-tight select-none cursor-cell border-r border-b border-gray-200"
-                      [style.text-align]="tableData()?.alignments?.[$index] || 'left'"
-                    >
-                      {{ header }}
-                    </th>
-                  }
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-gray-200">
-                @for (row of tableData()?.rows; track $index; let rowIndex = $index) {
-                  <tr class="hover:bg-indigo-50/10 transition-colors h-11">
-                    <!-- Row Index (2, 3, 4...) -->
-                    <td class="bg-gray-50 sticky left-0 z-10 text-center text-xs font-bold text-gray-500 select-none border-r border-gray-200">
-                      {{ rowIndex + 2 }}
-                    </td>
-                    <!-- Row Data -->
-                    @for (cell of row; track $index; let colIndex = $index) {
-                      <td
-                        (mousedown)="startSelection(rowIndex, colIndex, $event)"
-                        (mouseenter)="updateSelection(rowIndex, colIndex)"
-                        [ngClass]="getSelectionClasses(rowIndex, colIndex)"
-                        class="px-4 py-2 text-sm text-gray-800 font-medium whitespace-nowrap overflow-hidden text-ellipsis select-none cursor-cell border-r border-gray-200"
-                        [style.text-align]="tableData()?.alignments?.[colIndex] || 'left'"
-                      >
-                        {{ cell }}
-                      </td>
+          <textarea
+            id="markdown-input"
+            [(ngModel)]="inputText"
+            placeholder="| Column 1 | Column 2 |\n| --- | --- |\n| Row 1 | Row 2 |"
+            class="w-full h-[400px] p-4 bg-white border border-gray-200 rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none font-mono text-sm resize-none transition-all"
+          ></textarea>
+        </div>
+
+        <!-- Preview Section -->
+        <div class="flex flex-col space-y-4">
+          <div class="flex items-center justify-between">
+            <h2 class="text-lg font-semibold text-gray-700 flex items-center gap-2">
+              <lucide-icon name="grid" class="w-5 h-5 text-indigo-600"></lucide-icon>
+              Excel Preview
+            </h2>
+            <span *ngIf="tableData()" class="text-xs text-indigo-500 font-medium animate-pulse flex items-center gap-1">
+              <lucide-icon name="mouse-pointer-2" class="w-3 h-3"></lucide-icon>
+              Select and copy the table below
+            </span>
+          </div>
+
+          <div class="w-full h-[450px] bg-white border border-gray-300 rounded-xl shadow-inner overflow-auto selection:bg-transparent grid-container">
+            @if (!tableData()) {
+              <div class="h-full flex flex-col items-center justify-center text-gray-400 space-y-2 p-8 text-center">
+                <lucide-icon name="file-text" class="w-12 h-12 opacity-20"></lucide-icon>
+                <p>Paste a valid Markdown table to see the preview.</p>
+              </div>
+            } @else {
+              <div class="relative">
+                <table class="min-w-full border-collapse bg-white cursor-text table-fixed border-l border-t border-gray-200">
+                  <colgroup>
+                    <col class="w-12">
+                    @for (_ of columnLetters(); track $index) {
+                      <col class="col-data">
                     }
-                  </tr>
-                }
-              </tbody>
-            </table>
+                  </colgroup>
+                  <thead class="sticky top-0 z-20">
+                    <!-- Excel Column Headers (A, B, C...) -->
+                    <tr class="bg-gray-100 border-b border-gray-300 h-8">
+                      <th class="bg-gray-200 border-r border-gray-300 sticky left-0 z-30"></th>
+                      @for (letter of columnLetters(); track $index) {
+                        <th class="px-4 py-1 text-center text-[10px] font-bold text-gray-500 uppercase select-none border-r border-gray-300">
+                          {{ letter }}
+                        </th>
+                      }
+                    </tr>
+                    <!-- Markdown Table Headers (Fila 1) -->
+                    <tr class="bg-white h-12">
+                      <td class="bg-gray-50 border-r border-b border-gray-200 sticky left-0 z-30 text-center text-xs font-bold text-gray-500 select-none">
+                        1
+                      </td>
+                      @for (header of tableData()?.headers; track $index) {
+                        <th
+                          (mousedown)="startSelection(-1, $index, $event)"
+                          (mouseenter)="updateSelection(-1, $index)"
+                          [ngClass]="getSelectionClasses(-1, $index)"
+                          class="px-4 py-3 text-left text-sm font-bold text-gray-700 uppercase tracking-tight select-none cursor-cell border-r border-b border-gray-200"
+                          [style.text-align]="tableData()?.alignments?.[$index] || 'left'"
+                        >
+                          {{ header }}
+                        </th>
+                      }
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-gray-200">
+                    @for (row of tableData()?.rows; track $index; let rowIndex = $index) {
+                      <tr class="hover:bg-indigo-50/10 transition-colors h-11">
+                        <!-- Row Index (2, 3, 4...) -->
+                        <td class="bg-gray-50 sticky left-0 z-10 text-center text-xs font-bold text-gray-500 select-none border-r border-gray-200">
+                          {{ rowIndex + 2 }}
+                        </td>
+                        <!-- Row Data -->
+                        @for (cell of row; track $index; let colIndex = $index) {
+                          <td
+                            (mousedown)="startSelection(rowIndex, colIndex, $event)"
+                            (mouseenter)="updateSelection(rowIndex, colIndex)"
+                            [ngClass]="getSelectionClasses(rowIndex, colIndex)"
+                            class="px-4 py-2 text-sm text-gray-800 font-medium whitespace-nowrap overflow-hidden text-ellipsis select-none cursor-cell border-r border-gray-200"
+                            [style.text-align]="tableData()?.alignments?.[colIndex] || 'left'"
+                          >
+                            {{ cell }}
+                          </td>
+                        }
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            }
           </div>
-        }
+        </div>
       </div>
-    </div>
-  </div>
 
-  <!-- How to use -->
-  <div class="mt-12 p-6 bg-indigo-50 rounded-2xl border border-indigo-100">
-    <h3 class="text-indigo-900 font-bold mb-4 flex items-center gap-2">
-      <lucide-icon name="info" class="w-5 h-5"></lucide-icon>
-      How to use this tool
-    </h3>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-indigo-800 text-sm">
-      <div class="space-y-2">
-        <p class="font-bold">1. Paste Markdown</p>
-        <p class="opacity-80">Copy your markdown table from GitHub, VS Code, or any MD file and paste it in the left editor.</p>
-      </div>
-      <div class="space-y-2">
-        <p class="font-bold">2. Check Preview</p>
-        <p class="opacity-80">Instantly see how your table looks. We support column alignment markers like <code>:---:</code>.</p>
-      </div>
-      <div class="space-y-2">
-        <p class="font-bold">3. Paste in Excel</p>
-        <p class="opacity-80">Click "Copy for Excel" and paste directly into Excel, Google Sheets, or Numbers. No file download needed!</p>
+      <!-- How to use -->
+      <div class="mt-12 p-6 bg-indigo-50 rounded-2xl border border-indigo-100">
+        <h3 class="text-indigo-900 font-bold mb-4 flex items-center gap-2">
+          <lucide-icon name="info" class="w-5 h-5"></lucide-icon>
+          How to use this tool
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-indigo-800 text-sm">
+          <div class="space-y-2">
+            <p class="font-bold">1. Paste Markdown</p>
+            <p class="opacity-80">Copy your markdown table from GitHub, VS Code, or any MD file and paste it in the left editor.</p>
+          </div>
+          <div class="space-y-2">
+            <p class="font-bold">2. Check Preview</p>
+            <p class="opacity-80">Instantly see how your table looks. We support column alignment markers like <code>:---:</code>.</p>
+          </div>
+          <div class="space-y-2">
+            <p class="font-bold">3. Paste in Excel</p>
+            <p class="opacity-80">Click "Copy for Excel" and paste directly into Excel, Google Sheets, or Numbers. No file download needed!</p>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+    <app-footer></app-footer>
 </div>

@@ -11,10 +11,12 @@ export interface TableData {
   alignments: ('left' | 'center' | 'right' | null)[];
 }
 
+import { FooterComponent } from '../../components/footer/footer.component';
+
 @Component({
   selector: 'app-markdown-to-excel',
   standalone: true,
-  imports: [CommonModule, FormsModule, LucideAngularModule, TopNavbarComponent],
+  imports: [CommonModule, FormsModule, LucideAngularModule, TopNavbarComponent, FooterComponent],
   templateUrl: './markdown-to-excel.component.html',
   styleUrl: './markdown-to-excel.component.scss'
 })
