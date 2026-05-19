@@ -25,6 +25,10 @@ export const routes: Routes = [
         component: BaseComponent
     },
     {
+        path: 'legal/:doc',
+        loadComponent: () => import('./pages/legal/legal.component').then(m => m.LegalComponent)
+    },
+    {
         path: '**',
         redirectTo: '/'
     }
