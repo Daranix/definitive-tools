@@ -21,8 +21,8 @@ export class JwtEncoderComponent {
   readonly payload = model<string>();
 
   readonly jwt = resource({
-    loader: ({ request }) => this.encodeJwt(request),
-    request: () => ({ secret: this.secret(), payload: this.payload(), header: this.header() }),
+    loader: ({ params }) => this.encodeJwt(params),
+    params: () => ({ secret: this.secret(), payload: this.payload(), header: this.header() }),
   })
 
   async generateExample() {

@@ -1,0 +1,120 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: #f9fafb;
+}
+
+.grid-container {
+  padding: 0 !important;
+  overflow: auto;
+  position: relative;
+}
+
+table {
+  width: max-content; // Allow horizontal overflow
+  min-width: 100%;
+  table-layout: fixed;
+  border-spacing: 0;
+}
+
+th, td {
+  user-select: none;
+  cursor: cell;
+  box-sizing: border-box;
+  transition: background-color 0.05s ease;
+  border-right: 1px solid #e5e7eb;
+}
+
+.cursor-cell {
+  cursor: cell;
+}
+
+// Fixed width for index column
+.w-12 {
+  min-width: 48px;
+  max-width: 48px;
+  width: 48px;
+  padding: 0;
+}
+
+.col-data {
+  width: 150px;
+}
+
+.selected-cell {
+  background-color: rgba(99, 102, 241, 0.1) !important;
+  color: #312e81 !important;
+}
+
+.sel-top { border-top: 2px solid #4f46e5 !important; }
+.sel-bottom { border-bottom: 2px solid #4f46e5 !important; }
+.sel-left { border-left: 2px solid #4f46e5 !important; }
+.sel-right { border-right: 2px solid #4f46e5 !important; }
+
+// Marching ants effect for copied selection
+@keyframes marching-ants {
+  0% { border-image-outset: 0; }
+  100% { border-image-outset: 0; }
+}
+
+.sel-copied-top { 
+  border-top: 2px dashed #4f46e5 !important;
+  animation: ant-march 0.5s infinite linear;
+}
+.sel-copied-bottom { 
+  border-bottom: 2px dashed #4f46e5 !important;
+  animation: ant-march 0.5s infinite linear;
+}
+.sel-copied-left { 
+  border-left: 2px dashed #4f46e5 !important;
+  animation: ant-march 0.5s infinite linear;
+}
+.sel-copied-right { 
+  border-right: 2px dashed #4f46e5 !important;
+  animation: ant-march 0.5s infinite linear;
+}
+
+@keyframes ant-march {
+  from { border-style: dashed; }
+  to { border-style: dotted; }
+}
+
+// Higher end marching ants using background-image (optional but better)
+.sel-copied-top, .sel-copied-bottom, .sel-copied-left, .sel-copied-right {
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 5;
+  }
+}
+
+// Z-index management
+.sticky {
+  position: sticky;
+}
+
+thead.sticky {
+  top: 0;
+  z-index: 30;
+}
+
+td.sticky, th.sticky {
+  left: 0;
+  z-index: 20;
+}
+
+th.sticky.top-0 {
+  z-index: 40; // Corner cells
+}
+
+.shadow-inner {
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+}
+
+// Prevent table from stretching too thin
+.relative {
+  min-width: fit-content;
+}

@@ -1,0 +1,17 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+::ng-deep .swagger-ui {
+  .scheme-container {
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .info {
+    margin: 0;
+  }
+}
+
+

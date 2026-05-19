@@ -1,7 +1,7 @@
 import { Component, computed, contentChild, input, output, TemplateRef } from '@angular/core';
 import { z, ZodObject, ZodRawShape } from 'zod';
 import { AbstractControl, FormControl, FormGroup, NgModel, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule, NgIf, NgTemplateOutlet } from '@angular/common';
+import { CommonModule, NgTemplateOutlet } from '@angular/common';
 import { OutletContext } from '@angular/router';
 
 @Component({

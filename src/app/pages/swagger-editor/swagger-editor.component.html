@@ -1,0 +1,106 @@
+<div class="flex flex-col h-dvh">
+  <app-swagger-editor-toolbar 
+    (onLoadExample)="loadExampleDefinition()"
+    (onClear)="handleClear()"
+    (onImportUrl)="handleImportUrl()"
+    (onImportFile)="fileInput.click()"
+    (onSaveYaml)="handleSaveYaml()"
+    (onSaveJson)="handleSaveJson()"
+    (onGenerateClient)="handleGenerateClient($event)"
+    (onGenerateServer)="handleGenerateClient($event)"
+  />
+  <input type="file" #fileInput class="hidden" (change)="handleFileImport($event)" accept=".yaml,.yml,.json">
+  <div class="flex-1 min-h-0">
+    @if(isBrowser()) {
+    <div class="flex w-full h-full min-h-0">
+      <div class="flex-1 min-w-0 min-h-0 border-r border-gray-200">
+        <app-monaco-editor class="h-full w-full" [options]="editorOptions()" (onPaste)="handleOnPaste($event)"
+          (onEditorLoaded)="handleEditorLoaded($event)" [(code)]="definitionSpec"
+          (codeChange)="onContentChanges($event)"></app-monaco-editor>
+      </div>
+      <div class="flex-1 min-w-0 min-h-0 overflow-hidden relative">
+
+        <div class="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-white/80 backdrop-blur-sm"
+          [class.invisible]="!isLoading()">
+          <svg class="animate-spin h-8 w-8 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+            </path>
+          </svg>
+          <span class="text-sm font-medium text-gray-500">Rendering Swagger UI...</span>
+        </div>
+
+        <div class="h-full overflow-y-auto" [class.invisible]="isLoading()">
+          <div #custApiDocElement></div>
+        </div>
+
+        @if (activeGenerator()) {
+          <app-swagger-generation-modal 
+            [spec]="definitionSpec()!" 
+            [generator]="activeGenerator()!" 
+            (onClose)="activeGenerator.set(null)"
+          />
+        }
+
+      </div>
+    </div>
+    }
+  </div>
+
+  <!-- Import URL Modal -->
+  @if (isImportModalOpen()) {
+    <div class="fixed inset-0 z-[100] flex items-center justify-center p-4">
+      <!-- Backdrop -->
+      <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" (click)="isImportModalOpen.set(false)"></div>
+      
+      <!-- Modal Content -->
+      <div class="relative w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
+        <div class="px-6 py-6">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="p-2.5 bg-indigo-50 rounded-xl">
+              <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold text-gray-900">Import from URL</h3>
+              <p class="text-sm text-gray-500">Paste the link to your OpenAPI definition</p>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <div>
+              <input 
+                type="url" 
+                [(ngModel)]="importUrlInput" 
+                placeholder="https://api.example.com/swagger.yaml"
+                class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all outline-none text-sm"
+                (keyup.enter)="confirmImportUrl()"
+                autofocus
+              >
+            </div>
+            
+            <div class="flex gap-3 pt-2">
+              <button 
+                (click)="isImportModalOpen.set(false)"
+                class="flex-1 px-4 py-2.5 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors"
+              >
+                Cancel
+              </button>
+              <button 
+                (click)="confirmImportUrl()"
+                [disabled]="!importUrlInput()"
+                class="flex-1 px-4 py-2.5 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl shadow-lg shadow-indigo-200 transition-all"
+              >
+                Import
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+</div>

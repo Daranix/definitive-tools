@@ -1,5 +1,5 @@
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { contentChild, Directive, ElementRef, HostListener, inject, Input, OnInit, PLATFORM_ID, Renderer2, signal, TemplateRef, ViewContainerRef } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { contentChild, Directive, ElementRef, HostListener, inject, Input, OnInit, PLATFORM_ID, Renderer2, signal, TemplateRef, ViewContainerRef, DOCUMENT } from '@angular/core';
 
 @Directive({
   selector: '[appContextMenu]'
