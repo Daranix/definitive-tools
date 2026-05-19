@@ -74,14 +74,14 @@ export const TOOLS: ReadonlyArray<Tool> = [
         color: 'indigo',
         category: 'Text Tools'
     },
-    {
+    /*{
         id: 'markdown-to-pdf',
         name: 'Markdown to PDF',
         description: 'Convert Markdown text to professional PDF documents with a live preview. Perfect for documentation, notes, and quick reports.',
         icon: 'file-text',
         color: 'indigo',
         category: 'Text Tools'
-    },
+    },*/
     {
         id: 'markdown-to-html',
         name: 'Markdown to HTML',

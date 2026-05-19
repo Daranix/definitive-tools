@@ -2,8 +2,8 @@
   <main class="flex-1 flex overflow-hidden relative">
     
     <!-- Left Column: Markdown Editor -->
-    <div class="flex-1 flex flex-col bg-[#1e293b] overflow-hidden border-r border-slate-700/50">
-      <div class="px-4 py-2.5 bg-slate-800/50 border-b border-slate-700/50 flex items-center justify-between">
+    <div [style.width.%]="leftWidthPercent()" class="flex flex-col bg-[#1e293b] overflow-hidden">
+    <div class="h-14 px-4 bg-slate-800/50 border-b border-slate-700/50 flex items-center justify-between">
         <div class="flex items-center gap-2">
           <lucide-icon name="code" class="w-4 h-4 text-indigo-400"></lucide-icon>
           <span class="text-sm font-semibold tracking-wide text-slate-300 uppercase">Markdown Editor</span>
@@ -40,9 +40,21 @@
       </div>
     </div>
 
+    <!-- Resizable Splitter Divider -->
+    <div (mousedown)="onDragStart($event)"
+         (touchstart)="onDragStart($event)"
+         class="group w-1.5 h-full cursor-col-resize hover:bg-indigo-500/40 active:bg-indigo-500/80 bg-slate-800/80 transition-colors relative z-40 flex items-center justify-center border-l border-r border-slate-700/30">
+      <!-- Tactile Drag Grips -->
+      <div class="flex flex-col gap-1 pointer-events-none">
+        <span class="w-1 h-1 rounded-full bg-slate-500 group-hover:bg-indigo-300 transition-colors"></span>
+        <span class="w-1 h-1 rounded-full bg-slate-500 group-hover:bg-indigo-300 transition-colors"></span>
+        <span class="w-1 h-1 rounded-full bg-slate-500 group-hover:bg-indigo-300 transition-colors"></span>
+      </div>
+    </div>
+
     <!-- Right Column: Code & Preview Tabs -->
     <div class="flex-1 flex flex-col bg-[#1e293b] overflow-hidden relative">
-      <div class="px-4 py-2.5 bg-slate-800/50 border-b border-slate-700/50 flex items-center justify-between">
+      <div class="h-14 px-4 bg-slate-800/50 border-b border-slate-700/50 flex items-center justify-between">
         
         <!-- Left Side: Tabs -->
         <div class="flex bg-slate-900/60 p-0.5 rounded-lg border border-slate-700/30">

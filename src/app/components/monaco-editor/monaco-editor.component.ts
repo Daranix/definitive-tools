@@ -73,8 +73,27 @@ export class MonacoEditorComponent implements AfterViewInit, OnChanges, OnDestro
       }
 
       const onAmdLoader: any = () => {
-        // Load monaco
-        (<any>window).require.config({ paths: { 'vs': 'assets/monaco/vs' } });
+        // Configure global MonacoEnvironment with absolute paths to worker scripts
+        (<any>window).MonacoEnvironment = {
+          getWorkerUrl: function (moduleId: string, label: string) {
+            if (label === 'json') {
+              return '/assets/monaco/vs/language/json/jsonWorker.js';
+            }
+            if (label === 'css') {
+              return '/assets/monaco/vs/language/css/cssWorker.js';
+            }
+            if (label === 'html') {
+              return '/assets/monaco/vs/language/html/htmlWorker.js';
+            }
+            if (label === 'typescript' || label === 'javascript') {
+              return '/assets/monaco/vs/language/typescript/tsWorker.js';
+            }
+            return '/assets/monaco/vs/base/worker/workerMain.js';
+          }
+        };
+
+        // Load monaco using absolute root paths
+        (<any>window).require.config({ paths: { 'vs': '/assets/monaco/vs' } });
 
         (<any>window).require(['vs/editor/editor.main'], () => {
           this.initMonaco();
@@ -86,7 +105,7 @@ export class MonacoEditorComponent implements AfterViewInit, OnChanges, OnDestro
       if (!(<any>window).require) {
         const loaderScript: HTMLScriptElement = document.createElement('script');
         loaderScript.type = 'text/javascript';
-        loaderScript.src = 'assets/monaco/vs/loader.js';
+        loaderScript.src = '/assets/monaco/vs/loader.js';
         loaderScript.addEventListener('load', onAmdLoader);
         this.monacoScriptTag = loaderScript;
         document.body.appendChild(loaderScript);

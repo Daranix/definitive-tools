@@ -56,6 +56,7 @@ export class MarkdownToHtmlComponent implements AfterViewInit {
   readonly activeTab = signal<'preview' | 'code'>('code');
   readonly isStylesDrawerOpen = signal<boolean>(false);
   readonly selectedPreset = signal<'github' | 'indigo' | 'warm'>('github');
+  readonly leftWidthPercent = signal<number>(50);
 
   // Load initial welcome template using httpResource.text
   readonly welcomeResource = httpResource.text(() => '/presets/welcome.md');
@@ -215,5 +216,32 @@ export class MarkdownToHtmlComponent implements AfterViewInit {
 
   resetStyles() {
     this.applyPreset('github');
+  }
+
+  onDragStart(event: MouseEvent | TouchEvent) {
+    event.preventDefault();
+    
+    const onMouseMove = (moveEvent: MouseEvent | TouchEvent) => {
+      const clientX = 'touches' in moveEvent ? moveEvent.touches[0].clientX : moveEvent.clientX;
+      const mainElement = document.querySelector('main');
+      if (!mainElement) return;
+
+      const rect = mainElement.getBoundingClientRect();
+      const percentage = ((clientX - rect.left) / rect.width) * 100;
+      const clamped = Math.max(20, Math.min(80, percentage));
+      this.leftWidthPercent.set(clamped);
+    };
+
+    const onMouseUp = () => {
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+      document.removeEventListener('touchmove', onMouseMove);
+      document.removeEventListener('touchend', onMouseUp);
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+    document.addEventListener('touchmove', onMouseMove);
+    document.addEventListener('touchend', onMouseUp);
   }
 }
