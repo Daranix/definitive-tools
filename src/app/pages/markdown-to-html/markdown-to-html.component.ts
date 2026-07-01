@@ -1,10 +1,20 @@
 /// <reference path="../../../../node_modules/monaco-editor/monaco.d.ts" />
-import { Component, inject, signal, viewChild, AfterViewInit, PLATFORM_ID, ElementRef, effect } from '@angular/core';
+import {
+  Component,
+  inject,
+  signal,
+  viewChild,
+  AfterViewInit,
+  PLATFORM_ID,
+  ElementRef,
+  effect,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
-import { MonacoEditorComponent } from "@/app/components/monaco-editor/monaco-editor.component";
+import { MonacoEditorComponent } from '@/app/components/monaco-editor/monaco-editor.component';
 import { MetadataService } from '@/app/services/metadata.service';
 import { MarkdownPreviewComponent } from '@/app/components/markdown-preview/markdown-preview.component';
 
@@ -20,23 +30,30 @@ marked.use(
     highlight(code, lang, info) {
       const language = hljs.getLanguage(lang) ? lang : 'plaintext';
       return hljs.highlight(code, { language }).value;
-    }
-  })
+    },
+  }),
 );
 
 // Preset stylesheet asset paths
 const PRESET_URLS = {
   github: '/presets/github.css',
   indigo: '/presets/indigo.css',
-  warm: '/presets/warm.css'
+  warm: '/presets/warm.css',
 };
 
 @Component({
   selector: 'app-markdown-to-html',
   standalone: true,
-  imports: [CommonModule, FormsModule, LucideAngularModule, MonacoEditorComponent, MarkdownPreviewComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    LucideAngularModule,
+    MonacoEditorComponent,
+    MarkdownPreviewComponent,
+  ],
   templateUrl: './markdown-to-html.component.html',
-  styleUrl: './markdown-to-html.component.scss'
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './markdown-to-html.component.scss',
 })
 export class MarkdownToHtmlComponent implements AfterViewInit {
   private readonly platformId = inject(PLATFORM_ID);
@@ -45,8 +62,12 @@ export class MarkdownToHtmlComponent implements AfterViewInit {
   private readonly httpClient = inject(HttpClient);
 
   // Editor ViewChildren references
-  readonly leftEditor = viewChild('leftEditor', { read: MonacoEditorComponent });
-  readonly codeEditor = viewChild('codeEditor', { read: MonacoEditorComponent });
+  readonly leftEditor = viewChild('leftEditor', {
+    read: MonacoEditorComponent,
+  });
+  readonly codeEditor = viewChild('codeEditor', {
+    read: MonacoEditorComponent,
+  });
   readonly cssEditor = viewChild('cssEditor', { read: MonacoEditorComponent });
 
   // Core signals
@@ -62,53 +83,54 @@ export class MarkdownToHtmlComponent implements AfterViewInit {
   readonly welcomeResource = httpResource.text(() => '/presets/welcome.md');
 
   // Monaco Editor configurations
-  readonly markdownOptions = signal<monaco.editor.IStandaloneEditorConstructionOptions>({
-    language: 'markdown',
-    theme: 'vs-dark',
-    wordWrap: 'on',
-    minimap: { enabled: false },
-    automaticLayout: true,
-    fontSize: 14,
-    lineNumbers: 'on',
-    scrollBeyondLastLine: false,
-    padding: { top: 10, bottom: 10 }
-  });
+  readonly markdownOptions =
+    signal<monaco.editor.IStandaloneEditorConstructionOptions>({
+      language: 'markdown',
+      theme: 'vs-dark',
+      wordWrap: 'on',
+      minimap: { enabled: false },
+      automaticLayout: true,
+      fontSize: 14,
+      lineNumbers: 'on',
+      scrollBeyondLastLine: false,
+      padding: { top: 10, bottom: 10 },
+    });
 
-  readonly htmlOptions = signal<monaco.editor.IStandaloneEditorConstructionOptions>({
-    language: 'html',
-    theme: 'vs-dark',
-    wordWrap: 'on',
-    minimap: { enabled: false },
-    automaticLayout: true,
-    fontSize: 14,
-    lineNumbers: 'on',
-    readOnly: true,
-    scrollBeyondLastLine: false,
-    padding: { top: 10, bottom: 10 }
-  });
+  readonly htmlOptions =
+    signal<monaco.editor.IStandaloneEditorConstructionOptions>({
+      language: 'html',
+      theme: 'vs-dark',
+      wordWrap: 'on',
+      minimap: { enabled: false },
+      automaticLayout: true,
+      fontSize: 14,
+      lineNumbers: 'on',
+      readOnly: true,
+      scrollBeyondLastLine: false,
+      padding: { top: 10, bottom: 10 },
+    });
 
-  readonly cssOptions = signal<monaco.editor.IStandaloneEditorConstructionOptions>({
-    language: 'css',
-    theme: 'vs-dark',
-    wordWrap: 'on',
-    minimap: { enabled: false },
-    automaticLayout: true,
-    fontSize: 13,
-    lineNumbers: 'on',
-    scrollBeyondLastLine: false,
-    padding: { top: 10, bottom: 10 }
-  });
-
-
+  readonly cssOptions =
+    signal<monaco.editor.IStandaloneEditorConstructionOptions>({
+      language: 'css',
+      theme: 'vs-dark',
+      wordWrap: 'on',
+      minimap: { enabled: false },
+      automaticLayout: true,
+      fontSize: 13,
+      lineNumbers: 'on',
+      scrollBeyondLastLine: false,
+      padding: { top: 10, bottom: 10 },
+    });
 
   constructor() {
     this.metadataService.updateMetadata({
       title: 'Markdown to HTML Converter | definitive-tools',
-      description: 'Convert markdown text to clean HTML code instantly with real-time responsive browser side-by-side editing, customized CSS styling presets, and simple code exports.',
-      keywords: 'markdown to html, html generator, css preview, dynamic styling, inline css, markup editor, clean code'
+      description:
+        'Convert markdown text to clean HTML code instantly with real-time responsive browser side-by-side editing, customized CSS styling presets, and simple code exports.',
+      keywords:
+        'markdown to html, html generator, css preview, dynamic styling, inline css, markup editor, clean code',
     });
-
-
 
     // Reactive effect to load initial welcome markdown template via httpResource
     effect(() => {
@@ -168,19 +190,21 @@ export class MarkdownToHtmlComponent implements AfterViewInit {
   }
 
   toggleStylesDrawer() {
-    this.isStylesDrawerOpen.update(val => !val);
+    this.isStylesDrawerOpen.update((val) => !val);
   }
 
   private loadPresetCss(preset: 'github' | 'indigo' | 'warm') {
-    this.httpClient.get(PRESET_URLS[preset], { responseType: 'text' }).subscribe({
-      next: (css) => {
-        this.customCss.set(css);
-        this.cssEditor()?.getEditorInstance()?.setValue(css);
-      },
-      error: (err) => {
-        console.error("Failed to load preset stylesheet: " + preset, err);
-      }
-    });
+    this.httpClient
+      .get(PRESET_URLS[preset], { responseType: 'text' })
+      .subscribe({
+        next: (css) => {
+          this.customCss.set(css);
+          this.cssEditor()?.getEditorInstance()?.setValue(css);
+        },
+        error: (err) => {
+          console.error('Failed to load preset stylesheet: ' + preset, err);
+        },
+      });
   }
 
   applyPreset(preset: 'github' | 'indigo' | 'warm') {
@@ -220,9 +244,12 @@ export class MarkdownToHtmlComponent implements AfterViewInit {
 
   onDragStart(event: MouseEvent | TouchEvent) {
     event.preventDefault();
-    
+
     const onMouseMove = (moveEvent: MouseEvent | TouchEvent) => {
-      const clientX = 'touches' in moveEvent ? moveEvent.touches[0].clientX : moveEvent.clientX;
+      const clientX =
+        'touches' in moveEvent
+          ? moveEvent.touches[0].clientX
+          : moveEvent.clientX;
       const mainElement = document.querySelector('main');
       if (!mainElement) return;
 

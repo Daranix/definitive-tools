@@ -1,14 +1,14 @@
-import { Component, output } from '@angular/core';
+import { Component, output, ChangeDetectionStrategy } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-swagger-editor-toolbar',
   imports: [LucideAngularModule],
   templateUrl: './swagger-editor-toolbar.component.html',
-  styleUrl: './swagger-editor-toolbar.component.scss'
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './swagger-editor-toolbar.component.scss',
 })
 export class SwaggerEditorToolbarComponent {
-
   readonly onImportUrl = output<void>();
   readonly onImportFile = output<void>();
   readonly onSaveYaml = output<void>();
@@ -19,17 +19,7 @@ export class SwaggerEditorToolbarComponent {
   readonly onGenerateServer = output<string>();
   readonly onGenerateClient = output<string>();
 
-  readonly serverGenerators = [
-    'aspnetcore',
-    'go-server',
-    'spring'
-  ];
+  readonly serverGenerators = ['aspnetcore', 'go-server', 'spring'];
 
-  readonly clientGenerators = [
-    'go',
-    'csharp',
-    'java',
-    'typescript-angular'
-  ]
-
+  readonly clientGenerators = ['go', 'csharp', 'java', 'typescript-angular'];
 }

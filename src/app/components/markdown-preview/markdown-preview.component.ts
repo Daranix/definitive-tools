@@ -1,13 +1,19 @@
-import { Component, input, ViewEncapsulation, computed, inject } from '@angular/core';
+import {
+  Component,
+  input,
+  ViewEncapsulation,
+  computed,
+  inject,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-markdown-preview',
   standalone: true,
-  template: `
-    <div [innerHTML]="safeContent()"></div>
-  `,
-  encapsulation: ViewEncapsulation.ShadowDom
+  template: ` <div [innerHTML]="safeContent()"></div> `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class MarkdownPreviewComponent {
   private readonly sanitizer = inject(DomSanitizer);

@@ -6,360 +6,441 @@
         <div class="lg:col-span-2 bg-white rounded-lg shadow-md p-6">
             <h2 class="text-2xl font-bold mb-6 text-gray-800">QR Code Configuration</h2>
 
-            <app-zod-form #generatorForm [zodSchema]="formSchema()" (submit)="generateQrCode($event)">
-                <ng-template let-formGroup="formGroup">
-                   
-                    <!-- Content Type Selection -->
-                    <div class="mb-8">
-                        <label class="block text-gray-700 text-sm font-bold mb-3">Content Type</label>
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                            @for (contentType of contentTypes; track $index) {
-                            <label 
-                                [ngClass]="{'bg-indigo-600 text-white': selectedContentType() === contentType.id, 'bg-white hover:bg-gray-50 hover:text-gray-700': selectedContentType() !== contentType.id}"
-                                class="border border-gray-300 text-gray-700 px-4 py-3 rounded-md flex items-center justify-center text-sm font-medium transition cursor-pointer">
-                                <input 
-                                    type="radio" 
-                                    [formControl]="formGroup.get('contentType')" 
-                                    (change)="changeContentType(contentType.id)"
-                                    class="sr-only" />
-                                <lucide-icon [name]="contentType.icon" class="h-4 w-4 mr-2"></lucide-icon> {{ contentType.name }}
-                            </label>
+            @let selectedContentType = qrForm.contentType().value();
+
+            <form (submit)="$event.preventDefault(); generateQrCode()">
+                <!-- Content Type Selection -->
+                <div class="mb-8">
+                    <label class="block text-gray-700 text-sm font-bold mb-3">Content Type</label>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        @for (contentType of contentTypes; track $index) {
+                        <button type="button" (click)="changeContentType(contentType.id)"
+                            [ngClass]="{'bg-indigo-600 text-white': selectedContentType === contentType.id, 'bg-white hover:bg-gray-50 hover:text-gray-700': selectedContentType !== contentType.id}"
+                            class="border border-gray-300 text-gray-700 px-4 py-3 rounded-md flex items-center justify-center text-sm font-medium transition cursor-pointer">
+                            <lucide-icon [name]="contentType.icon" class="h-4 w-4 mr-2"></lucide-icon> {{ contentType.name }}
+                        </button>
+                        }
+                    </div>
+                </div>
+
+                @if(isUrlForm(qrForm)) {
+                <!-- URL Content Form (default view) -->
+                <div id="url-form" class="mb-8">
+                    <label for="url" class="block text-gray-700 text-sm font-bold mb-2">Website URL</label>
+                    <input type="text" id="url" [formField]="qrForm.url"
+                        class="min-w-0 block w-full px-3 py-2 rounded-md focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 border"
+                        placeholder="https://www.example.com">
+                    @if (qrForm.url().invalid() && qrForm.url().touched()) {
+                        <span class="text-xs text-red-500 font-medium mt-1 block">
+                            {{ qrForm.url().errors()[0]?.message || 'Invalid URL' }}
+                        </span>
+                    }
+                    <p class="mt-2 text-sm text-gray-500">Enter the full URL including https:// for websites.</p>
+                </div>
+                }
+
+                @if(isTextForm(qrForm)) {
+                    <!-- Text Content Form -->
+                    <div id="text-form" class="mb-8">
+                        <label for="text-input" class="block text-gray-700 text-sm font-bold mb-2">Text Content</label>
+                        <textarea id="text-input" rows="4"
+                            [formField]="qrForm.textInput"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            placeholder="Enter any text you want encoded in the QR code"></textarea>
+                        @if (qrForm.textInput().invalid() && qrForm.textInput().touched()) {
+                            <span class="text-xs text-red-500 font-medium mt-1 block">
+                                {{ qrForm.textInput().errors()[0]?.message || 'Invalid text' }}
+                            </span>
+                        }
+                    </div>
+                }
+
+                @if(isEmailForm(qrForm)) {
+                <!-- Email Content Form -->
+                <div id="email-form" class="mb-8">
+                    <div class="mb-4">
+                        <label for="email-address" class="block text-gray-700 text-sm font-bold mb-2">Email Address</label>
+                        <input type="email" id="email-address" [formField]="qrForm.emailAddress"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            placeholder="recipient@example.com">
+                        @if (qrForm.emailAddress().invalid() && qrForm.emailAddress().touched()) {
+                            <span class="text-xs text-red-500 font-medium mt-1 block">
+                                {{ qrForm.emailAddress().errors()[0]?.message || 'Invalid email address' }}
+                            </span>
+                        }
+                    </div>
+                    <div class="mb-4">
+                        <label for="email-subject" class="block text-gray-700 text-sm font-bold mb-2">Subject (optional)</label>
+                        <input type="text" id="email-subject" [formField]="qrForm.emailSubject!"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            placeholder="Email subject">
+                        @if (qrForm.emailSubject!().invalid() && qrForm.emailSubject!().touched()) {
+                            <span class="text-xs text-red-500 font-medium mt-1 block">
+                                {{ qrForm.emailSubject!().errors()[0]?.message }}
+                            </span>
+                        }
+                    </div>
+                    <div>
+                        <label for="email-body" class="block text-gray-700 text-sm font-bold mb-2">Body (optional)</label>
+                        <textarea id="email-body" rows="4" [formField]="qrForm.emailBody!"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            placeholder="Email content"></textarea>
+                        @if (qrForm.emailBody!().invalid() && qrForm.emailBody!().touched()) {
+                            <span class="text-xs text-red-500 font-medium mt-1 block">
+                                {{ qrForm.emailBody!().errors()[0]?.message }}
+                            </span>
+                        }
+                    </div>
+                </div>
+                }
+
+                @if(isPhoneForm(qrForm)) {
+                <!-- Phone Content Form -->
+                <div id="phone-form" class="mb-8">
+                    <label for="phone-input" class="block text-gray-700 text-sm font-bold mb-2">Phone Number</label>
+                    <input type="tel" id="phone-input" [formField]="qrForm.phoneNumber"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                        placeholder="+1 555 123 4567">
+                    @if (qrForm.phoneNumber().invalid() && qrForm.phoneNumber().touched()) {
+                        <span class="text-xs text-red-500 font-medium mt-1 block">
+                            {{ qrForm.phoneNumber().errors()[0]?.message || 'Invalid phone number' }}
+                        </span>
+                    }
+                </div>
+                }
+
+                @if(isSmsForm(qrForm)) {
+                <!-- SMS Content Form -->
+                <div id="sms-form" class="mb-8">
+                    <div class="mb-4">
+                        <label for="sms-phone" class="block text-gray-700 text-sm font-bold mb-2">Phone Number</label>
+                        <input type="tel" id="sms-phone" [formField]="qrForm.smsPhoneNumber"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            placeholder="+1 555 123 4567">
+                        @if (qrForm.smsPhoneNumber().invalid() && qrForm.smsPhoneNumber().touched()) {
+                            <span class="text-xs text-red-500 font-medium mt-1 block">
+                                {{ qrForm.smsPhoneNumber().errors()[0]?.message || 'Invalid phone number' }}
+                            </span>
+                        }
+                    </div>
+                    <div>
+                        <label for="sms-message" class="block text-gray-700 text-sm font-bold mb-2">Message</label>
+                        <textarea id="sms-message" rows="4" [formField]="qrForm.smsMessage"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            placeholder="SMS content"></textarea>
+                        @if (qrForm.smsMessage().invalid() && qrForm.smsMessage().touched()) {
+                            <span class="text-xs text-red-500 font-medium mt-1 block">
+                                {{ qrForm.smsMessage().errors()[0]?.message }}
+                            </span>
+                        }
+                    </div>
+                </div>
+                }
+
+                @if(isVcardForm(qrForm)) {
+                <!-- vCard Content Form -->
+                <div id="vcard-form" class="mb-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label for="vcard-firstname" class="block text-gray-700 text-sm font-bold mb-2">First Name</label>
+                            <input type="text" id="vcard-firstname" [formField]="qrForm.vcardFirstName"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            @if (qrForm.vcardFirstName().invalid() && qrForm.vcardFirstName().touched()) {
+                                <span class="text-xs text-red-500 font-medium mt-1 block">
+                                    {{ qrForm.vcardFirstName().errors()[0]?.message || 'First name is required' }}
+                                </span>
+                            }
+                        </div>
+                        <div>
+                            <label for="vcard-lastname" class="block text-gray-700 text-sm font-bold mb-2">Last Name</label>
+                            <input type="text" id="vcard-lastname" [formField]="qrForm.vcardLastName"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            @if (qrForm.vcardLastName().invalid() && qrForm.vcardLastName().touched()) {
+                                <span class="text-xs text-red-500 font-medium mt-1 block">
+                                    {{ qrForm.vcardLastName().errors()[0]?.message || 'Last name is required' }}
+                                </span>
                             }
                         </div>
                     </div>
-
-                    @if(selectedContentType() === 'url') {
-                    <!-- URL Content Form (default view) -->
-                    <div id="url-form" class="mb-8">
-                        <label for="url-input" class="block text-gray-700 text-sm font-bold mb-2">Website URL</label>
-                        <input type="text" id="url" [formControl]="formGroup.get('url')"
-                            class="min-w-0 block w-full px-3 py-2 rounded-md focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 border"
-                            placeholder="www.example.com">
-                        <app-input-errors [control]="formGroup.get('url')"></app-input-errors>
-                        <p class="mt-2 text-sm text-gray-500">Enter the full URL including https:// for websites.</p>
-                    </div>
-                    }
-
-                    @if(selectedContentType() === 'text') {
-                        <!-- Text Content Form (hidden by default) -->
-                        <div id="text-form" class="mb-8">
-                            <label for="text-input" class="block text-gray-700 text-sm font-bold mb-2">Text Content</label>
-                            <textarea id="text-input" name="text-input" rows="4"
-                                [formControl]="formGroup.get('textInput')"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                placeholder="Enter any text you want encoded in the QR code"></textarea>
-                                <app-input-errors [control]="formGroup.get('textInput')"></app-input-errors>
-                        </div>
-                    }
-
-                    @if(selectedContentType() === 'email') {
-                    <!-- Email Content Form (hidden by default) -->
-                    <div id="email-form" class="mb-8">
-                        <div class="mb-4">
-                            <label for="email-address" class="block text-gray-700 text-sm font-bold mb-2">Email
-                                Address</label>
-                            <input type="email" id="email-address" name="email-address" [formControl]="formGroup.get('emailAddress')"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                placeholder="recipient@example.com">
-                            <app-input-errors [control]="formGroup.get('emailAddress')"></app-input-errors>
-                        </div>
-                        <div class="mb-4">
-                            <label for="email-subject" class="block text-gray-700 text-sm font-bold mb-2">Subject
-                                (optional)</label>
-                            <input type="text" id="email-subject" name="email-subject" [formControl]="formGroup.get('emailSubject')"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                placeholder="Email subject">
-                            <app-input-errors [control]="formGroup.get('emailSubject')"></app-input-errors>
-                        </div>
-                        <div>
-                            <label for="email-body" class="block text-gray-700 text-sm font-bold mb-2">Body
-                                (optional)</label>
-                            <textarea id="email-body" name="email-body" rows="4" [formControl]="formGroup.get('emailBody')"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                placeholder="Email content"></textarea>
-                            <app-input-errors [control]="formGroup.get('emailBody')"></app-input-errors>
-                        </div>
-                    </div>
-                    }
-
-                    @if(selectedContentType() === 'phone') {
-                    <!-- Phone Content Form (hidden by default) -->
-                    <div id="phone-form" class="mb-8">
-                        <label for="phone-input" class="block text-gray-700 text-sm font-bold mb-2">Phone Number</label>
-                        <input type="tel" id="phone-input" name="phone-input" [formControl]="formGroup.get('phoneNumber')"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                            placeholder="+1 555 123 4567">
-                        <app-input-errors [control]="formGroup.get('phoneNumber')"></app-input-errors>
-                    </div>
-                    }
-
-
-                    @if(selectedContentType() === 'sms') {
-                    <!-- SMS Content Form (hidden by default) -->
-                    <div id="sms-form" class="mb-8">
-                        <div class="mb-4">
-                            <label for="sms-phone" class="block text-gray-700 text-sm font-bold mb-2">Phone Number</label>
-                            <input type="tel" id="sms-phone" name="sms-phone" [formControl]="formGroup.get('smsPhoneNumber')"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                placeholder="+1 555 123 4567">
-                            <app-input-errors [control]="formGroup.get('smsPhoneNumber')"></app-input-errors>
-                        </div>
-                        <div>
-                            <label for="sms-message" class="block text-gray-700 text-sm font-bold mb-2">Message (optional)</label>
-                            <textarea id="sms-message" name="sms-message" rows="4" [formControl]="formGroup.get('smsMessage')"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                placeholder="SMS content"></textarea>
-                            <app-input-errors [control]="formGroup.get('smsMessage')"></app-input-errors>
-                        </div>
-                    </div>
-                    }
-
-
-                    @if(selectedContentType() === 'vcard') {
-                    <!-- vCard Content Form (hidden by default) -->
-                    <div id="vcard-form" class="mb-8">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                            <div>
-                                <label for="vcard-firstname" class="block text-gray-700 text-sm font-bold mb-2">First
-                                    Name</label>
-                                <input type="text" id="vcard-firstname" name="vcard-firstname" [formControl]="formGroup.get('vcardFirstName')"
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-                                <app-input-errors [control]="formGroup.get('smsMessage')"></app-input-errors>
-                            </div>
-                            <div>
-                                <label for="vcard-lastname" class="block text-gray-700 text-sm font-bold mb-2">Last
-                                    Name</label>
-                                <input type="text" id="vcard-lastname" name="vcard-lastname" [formControl]="formGroup.get('vcardLastName')"
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-                                <app-input-errors [control]="formGroup.get('smsMessage')"></app-input-errors>
-                            </div>
-                        </div>
-                        <div class="mb-4">
-                            <label for="vcard-company" class="block text-gray-700 text-sm font-bold mb-2">Company
-                                (optional)</label>
-                            <input type="text" id="vcard-company" name="vcard-company" [formControl]="formGroup.get('vcardCompany')"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-                            <app-input-errors [control]="formGroup.get('vcardCompany')"></app-input-errors>
-                        </div>
-                        <div class="mb-4">
-                            <label for="vcard-phone" class="block text-gray-700 text-sm font-bold mb-2">Phone Number</label>
-                            <input type="tel" id="vcard-phone" name="vcard-phone" [formControl]="formGroup.get('vcardPhoneNumber')"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-                            <app-input-errors [control]="formGroup.get('vcardPhoneNumber')"></app-input-errors>
-                        </div>
-                        <div class="mb-4">
-                            <label for="vcard-email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
-                            <input type="email" id="vcard-email" name="vcard-email" [formControl]="formGroup.get('vcardEmail')"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-                            <app-input-errors [control]="formGroup.get('vcardEmail')"></app-input-errors>
-                        </div>
-                        <div class="mb-4">
-                            <label for="vcard-website" class="block text-gray-700 text-sm font-bold mb-2">Website
-                                (optional)</label>
-                            <input type="url" id="vcard-website" name="vcard-website" [formControl]="formGroup.get('vcardWebsite')"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-                            <app-input-errors [control]="formGroup.get('vcardWebsite')"></app-input-errors>
-                        </div>
-                        <div>
-                            <label for="vcard-address" class="block text-gray-700 text-sm font-bold mb-2">Address
-                                (optional)</label>
-                            <textarea id="vcard-address" name="vcard-address" rows="2" [formControl]="formGroup.get('vcardAddress')"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"></textarea>
-                            <app-input-errors [control]="formGroup.get('vcardAddress')"></app-input-errors>
-                        </div>
-                    </div>
-                    }
-
-                    @if(selectedContentType() === 'wifi') {
-                    <!-- WiFi Content Form (hidden by default) -->
-                    <div id="wifi-form" class="mb-8">
-                        <div class="mb-4">
-                            <label for="wifi-ssid" class="block text-gray-700 text-sm font-bold mb-2">Network Name (SSID)</label>
-                            <input type="text" id="wifi-ssid" name="wifi-ssid" [formControl]="formGroup.get('wifiSsid')"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-                            <app-input-errors [control]="formGroup.get('wifiSsid')"></app-input-errors>
-                        </div>
-                        <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2">Encryption Type</label>
-                            <div class="flex space-x-4">
-                                @for (encryptionType of encryptionTypes; track $index) {
-                                    <label class="inline-flex items-center">
-                                        <input type="radio" name="wifi-encryption" [value]="encryptionType.id" [formControl]="formGroup.get('wifiEncryption')"
-                                            class="form-radio text-indigo-600" checked>
-                                        <span class="ml-2">{{ encryptionType.name }}</span>
-                                    </label>
-                                }
-                            </div>
-                            <app-input-errors [control]="formGroup.get('wifiEncryption')"></app-input-errors>
-                        </div>
-                        @if(formGroup.get('wifiEncryption').value !== 'none') {
-                            <div>
-                                <label for="wifi-password" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
-                                <input type="password" id="wifi-password" name="wifi-password" [formControl]="formGroup.get('wifiPassword')"
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-                                <app-input-errors [control]="formGroup.get('wifiPassword')"></app-input-errors>
-                            </div>
+                    <div class="mb-4">
+                        <label for="vcard-company" class="block text-gray-700 text-sm font-bold mb-2">Company (optional)</label>
+                        <input type="text" id="vcard-company" [formField]="qrForm.vcardCompany!"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        @if (qrForm.vcardCompany!().invalid() && qrForm.vcardCompany!().touched()) {
+                            <span class="text-xs text-red-500 font-medium mt-1 block">
+                                {{ qrForm.vcardCompany!().errors()[0]?.message }}
+                            </span>
                         }
                     </div>
-                    }
+                    <div class="mb-4">
+                        <label for="vcard-phone" class="block text-gray-700 text-sm font-bold mb-2">Phone Number</label>
+                        <input type="tel" id="vcard-phone" [formField]="qrForm.vcardPhoneNumber"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        @if (qrForm.vcardPhoneNumber().invalid() && qrForm.vcardPhoneNumber().touched()) {
+                            <span class="text-xs text-red-500 font-medium mt-1 block">
+                                {{ qrForm.vcardPhoneNumber().errors()[0]?.message || 'Phone number is required' }}
+                            </span>
+                        }
+                    </div>
+                    <div class="mb-4">
+                        <label for="vcard-email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                        <input type="email" id="vcard-email" [formField]="qrForm.vcardEmail"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        @if (qrForm.vcardEmail().invalid() && qrForm.vcardEmail().touched()) {
+                            <span class="text-xs text-red-500 font-medium mt-1 block">
+                                {{ qrForm.vcardEmail().errors()[0]?.message || 'Invalid email' }}
+                            </span>
+                        }
+                    </div>
+                    <div class="mb-4">
+                        <label for="vcard-website" class="block text-gray-700 text-sm font-bold mb-2">Website (optional)</label>
+                        <input type="url" id="vcard-website" [formField]="qrForm.vcardWebsite!"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        @if (qrForm.vcardWebsite!().invalid() && qrForm.vcardWebsite!().touched()) {
+                            <span class="text-xs text-red-500 font-medium mt-1 block">
+                                {{ qrForm.vcardWebsite!().errors()[0]?.message }}
+                            </span>
+                        }
+                    </div>
+                    <div>
+                        <label for="vcard-address" class="block text-gray-700 text-sm font-bold mb-2">Address (optional)</label>
+                        <textarea id="vcard-address" rows="2" [formField]="qrForm.vcardAddress!"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+                        @if (qrForm.vcardAddress!().invalid() && qrForm.vcardAddress!().touched()) {
+                            <span class="text-xs text-red-500 font-medium mt-1 block">
+                                {{ qrForm.vcardAddress!().errors()[0]?.message }}
+                            </span>
+                        }
+                    </div>
+                </div>
+                }
 
-                    @if(selectedContentType() === 'geo') {
-                    <!-- Location Content Form (hidden by default) -->
-                    <div id="geo-form" class="mb-8">
-                        <div class="mb-4">
-                            <label for="geo-latitude" class="block text-gray-700 text-sm font-bold mb-2">Latitude</label>
-                            <input type="text" id="geo-latitude" name="geo-latitude" [formControl]="formGroup.get('geoLatitude')"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                placeholder="e.g. 37.7749">
-                            <app-input-errors [control]="formGroup.get('geoLatitude')"></app-input-errors>
+                @if(isWifiForm(qrForm)) {
+                <!-- WiFi Content Form -->
+                <div id="wifi-form" class="mb-8">
+                    <div class="mb-4">
+                        <label for="wifi-ssid" class="block text-gray-700 text-sm font-bold mb-2">Network Name (SSID)</label>
+                        <input type="text" id="wifi-ssid" [formField]="qrForm.wifiSsid"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        @if (qrForm.wifiSsid().invalid() && qrForm.wifiSsid().touched()) {
+                            <span class="text-xs text-red-500 font-medium mt-1 block">
+                                {{ qrForm.wifiSsid().errors()[0]?.message || 'Network SSID is required' }}
+                            </span>
+                        }
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Encryption Type</label>
+                        <div class="flex space-x-4">
+                            @for (encryptionType of encryptionTypes; track $index) {
+                                <label class="inline-flex items-center cursor-pointer">
+                                    <input type="radio" [value]="encryptionType.id" [formField]="qrForm.wifiEncryption"
+                                        class="form-radio text-indigo-600">
+                                    <span class="ml-2">{{ encryptionType.name }}</span>
+                                </label>
+                            }
                         </div>
+                        @if (qrForm.wifiEncryption().invalid() && qrForm.wifiEncryption().touched()) {
+                            <span class="text-xs text-red-500 font-medium mt-1 block">
+                                {{ qrForm.wifiEncryption().errors()[0]?.message }}
+                            </span>
+                        }
+                    </div>
+                    @if(qrForm.wifiEncryption().value() !== 'none') {
                         <div>
-                            <label for="geo-longitude" class="block text-gray-700 text-sm font-bold mb-2">Longitude</label>
-                            <input type="text" id="geo-longitude" name="geo-longitude" [formControl]="formGroup.get('geoLongitude')"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                placeholder="e.g. -122.4194">
-                            <app-input-errors [control]="formGroup.get('geoLongitude')"></app-input-errors>
+                            <label for="wifi-password" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                            <input type="password" id="wifi-password" [formField]="qrForm.wifiPassword!"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            @if (qrForm.wifiPassword!().invalid() && qrForm.wifiPassword!().touched()) {
+                                <span class="text-xs text-red-500 font-medium mt-1 block">
+                                    {{ qrForm.wifiPassword!().errors()[0]?.message }}
+                                </span>
+                            }
                         </div>
-                        <div class="mt-4">
-                            <button id="get-current-location"
-                                type="button"
-                                class="text-indigo-600 hover:text-indigo-800 transition text-sm font-medium" (click)="getCurrentLocation()">
-                                <lucide-icon name="map-pin" class="inline-block"></lucide-icon> Use my current location
-                            </button>
-                        </div>
-                    </div>
                     }
+                </div>
+                }
 
-
-                    <!-- QR Code Customization -->
-                    <div class="mb-6">
-                        <h3 class="text-xl font-semibold mb-4 text-gray-800">Customize QR Code</h3>
-
-                        <!-- Dots Type Inside the QR-->
-                        <div class="mb-6">
-                            <label for="dotsType" class="block text-gray-700 text-sm font-bold mb-2">Dots Shape</label>
-                            <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
-
-                                @for (dotType of dotsTypes; track $index) {
-                                <label
-                                    class="border border-gray-300 rounded-md p-2 flex items-center justify-between cursor-pointer hover:bg-gray-50 transition">
-                                    <span>{{ dotType.name }}</span>
-                                    <input type="radio" name="dotsType" [value]="dotType.id" [formControl]="formGroup.get('dotsType')"
-                                        class="form-radio text-indigo-600">
-                                </label>
-                                }
-                            </div>
-                            <p class="mt-2 text-sm text-gray-500">The shape of the dots in the QR code.</p>
-                            <app-input-errors [control]="formGroup.get('dotsType')"></app-input-errors>
-                        </div>
-
-                        <!-- Corners Style Inside the QR-->
-                        <div class="mb-6">
-                            <label for="cornersStyle" class="block text-gray-700 text-sm font-bold mb-2">Corners Style</label>
-                            <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
-
-                                @for (cornerSquareStyle of cornersSquareStyles; track $index) {
-                                <label
-                                    class="border border-gray-300 rounded-md p-2 flex items-center justify-between cursor-pointer hover:bg-gray-50 transition">
-                                    <span>{{ cornerSquareStyle.name }}</span>
-                                    <input type="radio" name="cornersStyle" [value]="cornerSquareStyle.id" [formControl]="formGroup.get('cornersStyle')"
-                                        class="form-radio text-indigo-600">
-                                </label>
-                                }
-                            </div>
-                            <p class="mt-2 text-sm text-gray-500">The style of the corners in the QR code.</p>
-                            <app-input-errors [control]="formGroup.get('cornersInnerDotStyle')"></app-input-errors>
-                        </div>
-
-                        <!-- Corners Dot Style the QR-->
-                        <div class="mb-6">
-                            <label for="cornersInnerDotStyle" class="block text-gray-700 text-sm font-bold mb-2">Corners Inner Dot Style</label>
-                            <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
-
-                                @for (cornerSquareStyle of cornersInnerDotStyles; track $index) {
-                                <label
-                                    class="border border-gray-300 rounded-md p-2 flex items-center justify-between cursor-pointer hover:bg-gray-50 transition">
-                                    <span>{{ cornerSquareStyle.name }}</span>
-                                    <input type="radio" name="cornersInnerDotStyle" [value]="cornerSquareStyle.id" [formControl]="formGroup.get('cornersInnerDotStyle')"
-                                        class="form-radio text-indigo-600">
-                                </label>
-                                }
-                            </div>
-                            <p class="mt-2 text-sm text-gray-500">The style of the corners in the QR code.</p>
-                            <app-input-errors [control]="formGroup.get('cornersInnerDotStyle')"></app-input-errors>
-                        </div>
-
-                        <!-- Size -->
-                        <div class="mb-6">
-                            <label for="qrSize" class="block text-gray-700 text-sm font-bold mb-2">Size</label>
-                            <div class="flex items-center">
-                                <input type="range" id="qrSize" name="qrSize" min="100" max="2000" [formControl]="formGroup.get('size')" #size
-                                    class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
-                                <span id="size-value" class="ml-4 text-gray-700 w-12 text-center">{{ size.value }}px</span>
-                            </div>
-                        </div>
-
-                        <!-- Error Correction -->
-                        <div class="mb-6">
-                            <label class="block text-gray-700 text-sm font-bold mb-2">Error Correction Level</label>
-                            <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
-
-                                @for (errorCorrectionLevel of errorCorrectionLevels; track $index) {
-                                <label
-                                    class="border border-gray-300 rounded-md p-2 flex items-center justify-between cursor-pointer hover:bg-gray-50 transition">
-                                    <span>{{ errorCorrectionLevel.name }}</span>
-                                    <input type="radio" name="errorCorrectionLevel" [value]="errorCorrectionLevel.id" [formControl]="formGroup.get('errorCorrectionLevel')"
-                                        class="form-radio text-indigo-600">
-                                </label>
-                                }
-                            </div>
-                            <app-input-errors [control]="formGroup.get('errorCorrectionLevel')"></app-input-errors>
-                            <p class="mt-2 text-sm text-gray-500">Higher correction levels make your QR code more reliable
-                                but
-                                increase complexity.</p>
-                        </div>
-
-                        <!-- Colors -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="fg-color" class="block text-gray-700 text-sm font-bold mb-2">Foreground
-                                    Color</label>
-                                <div class="flex">
-                                    <input type="color" id="fg-color" name="foregroundColor" #fgColor value="#000000"
-                                        (input)="fgHexInput.value = fgColor.value"
-                                        [formControl]="formGroup.get('foregroundColor')"
-                                        class="h-10 w-10 rounded border border-gray-300">
-                                    <input type="text" id="fg-color-hex" #fgHexInput value="#000000"
-                                        (input)="fgColor.value = fgHexInput.value"
-                                        class="flex-1 ml-2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-                                </div>
-                                <app-input-errors [control]="formGroup.get('foregroundColor')"></app-input-errors>
-                            </div>
-                            <div>
-                                <label for="bg-color" class="block text-gray-700 text-sm font-bold mb-2">Background
-                                    Color</label>
-                                <div class="flex">
-                                    <input type="color" id="bg-color" name="backgroundColor" value="#ffffff" #bgColor
-                                        (input)="bgHexInput.value = bgColor.value"
-                                        [formControl]="formGroup.get('backgroundColor')"
-                                        class="h-10 w-10 rounded border border-gray-300">
-                                    <input type="text" id="bg-color-hex" value="#ffffff" #bgHexInput
-                                        (input)="bgColor.value = bgHexInput.value"
-                                        class="flex-1 ml-2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-                                </div>
-                            </div>
-                        </div>
+                @if(isGeoForm(qrForm)) {
+                <!-- Location Content Form -->
+                <div id="geo-form" class="mb-8">
+                    <div class="mb-4">
+                        <label for="geo-latitude" class="block text-gray-700 text-sm font-bold mb-2">Latitude</label>
+                        <input type="text" id="geo-latitude" [formField]="qrForm.geoLatitude"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            placeholder="e.g. 37.7749">
+                        @if (qrForm.geoLatitude().invalid() && qrForm.geoLatitude().touched()) {
+                            <span class="text-xs text-red-500 font-medium mt-1 block">
+                                {{ qrForm.geoLatitude().errors()[0]?.message || 'Latitude is required' }}
+                            </span>
+                        }
                     </div>
-
-                    <div class="flex justify-center">
-                        <button id="generate-qr" type="submit"
-                            class="bg-indigo-600 text-white font-medium py-3 px-8 rounded-md hover:bg-indigo-700 transition focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                            Generate QR Code
+                    <div>
+                        <label for="geo-longitude" class="block text-gray-700 text-sm font-bold mb-2">Longitude</label>
+                        <input type="text" id="geo-longitude" [formField]="qrForm.geoLongitude"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            placeholder="e.g. -122.4194">
+                        @if (qrForm.geoLongitude().invalid() && qrForm.geoLongitude().touched()) {
+                            <span class="text-xs text-red-500 font-medium mt-1 block">
+                                {{ qrForm.geoLongitude().errors()[0]?.message || 'Longitude is required' }}
+                            </span>
+                        }
+                    </div>
+                    <div class="mt-4">
+                        <button id="get-current-location"
+                            type="button"
+                            class="text-indigo-600 hover:text-indigo-800 transition text-sm font-medium" (click)="getCurrentLocation()">
+                            <lucide-icon name="map-pin" class="inline-block"></lucide-icon> Use my current location
                         </button>
                     </div>
-                </ng-template>
-                
-            </app-zod-form>
+                </div>
+                }
+
+
+                <!-- QR Code Customization -->
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-800">Customize QR Code</h3>
+
+                    <!-- Dots Type Inside the QR-->
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Dots Shape</label>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                            @for (dotType of dotsTypes; track $index) {
+                            <label
+                                class="border border-gray-300 rounded-md p-2 flex items-center justify-between cursor-pointer hover:bg-gray-50 transition">
+                                <span>{{ dotType.name }}</span>
+                                <input type="radio" [value]="dotType.id" [formField]="qrForm.dotsType"
+                                    class="form-radio text-indigo-600">
+                            </label>
+                            }
+                        </div>
+                        <p class="mt-2 text-sm text-gray-500">The shape of the dots in the QR code.</p>
+                        @if (qrForm.dotsType().invalid() && qrForm.dotsType().touched()) {
+                            <span class="text-xs text-red-500 font-medium mt-1 block">
+                                {{ qrForm.dotsType().errors()[0]?.message }}
+                            </span>
+                        }
+                    </div>
+
+                    <!-- Corners Style Inside the QR-->
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Corners Style</label>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                            @for (cornerSquareStyle of cornersSquareStyles; track $index) {
+                            <label
+                                class="border border-gray-300 rounded-md p-2 flex items-center justify-between cursor-pointer hover:bg-gray-50 transition">
+                                <span>{{ cornerSquareStyle.name }}</span>
+                                <input type="radio" [value]="cornerSquareStyle.id" [formField]="qrForm.cornersStyle"
+                                    class="form-radio text-indigo-600">
+                            </label>
+                            }
+                        </div>
+                        <p class="mt-2 text-sm text-gray-500">The style of the corners in the QR code.</p>
+                        @if (qrForm.cornersStyle().invalid() && qrForm.cornersStyle().touched()) {
+                            <span class="text-xs text-red-500 font-medium mt-1 block">
+                                {{ qrForm.cornersStyle().errors()[0]?.message }}
+                            </span>
+                        }
+                    </div>
+
+                    <!-- Corners Dot Style the QR-->
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Corners Inner Dot Style</label>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                            @for (cornerSquareStyle of cornersInnerDotStyles; track $index) {
+                            <label
+                                class="border border-gray-300 rounded-md p-2 flex items-center justify-between cursor-pointer hover:bg-gray-50 transition">
+                                <span>{{ cornerSquareStyle.name }}</span>
+                                <input type="radio" [value]="cornerSquareStyle.id" [formField]="qrForm.cornersInnerDotStyle"
+                                    class="form-radio text-indigo-600">
+                            </label>
+                            }
+                        </div>
+                        <p class="mt-2 text-sm text-gray-500">The style of the corners in the QR code.</p>
+                        @if (qrForm.cornersInnerDotStyle().invalid() && qrForm.cornersInnerDotStyle().touched()) {
+                            <span class="text-xs text-red-500 font-medium mt-1 block">
+                                {{ qrForm.cornersInnerDotStyle().errors()[0]?.message }}
+                            </span>
+                        }
+                    </div>
+
+                    <!-- Size -->
+                    <div class="mb-6">
+                        <label for="qrSize" class="block text-gray-700 text-sm font-bold mb-2">Size</label>
+                        <div class="flex items-center">
+                            <input type="range" id="qrSize" min="100" max="2000"
+                                [value]="qrForm.size().value()"
+                                (input)="qrForm.size().value.set(+$any($event.target).value)"
+                                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                            <span id="size-value" class="ml-4 text-gray-700 w-12 text-center">{{ qrForm.size().value() }}px</span>
+                        </div>
+                        @if (qrForm.size().invalid() && qrForm.size().touched()) {
+                            <span class="text-xs text-red-500 font-medium mt-1 block">
+                                {{ qrForm.size().errors()[0]?.message }}
+                            </span>
+                        }
+                    </div>
+
+                    <!-- Error Correction -->
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Error Correction Level</label>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                            @for (errorCorrectionLevel of errorCorrectionLevels; track $index) {
+                            <label
+                                class="border border-gray-300 rounded-md p-2 flex items-center justify-between cursor-pointer hover:bg-gray-50 transition">
+                                <span>{{ errorCorrectionLevel.name }}</span>
+                                <input type="radio" [value]="errorCorrectionLevel.id" [formField]="qrForm.errorCorrectionLevel"
+                                    class="form-radio text-indigo-600">
+                            </label>
+                            }
+                        </div>
+                        <p class="mt-2 text-sm text-gray-500">Higher correction levels make your QR code more reliable but increase complexity.</p>
+                        @if (qrForm.errorCorrectionLevel().invalid() && qrForm.errorCorrectionLevel().touched()) {
+                            <span class="text-xs text-red-500 font-medium mt-1 block">
+                                {{ qrForm.errorCorrectionLevel().errors()[0]?.message }}
+                            </span>
+                        }
+                    </div>
+
+                    <!-- Colors -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="fg-color" class="block text-gray-700 text-sm font-bold mb-2">Foreground Color</label>
+                            <div class="flex">
+                                <input type="color" id="fg-color" [formField]="qrForm.foregroundColor"
+                                    class="h-10 w-10 rounded border border-gray-300">
+                                <input type="text" id="fg-color-hex" [formField]="qrForm.foregroundColor"
+                                    class="flex-1 ml-2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            </div>
+                            @if (qrForm.foregroundColor().invalid() && qrForm.foregroundColor().touched()) {
+                                <span class="text-xs text-red-500 font-medium mt-1 block">
+                                    {{ qrForm.foregroundColor().errors()[0]?.message }}
+                                </span>
+                            }
+                        </div>
+                        <div>
+                            <label for="bg-color" class="block text-gray-700 text-sm font-bold mb-2">Background Color</label>
+                            <div class="flex">
+                                <input type="color" id="bg-color" [formField]="qrForm.backgroundColor"
+                                    class="h-10 w-10 rounded border border-gray-300">
+                                <input type="text" id="bg-color-hex" [formField]="qrForm.backgroundColor"
+                                    class="flex-1 ml-2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            </div>
+                            @if (qrForm.backgroundColor().invalid() && qrForm.backgroundColor().touched()) {
+                                <span class="text-xs text-red-500 font-medium mt-1 block">
+                                    {{ qrForm.backgroundColor().errors()[0]?.message }}
+                                </span>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-center">
+                    <button id="generate-qr" type="submit"
+                        class="bg-indigo-600 text-white font-medium py-3 px-8 rounded-md hover:bg-indigo-700 transition focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        Generate QR Code
+                    </button>
+                </div>
+            </form>
 
         </div>
 

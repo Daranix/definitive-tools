@@ -1,4 +1,9 @@
-import { Component, input, output } from '@angular/core';
+import {
+  Component,
+  input,
+  output,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { OpengraphTemplateFormBasicComponent } from '../opengraph-template-form-fields/opengraph-template-form-basic/opengraph-template-form-basic.component';
 import { OpengraphTemplateFormNoticeComponent } from '../opengraph-template-form-fields/opengraph-template-form-notice/opengraph-template-form-notice.component';
 import { OpengraphTemplateFormImageRightComponent } from '../opengraph-template-form-fields/opengraph-template-form-image-right/opengraph-template-form-image-right.component';
@@ -14,14 +19,13 @@ import { OpenGraphTemplate } from '../../../types';
     OpengraphTemplateFormHeroComponent,
     OpengraphTemplateFormLogosComponent,
     OpengraphTemplateFormImageRightComponent,
-    OpengraphTemplateFormNoticeComponent
+    OpengraphTemplateFormNoticeComponent,
   ],
   templateUrl: './opengraph-template-form.component.html',
-  styleUrl: './opengraph-template-form.component.scss'
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './opengraph-template-form.component.scss',
 })
 export class OpengraphTemplateFormComponent {
-
   readonly templateSelected = input.required<TemplateType>();
   readonly templatePropertiesChanged = output<OpenGraphTemplate>();
-
 }

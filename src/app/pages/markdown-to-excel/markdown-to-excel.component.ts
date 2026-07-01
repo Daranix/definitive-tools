@@ -1,4 +1,12 @@
-import { Component, inject, model, computed, signal, HostListener } from '@angular/core';
+import {
+  Component,
+  inject,
+  model,
+  computed,
+  signal,
+  HostListener,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
@@ -16,9 +24,16 @@ import { FooterComponent } from '../../components/footer/footer.component';
 @Component({
   selector: 'app-markdown-to-excel',
   standalone: true,
-  imports: [CommonModule, FormsModule, LucideAngularModule, TopNavbarComponent, FooterComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    LucideAngularModule,
+    TopNavbarComponent,
+    FooterComponent,
+  ],
   templateUrl: './markdown-to-excel.component.html',
-  styleUrl: './markdown-to-excel.component.scss'
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './markdown-to-excel.component.scss',
 })
 export class MarkdownToExcelComponent {
   private readonly metadataService = inject(MetadataService);
@@ -36,8 +51,8 @@ export class MarkdownToExcelComponent {
   });
 
   // Selection signals
-  readonly selectionStart = signal<{ row: number, col: number } | null>(null);
-  readonly selectionEnd = signal<{ row: number, col: number } | null>(null);
+  readonly selectionStart = signal<{ row: number; col: number } | null>(null);
+  readonly selectionEnd = signal<{ row: number; col: number } | null>(null);
   readonly isSelecting = signal<boolean>(false);
   readonly isCopied = signal<boolean>(false);
 
@@ -109,7 +124,7 @@ export class MarkdownToExcelComponent {
       'sel-copied-top': row === minRow && isCopied,
       'sel-copied-bottom': row === maxRow && isCopied,
       'sel-copied-left': col === minCol && isCopied,
-      'sel-copied-right': col === maxCol && isCopied
+      'sel-copied-right': col === maxCol && isCopied,
     };
   }
 
@@ -134,7 +149,7 @@ export class MarkdownToExcelComponent {
 
     // Prepare data for headers if included in selection
     let tsv = '';
-    
+
     // If headers are part of selection (row -1)
     if (minRow === -1) {
       const headerRow = [];
@@ -163,19 +178,24 @@ export class MarkdownToExcelComponent {
   constructor() {
     this.metadataService.updateMetadata({
       title: 'Markdown to Excel Converter',
-      description: 'Convert Markdown tables to Excel-compatible formats (TSV) easily. Copy and paste your data directly into your favorite spreadsheet software.',
-      keywords: 'markdown, excel, converter, table, tsv, spreadsheet, developer tools'
+      description:
+        'Convert Markdown tables to Excel-compatible formats (TSV) easily. Copy and paste your data directly into your favorite spreadsheet software.',
+      keywords:
+        'markdown, excel, converter, table, tsv, spreadsheet, developer tools',
     });
   }
 
   private parseMarkdownTable(input: string): TableData | null {
     if (!input || !input.trim()) return null;
 
-    const lines = input.trim().split('\n').map(l => l.trim());
+    const lines = input
+      .trim()
+      .split('\n')
+      .map((l) => l.trim());
     if (lines.length < 2) return null;
 
     // Filter out lines that don't look like table lines (at least one |)
-    const tableLines = lines.filter(line => line.includes('|'));
+    const tableLines = lines.filter((line) => line.includes('|'));
     if (tableLines.length < 2) return null;
 
     // Find the header and divider rows
@@ -194,7 +214,7 @@ export class MarkdownToExcelComponent {
 
     const headers = this.splitRow(tableLines[headerRowIndex]);
     const alignments = this.parseAlignments(tableLines[dividerRowIndex]);
-    
+
     const rows: string[][] = [];
     for (let i = dividerRowIndex + 1; i < tableLines.length; i++) {
       const rowData = this.splitRow(tableLines[i]);
@@ -219,12 +239,14 @@ export class MarkdownToExcelComponent {
   private splitRow(line: string): string[] {
     // Remove leading and trailing pipes
     const trimmed = line.replace(/^\|/, '').replace(/\|$/, '');
-    return trimmed.split('|').map(cell => cell.trim());
+    return trimmed.split('|').map((cell) => cell.trim());
   }
 
-  private parseAlignments(line: string): ('left' | 'center' | 'right' | null)[] {
+  private parseAlignments(
+    line: string,
+  ): ('left' | 'center' | 'right' | null)[] {
     const cells = this.splitRow(line);
-    return cells.map(cell => {
+    return cells.map((cell) => {
       const hasLeft = cell.startsWith(':');
       const hasRight = cell.endsWith(':');
       if (hasLeft && hasRight) return 'center';

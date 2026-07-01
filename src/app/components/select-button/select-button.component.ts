@@ -1,26 +1,38 @@
 import { NgClass } from '@angular/common';
-import { Component, input, model, OnInit, signal } from '@angular/core';
-import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  Component,
+  input,
+  model,
+  OnInit,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
+import {
+  ControlValueAccessor,
+  FormsModule,
+  NG_VALUE_ACCESSOR,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-select-button',
   standalone: true,
   imports: [NgClass, FormsModule],
   templateUrl: './select-button.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: SelectButtonComponent,
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
 export class SelectButtonComponent implements ControlValueAccessor, OnInit {
   private onChanged: (value: string) => void = () => {};
   private onTouched: () => void = () => {};
 
   readonly disabled = model(false);
-  readonly options = input.required<Array<{ label: string, value: string }>>();
+  readonly options = input.required<Array<{ label: string; value: string }>>();
   protected selectedOption = signal<string | undefined>(undefined);
 
   ngOnInit() {
@@ -31,7 +43,7 @@ export class SelectButtonComponent implements ControlValueAccessor, OnInit {
 
   selectOption(option: string) {
     if (this.disabled()) return;
-    
+
     this.selectedOption.set(option);
     this.onChanged(option);
     this.onTouched();

@@ -1,8 +1,20 @@
-import { Component, effect, ElementRef, inject, input, output, signal, viewChild, untracked } from '@angular/core';
+import {
+  Component,
+  effect,
+  ElementRef,
+  inject,
+  input,
+  output,
+  signal,
+  viewChild,
+  untracked,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CheerpjService } from '@/app/core/services/cheerpj.service';
 
-const OPENAPI_GENERATOR_JAR = '/swagger-editor/openapi-generator-cli-7.22.0.jar';
+const OPENAPI_GENERATOR_JAR =
+  '/swagger-editor/openapi-generator-cli-7.22.0.jar';
 
 interface GeneratorConfig {
   type: 'client' | 'server';
@@ -14,20 +26,23 @@ interface GeneratorConfig {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './swagger-generation-modal.component.html',
-  styleUrl: './swagger-generation-modal.component.scss'
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './swagger-generation-modal.component.scss',
 })
 export class SwaggerGenerationModalComponent {
   private readonly cheerpjService = inject(CheerpjService);
 
   spec = input.required<string>();
   generator = input.required<GeneratorConfig>();
-  
+
   onClose = output<void>();
 
   readonly isGenerating = this.cheerpjService.isGenerating;
   readonly isMinimized = this.cheerpjService.isMinimized;
   readonly generationStatus = signal<string>('Initializing...');
-  readonly consoleLogs = signal<{message: string, type: 'info' | 'error'}[]>([]);
+  readonly consoleLogs = signal<{ message: string; type: 'info' | 'error' }[]>(
+    [],
+  );
   readonly isInitialized = this.cheerpjService.isInitialized;
 
   readonly cancelRequested = signal<boolean>(false);
@@ -35,7 +50,8 @@ export class SwaggerGenerationModalComponent {
   private originalLog = console.log;
   private originalError = console.error;
 
-  readonly consoleScroll = viewChild<ElementRef<HTMLDivElement>>('consoleScroll');
+  readonly consoleScroll =
+    viewChild<ElementRef<HTMLDivElement>>('consoleScroll');
 
   constructor() {
     effect(() => {
@@ -48,14 +64,17 @@ export class SwaggerGenerationModalComponent {
     });
 
     // Reactively start generation whenever the generator selection changes
-    effect(() => {
-      const gen = this.generator();
-      if (gen) {
-        // Always maximize when a new generator is selected to show the process
-        this.isMinimized.set(false);
-        untracked(() => this.startGeneration());
-      }
-    }, { allowSignalWrites: true });
+    effect(
+      () => {
+        const gen = this.generator();
+        if (gen) {
+          // Always maximize when a new generator is selected to show the process
+          this.isMinimized.set(false);
+          untracked(() => this.startGeneration());
+        }
+      },
+      { allowSignalWrites: true },
+    );
   }
 
   cancelGeneration() {
@@ -68,13 +87,21 @@ export class SwaggerGenerationModalComponent {
   private setupConsoleInterception() {
     console.log = (...args: any[]) => {
       this.originalLog.apply(console, args);
-      const message = args.map(arg => typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg)).join(' ');
+      const message = args
+        .map((arg) =>
+          typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg),
+        )
+        .join(' ');
       this.addConsoleLog(message, 'info');
     };
 
     console.error = (...args: any[]) => {
       this.originalError.apply(console, args);
-      const message = args.map(arg => typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg)).join(' ');
+      const message = args
+        .map((arg) =>
+          typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg),
+        )
+        .join(' ');
       this.addConsoleLog(message, 'error');
     };
   }
@@ -85,7 +112,7 @@ export class SwaggerGenerationModalComponent {
   }
 
   private addConsoleLog(message: string, type: 'info' | 'error') {
-    this.consoleLogs.update(logs => [...logs.slice(-100), { message, type }]);
+    this.consoleLogs.update((logs) => [...logs.slice(-100), { message, type }]);
   }
 
   async startGeneration() {
@@ -118,13 +145,19 @@ export class SwaggerGenerationModalComponent {
       const exitCode = await (window as any).cheerpjRunJar(
         jarPath,
         'generate',
-        '-g', this.generator().lang,
-        '-i', '/str/openapi.yaml',
-        '-o', '/files/out'
+        '-g',
+        this.generator().lang,
+        '-i',
+        '/str/openapi.yaml',
+        '-o',
+        '/files/out',
       );
 
       if (this.cancelRequested()) {
-        this.addConsoleLog('Process finished after cancellation. Output discarded.', 'info');
+        this.addConsoleLog(
+          'Process finished after cancellation. Output discarded.',
+          'info',
+        );
         return;
       }
 
@@ -135,7 +168,6 @@ export class SwaggerGenerationModalComponent {
       // 5. Bundle and download
       await this.downloadGeneratedZip();
       this.generationStatus.set('Generation complete!');
-
     } catch (ex) {
       if (this.cancelRequested()) return;
       console.error('Generation failed', ex);
@@ -151,11 +183,11 @@ export class SwaggerGenerationModalComponent {
       const db = await this.openIndexedDB(dbName);
       const transaction = db.transaction(['files'], 'readwrite');
       const store = transaction.objectStore('files');
-      
+
       // Delete all entries in the /files/out/ range
       const range = IDBKeyRange.bound('/files/out/', '/files/out/' + '\uffff');
       const request = store.delete(range);
-      
+
       await new Promise<void>((resolve, reject) => {
         transaction.oncomplete = () => resolve();
         transaction.onerror = () => reject(transaction.error);
@@ -169,14 +201,14 @@ export class SwaggerGenerationModalComponent {
       const JSZip = (await import('jszip')).default;
       this.generationStatus.set('Bundling files into ZIP...');
       const zip = new JSZip();
-      
+
       const dbName = await this.cheerpjService.findDatabaseName();
       console.log('Accessing virtual filesystem from:', dbName);
 
       const db = await this.openIndexedDB(dbName);
       const transaction = db.transaction(['files'], 'readonly');
       const store = transaction.objectStore('files');
-      
+
       await new Promise<void>((resolve, reject) => {
         const request = store.openCursor();
         request.onsuccess = (event: any) => {
@@ -188,7 +220,9 @@ export class SwaggerGenerationModalComponent {
             // and 'type'. We only want files.
             const entry = cursor.value;
             if (entry && entry.type === 'file' && entry.contents) {
-              const relativePath = path.replace('/files/out/', '').replace(/^\/+/, '');
+              const relativePath = path
+                .replace('/files/out/', '')
+                .replace(/^\/+/, '');
               if (relativePath) {
                 console.log('Adding to ZIP:', relativePath);
                 zip.file(relativePath, entry.contents);
@@ -199,13 +233,16 @@ export class SwaggerGenerationModalComponent {
             resolve();
           }
         };
-        request.onerror = () => reject(new Error('Failed to read files from IndexedDB'));
+        request.onerror = () =>
+          reject(new Error('Failed to read files from IndexedDB'));
       });
 
       const blob = await zip.generateAsync({ type: 'blob' });
       this.downloadFile(blob, `${this.generator()}-generated.zip`);
     } catch (ex) {
-      throw new Error(`Failed to create ZIP: ${ex instanceof Error ? ex.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to create ZIP: ${ex instanceof Error ? ex.message : 'Unknown error'}`,
+      );
     }
   }
 
@@ -236,7 +273,7 @@ export class SwaggerGenerationModalComponent {
   }
 
   toggleMinimize() {
-    this.isMinimized.update(v => !v);
+    this.isMinimized.update((v) => !v);
   }
 
   close() {

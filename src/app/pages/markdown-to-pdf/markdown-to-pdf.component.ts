@@ -1,9 +1,17 @@
-import { Component, inject, signal, viewChild, AfterViewInit, PLATFORM_ID } from '@angular/core';
+import {
+  Component,
+  inject,
+  signal,
+  viewChild,
+  AfterViewInit,
+  PLATFORM_ID,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
-import { MonacoEditorComponent } from "@/app/components/monaco-editor/monaco-editor.component";
+import { MonacoEditorComponent } from '@/app/components/monaco-editor/monaco-editor.component';
 import { MetadataService } from '@/app/services/metadata.service';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -18,16 +26,22 @@ marked.use(
     highlight(code, lang, info) {
       const language = hljs.getLanguage(lang) ? lang : 'plaintext';
       return hljs.highlight(code, { language }).value;
-    }
-  })
+    },
+  }),
 );
 
 @Component({
   selector: 'app-markdown-to-pdf',
   standalone: true,
-  imports: [CommonModule, FormsModule, LucideAngularModule, MonacoEditorComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    LucideAngularModule,
+    MonacoEditorComponent,
+  ],
   templateUrl: './markdown-to-pdf.component.html',
-  styleUrl: './markdown-to-pdf.component.scss'
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './markdown-to-pdf.component.scss',
 })
 export class MarkdownToPdfComponent implements AfterViewInit {
   private readonly platformId = inject(PLATFORM_ID);
@@ -39,30 +53,31 @@ export class MarkdownToPdfComponent implements AfterViewInit {
   readonly previewHtml = signal<string>('');
   readonly isGenerating = signal<boolean>(false);
 
-  readonly editorOptions = signal<monaco.editor.IStandaloneEditorConstructionOptions>({
-    language: 'markdown',
-    theme: 'vs-dark',
-    wordWrap: 'on',
-    minimap: { enabled: false },
-    automaticLayout: true,
-    fontSize: 14,
-    lineNumbers: 'on',
-    scrollBeyondLastLine: false,
-    padding: { top: 10, bottom: 10 }
-  });
+  readonly editorOptions =
+    signal<monaco.editor.IStandaloneEditorConstructionOptions>({
+      language: 'markdown',
+      theme: 'vs-dark',
+      wordWrap: 'on',
+      minimap: { enabled: false },
+      automaticLayout: true,
+      fontSize: 14,
+      lineNumbers: 'on',
+      scrollBeyondLastLine: false,
+      padding: { top: 10, bottom: 10 },
+    });
 
   private readonly contentChange$ = new Subject<string>();
 
   constructor() {
     this.metadataService.updateMetadata({
       title: 'Markdown to PDF Converter',
-      description: 'Convert your Markdown text to professional PDF documents instantly. Live preview, premium styling, and easy download.',
-      keywords: 'markdown, pdf, converter, documentation, markdown editor, professional pdf, online tools'
+      description:
+        'Convert your Markdown text to professional PDF documents instantly. Live preview, premium styling, and easy download.',
+      keywords:
+        'markdown, pdf, converter, documentation, markdown editor, professional pdf, online tools',
     });
 
-    this.contentChange$.pipe(
-      debounceTime(300)
-    ).subscribe(content => {
+    this.contentChange$.pipe(debounceTime(300)).subscribe((content) => {
       this.updatePreview(content);
     });
   }
@@ -112,7 +127,7 @@ export class MarkdownToPdfComponent implements AfterViewInit {
       image: { type: 'jpeg', quality: 0.98 },
       html2canvas: { scale: 2, useCORS: true, letterRendering: true },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-      pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+      pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
     } as const;
 
     try {

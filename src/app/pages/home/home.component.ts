@@ -1,4 +1,10 @@
-import { Component, inject, signal, computed } from '@angular/core';
+import {
+  Component,
+  inject,
+  signal,
+  computed,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
 import { TOOLS } from '../../utils/constants';
@@ -9,10 +15,10 @@ import { FooterComponent } from '../../components/footer/footer.component';
   selector: 'app-home',
   imports: [LucideAngularModule, RouterLink, FooterComponent],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './home.component.scss',
 })
 export class HomeComponent {
-
   private readonly metadataService = inject(MetadataService);
 
   readonly searchQuery = signal<string>('');
@@ -29,28 +35,30 @@ export class HomeComponent {
       try {
         favs = JSON.parse(localStorage.getItem('favorite-tools') || '[]');
       } catch {}
-      list = list.filter(t => favs.includes(t.id));
+      list = list.filter((t) => favs.includes(t.id));
     } else if (category !== 'All') {
-      list = list.filter(t => t.category === category);
+      list = list.filter((t) => t.category === category);
     }
 
     if (!query) {
       return list;
     }
 
-    return list.filter(tool => 
-      tool.name.toLowerCase().includes(query) || 
-      tool.description.toLowerCase().includes(query) ||
-      tool.category.toLowerCase().includes(query)
+    return list.filter(
+      (tool) =>
+        tool.name.toLowerCase().includes(query) ||
+        tool.description.toLowerCase().includes(query) ||
+        tool.category.toLowerCase().includes(query),
     );
   });
 
   constructor() {
     this.metadataService.updateMetadata({
       title: 'Definitive Tools - Free Digital Utilities',
-      description: 'Access free, easy-to-use tools for all your digital needs without registration or downloads.',
-      keywords: 'online tools, free tools, digital tools, web tools, QR generator, utility tools'
+      description:
+        'Access free, easy-to-use tools for all your digital needs without registration or downloads.',
+      keywords:
+        'online tools, free tools, digital tools, web tools, QR generator, utility tools',
     });
   }
-
 }

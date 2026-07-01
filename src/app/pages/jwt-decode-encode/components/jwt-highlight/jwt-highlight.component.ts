@@ -1,9 +1,15 @@
-import { Component, computed, input } from '@angular/core';
+import {
+  Component,
+  computed,
+  input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 
 @Component({
   selector: 'app-jwt-highlight',
   imports: [],
   templateUrl: './jwt-highlight.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './jwt-highlight.component.scss',
 })
 export class JwtHighlightComponent {

@@ -1,23 +1,42 @@
-import { Toast, ToastPosition, ToastService } from '@app/services/toast.service';
+import {
+  Toast,
+  ToastPosition,
+  ToastService,
+} from '@app/services/toast.service';
 import { NgClass } from '@angular/common';
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnDestroy,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 
 @Component({
-    selector: 'app-toast',
-    imports: [NgClass],
-    templateUrl: './toast.component.html',
-    styleUrl: './toast.component.scss'
+  selector: 'app-toast',
+  imports: [NgClass],
+  templateUrl: './toast.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './toast.component.scss',
 })
-export class ToastComponent implements OnInit, OnDestroy{
+export class ToastComponent implements OnInit, OnDestroy {
   toasts: Toast[] = [];
-  readonly positions: ToastPosition[] = ['top-right', 'top-left', 'bottom-right', 'bottom-left', 'top-center', 'bottom-center'];
+  readonly positions: ToastPosition[] = [
+    'top-right',
+    'top-left',
+    'bottom-right',
+    'bottom-left',
+    'top-center',
+    'bottom-center',
+  ];
   private subscription?: Subscription;
   private readonly toastService = inject(ToastService);
 
   ngOnInit(): void {
-    this.subscription = this.toastService.getToasts()
-      .subscribe(toasts => this.toasts = toasts);
+    this.subscription = this.toastService
+      .getToasts()
+      .subscribe((toasts) => (this.toasts = toasts));
   }
 
   ngOnDestroy(): void {
@@ -31,6 +50,6 @@ export class ToastComponent implements OnInit, OnDestroy{
   }
 
   getToastsByPosition(position: ToastPosition): Toast[] {
-    return this.toasts.filter(toast => toast.position === position);
+    return this.toasts.filter((toast) => toast.position === position);
   }
 }

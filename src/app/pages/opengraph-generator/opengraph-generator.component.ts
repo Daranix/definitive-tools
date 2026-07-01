@@ -1,4 +1,11 @@
-import { Component, inject, linkedSignal, model, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  linkedSignal,
+  model,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 
 import { LucideAngularModule } from 'lucide-angular';
 import { TopNavbarComponent } from '@/app/components/top-navbar/top-navbar.component';
@@ -25,31 +32,34 @@ type Platform = 'opengraph' | 'twitter';
     OpengraphTemplateBuilderComponent,
     SelectButtonComponent,
     FormsModule,
-    FooterComponent
+    FooterComponent,
   ],
   templateUrl: './opengraph-generator.component.html',
-  styleUrl: './opengraph-generator.component.scss'
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './opengraph-generator.component.scss',
 })
 export class OpengraphGeneratorComponent {
-
-
-
   private readonly metadataService = inject(MetadataService);
   readonly templateSelected = model<TemplateType>('image-right');
   readonly data = signal<Partial<OpenGraphData>>({});
   readonly outputSvgUrl = signal<string | undefined>(undefined);
 
-  readonly platforms: Array<{ label: string, value: Platform }> = [
+  readonly platforms: Array<{ label: string; value: Platform }> = [
     { label: 'Open Graph', value: 'opengraph' },
-    { label: 'Twitter / X', value: 'twitter' }
+    { label: 'Twitter / X', value: 'twitter' },
   ];
 
-  readonly dimensionsByPlatform: Record<Platform, { width: number, height: number }> = {
-    'opengraph': { width: 1200, height: 630 },
-    'twitter': { width: 1500, height: 500 }
+  readonly dimensionsByPlatform: Record<
+    Platform,
+    { width: number; height: number }
+  > = {
+    opengraph: { width: 1200, height: 630 },
+    twitter: { width: 1500, height: 500 },
   };
 
-  readonly dimensions = linkedSignal(() => this.dimensionsByPlatform[this.selectedPlatform()]);
+  readonly dimensions = linkedSignal(
+    () => this.dimensionsByPlatform[this.selectedPlatform()],
+  );
 
   readonly selectedPlatform = model<Platform>('opengraph');
 
@@ -57,13 +67,14 @@ export class OpengraphGeneratorComponent {
     this.metadataService.updateMetadata({
       title: 'Opengraph Generator',
       description: `Create professional Opengraph images and Twitter Cards that boost your website's visibility on social media platforms. Easy-to-use tool for generating custom social previews.`,
-      keywords: 'opengraph generator, twitter cards, social media preview, meta tags, social share images, open graph protocol, social media optimization, website metadata, custom social images'
-    })
+      keywords:
+        'opengraph generator, twitter cards, social media preview, meta tags, social share images, open graph protocol, social media optimization, website metadata, custom social images',
+    });
 
     toObservable(this.selectedPlatform).subscribe((platform) => {
       this.data.set({
         ...this.data(),
-        dimensions: this.dimensionsByPlatform[platform]
+        dimensions: this.dimensionsByPlatform[platform],
       });
     });
   }
@@ -77,7 +88,6 @@ export class OpengraphGeneratorComponent {
   }
 
   async downloadImage() {
-
     // Create a canvas element
     const canvas = document.createElement('canvas');
 
@@ -89,9 +99,8 @@ export class OpengraphGeneratorComponent {
     ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-
     const img = new Image();
-    img.onload = function() {
+    img.onload = function () {
       // Draw image to canvas
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
@@ -103,10 +112,9 @@ export class OpengraphGeneratorComponent {
         a.href = blobUrl;
         a.download = 'opengraph-image.png';
         a.click();
-        URL.revokeObjectURL(blobUrl)
+        URL.revokeObjectURL(blobUrl);
       }, 'image/png');
-
-    }
+    };
 
     img.src = this.outputSvgUrl()!;
   }

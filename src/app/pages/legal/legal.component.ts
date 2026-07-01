@@ -1,4 +1,10 @@
-import { Component, inject, computed, effect } from '@angular/core';
+import {
+  Component,
+  inject,
+  computed,
+  effect,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
@@ -25,7 +31,8 @@ import { FooterComponent } from '../../components/footer/footer.component';
   selector: 'app-legal',
   imports: [CommonModule, RouterLink, LucideAngularModule, FooterComponent],
   templateUrl: './legal.component.html',
-  styleUrl: './legal.component.scss'
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './legal.component.scss',
 })
 export class LegalComponent {
   private route = inject(ActivatedRoute);
@@ -33,18 +40,22 @@ export class LegalComponent {
   private http = inject(HttpClient);
   private metadataService = inject(MetadataService);
 
-  readonly doc = toSignal(this.route.paramMap.pipe(map(params => params.get('doc')!)));
+  readonly doc = toSignal(
+    this.route.paramMap.pipe(map((params) => params.get('doc')!)),
+  );
 
   readonly docResource = rxResource({
     params: () => this.doc(),
-    stream: (params) => this.loadDoc(params)
+    stream: (params) => this.loadDoc(params),
   });
 
   private loadDoc({ params: doc }: { params: string | null | undefined }) {
     if (!doc) throw new Error('No doc parameter provided');
-    return this.http.get(`/legal/${doc}.md`, { responseType: 'text' }).pipe(
-      switchMap(rawMarkdown => from(this.parseDocContent(rawMarkdown)))
-    );
+    return this.http
+      .get(`/legal/${doc}.md`, { responseType: 'text' })
+      .pipe(
+        switchMap((rawMarkdown) => from(this.parseDocContent(rawMarkdown))),
+      );
   }
 
   private async parseDocContent(rawMarkdown: string) {
@@ -52,7 +63,7 @@ export class LegalComponent {
     const html = await marked.parse(parsed.body);
     return {
       metadata: parsed.attributes,
-      content: this.sanitizer.bypassSecurityTrustHtml(html)
+      content: this.sanitizer.bypassSecurityTrustHtml(html),
     };
   }
 
@@ -90,12 +101,15 @@ export class LegalComponent {
       if (!docValue?.metadata) return;
 
       const meta = docValue.metadata;
-      const description = meta.description || `${meta.title} - Definitive Tools. Free, secure, client-side online tools.`;
+      const description =
+        meta.description ||
+        `${meta.title} - Definitive Tools. Free, secure, client-side online tools.`;
 
       this.metadataService.updateMetadata({
         title: meta.title,
         description,
-        keywords: meta.keywords || `${meta.title}, definitive tools, open source`
+        keywords:
+          meta.keywords || `${meta.title}, definitive tools, open source`,
       });
     });
   }

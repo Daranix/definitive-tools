@@ -1,4 +1,12 @@
-import { Component, computed, inject, PLATFORM_ID, signal, effect } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  PLATFORM_ID,
+  signal,
+  effect,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { isPlatformBrowser, NgClass, DecimalPipe } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 import { TopNavbarComponent } from '@/app/components/top-navbar/top-navbar.component';
@@ -6,7 +14,11 @@ import { FooterComponent } from '@/app/components/footer/footer.component';
 import { DragAndDropFileComponent } from '@/app/components/drag-and-drop-file/drag-and-drop-file.component';
 import { MetadataService } from '@/app/services/metadata.service';
 import { ToastService } from '@/app/services/toast.service';
-import { form, validateStandardSchema, FormField } from '@angular/forms/signals';
+import {
+  form,
+  validateStandardSchema,
+  FormField,
+} from '@angular/forms/signals';
 import { z } from 'zod';
 
 export type ImageFormat = 'png' | 'jpeg' | 'webp' | 'gif' | 'bmp';
@@ -27,23 +39,31 @@ export interface ConversionOptions {
     TopNavbarComponent,
     FooterComponent,
     DragAndDropFileComponent,
-    FormField
+    FormField,
   ],
   templateUrl: './image-converter.component.html',
-  styleUrl: './image-converter.component.scss'
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './image-converter.component.scss',
 })
 export class ImageConverterComponent {
   private readonly metadataService = inject(MetadataService);
   private readonly toastService = inject(ToastService);
   private readonly platformId = inject(PLATFORM_ID);
 
-  readonly allowedExtensions = ['.png', '.jpg', '.jpeg', '.webp', '.gif', '.bmp'];
+  readonly allowedExtensions = [
+    '.png',
+    '.jpg',
+    '.jpeg',
+    '.webp',
+    '.gif',
+    '.bmp',
+  ];
   readonly formats: ImageFormat[] = ['webp', 'png', 'jpeg', 'gif', 'bmp'];
 
   // State Signals
   readonly file = signal<File | undefined>(undefined);
   readonly fileUrl = signal<string | undefined>(undefined);
-  
+
   readonly outputBlob = signal<Blob | undefined>(undefined);
   readonly outputUrl = signal<string | undefined>(undefined);
   readonly outputFileName = signal<string>('');
@@ -53,18 +73,24 @@ export class ImageConverterComponent {
     targetFormat: 'webp',
     quality: 85,
     resizeWidth: null,
-    resizeHeight: null
+    resizeHeight: null,
   });
 
   readonly optionsSchema = z.object({
     targetFormat: z.enum(['webp', 'png', 'jpeg', 'gif', 'bmp']),
     quality: z.number().min(1).max(100),
-    resizeWidth: z.number().nullable().refine(val => val === null || val > 0, {
-      message: 'Width must be a positive number'
-    }),
-    resizeHeight: z.number().nullable().refine(val => val === null || val > 0, {
-      message: 'Height must be a positive number'
-    }),
+    resizeWidth: z
+      .number()
+      .nullable()
+      .refine((val) => val === null || val > 0, {
+        message: 'Width must be a positive number',
+      }),
+    resizeHeight: z
+      .number()
+      .nullable()
+      .refine((val) => val === null || val > 0, {
+        message: 'Height must be a positive number',
+      }),
   });
 
   readonly optionsForm = form(this.optionsModel, (schemaPath) => {
@@ -97,8 +123,9 @@ export class ImageConverterComponent {
   constructor() {
     this.metadataService.updateMetadata({
       title: 'Image Converter',
-      description: 'Convert images client-side between different formats like PNG, JPEG, WEBP, GIF, BMP, and TIFF using FFmpeg.wasm. Resize and compress with privacy.',
-      updateCanonical: true
+      description:
+        'Convert images client-side between different formats like PNG, JPEG, WEBP, GIF, BMP, and TIFF using FFmpeg.wasm. Resize and compress with privacy.',
+      updateCanonical: true,
     });
 
     // Cleanup input URL on destroy/change
@@ -190,16 +217,30 @@ export class ImageConverterComponent {
       const baseURL = `${window.location.origin}/assets/ffmpeg`;
       await this.ffmpeg.load({
         classWorkerURL: `${baseURL}/worker.js`,
-        coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
-        wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
+        coreURL: await toBlobURL(
+          `${baseURL}/ffmpeg-core.js`,
+          'text/javascript',
+        ),
+        wasmURL: await toBlobURL(
+          `${baseURL}/ffmpeg-core.wasm`,
+          'application/wasm',
+        ),
       });
 
       this.loaded.set(true);
-      this.logs.update((currentLogs) => [...currentLogs, 'FFmpeg core loaded successfully.']);
+      this.logs.update((currentLogs) => [
+        ...currentLogs,
+        'FFmpeg core loaded successfully.',
+      ]);
     } catch (error: any) {
       console.error(error);
-      this.toastService.error({ message: 'Failed to load FFmpeg core resources.' });
-      this.logs.update((currentLogs) => [...currentLogs, `Error: ${error?.message || error}`]);
+      this.toastService.error({
+        message: 'Failed to load FFmpeg core resources.',
+      });
+      this.logs.update((currentLogs) => [
+        ...currentLogs,
+        `Error: ${error?.message || error}`,
+      ]);
     }
   }
 
@@ -211,12 +252,18 @@ export class ImageConverterComponent {
 
     const currentFile = this.file();
     if (!currentFile) {
-      if (!isAuto) this.toastService.warning({ message: 'Please select an image file first.' });
+      if (!isAuto)
+        this.toastService.warning({
+          message: 'Please select an image file first.',
+        });
       return;
     }
 
     if (this.optionsForm().invalid()) {
-      if (!isAuto) this.toastService.warning({ message: 'Please fix validation errors first.' });
+      if (!isAuto)
+        this.toastService.warning({
+          message: 'Please fix validation errors first.',
+        });
       return;
     }
 
@@ -245,8 +292,11 @@ export class ImageConverterComponent {
       const targetExt = `.${fmt}`;
       const outputName = `output_${Date.now()}${targetExt}`;
 
-      this.logs.update((currentLogs) => [...currentLogs, `Loading "${currentFile.name}" into virtual file system...`]);
-      
+      this.logs.update((currentLogs) => [
+        ...currentLogs,
+        `Loading "${currentFile.name}" into virtual file system...`,
+      ]);
+
       const { fetchFile } = await import('@ffmpeg/util');
       const fileData = await fetchFile(currentFile);
       await this.ffmpeg.writeFile(inputName, fileData);
@@ -266,13 +316,19 @@ export class ImageConverterComponent {
         args.push('-q:v', q.toString());
       } else if (fmt === 'jpeg') {
         // Map quality (1-100) to qscale (1-31, where 1 is best)
-        const qScale = Math.max(1, Math.min(31, Math.round(((100 - q) / 100) * 30 + 1)));
+        const qScale = Math.max(
+          1,
+          Math.min(31, Math.round(((100 - q) / 100) * 30 + 1)),
+        );
         args.push('-q:v', qScale.toString());
       }
 
       args.push(outputName);
 
-      this.logs.update((currentLogs) => [...currentLogs, `Executing: ffmpeg ${args.join(' ')}`]);
+      this.logs.update((currentLogs) => [
+        ...currentLogs,
+        `Executing: ffmpeg ${args.join(' ')}`,
+      ]);
 
       // Run FFmpeg
       await this.ffmpeg.exec(args);
@@ -289,7 +345,10 @@ export class ImageConverterComponent {
       this.outputUrl.set(URL.createObjectURL(blob));
 
       // Build download file name
-      const baseName = currentFile.name.substring(0, currentFile.name.lastIndexOf('.'));
+      const baseName = currentFile.name.substring(
+        0,
+        currentFile.name.lastIndexOf('.'),
+      );
       this.outputFileName.set(`${baseName}_converted${targetExt}`);
 
       // Cleanup virtual files to free memory
@@ -299,8 +358,13 @@ export class ImageConverterComponent {
       this.toastService.success({ message: 'Image converted successfully!' });
     } catch (error: any) {
       console.error(error);
-      this.toastService.error({ message: `Conversion failed: ${error?.message || error}` });
-      this.logs.update((currentLogs) => [...currentLogs, `Execution failed: ${error?.message || error}`]);
+      this.toastService.error({
+        message: `Conversion failed: ${error?.message || error}`,
+      });
+      this.logs.update((currentLogs) => [
+        ...currentLogs,
+        `Execution failed: ${error?.message || error}`,
+      ]);
     } finally {
       this.converting.set(false);
       if (this.pendingConvert) {

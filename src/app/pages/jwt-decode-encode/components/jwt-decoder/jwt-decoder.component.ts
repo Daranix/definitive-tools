@@ -6,6 +6,7 @@ import {
   model,
   resource,
   signal,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
@@ -23,6 +24,7 @@ import { JwtHighlightComponent } from '../jwt-highlight/jwt-highlight.component'
     JwtHighlightComponent,
   ],
   templateUrl: './jwt-decoder.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './jwt-decoder.component.scss',
 })
 export class JwtDecoderComponent {

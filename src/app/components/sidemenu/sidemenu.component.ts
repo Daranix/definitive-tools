@@ -1,4 +1,4 @@
-import { Component, computed } from '@angular/core';
+import { Component, computed, ChangeDetectionStrategy } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TOOLS } from '../../utils/constants';
 import { LucideAngularModule } from 'lucide-angular';
@@ -7,13 +7,14 @@ import { LucideAngularModule } from 'lucide-angular';
   selector: 'app-sidemenu',
   imports: [RouterModule, LucideAngularModule],
   templateUrl: './sidemenu.component.html',
-  styleUrl: './sidemenu.component.scss'
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './sidemenu.component.scss',
 })
 export class SidemenuComponent {
   readonly tools = TOOLS;
 
   readonly categorizedTools = computed(() => {
-    const groups: Record<string, Array<typeof TOOLS[number]>> = {};
+    const groups: Record<string, Array<(typeof TOOLS)[number]>> = {};
     for (const tool of TOOLS) {
       if (!groups[tool.category]) {
         groups[tool.category] = [];
@@ -22,7 +23,7 @@ export class SidemenuComponent {
     }
     return Object.entries(groups).map(([name, tools]) => ({
       name,
-      tools
+      tools,
     }));
   });
 }

@@ -1,5 +1,18 @@
 /// <reference path="../../../../node_modules/monaco-editor/monaco.d.ts" />
-import { Component, Input, AfterViewInit, ElementRef, Output, EventEmitter, OnChanges, OnDestroy, viewChild, model, output } from '@angular/core';
+import {
+  Component,
+  Input,
+  AfterViewInit,
+  ElementRef,
+  Output,
+  EventEmitter,
+  OnChanges,
+  OnDestroy,
+  viewChild,
+  model,
+  output,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 
 let loadedMonaco = false;
 let loadPromise: Promise<void>;
@@ -7,19 +20,28 @@ let loadPromise: Promise<void>;
 @Component({
   selector: 'app-monaco-editor',
   templateUrl: './monaco-editor.component.html',
-  styleUrls: ['./monaco-editor.component.scss']
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrls: ['./monaco-editor.component.scss'],
 })
-export class MonacoEditorComponent implements AfterViewInit, OnChanges, OnDestroy {
-
+export class MonacoEditorComponent
+  implements AfterViewInit, OnChanges, OnDestroy
+{
   //@ViewChild('editorContainer') _editorContainer?: ElementRef<HTMLDivElement>;
-  private readonly editorContainer = viewChild<ElementRef<HTMLDivElement>>('editorContainer');
-  readonly options = model<monaco.editor.IStandaloneEditorConstructionOptions | undefined>({
-    theme: 'vs-dark'
+  private readonly editorContainer =
+    viewChild<ElementRef<HTMLDivElement>>('editorContainer');
+  readonly options = model<
+    monaco.editor.IStandaloneEditorConstructionOptions | undefined
+  >({
+    theme: 'vs-dark',
   });
 
   private monacoScriptTag?: HTMLScriptElement;
 
-  readonly onPaste = output<{ event: monaco.editor.IPasteEvent, pastedText?: string, fullText?: string }>();
+  readonly onPaste = output<{
+    event: monaco.editor.IPasteEvent;
+    pastedText?: string;
+    fullText?: string;
+  }>();
   readonly onEditorLoaded = output<monaco.editor.IStandaloneCodeEditor>();
 
   @Input() code = '';
@@ -30,7 +52,7 @@ export class MonacoEditorComponent implements AfterViewInit, OnChanges, OnDestro
   // Holds instance of the current code editor
   private codeEditorInstance?: monaco.editor.IStandaloneCodeEditor;
 
-  constructor() { }
+  constructor() {}
   ngOnDestroy(): void {
     this.monacoScriptTag?.remove();
     this.resizeObserver?.disconnect();
@@ -66,8 +88,7 @@ export class MonacoEditorComponent implements AfterViewInit, OnChanges, OnDestro
 
   private loadMonacoModule(): Promise<void> {
     return new Promise<void>((resolve: any) => {
-
-      if (typeof ((<any>window).monaco) === 'object') {
+      if (typeof (<any>window).monaco === 'object') {
         resolve();
         return;
       }
@@ -89,11 +110,11 @@ export class MonacoEditorComponent implements AfterViewInit, OnChanges, OnDestro
               return '/assets/monaco/vs/language/typescript/tsWorker.js';
             }
             return '/assets/monaco/vs/base/worker/workerMain.js';
-          }
+          },
         };
 
         // Load monaco using absolute root paths
-        (<any>window).require.config({ paths: { 'vs': '/assets/monaco/vs' } });
+        (<any>window).require.config({ paths: { vs: '/assets/monaco/vs' } });
 
         (<any>window).require(['vs/editor/editor.main'], () => {
           this.initMonaco();
@@ -103,7 +124,8 @@ export class MonacoEditorComponent implements AfterViewInit, OnChanges, OnDestro
 
       // Load AMD loader if necessary
       if (!(<any>window).require) {
-        const loaderScript: HTMLScriptElement = document.createElement('script');
+        const loaderScript: HTMLScriptElement =
+          document.createElement('script');
         loaderScript.type = 'text/javascript';
         loaderScript.src = '/assets/monaco/vs/loader.js';
         loaderScript.addEventListener('load', onAmdLoader);
@@ -127,13 +149,16 @@ export class MonacoEditorComponent implements AfterViewInit, OnChanges, OnDestro
 
     const options = this.options();
 
-    this.codeEditorInstance = monaco.editor.create(this.editorContainer()!.nativeElement, {
-      ...options,
-      value: this.code || ''
-    });
+    this.codeEditorInstance = monaco.editor.create(
+      this.editorContainer()!.nativeElement,
+      {
+        ...options,
+        value: this.code || '',
+      },
+    );
 
     // To support two-way binding of the code
-    this.codeEditorInstance!.getModel()!.onDidChangeContent(e => {
+    this.codeEditorInstance!.getModel()!.onDidChangeContent((e) => {
       this.codeChange.emit(this.codeEditorInstance!.getValue());
     });
 
@@ -150,11 +175,14 @@ export class MonacoEditorComponent implements AfterViewInit, OnChanges, OnDestro
       const pastedText = pasteEvent.range
         ? this.codeEditorInstance!.getModel()!.getValueInRange(pasteEvent.range)
         : '';
-      this.onPaste.emit({ event: pasteEvent, pastedText: pastedText, fullText: this.codeEditorInstance!.getValue() });
+      this.onPaste.emit({
+        event: pasteEvent,
+        pastedText: pastedText,
+        fullText: this.codeEditorInstance!.getValue(),
+      });
     });
 
     this.onEditorLoaded.emit(this.codeEditorInstance!);
-
   }
 
   getEditorInstance(): monaco.editor.IStandaloneCodeEditor | undefined {
@@ -163,9 +191,11 @@ export class MonacoEditorComponent implements AfterViewInit, OnChanges, OnDestro
 
   removeContextMenuElement() {
     // const keepIds = [];
-    const contextmenu = this.codeEditorInstance!.getContribution('editor.contrib.contextmenu')! as any;
+    const contextmenu = this.codeEditorInstance!.getContribution(
+      'editor.contrib.contextmenu',
+    )! as any;
     const realMethod = contextmenu._getMenuActions;
-    console.log(realMethod())
+    console.log(realMethod());
     contextmenu._getMenuActions = function () {
       const items = realMethod.apply(contextmenu, arguments);
       /*return items.filter(function (item) {
@@ -178,5 +208,4 @@ export class MonacoEditorComponent implements AfterViewInit, OnChanges, OnDestro
   formatCode() {
     this.codeEditorInstance?.getAction('editor.action.formatDocument')?.run();
   }
-
 }

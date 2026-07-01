@@ -1,7 +1,20 @@
 /// <reference path="../../../types/swagger-ui-dist.d.ts" />
 /// <reference path="../../../types/cheerpj.d.ts" />
-import { AfterContentInit, Component, computed, effect, ElementRef, inject, model, PLATFORM_ID, signal, viewChild, ViewEncapsulation } from '@angular/core';
-import { MonacoEditorComponent } from "@/app/components/monaco-editor/monaco-editor.component";
+import {
+  AfterContentInit,
+  Component,
+  computed,
+  effect,
+  ElementRef,
+  inject,
+  model,
+  PLATFORM_ID,
+  signal,
+  viewChild,
+  ViewEncapsulation,
+  ChangeDetectionStrategy,
+} from '@angular/core';
+import { MonacoEditorComponent } from '@/app/components/monaco-editor/monaco-editor.component';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { lastValueFrom, Subject } from 'rxjs';
@@ -20,20 +33,27 @@ interface GeneratorConfig {
 }
 
 const PETSTORE_API_DEFINITION = '/swagger-editor/examples/petstore.yaml';
-const OPENAPI_GENERATOR_JAR = '/swagger-editor/openapi-generator-cli-7.22.0.jar';
+const OPENAPI_GENERATOR_JAR =
+  '/swagger-editor/openapi-generator-cli-7.22.0.jar';
 const CHEERPJ_LOADER_URL = 'https://cjrtnc.leaningtech.com/4.3/loader.js';
 const RENDER_DEBOUNCE_MS = 500;
 
 @Component({
   selector: 'app-swagger-editor',
-  imports: [MonacoEditorComponent, SwaggerEditorToolbarComponent, SwaggerGenerationModalComponent, FormsModule, CommonModule],
+  imports: [
+    MonacoEditorComponent,
+    SwaggerEditorToolbarComponent,
+    SwaggerGenerationModalComponent,
+    FormsModule,
+    CommonModule,
+  ],
   providers: [CheerpjService],
   templateUrl: './swagger-editor.component.html',
   styleUrl: './swagger-editor.component.scss',
-  encapsulation: ViewEncapsulation.None
+  changeDetection: ChangeDetectionStrategy.Eager,
+  encapsulation: ViewEncapsulation.None,
 })
 export class SwaggerEditorComponent implements AfterContentInit {
-
   private readonly platformId = inject(PLATFORM_ID);
   private readonly httpClient = inject(HttpClient);
   private readonly cheerpjService = inject(CheerpjService);
@@ -41,11 +61,14 @@ export class SwaggerEditorComponent implements AfterContentInit {
 
   readonly isBrowser = computed(() => isPlatformBrowser(this.platformId));
   readonly editorContainer = viewChild(MonacoEditorComponent);
-  readonly custApiDocElement = viewChild<ElementRef<HTMLDivElement>>('custApiDocElement');
-  readonly editorOptions = signal<monaco.editor.IStandaloneEditorConstructionOptions | undefined>({
+  readonly custApiDocElement =
+    viewChild<ElementRef<HTMLDivElement>>('custApiDocElement');
+  readonly editorOptions = signal<
+    monaco.editor.IStandaloneEditorConstructionOptions | undefined
+  >({
     language: 'yaml',
     theme: 'vs-dark',
-    contextmenu: false
+    contextmenu: false,
   });
 
   readonly definitionSpec = model<string>('');
@@ -56,15 +79,15 @@ export class SwaggerEditorComponent implements AfterContentInit {
 
   readonly activeGenerator = signal<GeneratorConfig | null>(null);
 
-  constructor() { }
+  constructor() {}
 
   /** Debounce subject — prevents re-rendering on every keystroke */
   private readonly contentChange$ = new Subject<string>();
 
   ngAfterContentInit(): void {
-    this.contentChange$.pipe(
-      debounceTime(RENDER_DEBOUNCE_MS)
-    ).subscribe(content => this.renderSwaggerUI(content));
+    this.contentChange$
+      .pipe(debounceTime(RENDER_DEBOUNCE_MS))
+      .subscribe((content) => this.renderSwaggerUI(content));
   }
 
   handleEditorLoaded(_editor: monaco.editor.IStandaloneCodeEditor) {
@@ -73,12 +96,22 @@ export class SwaggerEditorComponent implements AfterContentInit {
     }
   }
 
-  handleOnPaste(pasteEvent: { event: monaco.editor.IPasteEvent, pastedText?: string, fullText?: string }) {
+  handleOnPaste(pasteEvent: {
+    event: monaco.editor.IPasteEvent;
+    pastedText?: string;
+    fullText?: string;
+  }) {
     try {
       JSON.parse(pasteEvent.fullText!);
-      (window as any).monaco.editor.setModelLanguage((window as any).monaco.editor.getModels()[0], 'json');
+      (window as any).monaco.editor.setModelLanguage(
+        (window as any).monaco.editor.getModels()[0],
+        'json',
+      );
     } catch {
-      (window as any).monaco.editor.setModelLanguage((window as any).monaco.editor.getModels()[0], 'yaml');
+      (window as any).monaco.editor.setModelLanguage(
+        (window as any).monaco.editor.getModels()[0],
+        'yaml',
+      );
     }
 
     setTimeout(() => {
@@ -108,14 +141,20 @@ export class SwaggerEditorComponent implements AfterContentInit {
     this.isImportModalOpen.set(false);
     this.isLoading.set(true);
     try {
-      const content = await lastValueFrom(this.httpClient.get(url, { responseType: 'text' }));
+      const content = await lastValueFrom(
+        this.httpClient.get(url, { responseType: 'text' }),
+      );
       this.definitionSpec.set(content);
     } catch (ex) {
       console.error('Failed to import from URL', ex);
       if (ex instanceof HttpErrorResponse && ex.status === 0) {
-        alert('CORS Error: The external server blocked the request. This usually happens when the server doesn\'t allow cross-origin requests. Try downloading the file and using "Import file" instead.');
+        alert(
+          'CORS Error: The external server blocked the request. This usually happens when the server doesn\'t allow cross-origin requests. Try downloading the file and using "Import file" instead.',
+        );
       } else {
-        alert('Failed to load the definition from the provided URL. Please check the URL and try again.');
+        alert(
+          'Failed to load the definition from the provided URL. Please check the URL and try again.',
+        );
       }
     } finally {
       this.isLoading.set(false);
@@ -193,7 +232,9 @@ export class SwaggerEditorComponent implements AfterContentInit {
   async loadExampleDefinition() {
     this.isLoading.set(true);
     try {
-      const definition = await lastValueFrom(this.httpClient.get(PETSTORE_API_DEFINITION, { responseType: 'text' }));
+      const definition = await lastValueFrom(
+        this.httpClient.get(PETSTORE_API_DEFINITION, { responseType: 'text' }),
+      );
       this.definitionSpec.set(definition);
     } catch (ex) {
       console.error('Failed to load example definition', ex);
@@ -207,7 +248,7 @@ export class SwaggerEditorComponent implements AfterContentInit {
       // If already generating, maximize the modal so the user sees the active process
       this.cheerpjService.isMinimized.set(false);
       this.toastService.warning({
-        message: `A generation process is already active. Please wait or cancel it.`
+        message: `A generation process is already active. Please wait or cancel it.`,
       });
       return;
     }
@@ -215,7 +256,7 @@ export class SwaggerEditorComponent implements AfterContentInit {
     this.cheerpjService.isMinimized.set(false);
     this.activeGenerator.set({
       type: 'client',
-      lang: lang
+      lang: lang,
     });
   }
 
@@ -245,7 +286,9 @@ export class SwaggerEditorComponent implements AfterContentInit {
       // which breaks esbuild's browser bundle. swagger-ui-dist has no exports map,
       // so this subpath import resolves freely.
       // The file exports the SwaggerUI factory as the CJS module.exports (default).
-      const SwaggerUIBundle = (await import('swagger-ui-dist/swagger-ui-es-bundle.js')).default;
+      const SwaggerUIBundle = (
+        await import('swagger-ui-dist/swagger-ui-es-bundle.js')
+      ).default;
 
       const container = this.custApiDocElement()?.nativeElement;
       if (!container) return;
