@@ -4,6 +4,7 @@
         <div class="relative">
             <input type="text"
                 [(ngModel)]="title"
+                data-testid="og-title-input"
                 class="w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-900 focus:ring-indigo-500 focus:border-indigo-500" />
             <button class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-indigo-600"
                 appContextMenu>
@@ -21,6 +22,7 @@
         <div class="relative">
             <input type="text"
                 [(ngModel)]="description"
+                data-testid="og-description-input"
                 class="w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-900 focus:ring-indigo-500 focus:border-indigo-500" />
             <button class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-indigo-600"
                 appContextMenu>

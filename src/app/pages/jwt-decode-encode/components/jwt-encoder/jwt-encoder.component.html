@@ -2,6 +2,7 @@
   <div class="flex justify-end">
     <button
       (click)="generateExample()"
+      data-testid="encoder-generate-example-btn"
       class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium hover:bg-gray-50"
     >
       Generate example
@@ -39,7 +40,8 @@
           </div>
         </div>
         <textarea
-          id="encoded-jwt"
+          id="encoded-jwt-header"
+          data-testid="encoder-header-textarea"
           class="w-full h-full p-3 min-h-[200px] rounded-md font-mono text-sm"
           [(ngModel)]="header"
           placeholder="Paste JSON header here."
@@ -75,7 +77,8 @@
           </div>
         </div>
         <textarea
-          id="encoded-jwt"
+          id="encoded-jwt-payload"
+          data-testid="encoder-payload-textarea"
           class="w-full h-full p-3 min-h-[200px] rounded-md font-mono text-sm"
           [(ngModel)]="payload"
           placeholder="Paste JSON payload here."
@@ -93,6 +96,7 @@
         <div class="relative">
           <input
             id="secret"
+            data-testid="encoder-secret-input"
             [(ngModel)]="secret"
             type="text"
             class="w-full p-2 border rounded-md font-mono text-sm"
@@ -140,6 +144,7 @@
           </div>
         </div>
         <app-jwt-highlight
+          data-testid="encoder-jwt-output"
           [jwt]="$safeNavigationMigration(jwt.value()?.token)"
           class="min-h-[400px]"
         ></app-jwt-highlight>
@@ -147,6 +152,7 @@
 
       @if (jwt.value()?.error) {
         <div
+          data-testid="encoder-error-box"
           class="p-3 rounded-md bg-red-50 text-red-800 border border-red-200"
         >
           Invalid token for the specified secret<br />

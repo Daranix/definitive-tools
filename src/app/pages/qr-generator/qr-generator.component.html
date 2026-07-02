@@ -15,6 +15,7 @@
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
                         @for (contentType of contentTypes; track $index) {
                         <button type="button" (click)="changeContentType(contentType.id)"
+                            [attr.data-testid]="'content-type-' + contentType.id"
                             [ngClass]="{'bg-indigo-600 text-white': selectedContentType === contentType.id, 'bg-white hover:bg-gray-50 hover:text-gray-700': selectedContentType !== contentType.id}"
                             class="border border-gray-300 text-gray-700 px-4 py-3 rounded-md flex items-center justify-center text-sm font-medium transition cursor-pointer">
                             <lucide-icon [name]="contentType.icon" class="h-4 w-4 mr-2"></lucide-icon> {{ contentType.name }}

@@ -8,11 +8,13 @@
             <div class="flex justify-center mb-6">
                 <div class="inline-flex rounded-md shadow-sm">
                     <button (click)="mode.set('encode')"
+                        data-testid="mode-encode-btn"
                         class="px-4 py-2 text-sm font-medium rounded-l-md border border-gray-300"
                         [ngClass]="{'bg-indigo-600 text-white': mode() === 'encode', 'bg-white text-gray-700 hover:bg-gray-100': mode() !== 'encode'}">
                         Encode
                     </button>
                     <button (click)="mode.set('decode')"
+                        data-testid="mode-decode-btn"
                         [ngClass]="{'bg-indigo-600 text-white': mode() === 'decode', 'bg-white text-gray-700 hover:bg-gray-100': mode() !== 'decode'}"
                         class="px-4 py-2 text-sm font-medium rounded-r-md border border-gray-300">
                         Decode
@@ -38,6 +40,7 @@
                     {{ mode() === 'encode' ? 'Encode to Base64' : 'Decode from Base64' }}
                 </button>
                 <button (click)="handleSwap()"
+                    data-testid="swap-btn"
                     class="bg-white border border-indigo-700 text-indigo-700 font-medium py-2 px-4 rounded hover:bg-indigo-50 transition flex items-center gap-2"
                     [disabled]="!outputText()">
                     <lucide-angular name="arrow-right-left" class="h-5 w-5"></lucide-angular>

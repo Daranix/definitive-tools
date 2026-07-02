@@ -51,6 +51,9 @@ export class LegalComponent {
 
   private loadDoc({ params: doc }: { params: string | null | undefined }) {
     if (!doc) throw new Error('No doc parameter provided');
+    if (doc.endsWith('.md')) {
+      throw new Error('Invalid document name (recursion guard)');
+    }
     return this.http
       .get(`/legal/${doc}.md`, { responseType: 'text' })
       .pipe(
@@ -59,6 +62,9 @@ export class LegalComponent {
   }
 
   private async parseDocContent(rawMarkdown: string) {
+    if (rawMarkdown.trim().startsWith('<')) {
+      throw new Error('Document not found (SPA fallback)');
+    }
     const parsed = fm<LegalMetadata>(rawMarkdown);
     const html = await marked.parse(parsed.body);
     return {

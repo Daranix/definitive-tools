@@ -4,7 +4,7 @@
         
         <!-- File Menu -->
         <div class="relative group">
-            <button class="flex items-center gap-1 px-3 py-1.5 text-sm text-gray-600 rounded hover:bg-gray-100 transition-colors">
+            <button data-testid="swagger-file-menu-btn" class="flex items-center gap-1 px-3 py-1.5 text-sm text-gray-600 rounded hover:bg-gray-100 transition-colors">
                 <lucide-angular name="file-text" class="w-4 h-4" />
                 <span>File</span>
                 <lucide-angular name="chevron-down" class="w-3 h-3 ml-1 opacity-50" />
@@ -19,8 +19,8 @@
                         <li><button (click)="onSaveYaml.emit()" class="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"><lucide-angular name="download" class="w-3.5 h-3.5" />Save as YAML</button></li>
                         <li><button (click)="onSaveJson.emit()" class="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"><lucide-angular name="download" class="w-3.5 h-3.5" />Convert and save as JSON</button></li>
                         <li class="border-t border-gray-100 my-1"></li>
-                        <li><button (click)="onLoadExample.emit()" class="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"><lucide-angular name="book-open" class="w-3.5 h-3.5" />Load Petstore example</button></li>
-                        <li><button (click)="onClear.emit()" class="w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2"><lucide-angular name="trash-2" class="w-3.5 h-3.5" />Clear editor</button></li>
+                        <li><button (click)="onLoadExample.emit()" data-testid="swagger-load-example-btn" class="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"><lucide-angular name="book-open" class="w-3.5 h-3.5" />Load Petstore example</button></li>
+                        <li><button (click)="onClear.emit()" data-testid="swagger-clear-btn" class="w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2"><lucide-angular name="trash-2" class="w-3.5 h-3.5" />Clear editor</button></li>
                     </ul>
                 </div>
             </div>

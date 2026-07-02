@@ -18,6 +18,7 @@
           </div>
           <textarea
             id="markdown-input"
+            data-testid="md-excel-textarea"
             [(ngModel)]="inputText"
             placeholder="| Column 1 | Column 2 |\n| --- | --- |\n| Row 1 | Row 2 |"
             class="w-full h-[400px] p-4 bg-white border border-gray-200 rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none font-mono text-sm resize-none transition-all"
@@ -39,13 +40,13 @@
 
           <div class="w-full h-[450px] bg-white border border-gray-300 rounded-xl shadow-inner overflow-auto selection:bg-transparent grid-container">
             @if (!tableData()) {
-              <div class="h-full flex flex-col items-center justify-center text-gray-400 space-y-2 p-8 text-center">
+              <div data-testid="excel-table-empty" class="h-full flex flex-col items-center justify-center text-gray-400 space-y-2 p-8 text-center">
                 <lucide-icon name="file-text" class="w-12 h-12 opacity-20"></lucide-icon>
                 <p>Paste a valid Markdown table to see the preview.</p>
               </div>
             } @else {
               <div class="relative">
-                <table class="min-w-full border-collapse bg-white cursor-text table-fixed border-l border-t border-gray-200">
+                <table data-testid="excel-table" class="min-w-full border-collapse bg-white cursor-text table-fixed border-l border-t border-gray-200">
                   <colgroup>
                     <col class="w-12">
                     @for (_ of columnLetters(); track $index) {

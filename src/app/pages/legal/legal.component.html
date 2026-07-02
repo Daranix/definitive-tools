@@ -31,7 +31,7 @@
             <li>
               <svg class="w-4 h-4 text-slate-400" fill="currentColor" viewBox="0 0 20 20"><path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"/></svg>
             </li>
-            <li class="font-medium text-slate-900 truncate max-w-[150px] md:max-w-none">{{ metadata()?.title }}</li>
+            <li data-testid="legal-title" class="font-medium text-slate-900 truncate max-w-[150px] md:max-w-none">{{ metadata()?.title }}</li>
           }
         </ol>
       </nav>
@@ -44,7 +44,7 @@
 
     <!-- Loading State -->
     @if (isLoading()) {
-      <div class="flex flex-col items-center justify-center py-20 text-slate-400">
+      <div data-testid="legal-loading" class="flex flex-col items-center justify-center py-20 text-slate-400">
         <div class="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mb-4"></div>
         <p class="text-lg">Loading document...</p>
       </div>
@@ -52,7 +52,7 @@
 
     <!-- Error State -->
     @if (error()) {
-      <div class="flex flex-col items-center justify-center py-20 text-center">
+      <div data-testid="legal-error" class="flex flex-col items-center justify-center py-20 text-center">
         <lucide-icon name="circle-off" class="w-16 h-16 text-red-500 mb-4"></lucide-icon>
         <h2 class="text-2xl font-bold text-slate-800 mb-2">Document Not Found ({{ errorCode() }})</h2>
         <p class="text-slate-600 mb-6">We couldn't retrieve the requested legal document.</p>
@@ -64,7 +64,7 @@
 
     <!-- Content State -->
     @if (content()) {
-      <article class="markdown-body" [innerHTML]="content()"></article>
+      <article data-testid="legal-content" class="markdown-body" [innerHTML]="content()"></article>
     }
 
   </div>

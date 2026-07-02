@@ -179,6 +179,14 @@ export class QrGeneratorComponent {
     const result = QrUnionSchema.safeParse(rawData);
 
     if (!result.success) {
+      // Mark the root and all active nested child controls as touched to trigger validation messages in template
+      this.qrForm().markAsTouched();
+      Object.keys(this.qrForm).forEach((key) => {
+        const control = (this.qrForm as any)[key];
+        if (control && typeof control === 'function' && typeof control().markAsTouched === 'function') {
+          control().markAsTouched();
+        }
+      });
       this.toastService.warning({
         message: 'Please correct all validation errors first.',
       });

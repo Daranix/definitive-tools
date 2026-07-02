@@ -10,6 +10,7 @@
         </div>
         <div class="flex items-center gap-2">
           <button (click)="handleClear()" 
+                  data-testid="md-html-clear-btn"
                   class="p-1.5 hover:bg-slate-700/80 rounded-lg transition-colors text-slate-400 hover:text-red-400"
                   title="Clear Editor">
             <lucide-icon name="trash-2" class="w-4 h-4"></lucide-icon>
@@ -59,6 +60,7 @@
         <!-- Left Side: Tabs -->
         <div class="flex bg-slate-900/60 p-0.5 rounded-lg border border-slate-700/30">
           <button (click)="activeTab.set('preview')"
+                  data-testid="md-html-preview-tab"
                   [class.bg-slate-800]="activeTab() === 'preview'"
                   [class.text-white]="activeTab() === 'preview'"
                   [class.text-slate-400]="activeTab() !== 'preview'"
@@ -67,6 +69,7 @@
             Preview
           </button>
           <button (click)="activeTab.set('code')"
+                  data-testid="md-html-code-tab"
                   [class.bg-slate-800]="activeTab() === 'code'"
                   [class.text-white]="activeTab() === 'code'"
                   [class.text-slate-400]="activeTab() !== 'code'"
@@ -81,12 +84,14 @@
           @if (activeTab() === 'code') {
             <button (click)="handleCopyHtml()" 
                     [disabled]="!previewHtml()"
+                    data-testid="md-html-copy-btn"
                     class="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700 hover:bg-slate-600 disabled:opacity-40 disabled:cursor-not-allowed text-slate-200 rounded-lg transition-all text-xs font-medium border border-slate-600/40">
               <lucide-icon name="copy" class="w-3.5 h-3.5"></lucide-icon>
               Copy HTML
             </button>
           }
           <button (click)="toggleStylesDrawer()" 
+                  data-testid="md-html-styles-btn"
                   class="flex items-center gap-1.5 px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition-all text-xs font-semibold uppercase tracking-wider shadow-lg shadow-indigo-500/20 border border-indigo-500/30">
             <lucide-icon name="palette" class="w-3.5 h-3.5"></lucide-icon>
             Styles

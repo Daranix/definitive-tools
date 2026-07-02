@@ -1,6 +1,7 @@
 <div class="space-y-6">
     <div class="flex justify-end">
         <button (click)="generateExample()"
+            data-testid="generate-example-btn"
             class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium hover:bg-gray-50">
             Generate example
         </button>
@@ -29,6 +30,7 @@
                     <app-jwt-highlight [jwt]="jwtEncoded()"></app-jwt-highlight>
                     <textarea role="textbox" 
                         [(ngModel)]="jwtEncoded" 
+                        data-testid="jwt-input-textarea"
                         class="absolute top-0 left-0 h-full w-full resize-none bg-transparent p-4 m-0 border-0 text-inherit overflow-hidden whitespace-pre-wrap break-all antialiased [-webkit-text-fill-color:transparent]" autocapitalize="off" autocomplete="off" autocorrect="off"
                         spellcheck="false"
                         data-gramm="false"></textarea>
@@ -38,6 +40,7 @@
 
             @if(jwtEncoded()) {
             <div class="p-3 rounded-md"
+                data-testid="jwt-status-box"
                 [ngClass]="{ 'bg-green-50 text-green-800 border border-green-200': !jwtDecoded().error, 'bg-red-50 text-red-800 border border-red-200': jwtDecoded().error }">
                 {{ !jwtDecoded().error ? "Valid JWT" : "Invalid JWT format" }}
             </div>
@@ -102,6 +105,7 @@
                         </div>
                     </div>
                     <pre
+                        data-testid="decoded-header-output"
                         class="p-4 text-sm font-mono overflow-auto max-h-[200px]">{{ jwtDecoded().header | json }}</pre>
                 </div>
             </div>
@@ -121,6 +125,7 @@
                         </div>
                     </div>
                     <pre
+                        data-testid="decoded-payload-output"
                         class="p-4 text-sm font-mono overflow-auto max-h-[200px]">{{ jwtDecoded().payload| json }}</pre>
                 </div>
             </div>
