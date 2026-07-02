@@ -9,7 +9,7 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import * as jose from 'jose';
 import { ToastService } from '@/app/services/toast.service';
 import { JwtHighlightComponent } from '../jwt-highlight/jwt-highlight.component';
@@ -17,7 +17,7 @@ import { JwtHighlightComponent } from '../jwt-highlight/jwt-highlight.component'
 @Component({
   selector: 'app-jwt-decoder',
   imports: [
-    LucideAngularModule,
+    LucideIconComponent,
     NgClass,
     FormsModule,
     JsonPipe,

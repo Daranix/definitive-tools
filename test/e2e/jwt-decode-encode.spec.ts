@@ -3,6 +3,7 @@ import { test, expect } from '@playwright/test';
 test.describe('JWT Decoder / Encoder & Validator Tool', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/tool/jwt-decode-encode');
+    await page.waitForTimeout(1000);
   });
 
   test('should decode valid JWT and show header and payload', async ({ page }) => {

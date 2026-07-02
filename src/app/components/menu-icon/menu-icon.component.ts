@@ -1,10 +1,10 @@
 import { Component, model, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 
 @Component({
   selector: 'app-menu-icon',
-  imports: [FormsModule, LucideAngularModule],
+  imports: [FormsModule, LucideIconComponent],
   templateUrl: './menu-icon.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './menu-icon.component.scss',

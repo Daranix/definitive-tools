@@ -3,6 +3,7 @@ import { test, expect } from '@playwright/test';
 test.describe('QR Code Generator Tool', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/tool/qr-generator');
+    await page.waitForTimeout(1000);
   });
 
   test('should load with default Text content type and allow generation', async ({ page }) => {

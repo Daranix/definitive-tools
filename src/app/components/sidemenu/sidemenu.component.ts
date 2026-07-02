@@ -1,11 +1,11 @@
 import { Component, computed, ChangeDetectionStrategy } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TOOLS } from '../../utils/constants';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 
 @Component({
   selector: 'app-sidemenu',
-  imports: [RouterModule, LucideAngularModule],
+  imports: [RouterModule, LucideIconComponent],
   templateUrl: './sidemenu.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './sidemenu.component.scss',

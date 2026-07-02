@@ -1,9 +1,9 @@
 import { Component, output, ChangeDetectionStrategy } from '@angular/core';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 
 @Component({
   selector: 'app-swagger-editor-toolbar',
-  imports: [LucideAngularModule],
+  imports: [LucideIconComponent],
   templateUrl: './swagger-editor-toolbar.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './swagger-editor-toolbar.component.scss',

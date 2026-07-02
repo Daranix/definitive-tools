@@ -6,7 +6,6 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { LucideAngularModule } from 'lucide-angular';
 import { DragAndDropFileComponent } from '@/app/components/drag-and-drop-file/drag-and-drop-file.component';
 import { FormsModule } from '@angular/forms';
 import { MetadataService } from '@/app/services/metadata.service';
@@ -64,7 +63,6 @@ import { FooterComponent } from '../../components/footer/footer.component';
 @Component({
   selector: 'app-background-remover',
   imports: [
-    LucideAngularModule,
     DragAndDropFileComponent,
     FormsModule,
     BlobPipe,

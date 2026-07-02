@@ -7,7 +7,7 @@ import {
   WritableSignal,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import {
   QrContentType,
   QrFormData,
@@ -84,7 +84,7 @@ export const CORNERS_INNER_DOT_STYLES: ReadonlyArray<{
 @Component({
   selector: 'app-qr-generator',
   imports: [
-    LucideAngularModule,
+    LucideIconComponent,
     NgClass,
     FormField,
     UpperCasePipe,

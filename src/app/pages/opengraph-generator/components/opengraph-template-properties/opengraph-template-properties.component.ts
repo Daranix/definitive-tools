@@ -9,7 +9,7 @@ import {
   signal,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import {
   BackgroundType,
   GRADIENT_DIRECTIONS,
@@ -38,7 +38,7 @@ import { getChecksumSha256 } from '@/app/utils/functions';
 @Component({
   selector: 'app-opengraph-template-properties',
   imports: [
-    LucideAngularModule,
+    LucideIconComponent,
     NgClass,
     NgStyle,
     FormsModule,

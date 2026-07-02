@@ -10,7 +10,7 @@ import {
   FONT_TYPES,
   OpengraphFontOptionsComponent,
 } from '../../../opengraph-font-options/opengraph-font-options.component';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import { ContextMenuDirective } from '@/app/directives/context-menu.directive';
 import { FormsModule } from '@angular/forms';
 import {
@@ -39,7 +39,7 @@ const TITLE_DEFAULT_FONT_OPTIONS: OpenGraphTemplateFormInputFontOptions = {
   imports: [
     FormsModule,
     OpengraphFontOptionsComponent,
-    LucideAngularModule,
+    LucideIconComponent,
     ContextMenuDirective,
     DragAndDropFileComponent,
   ],

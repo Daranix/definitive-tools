@@ -10,7 +10,7 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 
 export type Mode = 'encode' | 'decode';
 
@@ -19,7 +19,7 @@ import { FooterComponent } from '../../components/footer/footer.component';
 @Component({
   selector: 'app-base64',
   imports: [
-    LucideAngularModule,
+    LucideIconComponent,
     NgClass,
     FormsModule,
     TopNavbarComponent,

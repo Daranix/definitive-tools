@@ -12,7 +12,7 @@ import {
   output,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import {
   FONT_TYPES,
   OpengraphFontOptionsComponent,
@@ -39,7 +39,7 @@ const TITLE_DEFAULT_FONT_OPTIONS: OpenGraphTemplateFormInputFontOptions = {
   selector: 'app-opengraph-template-form-notice',
   imports: [
     DragAndDropFileComponent,
-    LucideAngularModule,
+    LucideIconComponent,
     OpengraphFontOptionsComponent,
     ContextMenuDirective,
     FormsModule,

@@ -10,7 +10,7 @@ import {
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import { MonacoEditorComponent } from '@/app/components/monaco-editor/monaco-editor.component';
 import { MetadataService } from '@/app/services/metadata.service';
 import { Subject } from 'rxjs';
@@ -36,7 +36,7 @@ marked.use(
   imports: [
     CommonModule,
     FormsModule,
-    LucideAngularModule,
+    LucideIconComponent,
     MonacoEditorComponent,
   ],
   templateUrl: './markdown-to-pdf.component.html',

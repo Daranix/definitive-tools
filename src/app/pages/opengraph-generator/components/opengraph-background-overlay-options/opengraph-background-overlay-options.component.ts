@@ -7,7 +7,7 @@ import {
 } from '../../constants';
 import { OpenGraphBackgroundOverlay } from '../../types';
 import { NgClass, NgStyle } from '@angular/common';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import {
   combineLatest,
@@ -20,7 +20,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-opengraph-background-overlay-options',
-  imports: [NgStyle, NgClass, LucideAngularModule, FormsModule],
+  imports: [NgStyle, NgClass, LucideIconComponent, FormsModule],
   templateUrl: './opengraph-background-overlay-options.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './opengraph-background-overlay-options.component.scss',

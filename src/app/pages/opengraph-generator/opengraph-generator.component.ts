@@ -7,7 +7,7 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import { TopNavbarComponent } from '@/app/components/top-navbar/top-navbar.component';
 import { OpengraphTemplateSelectorComponent } from './components/opengraph-template-selector/opengraph-template-selector.component';
 import { OpengraphTemplatePropertiesComponent } from './components/opengraph-template-properties/opengraph-template-properties.component';
@@ -25,7 +25,7 @@ type Platform = 'opengraph' | 'twitter';
 @Component({
   selector: 'app-opengraph-generator',
   imports: [
-    LucideAngularModule,
+    LucideIconComponent,
     TopNavbarComponent,
     OpengraphTemplateSelectorComponent,
     OpengraphTemplatePropertiesComponent,

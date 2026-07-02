@@ -14,7 +14,7 @@ import { map, switchMap, from } from 'rxjs';
 import { marked } from 'marked';
 import fm from 'front-matter';
 import { CommonModule } from '@angular/common';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 
 interface LegalMetadata {
   title: string;
@@ -29,7 +29,7 @@ import { FooterComponent } from '../../components/footer/footer.component';
 
 @Component({
   selector: 'app-legal',
-  imports: [CommonModule, RouterLink, LucideAngularModule, FooterComponent],
+  imports: [CommonModule, RouterLink, LucideIconComponent, FooterComponent],
   templateUrl: './legal.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './legal.component.scss',

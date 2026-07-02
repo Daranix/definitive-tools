@@ -8,7 +8,7 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { isPlatformBrowser, NgClass, DecimalPipe } from '@angular/common';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import { TopNavbarComponent } from '@/app/components/top-navbar/top-navbar.component';
 import { FooterComponent } from '@/app/components/footer/footer.component';
 import { DragAndDropFileComponent } from '@/app/components/drag-and-drop-file/drag-and-drop-file.component';
@@ -33,7 +33,7 @@ export interface ConversionOptions {
 @Component({
   selector: 'app-image-converter',
   imports: [
-    LucideAngularModule,
+    LucideIconComponent,
     NgClass,
     DecimalPipe,
     TopNavbarComponent,

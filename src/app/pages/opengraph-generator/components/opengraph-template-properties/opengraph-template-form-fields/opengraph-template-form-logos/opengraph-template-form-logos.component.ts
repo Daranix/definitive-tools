@@ -15,7 +15,7 @@ import {
   OpengraphFontOptionsComponent,
 } from '../../../opengraph-font-options/opengraph-font-options.component';
 import { DragAndDropFileComponent } from '@/app/components/drag-and-drop-file/drag-and-drop-file.component';
-import { LucideAngularComponent, LucideAngularModule } from 'lucide-angular';
+import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import { FormsModule } from '@angular/forms';
 import { ContextMenuDirective } from '@/app/directives/context-menu.directive';
 
@@ -37,7 +37,7 @@ const TITLE_DEFAULT_FONT_OPTIONS: OpenGraphTemplateFormInputFontOptions = {
   selector: 'app-opengraph-template-form-logos',
   imports: [
     DragAndDropFileComponent,
-    LucideAngularModule,
+    LucideIconComponent,
     FormsModule,
     OpengraphFontOptionsComponent,
     ContextMenuDirective,

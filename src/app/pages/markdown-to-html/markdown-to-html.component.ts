@@ -13,7 +13,7 @@ import {
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import { MonacoEditorComponent } from '@/app/components/monaco-editor/monaco-editor.component';
 import { MetadataService } from '@/app/services/metadata.service';
 import { MarkdownPreviewComponent } from '@/app/components/markdown-preview/markdown-preview.component';
@@ -47,7 +47,7 @@ const PRESET_URLS = {
   imports: [
     CommonModule,
     FormsModule,
-    LucideAngularModule,
+    LucideIconComponent,
     MonacoEditorComponent,
     MarkdownPreviewComponent,
   ],

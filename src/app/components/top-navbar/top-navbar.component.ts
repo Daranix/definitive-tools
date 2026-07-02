@@ -8,12 +8,12 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import { ToastService } from '@app/services/toast.service';
 
 @Component({
   selector: 'app-top-navbar',
-  imports: [LucideAngularModule, RouterLink],
+  imports: [LucideIconComponent, RouterLink],
   templateUrl: './top-navbar.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './top-navbar.component.scss',

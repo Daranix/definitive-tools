@@ -8,7 +8,7 @@
 
             @let selectedContentType = qrForm.contentType().value();
 
-            <form (submit)="$event.preventDefault(); generateQrCode()">
+            <form (submit)="$event.preventDefault(); generateQrCode()" onsubmit="return false;">
                 <!-- Content Type Selection -->
                 <div class="mb-8">
                     <label class="block text-gray-700 text-sm font-bold mb-3">Content Type</label>

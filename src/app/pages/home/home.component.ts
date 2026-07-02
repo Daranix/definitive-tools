@@ -6,14 +6,14 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import { TOOLS } from '../../utils/constants';
 import { MetadataService } from '@app/services/metadata.service';
 import { FooterComponent } from '../../components/footer/footer.component';
 
 @Component({
   selector: 'app-home',
-  imports: [LucideAngularModule, RouterLink, FooterComponent],
+  imports: [LucideIconComponent, RouterLink, FooterComponent],
   templateUrl: './home.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './home.component.scss',

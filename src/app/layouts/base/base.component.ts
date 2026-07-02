@@ -15,7 +15,7 @@ import { SidemenuComponent } from '../../components/sidemenu/sidemenu.component'
 import { MenuIconComponent } from '../../components/menu-icon/menu-icon.component';
 import { TopNavbarService } from '../../services/top-navbar.service';
 import { NgClass } from '@angular/common';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import { filter } from 'rxjs';
 
 @Component({
@@ -25,7 +25,7 @@ import { filter } from 'rxjs';
     SidemenuComponent,
     MenuIconComponent,
     NgClass,
-    LucideAngularModule,
+    LucideIconComponent,
   ],
   templateUrl: './base.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,

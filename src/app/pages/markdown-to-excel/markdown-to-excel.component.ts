@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import { TopNavbarComponent } from '@/app/components/top-navbar/top-navbar.component';
 import { MetadataService } from '@/app/services/metadata.service';
 
@@ -27,7 +27,7 @@ import { FooterComponent } from '../../components/footer/footer.component';
   imports: [
     CommonModule,
     FormsModule,
-    LucideAngularModule,
+    LucideIconComponent,
     TopNavbarComponent,
     FooterComponent,
   ],

@@ -6,7 +6,7 @@ import {
   resource,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import * as jose from 'jose';
 import { ToastService } from '@/app/services/toast.service';
 import { JsonPipe, NgClass } from '@angular/common';
@@ -15,7 +15,7 @@ import { JwtHighlightComponent } from '../jwt-highlight/jwt-highlight.component'
 
 @Component({
   selector: 'app-jwt-encoder',
-  imports: [LucideAngularModule, FormsModule, JwtHighlightComponent],
+  imports: [LucideIconComponent, FormsModule, JwtHighlightComponent],
   templateUrl: './jwt-encoder.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './jwt-encoder.component.scss',
