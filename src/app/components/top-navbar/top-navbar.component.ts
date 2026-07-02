@@ -10,6 +10,8 @@ import {
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import { ToastService } from '@app/services/toast.service';
+import { GithubService } from '../../services/github.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-top-navbar',
@@ -21,7 +23,9 @@ import { ToastService } from '@app/services/toast.service';
 export class TopNavbarComponent {
   readonly activatedRoute = inject(ActivatedRoute);
   readonly toastService = inject(ToastService);
+  private readonly githubService = inject(GithubService);
 
+  readonly stars = toSignal(this.githubService.getRepoStars(), { initialValue: 0 });
   readonly info = computed(() => this.getToolInfo());
   readonly isMobileMenuOpen = signal<boolean>(false);
   readonly isFavorite = signal<boolean>(false);

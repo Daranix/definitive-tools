@@ -10,6 +10,8 @@ import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.co
 import { TOOLS } from '../../utils/constants';
 import { MetadataService } from '@app/services/metadata.service';
 import { FooterComponent } from '../../components/footer/footer.component';
+import { GithubService } from '../../services/github.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +22,9 @@ import { FooterComponent } from '../../components/footer/footer.component';
 })
 export class HomeComponent {
   private readonly metadataService = inject(MetadataService);
+  private readonly githubService = inject(GithubService);
 
+  readonly stars = toSignal(this.githubService.getRepoStars(), { initialValue: 0 });
   readonly searchQuery = signal<string>('');
   readonly selectedCategory = signal<string>('All');
   readonly isMobileMenuOpen = signal<boolean>(false);
