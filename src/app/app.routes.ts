@@ -22,6 +22,7 @@ export const routes: Routes = [
             { path: 'markdown-to-excel', loadComponent: () => import('./pages/markdown-to-excel/markdown-to-excel.component').then(m => m.MarkdownToExcelComponent), data: { id: 'markdown-to-excel' } },
             { path: 'markdown-to-pdf', loadComponent: () => import('./pages/markdown-to-pdf/markdown-to-pdf.component').then(m => m.MarkdownToPdfComponent), data: { id: 'markdown-to-pdf' } },
             { path: 'markdown-to-html', loadComponent: () => import('./pages/markdown-to-html/markdown-to-html.component').then(m => m.MarkdownToHtmlComponent), data: { id: 'markdown-to-html' } },
+            { path: 'audio-editor', loadComponent: () => import('./pages/audio-editor/audio-editor.component').then(m => m.AudioEditorComponent), data: { id: 'audio-editor' } },
         ],
         component: BaseComponent
     },

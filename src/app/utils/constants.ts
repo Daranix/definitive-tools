@@ -6,9 +6,11 @@ import {
   LucideBookOpen,
   LucideCaseUpper,
   LucideCheck,
+  LucideCheckCircle,
   LucideChevronDown,
   LucideCircleEllipsis,
   LucideCircleOff,
+  LucideClock,
   LucideCode,
   LucideColumns2,
   LucideCopy,
@@ -34,12 +36,15 @@ import {
   LucideMoveDownRight,
   LucideMoveLeft,
   LucideMoveRight,
+  LucideMusic,
   LucideSplit,
   LucideMoveUp,
   LucideMoveUpLeft,
   LucideMoveUpRight,
   LucidePalette,
+  LucidePause,
   LucidePhone,
+  LucidePlay,
   LucideQrCode,
   LucideRotateCw,
   LucideScissors,
@@ -48,6 +53,7 @@ import {
   LucideShuffle,
   LucideSliders,
   LucideTabletSmartphone,
+  LucideTerminal,
   LucideTrash2,
   LucideUpload,
   LucideWifi,
@@ -151,6 +157,14 @@ export const TOOLS: ReadonlyArray<Tool> = [
         icon: 'code',
         color: 'indigo',
         category: 'Text Tools'
+    },
+    {
+        id: 'audio-editor',
+        name: 'Audio Editor',
+        description: 'Trim, cut, and convert audio files directly in your browser. Export to MP3, WAV, OGG, AAC, and FLAC with custom bitrate and sample rate settings.',
+        icon: 'music',
+        color: 'indigo',
+        category: 'Media Tools'
     }
 ]
 
@@ -218,5 +232,11 @@ export const USED_ICONS = {
     Palette: LucidePalette,
     Sliders: LucideSliders,
     Columns2: LucideColumns2,
-    Split: LucideSplit
+    Split: LucideSplit,
+    Music: LucideMusic,
+    Play: LucidePlay,
+    Pause: LucidePause,
+    Clock: LucideClock,
+    CheckCircle: LucideCheckCircle,
+    Terminal: LucideTerminal
 } as const;

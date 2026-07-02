@@ -1,0 +1,376 @@
+<div class="min-h-screen flex flex-col bg-gray-50">
+  <app-top-navbar></app-top-navbar>
+
+  <main class="flex-grow container mx-auto px-4 py-8 max-w-6xl">
+    <!-- Header -->
+    <div class="mb-8 text-center md:text-left">
+      <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Client-Side Audio Editor</h1>
+      <p class="mt-2 text-md text-gray-600">
+        Trim, cut, and convert audio files directly in your browser. Powered by WebAssembly — 100% private, no uploads.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <!-- ══ LEFT PANEL ══════════════════════════════════════════════════════ -->
+      <div class="lg:col-span-8 flex flex-col gap-6">
+
+        @if (!audioForm.file().value()) {
+          <!-- Upload Area -->
+          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 flex flex-col items-center justify-center min-h-[400px] transition-all hover:shadow-md">
+            <app-drag-and-drop-file
+              name="audio-file"
+              [validExtensions]="allowedExtensions"
+              (onFileChange)="onFileSelected($event)"
+              class="w-full h-full flex flex-col justify-center items-center">
+            </app-drag-and-drop-file>
+          </div>
+        } @else {
+          <!-- Waveform Workspace -->
+          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex flex-col gap-5">
+            <!-- File header -->
+            <div class="flex items-center justify-between border-b border-gray-100 pb-4">
+              <div class="flex items-center gap-3">
+                <div class="p-2 bg-indigo-50 text-indigo-600 rounded-lg">
+                  <lucide-angular name="music" class="h-5 w-5"></lucide-angular>
+                </div>
+                <div>
+                  <h2 class="text-lg font-bold text-gray-900 truncate max-w-[250px] md:max-w-[400px]">
+                    {{ audioForm.file().value()?.name }}
+                  </h2>
+                  <p class="text-xs text-gray-500">
+                    {{ formatFileSize(originalSize()) }} &nbsp;·&nbsp; Duration: {{ formatTime(duration()) }}
+                  </p>
+                </div>
+              </div>
+              <button
+                (click)="clear()"
+                [disabled]="exporting()"
+                class="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition disabled:opacity-50">
+                <lucide-angular name="trash-2" class="h-5 w-5"></lucide-angular>
+              </button>
+            </div>
+
+            <!-- Waveform Canvas -->
+            @if (waveformReady()) {
+              <div class="flex flex-col gap-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Waveform</span>
+                  <span class="text-[10px] text-gray-400 italic">Drag the cyan/pink handles to set trim points</span>
+                </div>
+                <div class="relative rounded-xl overflow-hidden border border-slate-800 bg-slate-900 shadow-inner">
+                  <canvas
+                    #waveformCanvas
+                    class="w-full block waveform-canvas"
+                    (mousemove)="updateCursor($event)">
+                  </canvas>
+                </div>
+
+                <!-- Transport Controls -->
+                <div class="flex items-center gap-3 mt-1 flex-wrap">
+                  <button
+                    (click)="togglePlay()"
+                    [disabled]="exporting()"
+                    class="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-sm font-semibold transition disabled:opacity-50">
+                    @if (playing()) {
+                      <lucide-angular name="pause" class="h-4 w-4"></lucide-angular>
+                      Pause
+                    } @else {
+                      <lucide-angular name="play" class="h-4 w-4"></lucide-angular>
+                      Play
+                    }
+                  </button>
+
+                  <button
+                    (click)="playTrimmed()"
+                    [disabled]="exporting() || playing()"
+                    class="flex items-center gap-2 px-4 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-xl text-sm font-semibold transition disabled:opacity-50">
+                    <lucide-angular name="scissors" class="h-4 w-4"></lucide-angular>
+                    Play Trimmed
+                  </button>
+
+                  <button
+                    (click)="resetTrim()"
+                    [disabled]="exporting()"
+                    class="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-xl text-sm font-semibold transition disabled:opacity-50">
+                    <lucide-angular name="rotate-cw" class="h-4 w-4"></lucide-angular>
+                    Reset
+                  </button>
+
+                  <div class="ml-auto flex items-center gap-2 text-sm font-mono text-gray-500">
+                    <lucide-angular name="clock" class="h-4 w-4 text-yellow-400"></lucide-angular>
+                    {{ formatTime(currentTime()) }} / {{ formatTime(duration()) }}
+                  </div>
+                </div>
+
+                <!-- Trim range visual bar -->
+                <div class="relative h-2 bg-gray-100 rounded-full overflow-hidden mt-1">
+                  <div
+                    class="absolute h-full bg-gradient-to-r from-cyan-400 to-pink-400 rounded-full transition-all"
+                    [style.left.%]="(audioForm.trimStart().value() / duration()) * 100"
+                    [style.right.%]="100 - (audioForm.trimEnd().value() / duration()) * 100">
+                  </div>
+                </div>
+              </div>
+            } @else {
+              <div class="h-32 bg-slate-900 rounded-xl flex items-center justify-center">
+                <div class="flex items-center gap-3 text-slate-400">
+                  <div class="w-6 h-6 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin"></div>
+                  <span class="text-sm font-medium">Decoding audio...</span>
+                </div>
+              </div>
+            }
+          </div>
+
+          <!-- Export Result Card -->
+          @if (outputBlob() && !exporting()) {
+            <div class="bg-emerald-50/70 rounded-2xl border border-emerald-100 shadow-sm p-5 flex flex-col md:flex-row items-center justify-between gap-4">
+              <div class="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
+                <div class="p-2 bg-emerald-500/10 text-emerald-600 rounded-lg flex-shrink-0">
+                  <lucide-angular name="check-circle" class="h-6 w-6"></lucide-angular>
+                </div>
+                <div>
+                  <h4 class="text-sm font-semibold text-gray-900">Export Successful!</h4>
+                  <p class="text-xs text-gray-600 mt-0.5">
+                    Output: {{ formatFileSize(convertedSize()) }}
+                    @if (sizeChangePercent() > 0) {
+                      · <span class="text-emerald-600 font-bold">Saved {{ sizeChangePercent() }}%</span>
+                    } @else if (sizeChangePercent() < 0) {
+                      · <span class="text-amber-600 font-bold">Increased by {{ -sizeChangePercent() }}%</span>
+                    }
+                  </p>
+                </div>
+              </div>
+              <button
+                (click)="handleDownload()"
+                class="w-full md:w-auto px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl shadow-sm hover:shadow transition flex items-center justify-center gap-2 text-sm font-semibold">
+                <lucide-angular name="download" class="h-4 w-4"></lucide-angular>
+                Download
+              </button>
+            </div>
+          }
+
+          <!-- Exporting progress -->
+          @if (exporting()) {
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-5 h-5 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin flex-shrink-0"></div>
+                <span class="text-sm font-semibold text-gray-700">Exporting audio with FFmpeg...</span>
+                @if (progress() > 0) {
+                  <span class="ml-auto text-xs font-mono font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">{{ progress() }}%</span>
+                }
+              </div>
+              <div class="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                <div
+                  class="h-full bg-gradient-to-r from-indigo-500 to-violet-500 rounded-full transition-all duration-300"
+                  [style.width.%]="progress()">
+                </div>
+              </div>
+            </div>
+          }
+        }
+
+        <!-- Execution Console Logger -->
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+          <button
+            (click)="showLogs.set(!showLogs())"
+            class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-50 transition border-b border-gray-50">
+            <div class="flex items-center gap-2">
+              <lucide-angular name="terminal" class="h-4 w-4 text-gray-400"></lucide-angular>
+              <span class="text-sm font-semibold text-gray-700">Execution Console Logger</span>
+              @if (logs().length > 0) {
+                <span class="text-[10px] bg-indigo-100 text-indigo-600 font-bold px-1.5 py-0.5 rounded-full">{{ logs().length }}</span>
+              }
+            </div>
+            <lucide-angular
+              name="chevron-down"
+              class="h-4 w-4 text-gray-400 transition-transform duration-200"
+              [ngClass]="{'rotate-180': showLogs()}">
+            </lucide-angular>
+          </button>
+          @if (showLogs()) {
+            <div class="p-6 bg-gray-950 font-mono text-[11px] leading-relaxed text-emerald-400 h-56 overflow-y-auto flex flex-col gap-1">
+              @if (logs().length === 0) {
+                <span class="text-gray-500 italic">No logs recorded yet. Export an audio file to see logs.</span>
+              } @else {
+                @for (log of logs(); track $index) {
+                  <div>{{ log }}</div>
+                }
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- ══ RIGHT PANEL ═════════════════════════════════════════════════════ -->
+      <div class="lg:col-span-4 flex flex-col gap-6">
+
+        <!-- Export Options -->
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex flex-col gap-5">
+          <h3 class="text-lg font-bold text-gray-900 border-b border-gray-50 pb-3">Export Options</h3>
+
+          <!-- Format picker -->
+          <div class="flex flex-col gap-2">
+            <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Target Format</label>
+            <div class="grid grid-cols-3 gap-2">
+              @for (fmt of formats; track fmt) {
+                <button
+                  (click)="audioForm.targetFormat().value.set(fmt)"
+                  [disabled]="exporting()"
+                  [ngClass]="{
+                    'bg-indigo-600 text-white shadow-sm border-indigo-600': audioForm.targetFormat().value() === fmt,
+                    'bg-white text-gray-700 border-gray-200 hover:bg-gray-50': audioForm.targetFormat().value() !== fmt
+                  }"
+                  class="py-2.5 px-3 text-xs font-semibold rounded-xl border text-center transition uppercase disabled:opacity-50">
+                  {{ fmt }}
+                </button>
+              }
+            </div>
+            @if (audioForm.targetFormat().invalid() && audioForm.targetFormat().touched()) {
+              <span class="text-[10px] text-red-500 font-medium">
+                {{ audioForm.targetFormat().errors()[0]?.message }}
+              </span>
+            }
+          </div>
+
+          <!-- Bitrate (lossy only) -->
+          @if (isLossyFormat()) {
+            <div class="flex flex-col gap-2">
+              <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Bitrate</label>
+              <div class="grid grid-cols-3 gap-2">
+                @for (br of bitrateOptions; track br) {
+                  <button
+                    (click)="audioForm.bitrate().value.set(br)"
+                    [disabled]="exporting()"
+                    [ngClass]="{
+                      'bg-violet-600 text-white shadow-sm border-violet-600': audioForm.bitrate().value() === br,
+                      'bg-white text-gray-700 border-gray-200 hover:bg-gray-50': audioForm.bitrate().value() !== br
+                    }"
+                    class="py-2 text-xs font-semibold rounded-xl border text-center transition disabled:opacity-50">
+                    {{ br }}k
+                  </button>
+                }
+              </div>
+            </div>
+          }
+
+          <!-- Sample Rate -->
+          <div class="flex flex-col gap-2">
+            <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Sample Rate</label>
+            <div class="flex flex-col gap-1.5">
+              @for (sr of sampleRateOptions; track sr) {
+                <button
+                  (click)="audioForm.sampleRate().value.set(sr)"
+                  [disabled]="exporting()"
+                  [ngClass]="{
+                    'bg-slate-800 text-white border-slate-700': audioForm.sampleRate().value() === sr,
+                    'bg-white text-gray-700 border-gray-200 hover:bg-gray-50': audioForm.sampleRate().value() !== sr
+                  }"
+                  class="w-full py-2.5 px-4 text-xs font-semibold rounded-xl border text-left flex items-center justify-between transition disabled:opacity-50">
+                  <span>{{ sr | number }} Hz</span>
+                  <span class="text-[10px] font-normal opacity-60">
+                    @switch (sr) {
+                      @case (22050) { FM quality }
+                      @case (44100) { CD quality }
+                      @case (48000) { Pro / DVD }
+                    }
+                  </span>
+                </button>
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- Trim Info -->
+        @if (audioForm.file().value() && waveformReady()) {
+          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex flex-col gap-4">
+            <h3 class="text-lg font-bold text-gray-900 border-b border-gray-50 pb-3">Trim Selection</h3>
+
+            <fieldset [disabled]="exporting()" class="contents">
+              <div class="grid grid-cols-2 gap-3">
+                <div class="flex flex-col gap-1.5">
+                  <label class="text-[10px] font-bold text-cyan-500 uppercase tracking-wider">Start (sec)</label>
+                  <input
+                    type="number"
+                    [formField]="audioForm.trimStart"
+                    step="0.01"
+                    class="w-full text-sm py-2 px-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-cyan-400/30 focus:border-cyan-400 transition outline-none font-mono disabled:opacity-50" />
+                  @if (audioForm.trimStart().invalid() && audioForm.trimStart().touched()) {
+                    <span class="text-[10px] text-red-500 font-medium">
+                      {{ audioForm.trimStart().errors()[0]?.message }}
+                    </span>
+                  }
+                </div>
+                <div class="flex flex-col gap-1.5">
+                  <label class="text-[10px] font-bold text-pink-500 uppercase tracking-wider">End (sec)</label>
+                  <input
+                    type="number"
+                    [formField]="audioForm.trimEnd"
+                    step="0.01"
+                    class="w-full text-sm py-2 px-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-400/30 focus:border-pink-400 transition outline-none font-mono disabled:opacity-50" />
+                  @if (audioForm.trimEnd().invalid() && audioForm.trimEnd().touched()) {
+                    <span class="text-[10px] text-red-500 font-medium">
+                      {{ audioForm.trimEnd().errors()[0]?.message }}
+                    </span>
+                  }
+                </div>
+              </div>
+            </fieldset>
+
+            <!-- Duration summary -->
+            <div class="bg-gray-50 rounded-xl p-3 flex items-center justify-between">
+              <div class="text-center flex-1">
+                <p class="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Start</p>
+                <p class="text-sm font-mono font-bold text-cyan-600">{{ formatTime(audioForm.trimStart().value()) }}</p>
+              </div>
+              <div class="text-gray-200 text-xl">→</div>
+              <div class="text-center flex-1">
+                <p class="text-[10px] text-gray-400 uppercase font-bold tracking-wider">End</p>
+                <p class="text-sm font-mono font-bold text-pink-600">{{ formatTime(audioForm.trimEnd().value()) }}</p>
+              </div>
+              <div class="text-gray-200 text-xl">→</div>
+              <div class="text-center flex-1">
+                <p class="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Duration</p>
+                <p class="text-sm font-mono font-bold text-indigo-600">{{ formatTime(trimDuration()) }}</p>
+              </div>
+            </div>
+          </div>
+        }
+
+        <!-- Export Button -->
+        @if (audioForm.file().value()) {
+          <button
+            (click)="handleExport()"
+            [disabled]="exporting() || !waveformReady() || audioForm().invalid()"
+            class="w-full py-3.5 px-6 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white rounded-2xl shadow-md hover:shadow-lg transition flex items-center justify-center gap-3 text-sm font-bold disabled:opacity-50 disabled:cursor-not-allowed">
+            @if (exporting()) {
+              <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              Exporting...
+            } @else {
+              <lucide-angular name="download" class="h-5 w-5"></lucide-angular>
+              Export Audio
+            }
+          </button>
+
+          <!-- Form-level validation errors -->
+          @if (audioForm().invalid() && audioForm().touched()) {
+            <p class="text-[11px] text-red-500 text-center -mt-2">
+              Please fix validation errors before exporting.
+            </p>
+          }
+        }
+      </div>
+    </div>
+  </main>
+
+  <!-- Hidden audio element for playback -->
+  <audio
+    #audioEl
+    (play)="onAudioPlay()"
+    (pause)="onAudioPause()"
+    (ended)="onAudioEnded()"
+    class="hidden"
+    preload="metadata">
+  </audio>
+
+  <app-footer></app-footer>
+</div>
