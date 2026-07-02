@@ -3,7 +3,7 @@
     
     <!-- Left Column: Markdown Editor -->
     <div [style.width.%]="leftWidthPercent()" class="flex flex-col bg-[#1e293b] overflow-hidden">
-    <div class="h-14 px-4 bg-slate-800/50 border-b border-slate-700/50 flex items-center justify-between">
+      <div class="h-14 px-4 bg-slate-800/50 border-b border-slate-700/50 flex items-center justify-between">
         <div class="flex items-center gap-2">
           <lucide-icon name="code" class="w-4 h-4 text-indigo-400"></lucide-icon>
           <span class="text-sm font-semibold tracking-wide text-slate-300 uppercase">Markdown Editor</span>
@@ -14,6 +14,12 @@
                   class="p-1.5 hover:bg-slate-700/80 rounded-lg transition-colors text-slate-400 hover:text-red-400"
                   title="Clear Editor">
             <lucide-icon name="trash-2" class="w-4 h-4"></lucide-icon>
+          </button>
+          <button (click)="downloadMarkdown()"
+                  [disabled]="!markdownText()"
+                  class="p-1.5 hover:bg-slate-700/80 rounded-lg transition-colors text-slate-400 hover:text-indigo-400 disabled:opacity-30 disabled:cursor-not-allowed"
+                  title="Download Markdown (.md)">
+            <lucide-icon name="download" class="w-4 h-4"></lucide-icon>
           </button>
           <button (click)="handleCopyMarkdown()" 
                   [disabled]="!markdownText()"
@@ -82,12 +88,28 @@
         <!-- Right Side: Custom Actions -->
         <div class="flex items-center gap-2">
           @if (activeTab() === 'code') {
+            <button (click)="downloadHtml()"
+                    [disabled]="!previewHtml()"
+                    class="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700 hover:bg-slate-600 disabled:opacity-40 disabled:cursor-not-allowed text-slate-200 rounded-lg transition-all text-xs font-medium border border-slate-600/40"
+                    title="Download HTML Document">
+              <lucide-icon name="download" class="w-3.5 h-3.5"></lucide-icon>
+              Download HTML
+            </button>
             <button (click)="handleCopyHtml()" 
                     [disabled]="!previewHtml()"
                     data-testid="md-html-copy-btn"
                     class="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700 hover:bg-slate-600 disabled:opacity-40 disabled:cursor-not-allowed text-slate-200 rounded-lg transition-all text-xs font-medium border border-slate-600/40">
               <lucide-icon name="copy" class="w-3.5 h-3.5"></lucide-icon>
               Copy HTML
+            </button>
+          }
+          @if (activeTab() === 'preview') {
+            <button (click)="printPreview()"
+                    [disabled]="!previewHtml()"
+                    class="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700 hover:bg-slate-600 disabled:opacity-40 disabled:cursor-not-allowed text-slate-200 rounded-lg transition-all text-xs font-medium border border-slate-600/40"
+                    title="Print Document">
+              <lucide-icon name="printer" class="w-3.5 h-3.5"></lucide-icon>
+              Print
             </button>
           }
           <button (click)="toggleStylesDrawer()" 

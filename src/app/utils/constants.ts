@@ -46,6 +46,7 @@ import {
   LucidePhone,
   LucidePlay,
   LucideQrCode,
+  LucidePrinter,
   LucideRotateCw,
   LucideScissors,
   LucideServer,
@@ -238,5 +239,6 @@ export const USED_ICONS = {
     Pause: LucidePause,
     Clock: LucideClock,
     CheckCircle: LucideCheckCircle,
-    Terminal: LucideTerminal
+    Terminal: LucideTerminal,
+    Printer: LucidePrinter
 } as const;

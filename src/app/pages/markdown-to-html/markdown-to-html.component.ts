@@ -193,6 +193,95 @@ export class MarkdownToHtmlComponent implements AfterViewInit {
     this.isStylesDrawerOpen.update((val) => !val);
   }
 
+  downloadMarkdown() {
+    const mdText = this.markdownText();
+    if (!mdText) return;
+    
+    const blob = new Blob([mdText], { type: 'text/markdown;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'document.md';
+    link.click();
+    URL.revokeObjectURL(url);
+  }
+
+  downloadHtml() {
+    const htmlText = this.previewHtml();
+    if (!htmlText) return;
+    
+    // Construct a full HTML document including custom styles for premium preview
+    const fullHtml = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Converted Document</title>
+  <style>
+    ${this.customCss()}
+  </style>
+</head>
+<body class="markdown-body" style="padding: 2rem; max-width: 800px; margin: 0 auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  ${htmlText}
+</body>
+</html>`;
+    
+    const blob = new Blob([fullHtml], { type: 'text/html;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'document.html';
+    link.click();
+    URL.revokeObjectURL(url);
+  }
+
+  printPreview() {
+    const htmlText = this.previewHtml();
+    if (!htmlText) return;
+
+    // Create a hidden iframe for print preparation to avoid popup blockers and extra tabs
+    let printFrame = document.getElementById('markdown-print-iframe') as HTMLIFrameElement;
+    if (!printFrame) {
+      printFrame = document.createElement('iframe');
+      printFrame.id = 'markdown-print-iframe';
+      printFrame.style.position = 'fixed';
+      printFrame.style.right = '0';
+      printFrame.style.bottom = '0';
+      printFrame.style.width = '0';
+      printFrame.style.height = '0';
+      printFrame.style.border = '0';
+      document.body.appendChild(printFrame);
+    }
+
+    const frameDoc = printFrame.contentWindow?.document || printFrame.contentDocument;
+    if (!frameDoc) return;
+
+    frameDoc.open();
+    frameDoc.write(`
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Print Document</title>
+        <style>
+          ${this.customCss()}
+          @media print {
+            body { padding: 0; margin: 0; }
+          }
+        </style>
+      </head>
+      <body class="markdown-body" style="padding: 2rem;">
+        ${htmlText}
+      </body>
+      </html>
+    `);
+    frameDoc.close();
+
+    // Trigger printing once content is loaded
+    setTimeout(() => {
+      printFrame.contentWindow?.focus();
+      printFrame.contentWindow?.print();
+    }, 250);
+  }
+
   private loadPresetCss(preset: 'github' | 'indigo' | 'warm') {
     this.httpClient
       .get(PRESET_URLS[preset], { responseType: 'text' })
