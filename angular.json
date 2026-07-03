@@ -22,7 +22,9 @@
             },
             "externalDependencies": [
               "onnxruntime-node",
-              "sharp"
+              "sharp",
+              "fs",
+              "path"
             ],
             "allowedCommonJsDependencies": [
               "yaml",

@@ -27,6 +27,7 @@
     "@angular/platform-server": "^22.0.4",
     "@angular/router": "^22.0.4",
     "@angular/ssr": "^22.0.5",
+    "@diffusionstudio/vits-web": "^1.0.3",
     "@ffmpeg/core": "^0.12.10",
     "@ffmpeg/ffmpeg": "^0.12.10",
     "@ffmpeg/util": "^0.12.2",

@@ -16,6 +16,7 @@ export const routes: Routes = [
             { path: 'image-converter', loadComponent: () => import('./pages/image-converter/image-converter.component').then(m => m.ImageConverterComponent), data: { id: 'image-converter' } },
             { path: 'base64-encoder-decoder', loadComponent: () => import('./pages/base64/base64.component').then(m => m.Base64Component), data: { id: 'base64-encoder-decoder' } },
             { path: 'image-base64-converter', loadComponent: () => import('./pages/image-base64/image-base64.component').then(m => m.ImageBase64Component), data: { id: 'image-base64-converter' } },
+            { path: 'text-to-speech', loadComponent: () => import('./pages/text-to-speech/text-to-speech.component').then(m => m.TextToSpeechComponent), data: { id: 'text-to-speech' } },
             { path: 'random-password-generator', loadComponent: () => import('./pages/random-password-generator/random-password-generator.component').then(m => m.RandomPasswordGeneratorComponent), data: { id: 'random-password-generator' } },
             { path: 'jwt-decode-encode', loadComponent: () => import('./pages/jwt-decode-encode/jwt-decode-encode.component').then(m => m.JwtDecodeEncodeComponent), data: { id: 'jwt-decode-encode' } },
             { path: 'opengraph-generator', loadComponent: () => import('./pages/opengraph-generator/opengraph-generator.component').then(m => m.OpengraphGeneratorComponent), data: { id: 'opengraph-generator' } },

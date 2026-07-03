@@ -174,6 +174,14 @@ export const TOOLS: ReadonlyArray<Tool> = [
         icon: 'music',
         color: 'indigo',
         category: 'Media Tools'
+    },
+    {
+        id: 'text-to-speech',
+        name: 'Text to Speech (TTS)',
+        description: 'Convert text to spoken audio locally in your browser. Powered by VITS WebAssembly models.',
+        icon: 'music',
+        color: 'indigo',
+        category: 'Media Tools'
     }
 ]
 
