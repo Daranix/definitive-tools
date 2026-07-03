@@ -1,0 +1,343 @@
+<div class="min-h-screen flex flex-col bg-gray-50">
+  <app-top-navbar></app-top-navbar>
+
+  <main class="flex-grow container mx-auto px-4 py-8 max-w-6xl">
+    <!-- Header Section -->
+    <div class="text-center mb-8">
+      <h1 data-testid="tool-title" class="text-3xl font-extrabold text-gray-900 tracking-tight sm:text-4xl">
+        Image Base64 Converter
+      </h1>
+      <p class="mt-3 max-w-2xl mx-auto text-lg text-gray-500 sm:mt-4">
+        Convert images to Base64 strings, or decode Base64 strings back to preview and download images.
+      </p>
+    </div>
+
+    <!-- Toggle Mode Tabs -->
+    <div class="flex justify-center mb-8">
+      <div class="bg-gray-100 p-1.5 rounded-xl inline-flex space-x-1 shadow-inner">
+        <button
+          (click)="mode.set('encode')"
+          data-testid="toggle-encode-btn"
+          class="flex items-center space-x-2 px-5 py-2.5 text-sm font-semibold rounded-lg transition duration-200"
+          [ngClass]="{
+            'bg-white text-indigo-700 shadow-sm': mode() === 'encode',
+            'text-gray-600 hover:text-gray-900 hover:bg-gray-200/50': mode() !== 'encode'
+          }"
+        >
+          <lucide-angular name="image" class="h-4 w-4"></lucide-angular>
+          <span>Image to Base64</span>
+        </button>
+        <button
+          (click)="mode.set('decode')"
+          data-testid="toggle-decode-btn"
+          class="flex items-center space-x-2 px-5 py-2.5 text-sm font-semibold rounded-lg transition duration-200"
+          [ngClass]="{
+            'bg-white text-indigo-700 shadow-sm': mode() === 'decode',
+            'text-gray-600 hover:text-gray-900 hover:bg-gray-200/50': mode() !== 'decode'
+          }"
+        >
+          <lucide-angular name="code" class="h-4 w-4"></lucide-angular>
+          <span>Base64 to Image</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 md:p-8">
+      
+      <!-- ENCODER MODE -->
+      @if (mode() === 'encode') {
+        <div class="space-y-6">
+          @if (!encodedBase64()) {
+            <div class="max-w-xl mx-auto">
+              <label class="block text-sm font-semibold text-gray-700 mb-2 text-center">
+                Select or Drag & Drop an Image
+              </label>
+              <app-drag-and-drop-file
+                name="image-file"
+                [validExtensions]="allowedExtensions"
+                [maxFileSize]="5242880"
+                (onFileChange)="onFileChange($event)"
+              ></app-drag-and-drop-file>
+              <p class="text-xs text-gray-400 text-center mt-2">
+                Supported formats: PNG, JPG, JPEG, WEBP, GIF, SVG, BMP. Max file size: 5MB.
+              </p>
+            </div>
+          } @else {
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+              
+              <!-- Left: Image Preview & File Meta -->
+              <div class="lg:col-span-5 space-y-4">
+                <h3 class="text-md font-bold text-gray-800 uppercase tracking-wider">
+                  Source Image
+                </h3>
+                
+                <div class="relative bg-gray-100 border border-gray-200 rounded-xl overflow-hidden flex items-center justify-center min-h-[250px] max-h-[350px] p-4 group">
+                  <img
+                    [src]="encodedBase64()"
+                    alt="Source Preview"
+                    class="max-w-full max-h-[300px] object-contain rounded-lg shadow-sm"
+                  />
+                  <button
+                    (click)="clearEncoder()"
+                    class="absolute top-3 right-3 bg-red-600 hover:bg-red-700 text-white p-2 rounded-full shadow-lg transition duration-150 hover:scale-105"
+                    title="Remove Image"
+                  >
+                    <lucide-angular name="trash-2" class="h-4 w-4"></lucide-angular>
+                  </button>
+                </div>
+
+                <!-- Image Metadata Panel -->
+                <div class="bg-gray-50 border border-gray-100 rounded-xl p-4 space-y-2.5 text-sm">
+                  <div class="flex justify-between">
+                    <span class="text-gray-500 font-medium">Name:</span>
+                    <span class="text-gray-900 font-semibold truncate max-w-[200px]" [title]="imageName()">
+                      {{ imageName() }}
+                    </span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-gray-500 font-medium">Type:</span>
+                    <span class="text-gray-900 font-semibold uppercase">{{ imageType() || 'unknown' }}</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-gray-500 font-medium">File Size:</span>
+                    <span class="text-gray-900 font-semibold">{{ imageSize() | fileSize }}</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-gray-500 font-medium">Dimensions:</span>
+                    <span class="text-gray-900 font-semibold">
+                      {{ imageDimensions() ? imageDimensions()!.width + ' × ' + imageDimensions()!.height + ' px' : 'Loading...' }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right: Options & Base64 Output -->
+              <div class="lg:col-span-7 flex flex-col space-y-4">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                  <h3 class="text-md font-bold text-gray-800 uppercase tracking-wider">
+                    Base64 Representation
+                  </h3>
+                  
+                  <!-- Output Format Selector -->
+                  <div class="inline-flex rounded-lg shadow-sm bg-gray-100 p-0.5 border border-gray-200">
+                    <button
+                      (click)="outputFormat.set('dataUri')"
+                      class="px-3 py-1.5 text-xs font-semibold rounded-md transition"
+                      [ngClass]="{
+                        'bg-white text-indigo-700 shadow-sm': outputFormat() === 'dataUri',
+                        'text-gray-600 hover:text-gray-900': outputFormat() !== 'dataUri'
+                      }"
+                    >
+                      Data URI
+                    </button>
+                    <button
+                      (click)="outputFormat.set('raw')"
+                      class="px-3 py-1.5 text-xs font-semibold rounded-md transition"
+                      [ngClass]="{
+                        'bg-white text-indigo-700 shadow-sm': outputFormat() === 'raw',
+                        'text-gray-600 hover:text-gray-900': outputFormat() !== 'raw'
+                      }"
+                    >
+                      Raw
+                    </button>
+                    <button
+                      (click)="outputFormat.set('html')"
+                      class="px-3 py-1.5 text-xs font-semibold rounded-md transition"
+                      [ngClass]="{
+                        'bg-white text-indigo-700 shadow-sm': outputFormat() === 'html',
+                        'text-gray-600 hover:text-gray-900': outputFormat() !== 'html'
+                      }"
+                    >
+                      HTML
+                    </button>
+                    <button
+                      (click)="outputFormat.set('css')"
+                      class="px-3 py-1.5 text-xs font-semibold rounded-md transition"
+                      [ngClass]="{
+                        'bg-white text-indigo-700 shadow-sm': outputFormat() === 'css',
+                        'text-gray-600 hover:text-gray-900': outputFormat() !== 'css'
+                      }"
+                    >
+                      CSS
+                    </button>
+                  </div>
+                </div>
+
+                <div class="relative flex-grow flex flex-col min-h-[220px]">
+                  <textarea
+                    readonly
+                    [value]="formattedOutput()"
+                    class="w-full flex-grow p-4 bg-gray-50 border border-gray-200 rounded-xl font-mono text-xs text-gray-800 focus:outline-none focus:ring-1 focus:ring-indigo-500 overflow-y-auto resize-none h-[220px]"
+                    placeholder="Base64 encoded output will appear here..."
+                  ></textarea>
+                </div>
+
+                <!-- Action buttons -->
+                <div class="flex justify-end space-x-3">
+                  <button
+                    (click)="copyText(formattedOutput())"
+                    class="flex items-center justify-center px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl text-sm transition shadow-md hover:shadow-lg"
+                  >
+                    <lucide-angular name="copy" class="h-4 w-4 mr-2"></lucide-angular>
+                    Copy Base64
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          }
+        </div>
+      }
+
+      <!-- DECODER MODE -->
+      @if (mode() === 'decode') {
+        <div class="space-y-6">
+          <div class="space-y-2">
+            <label class="block text-sm font-semibold text-gray-700">
+              Paste Base64 Encoded Image Data
+            </label>
+            <textarea
+              [(ngModel)]="base64Input"
+              data-testid="base64-textarea"
+              class="w-full h-40 p-4 border border-gray-200 rounded-xl font-mono text-xs focus:ring-indigo-500 focus:border-indigo-500 shadow-sm"
+              placeholder="Paste Base64 string here (e.g. data:image/png;base64,... or raw Base64)..."
+            ></textarea>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex justify-between items-center">
+            <button
+              (click)="clearDecoder()"
+              class="flex items-center px-4 py-2 border border-gray-300 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 transition"
+              [disabled]="!base64Input()"
+            >
+              <lucide-angular name="trash-2" class="h-4 w-4 mr-2"></lucide-angular>
+              Clear
+            </button>
+
+            <button
+              (click)="handleDecode()"
+              data-testid="decode-btn"
+              class="flex items-center px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-semibold shadow-md transition"
+              [disabled]="!base64Input()"
+            >
+              <lucide-angular name="code" class="h-4 w-4 mr-2"></lucide-angular>
+              Decode Base64
+            </button>
+          </div>
+
+          <!-- Error Alert -->
+          @if (decodeError()) {
+            <div data-testid="decode-error" class="p-4 bg-red-50 border border-red-200 rounded-xl flex items-start space-x-3 text-red-800">
+              <lucide-angular name="info" class="h-5 w-5 text-red-500 mt-0.5"></lucide-angular>
+              <div>
+                <p class="font-semibold text-sm">Decoding Failed</p>
+                <p class="text-xs text-red-700 mt-1">{{ decodeError() }}</p>
+              </div>
+            </div>
+          }
+
+          <!-- Preview & Metadata -->
+          @if (decodedImageSrc() && decodedMetadata()) {
+            <div class="border-t border-gray-100 pt-8">
+              <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                
+                <!-- Left: Decoded image preview -->
+                <div class="lg:col-span-6 space-y-4">
+                  <h3 class="text-md font-bold text-gray-800 uppercase tracking-wider">
+                    Decoded Preview
+                  </h3>
+                  
+                  <div class="bg-gray-100 border border-gray-200 rounded-xl p-4 flex items-center justify-center min-h-[250px] max-h-[350px]">
+                    <img
+                      [src]="decodedImageSrc()"
+                      data-testid="decoded-image-preview"
+                      alt="Decoded Preview"
+                      class="max-w-full max-h-[300px] object-contain rounded-lg shadow-sm"
+                    />
+                  </div>
+                </div>
+
+                <!-- Right: Decoded metadata & download -->
+                <div class="lg:col-span-6 flex flex-col justify-between space-y-6">
+                  <div class="space-y-4">
+                    <h3 class="text-md font-bold text-gray-800 uppercase tracking-wider">
+                      Decoded File Metadata
+                    </h3>
+
+                    <div data-testid="metadata-panel" class="bg-gray-50 border border-gray-100 rounded-xl p-4 space-y-2.5 text-sm">
+                      <div class="flex justify-between">
+                        <span class="text-gray-500 font-medium">Inferred Format:</span>
+                        <span data-testid="inferred-format" class="text-gray-900 font-semibold uppercase">
+                          {{ decodedMetadata()!.mimeType.split('/')[1] || 'unknown' }}
+                        </span>
+                      </div>
+                      <div class="flex justify-between">
+                        <span class="text-gray-500 font-medium">MIME Type:</span>
+                        <span data-testid="mime-type" class="text-gray-900 font-semibold">{{ decodedMetadata()!.mimeType }}</span>
+                      </div>
+                      <div class="flex justify-between">
+                        <span class="text-gray-500 font-medium">Estimated Binary Size:</span>
+                        <span data-testid="binary-size" class="text-gray-900 font-semibold">{{ decodedMetadata()!.size | fileSize }}</span>
+                      </div>
+                      <div class="flex justify-between">
+                        <span class="text-gray-500 font-medium">Image Size:</span>
+                        <span data-testid="image-dimensions" class="text-gray-900 font-semibold">
+                          {{ decodedMetadata()!.width }} × {{ decodedMetadata()!.height }} px
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex space-x-3">
+                    <button
+                      (click)="downloadDecodedImage()"
+                      class="flex-1 flex items-center justify-center px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl text-sm transition shadow-md hover:shadow-lg"
+                    >
+                      <lucide-angular name="download" class="h-4 w-4 mr-2"></lucide-angular>
+                      Download Image File
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          }
+        </div>
+      }
+
+    </div>
+
+    <!-- About Section -->
+    <div class="mt-12 bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm space-y-6">
+      <div>
+        <h2 class="text-xl font-bold text-gray-900 mb-3">About Image Base64 Conversion</h2>
+        <p class="text-gray-600 text-sm leading-relaxed">
+          Base64 encoding converts image binary data into an ASCII string format. This string can be embedded directly in HTML, CSS, or JSON payloads.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+        <div>
+          <h3 class="font-bold text-gray-800 mb-2">When to use Base64</h3>
+          <ul class="list-disc pl-5 text-gray-600 space-y-1.5">
+            <li>Small icons, SVGs, or graphics to minimize HTTP requests.</li>
+            <li>Email templates where external images might be blocked.</li>
+            <li>Storing dynamic image payloads in JSON/XML datasets.</li>
+            <li>Working offline or within standalone web environments.</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-bold text-gray-800 mb-2">Best Practices</h3>
+          <ul class="list-disc pl-5 text-gray-600 space-y-1.5">
+            <li>Avoid encoding large images (e.g. >1MB) as Base64 because it increases the payload size by approximately 33%.</li>
+            <li>For performance, rely on browser caching for static files instead of loading heavy Data URIs in stylesheets.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <app-footer></app-footer>
+</div>

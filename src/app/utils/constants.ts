@@ -96,6 +96,14 @@ export const TOOLS: ReadonlyArray<Tool> = [
         category: 'Image Tools'
     },
     {
+        id: 'image-base64-converter',
+        name: 'Image Base64 Converter',
+        description: 'Convert images to Base64 strings or decode Base64 data back to preview and download images. Supports multiple formats.',
+        icon: 'image',
+        color: 'indigo',
+        category: 'Image Tools'
+  },
+    {
         id: 'base64-encoder-decoder',
         name: 'Base64 Encoder / Decoder',
         description: 'Easily encode text to Base64 or decode Base64 to text. Perfect for data transfer, embedding images, or working with APIs.',
