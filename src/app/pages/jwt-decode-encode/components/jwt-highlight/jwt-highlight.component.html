@@ -1,9 +1,2 @@
-<pre
-  aria-hidden="true"
-  class="m-0 border-0 bg-transparent p-4 whitespace-pre-wrap break-all relative pointer-events-none"
->@for (part of highlighted(); track part; let i = $index) {
-  <span [class]="part.class">{{part.text}}</span>@if (part.separator) {
-  <span class="ace_dot">{{part.separator}}</span>
-}
-}
-</pre>
+<pre aria-hidden="true"
+  class="m-0 border-0 bg-transparent p-4 whitespace-pre-wrap break-all relative pointer-events-none">@for (part of highlighted(); track part; let i = $index) {<span [class]="part.class">{{part.text}}</span>@if (part.separator) {<span class="ace_dot">{{part.separator}}</span>}}</pre>
