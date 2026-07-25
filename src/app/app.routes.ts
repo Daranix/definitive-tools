@@ -11,6 +11,7 @@ export const routes: Routes = [
         path: 'tool',
         children: [
             { path: '', redirectTo: 'home', pathMatch: 'full' },
+            { path: 'meme-generator', loadComponent: () => import('./pages/meme-generator/meme-generator.component').then(m => m.MemeGeneratorComponent), data: { id: 'meme-generator' } },
             { path: 'qr-generator', loadComponent: () => import('./pages/qr-generator/qr-generator.component').then(m => m.QrGeneratorComponent), data: { id: 'qr-generator' } },
             { path: 'background-remover', loadComponent: () => import('./pages/background-remover/background-remover.component').then(m => m.BackgroundRemoverComponent), data: { id: 'background-remover' } },
             { path: 'image-converter', loadComponent: () => import('./pages/image-converter/image-converter.component').then(m => m.ImageConverterComponent), data: { id: 'image-converter' } },

@@ -45,14 +45,17 @@ import {
   LucidePause,
   LucidePhone,
   LucidePlay,
+  LucidePlus,
   LucideQrCode,
   LucidePrinter,
   LucideRotateCw,
   LucideScissors,
+  LucideSearch,
   LucideServer,
   LucideSettings,
   LucideShuffle,
   LucideSliders,
+  LucideSmile,
   LucideTabletSmartphone,
   LucideTerminal,
   LucideTrash2,
@@ -71,6 +74,14 @@ export interface Tool {
 }
 
 export const TOOLS: ReadonlyArray<Tool> = [
+    {
+        id: 'meme-generator',
+        name: 'Meme Generator',
+        description: 'Create funny memes with custom text overlays, drag-and-drop captions, font styling, and popular pre-set templates.',
+        icon: 'smile',
+        color: 'indigo',
+        category: 'Image Tools'
+    },
     {
         id: 'qr-generator',
         name: 'QR Code Generator',
@@ -256,5 +267,8 @@ export const USED_ICONS = {
     Clock: LucideClock,
     CheckCircle: LucideCheckCircle,
     Terminal: LucideTerminal,
-    Printer: LucidePrinter
+    Printer: LucidePrinter,
+    Smile: LucideSmile,
+    Plus: LucidePlus,
+    Search: LucideSearch
 } as const;
