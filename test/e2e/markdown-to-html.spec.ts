@@ -29,4 +29,28 @@ test.describe('Markdown to HTML Tool', () => {
     await page.getByTestId('md-html-clear-btn').click();
     await expect(copyBtn).toBeDisabled();
   });
+
+  test('should render mermaid diagram card with SVG and action toolbar in preview', async ({ page }) => {
+    await expect(page.locator('app-monaco-editor').first()).toBeVisible();
+
+    // Click on Preview tab to make app-markdown-preview visible
+    const previewTab = page.getByTestId('md-html-preview-tab');
+    await previewTab.click();
+
+    // Verify that the preview contains the rendered card container
+    const previewContainer = page.locator('app-markdown-preview');
+    await expect(previewContainer).toBeVisible();
+
+    // Check for mermaid diagram card and SVG
+    const card = previewContainer.locator('.mermaid-diagram-card');
+    await expect(card.first()).toBeVisible({ timeout: 15000 });
+
+    const mermaidSvg = card.locator('.mermaid-svg-viewport svg');
+    await expect(mermaidSvg.first()).toBeVisible();
+
+    // Verify diagram action buttons exist in the DOM (revealed on hover via CSS)
+    await expect(card.locator('button[title="Zoom In"]').first()).toBeAttached();
+    await expect(card.locator('button[title="Download SVG"]').first()).toBeAttached();
+    await expect(card.locator('button[title="Download PNG"]').first()).toBeAttached();
+  });
 });

@@ -23,11 +23,14 @@ import { markedHighlight } from 'marked-highlight';
 import hljs from 'highlight.js';
 import { HttpClient, httpResource } from '@angular/common/http';
 
-// Configure marked with highlight.js for premium syntax rendering
+// Configure marked with highlight.js for syntax rendering, preserving raw mermaid blocks
 marked.use(
   markedHighlight({
     langPrefix: 'hljs language-',
     highlight(code, lang, info) {
+      if (lang === 'mermaid') {
+        return code;
+      }
       const language = hljs.getLanguage(lang) ? lang : 'plaintext';
       return hljs.highlight(code, { language }).value;
     },
@@ -79,8 +82,13 @@ export class MarkdownToHtmlComponent implements AfterViewInit {
   readonly selectedPreset = signal<'github' | 'indigo' | 'warm'>('github');
   readonly leftWidthPercent = signal<number>(50);
 
-  // Load initial welcome template using httpResource.text
-  readonly welcomeResource = httpResource.text(() => '/presets/welcome.md');
+  // Load initial welcome template and mermaid script resource using httpResource.text (Browser Only, bypassed on SSR)
+  readonly welcomeResource = httpResource.text(() =>
+    this.isBrowser() ? '/presets/welcome.md' : undefined,
+  );
+  readonly mermaidScriptResource = httpResource.text(() =>
+    this.isBrowser() ? '/scripts/mermaid-interactivity.js' : undefined,
+  );
 
   // Monaco Editor configurations
   readonly markdownOptions =
@@ -144,12 +152,58 @@ export class MarkdownToHtmlComponent implements AfterViewInit {
         }
       }
     });
+
+    // Reactive effect to initialize Mermaid window handlers (Strict Client-Side / Browser Only, bypassed during SSR)
+    effect(() => {
+      if (!this.isBrowser() || typeof window === 'undefined') return;
+      const scriptCode = this.mermaidScriptResource.value();
+      if (
+        scriptCode &&
+        !(window as any).__mermaidHandlersInitialized
+      ) {
+        try {
+          const fn = new Function(scriptCode);
+          fn();
+        } catch (e) {
+          console.error('Failed to initialize mermaid interactivity script:', e);
+        }
+      }
+    });
   }
 
   ngAfterViewInit() {
-    // Load the default stylesheet preset
+    // Load the default stylesheet preset and initialize diagram handlers
     if (this.isBrowser()) {
+      this.initMermaidGlobalHandlers();
       this.loadPresetCss('github');
+    }
+  }
+
+  private initMermaidGlobalHandlers() {
+    if (!this.isBrowser()) return;
+    const win = window as any;
+    if (win.__mermaidHandlersInitialized) return;
+
+    const scriptCode = this.mermaidScriptResource.value();
+    if (scriptCode) {
+      try {
+        const fn = new Function(scriptCode);
+        fn();
+      } catch (e) {
+        console.error('Failed to initialize mermaid interactivity script:', e);
+      }
+    }
+  }
+
+  private getMermaidThemeForPreset(): 'default' | 'dark' | 'neutral' {
+    switch (this.selectedPreset()) {
+      case 'github':
+        return 'default';
+      case 'warm':
+        return 'neutral';
+      case 'indigo':
+      default:
+        return 'dark';
     }
   }
 
@@ -162,16 +216,154 @@ export class MarkdownToHtmlComponent implements AfterViewInit {
     this.customCss.set(content);
   }
 
+  private mermaidCounter = 0;
+
   private async updatePreview(content: string) {
     if (!content) {
       this.previewHtml.set('');
       return;
     }
     try {
-      const html = await marked.parse(content);
+      let html = await marked.parse(content);
+      if (
+        this.isBrowser() &&
+        (html.includes('class="mermaid"') || html.includes('language-mermaid'))
+      ) {
+        html = await this.renderMermaidDiagrams(html);
+      }
       this.previewHtml.set(html);
     } catch (error) {
       console.error('Markdown compilation failed:', error);
+    }
+  }
+
+  private async renderMermaidDiagrams(html: string): Promise<string> {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    const mermaidNodes = doc.querySelectorAll(
+      '.mermaid, code.language-mermaid, .language-mermaid',
+    );
+
+    if (mermaidNodes.length === 0) {
+      return html;
+    }
+
+    try {
+      const mermaidModule = await import('mermaid');
+      const mermaid = mermaidModule.default;
+      const theme = this.getMermaidThemeForPreset();
+
+      // Inject self-contained interactive handlers script into HTML output for standalone export & preview
+      const scriptCode = this.mermaidScriptResource.value();
+      if (scriptCode) {
+        const script = doc.createElement('script');
+        script.textContent = scriptCode;
+        doc.body.appendChild(script);
+      }
+
+      for (let i = 0; i < mermaidNodes.length; i++) {
+        const node = mermaidNodes[i];
+        const diagramCode = node.textContent?.trim() || '';
+        if (!diagramCode) continue;
+
+        const uniqueId = `mermaid-diag-${Date.now()}-${this.mermaidCounter++}`;
+        try {
+          const { svg } = await mermaid.render(uniqueId, diagramCode);
+
+          const card = doc.createElement('div');
+          card.className = 'mermaid-diagram-card';
+          card.style.position = 'relative';
+          card.style.margin = '1.5rem 0';
+          card.style.borderRadius = '0.75rem';
+          card.style.backgroundColor =
+            theme === 'default'
+              ? '#ffffff'
+              : theme === 'neutral'
+                ? '#fdfbf7'
+                : 'rgba(15, 23, 42, 0.6)';
+          card.style.overflow = 'hidden';
+
+          const isLight = theme === 'default' || theme === 'neutral';
+          const textColor = isLight ? '#475569' : '#94a3b8';
+          const btnBg = isLight ? '#e2e8f0' : '#334155';
+          const btnText = isLight ? '#1e293b' : '#f8fafc';
+          const btnBorder = isLight ? '#cbd5e1' : '#475569';
+
+          const toolbar = doc.createElement('div');
+          toolbar.className = 'mermaid-toolbar';
+          toolbar.style.position = 'absolute';
+          toolbar.style.top = '0.75rem';
+          toolbar.style.right = '0.75rem';
+          toolbar.style.zIndex = '20';
+          toolbar.style.display = 'flex';
+          toolbar.style.alignItems = 'center';
+          toolbar.style.gap = '0.35rem';
+          toolbar.style.padding = '0.35rem 0.6rem';
+          toolbar.style.borderRadius = '0.5rem';
+          toolbar.style.backdropFilter = 'blur(8px)';
+          toolbar.style.backgroundColor = isLight
+            ? 'rgba(241, 245, 249, 0.95)'
+            : 'rgba(15, 23, 42, 0.95)';
+          toolbar.style.border = isLight
+            ? '1px solid rgba(203, 213, 225, 0.8)'
+            : '1px solid rgba(51, 65, 85, 0.8)';
+          toolbar.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+
+          toolbar.innerHTML = `
+            <button onclick="window.__mermaidZoom(this, 0.8)" title="Zoom Out" style="padding: 0.2rem 0.45rem; background: ${btnBg}; color: ${btnText}; border: 1px solid ${btnBorder}; border-radius: 0.375rem; cursor: pointer; font-size: 0.75rem; font-weight: 700;">-</button>
+            <button onclick="window.__mermaidResetZoom(this)" title="Reset Zoom" style="padding: 0.2rem 0.45rem; background: ${btnBg}; color: ${btnText}; border: 1px solid ${btnBorder}; border-radius: 0.375rem; cursor: pointer; font-size: 0.75rem; font-weight: 600;">1:1</button>
+            <button onclick="window.__mermaidZoom(this, 1.2)" title="Zoom In" style="padding: 0.2rem 0.45rem; background: ${btnBg}; color: ${btnText}; border: 1px solid ${btnBorder}; border-radius: 0.375rem; cursor: pointer; font-size: 0.75rem; font-weight: 700;">+</button>
+            <div style="width: 1px; height: 0.9rem; background: ${btnBorder}; margin: 0 0.2rem;"></div>
+            <button onclick="window.__mermaidDownloadSvg(this)" title="Download SVG" style="padding: 0.2rem 0.5rem; background: #4f46e5; color: #ffffff; border: 1px solid #6366f1; border-radius: 0.375rem; cursor: pointer; font-size: 0.7rem; font-weight: 600;">SVG</button>
+            <button onclick="window.__mermaidDownloadPng(this)" title="Download PNG" style="padding: 0.2rem 0.5rem; background: #059669; color: #ffffff; border: 1px solid #10b981; border-radius: 0.375rem; cursor: pointer; font-size: 0.7rem; font-weight: 600;">PNG</button>
+          `;
+
+          const viewport = doc.createElement('div');
+          viewport.className = 'mermaid-svg-viewport';
+          viewport.setAttribute('onwheel', 'window.__mermaidWheel(event, this)');
+          viewport.setAttribute('onmousedown', 'window.__mermaidPanStart(event, this)');
+          viewport.style.padding = '1.25rem';
+          viewport.style.display = 'flex';
+          viewport.style.justifyContent = 'center';
+          viewport.style.overflow = 'auto';
+          viewport.style.maxHeight = '650px';
+          viewport.style.transition = 'transform 0.2s ease-out';
+          viewport.innerHTML = svg;
+
+          card.appendChild(toolbar);
+          card.appendChild(viewport);
+
+          const targetToReplace =
+            node.parentElement?.tagName === 'PRE' ? node.parentElement : node;
+          targetToReplace.replaceWith(card);
+        } catch (err) {
+          const errSvg =
+            document.getElementById(uniqueId) ||
+            document.getElementById(`d${uniqueId}`);
+          if (errSvg) errSvg.remove();
+
+          const errContainer = doc.createElement('div');
+          errContainer.className = 'mermaid-error-container';
+          errContainer.style.padding = '0.75rem 1rem';
+          errContainer.style.border = '1px dashed #ef4444';
+          errContainer.style.borderRadius = '0.5rem';
+          errContainer.style.backgroundColor = 'rgba(239, 68, 68, 0.1)';
+          errContainer.style.color = '#f87171';
+          errContainer.style.fontFamily = 'monospace';
+          errContainer.style.fontSize = '0.85rem';
+          errContainer.style.margin = '1rem 0';
+          errContainer.textContent = `Mermaid Diagram Syntax Error: ${err instanceof Error ? err.message : String(err)}`;
+
+          const targetToReplace =
+            node.parentElement?.tagName === 'PRE' ? node.parentElement : node;
+          targetToReplace.replaceWith(errContainer);
+        }
+      }
+
+      return doc.body.innerHTML;
+    } catch (err) {
+      console.error('Failed to load or render mermaid:', err);
+      return html;
     }
   }
 
@@ -196,7 +388,7 @@ export class MarkdownToHtmlComponent implements AfterViewInit {
   downloadMarkdown() {
     const mdText = this.markdownText();
     if (!mdText) return;
-    
+
     const blob = new Blob([mdText], { type: 'text/markdown;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -209,7 +401,7 @@ export class MarkdownToHtmlComponent implements AfterViewInit {
   downloadHtml() {
     const htmlText = this.previewHtml();
     if (!htmlText) return;
-    
+
     // Construct a full HTML document including custom styles for premium preview
     const fullHtml = `<!DOCTYPE html>
 <html>
@@ -224,7 +416,7 @@ export class MarkdownToHtmlComponent implements AfterViewInit {
   ${htmlText}
 </body>
 </html>`;
-    
+
     const blob = new Blob([fullHtml], { type: 'text/html;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -265,6 +457,14 @@ export class MarkdownToHtmlComponent implements AfterViewInit {
           ${this.customCss()}
           @media print {
             body { padding: 0; margin: 0; }
+            .mermaid-toolbar {
+              display: none !important;
+            }
+            .mermaid-diagram-card {
+              border: none !important;
+              box-shadow: none !important;
+              background: transparent !important;
+            }
           }
         </style>
       </head>

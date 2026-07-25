@@ -23,11 +23,18 @@ export class CodeCraftsmanship {
 }
 ```
 
-### Formatted Table Layout
+### Mermaid Diagram Demo
 
-| Column A | Column B | Column C |
-| :--- | :---: | ---: |
-| Sleek Dark Mode | Active | Premium Design |
-| Scoped Stylesheets | Complete | Safe Bleed-free |
+Here is a quick Mermaid flowchart diagram rendered live:
+
+```mermaid
+graph TD
+    A[Markdown Text] --> B(Marked Compiler)
+    B --> C{Contains Mermaid?}
+    C -->|Yes| D[Render SVG Diagram]
+    C -->|No| E[Highlight Syntax]
+    D --> F[HTML & Preview Output]
+    E --> F
+```
 
 > Crafting elegant tools requires understanding the fundamentals, avoiding shortcuts, and caring about details. Let's make something beautiful!

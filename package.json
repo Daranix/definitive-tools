@@ -41,6 +41,7 @@
     "jszip": "^3.10.1",
     "marked": "^18.0.3",
     "marked-highlight": "^2.2.4",
+    "mermaid": "^11.16.0",
     "monaco-editor": "^0.52.2",
     "monaco-yaml": "^5.4.0",
     "qr-code-styling": "^1.9.2",

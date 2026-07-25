@@ -154,6 +154,59 @@
 .markdown-body .hljs-bullet,
 .markdown-body .hljs-variable,
 .markdown-body .hljs-template-variable {
-  color: #c084fc !important;
+  color: #86efac !important;
 }
 
+/* --- Mermaid Diagram Interactivity & Styling --- */
+.markdown-body .mermaid-diagram-card {
+  position: relative !important;
+  margin: 1.5rem 0 !important;
+  border-radius: 0.75rem !important;
+  border: 1px solid transparent !important;
+  box-shadow: none !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+  overflow: hidden !important;
+}
+
+.markdown-body .mermaid-diagram-card:hover {
+  border-color: rgba(148, 163, 184, 0.3) !important;
+  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.15) !important;
+}
+
+.markdown-body .mermaid-toolbar {
+  position: absolute !important;
+  top: 0.75rem !important;
+  right: 0.75rem !important;
+  z-index: 20 !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out !important;
+}
+
+.markdown-body .mermaid-diagram-card:hover .mermaid-toolbar {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+.markdown-body .mermaid-svg-viewport {
+  cursor: grab;
+  user-select: none;
+}
+
+.markdown-body .mermaid-svg-viewport:active {
+  cursor: grabbing;
+}
+
+@media print {
+  .markdown-body .mermaid-toolbar {
+    display: none !important;
+  }
+  .markdown-body .mermaid-diagram-card {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    margin: 0 !important;
+  }
+}
