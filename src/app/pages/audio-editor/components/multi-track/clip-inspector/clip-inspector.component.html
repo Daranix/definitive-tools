@@ -1,0 +1,127 @@
+<div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex flex-col gap-4">
+  <div class="flex items-center justify-between border-b border-gray-50 pb-3">
+    <div class="flex items-center gap-2">
+      <lucide-angular name="sliders" class="h-5 w-5 text-indigo-600"></lucide-angular>
+      <h3 class="text-lg font-bold text-gray-900">Clip Inspector</h3>
+    </div>
+    @if (selectedClip()) {
+      <span class="px-2 py-0.5 bg-indigo-50 text-indigo-600 text-xs font-bold rounded-md">Selected</span>
+    }
+  </div>
+
+  @if (!selectedClip()) {
+    <div class="p-6 bg-gray-50 rounded-xl text-center flex flex-col items-center justify-center gap-2 text-gray-500">
+      <lucide-angular name="mouse-pointer" class="h-6 w-6 text-gray-400"></lucide-angular>
+      <p class="text-xs">Click on any clip on the timeline to configure its volume, offset, and fade transitions.</p>
+    </div>
+  } @else {
+    <div class="flex flex-col gap-4">
+      <!-- Name & Track -->
+      <div class="flex flex-col gap-1.5">
+        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Clip Name</label>
+        <input
+          type="text"
+          [ngModel]="selectedClip()!.name"
+          (ngModelChange)="onNameChange($event)"
+          class="text-xs font-bold text-gray-800 py-2 px-3 border border-gray-200 rounded-xl outline-none focus:ring-1 focus:ring-indigo-400" />
+      </div>
+
+      <!-- Track Assignment -->
+      <div class="flex flex-col gap-1.5">
+        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Assigned Track</label>
+        <select
+          [ngModel]="selectedClip()!.trackId"
+          (ngModelChange)="onTrackChange($event)"
+          class="text-xs py-2 px-3 border border-gray-200 rounded-xl bg-white outline-none focus:ring-1 focus:ring-indigo-400">
+          @for (t of tracks(); track t.id) {
+            <option [value]="t.id">{{ t.name }}</option>
+          }
+        </select>
+      </div>
+
+      <!-- Timeline Offset & Volume -->
+      <div class="grid grid-cols-2 gap-3">
+        <div class="flex flex-col gap-1.5">
+          <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Start Position (s)</label>
+          <input
+            type="number"
+            step="0.1"
+            min="0"
+            [ngModel]="selectedClip()!.timelineOffset"
+            (ngModelChange)="onOffsetChange($event)"
+            class="text-xs font-mono py-2 px-3 border border-gray-200 rounded-xl outline-none focus:ring-1 focus:ring-indigo-400" />
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Volume ({{ Math.round(selectedClip()!.volume * 100) }}%)</label>
+          <input
+            type="range"
+            min="0"
+            max="1.5"
+            step="0.05"
+            [ngModel]="selectedClip()!.volume"
+            (ngModelChange)="onVolumeChange($event)"
+            class="mt-2.5 h-1.5 bg-gray-200 rounded appearance-none cursor-pointer accent-indigo-600" />
+        </div>
+      </div>
+
+      <!-- Fade In & Fade Out Transitions -->
+      <div class="bg-indigo-50/50 border border-indigo-100 rounded-xl p-3.5 flex flex-col gap-3">
+        <div class="flex items-center gap-1.5 text-xs font-bold text-indigo-900">
+          <lucide-angular name="trending-up" class="h-4 w-4 text-indigo-600"></lucide-angular>
+          Fade Curves & Transitions
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div class="flex flex-col gap-1">
+            <label class="text-[10px] font-bold text-gray-500 uppercase">Fade In (sec)</label>
+            <input
+              type="number"
+              step="0.1"
+              min="0"
+              [max]="(selectedClip()!.trimEnd - selectedClip()!.trimStart) / 2"
+              [ngModel]="selectedClip()!.fadeIn"
+              (ngModelChange)="onFadeChange('fadeIn', $event)"
+              class="text-xs font-mono py-1.5 px-2 bg-white border border-gray-200 rounded-lg outline-none focus:ring-1 focus:ring-indigo-400" />
+          </div>
+
+          <div class="flex flex-col gap-1">
+            <label class="text-[10px] font-bold text-gray-500 uppercase">Fade Out (sec)</label>
+            <input
+              type="number"
+              step="0.1"
+              min="0"
+              [max]="(selectedClip()!.trimEnd - selectedClip()!.trimStart) / 2"
+              [ngModel]="selectedClip()!.fadeOut"
+              (ngModelChange)="onFadeChange('fadeOut', $event)"
+              class="text-xs font-mono py-1.5 px-2 bg-white border border-gray-200 rounded-lg outline-none focus:ring-1 focus:ring-indigo-400" />
+          </div>
+        </div>
+
+        <!-- Crossfade Shortcut Tool -->
+        <button
+          (click)="onCrossfade.emit()"
+          class="w-full py-2 px-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition">
+          <lucide-angular name="shuffle" class="h-3.5 w-3.5"></lucide-angular>
+          Crossfade with Previous Clip
+        </button>
+      </div>
+
+      <!-- Quick Actions for Clip -->
+      <div class="flex items-center gap-2 pt-2 border-t border-gray-100">
+        <button
+          (click)="onDuplicate.emit()"
+          class="flex-1 py-2 px-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition">
+          <lucide-angular name="copy" class="h-3.5 w-3.5"></lucide-angular>
+          Duplicate
+        </button>
+        <button
+          (click)="onDelete.emit()"
+          class="py-2 px-3 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition">
+          <lucide-angular name="trash-2" class="h-3.5 w-3.5"></lucide-angular>
+          Delete
+        </button>
+      </div>
+    </div>
+  }
+</div>

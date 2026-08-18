@@ -1,0 +1,23 @@
+.timeline-scroll-container {
+  scrollbar-width: thin;
+  scrollbar-color: #475569 #0f172a;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+
+  &::-webkit-scrollbar {
+    height: 5px;
+    width: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: #0f172a;
+    border-radius: 9999px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #475569;
+    border-radius: 9999px;
+
+    &:hover {
+      background-color: #64748b;
+    }
+  }
+}
