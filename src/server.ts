@@ -14,7 +14,10 @@ const browserDistFolder = resolve(serverDistFolder, '../browser');
 
 const app = express();
 const angularApp = new AngularNodeAppEngine({
-  trustProxyHeaders: true
+  trustProxyHeaders: true,
+  ...(process.env['NG_ALLOWED_HOSTS']
+    ? { allowedHosts: process.env['NG_ALLOWED_HOSTS'].split(',').map((h) => h.trim()) }
+    : {}),
 });
 
 /**
