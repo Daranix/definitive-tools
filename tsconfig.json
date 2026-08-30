@@ -17,6 +17,7 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022",
+    "types": ["dom-speech-recognition"],
     "paths": {
       "@/*": [
         "./src/*"
@@ -24,7 +25,7 @@
       "@app/*": [
         "./src/app/*"
       ]
-    },
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

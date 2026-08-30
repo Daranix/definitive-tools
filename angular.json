@@ -20,12 +20,7 @@
             "loader": {
               ".ttf": "binary"
             },
-            "externalDependencies": [
-              "onnxruntime-node",
-              "sharp",
-              "fs",
-              "path"
-            ],
+            "externalDependencies": ["onnxruntime-node", "sharp", "fs", "path"],
             "allowedCommonJsDependencies": [
               "yaml",
               "swagger-ui-dist",
@@ -45,9 +40,7 @@
             "outputPath": "dist/definitive-tools",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -71,9 +64,7 @@
                 "output": "./assets/ffmpeg/"
               }
             ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "styles": ["src/styles.scss"],
             "scripts": [],
             "server": "src/main.server.ts",
             "outputMode": "server",
@@ -116,15 +107,9 @@
         "serve": {
           "builder": "@angular/build:dev-server",
           "options": {
-            "allowedHosts": [
-              "localhost",
-              "127.0.0.1"
-            ],
+            "allowedHosts": ["localhost", "127.0.0.1"],
             "prebundle": {
-              "exclude": [
-                "@ffmpeg/ffmpeg",
-                "@ffmpeg/util"
-              ]
+              "exclude": ["@ffmpeg/ffmpeg", "@ffmpeg/util"]
             }
           },
           "configurations": {
@@ -143,10 +128,7 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -155,18 +137,23 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "styles": ["src/styles.scss"],
             "scripts": [],
             "webWorkerTsConfig": "tsconfig.worker.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         }
       }
     }
   },
   "cli": {
-    "analytics": false
+    "analytics": false,
+    "schematicCollections": ["angular-eslint"]
   },
   "schematics": {
     "@schematics/angular:component": {

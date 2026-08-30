@@ -24,39 +24,8 @@ import { ImageComparisonComponent } from '@/app/components/image-comparison/imag
 import { LoadingSpinnerSmallComponent } from '@/app/components/loading-spinner-small/loading-spinner-small.component';
 import { ToastService } from '@/app/services/toast.service';
 import { ProgressBarComponent } from '@/app/components/progress-bar/progress-bar.component';
-import { DecimalPipe } from '@angular/common';
+import { ProgressInfo } from '@/app/components/model-download-progress/model-download-progress.component';
 import { TopNavbarComponent } from '@/app/components/top-navbar/top-navbar.component';
-
-type ProgressBaseInfo = {
-  status: 'initiate' | 'download' | 'progress' | 'done';
-  name: string;
-  file: string;
-};
-
-type InitialProgressInfo = ProgressBaseInfo & {
-  status: 'initiate';
-};
-
-type DownloadProgressInfo = ProgressBaseInfo & {
-  status: 'download';
-};
-
-type DownloadingProgressInfo = ProgressBaseInfo & {
-  status: 'progress';
-  progress: number;
-  loaded: number;
-  total: number;
-};
-
-type CompletedProgressInfo = ProgressBaseInfo & {
-  status: 'done';
-};
-
-export type ProgressInfo =
-  | InitialProgressInfo
-  | DownloadingProgressInfo
-  | DownloadProgressInfo
-  | CompletedProgressInfo;
 
 import { FooterComponent } from '../../components/footer/footer.component';
 
