@@ -1,20 +1,37 @@
+import { TopNavbarComponent } from '@/app/components/top-navbar/top-navbar.component';
 import { MetadataService } from '@/app/services/metadata.service';
+import { ToastService } from '@/app/services/toast.service';
 import { NgClass } from '@angular/common';
-import { Component, inject, model, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  model,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 
 export type Mode = 'encode' | 'decode';
 
+import { FooterComponent } from '../../components/footer/footer.component';
+
 @Component({
   selector: 'app-base64',
-  imports: [LucideAngularModule, NgClass, FormsModule],
+  imports: [
+    LucideIconComponent,
+    NgClass,
+    FormsModule,
+    TopNavbarComponent,
+    FooterComponent,
+  ],
   templateUrl: './base64.component.html',
-  styleUrl: './base64.component.scss'
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './base64.component.scss',
 })
 export class Base64Component {
-
   private readonly metadataService = inject(MetadataService);
+  private readonly toastService = inject(ToastService);
 
   readonly mode = signal<Mode>('encode');
   readonly inputText = model<string>('');
@@ -23,8 +40,10 @@ export class Base64Component {
   constructor() {
     this.metadataService.updateMetadata({
       title: 'Base64 Converter',
-      description: 'Easily encode text to Base64 or decode Base64 to text. Perfect for data transfer, embedding images, or working with APIs.',
-      keywords: 'base64, encode, decode, converter, text, image, api, data transfer, embedding, images, api, data transfer, embedding, images'
+      description:
+        'Easily encode text to Base64 or decode Base64 to text. Perfect for data transfer, embedding images, or working with APIs.',
+      keywords:
+        'base64, encode, decode, converter, text, image, api, data transfer, embedding, images, api, data transfer, embedding, images',
     });
   }
 
@@ -46,8 +65,17 @@ export class Base64Component {
     this.outputText.set(temp);
   }
 
-  handleCopy() {
-    navigator.clipboard.writeText(this.outputText());
+  async handleCopy() {
+    const text = this.outputText();
+    if (!text) {
+      this.toastService.warning({ message: 'Nothing to copy!' });
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(text);
+      this.toastService.success({ message: 'Copied to clipboard!' });
+    } catch (error) {
+      this.toastService.error({ message: 'Failed to copy to clipboard.' });
+    }
   }
-
 }

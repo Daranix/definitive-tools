@@ -1,0 +1,22 @@
+.waveform-scroll-container {
+  scrollbar-width: thin;
+  scrollbar-color: #334155 #0f172a;
+
+  &::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: #0f172a;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #334155;
+    border-radius: 4px;
+  }
+}
+
+.waveform-canvas {
+  height: 120px;
+  cursor: pointer;
+  user-select: none;
+}

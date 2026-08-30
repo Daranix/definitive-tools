@@ -11,16 +11,31 @@ export const routes: Routes = [
         path: 'tool',
         children: [
             { path: '', redirectTo: 'home', pathMatch: 'full' },
-            { path: 'qr-generator', loadComponent: () => import('./pages/qr-generator/qr-generator.component').then(m => m.QrGeneratorComponent) },
-            { path: 'background-remover', loadComponent: () => import('./pages/background-remover/background-remover.component').then(m => m.BackgroundRemoverComponent) },
-            { path: 'base64-encoder-decoder', loadComponent: () => import('./pages/base64/base64.component').then(m => m.Base64Component) },
-            { path: 'random-password-generator', loadComponent: () => import('./pages/random-password-generator/random-password-generator.component').then(m => m.RandomPasswordGeneratorComponent) },
-            { path: 'audio-speech-to-text', loadComponent: () => import('./pages/audio-speech-to-text/audio-speech-to-text.component').then(m => m.AudioSpeechToTextComponent) },
+            { path: 'meme-generator', loadComponent: () => import('./pages/meme-generator/meme-generator.component').then(m => m.MemeGeneratorComponent), data: { id: 'meme-generator' } },
+            { path: 'qr-generator', loadComponent: () => import('./pages/qr-generator/qr-generator.component').then(m => m.QrGeneratorComponent), data: { id: 'qr-generator' } },
+            { path: 'background-remover', loadComponent: () => import('./pages/background-remover/background-remover.component').then(m => m.BackgroundRemoverComponent), data: { id: 'background-remover' } },
+            { path: 'image-converter', loadComponent: () => import('./pages/image-converter/image-converter.component').then(m => m.ImageConverterComponent), data: { id: 'image-converter' } },
+            { path: 'base64-encoder-decoder', loadComponent: () => import('./pages/base64/base64.component').then(m => m.Base64Component), data: { id: 'base64-encoder-decoder' } },
+            { path: 'image-base64-converter', loadComponent: () => import('./pages/image-base64/image-base64.component').then(m => m.ImageBase64Component), data: { id: 'image-base64-converter' } },
+            { path: 'text-to-speech', loadComponent: () => import('./pages/text-to-speech/text-to-speech.component').then(m => m.TextToSpeechComponent), data: { id: 'text-to-speech' } },
+            { path: 'audio-speech-to-text', loadComponent: () => import('./pages/audio-speech-to-text/audio-speech-to-text.component').then(m => m.AudioSpeechToTextComponent), data: { id: 'audio-speech-to-text' } },
+            { path: 'random-password-generator', loadComponent: () => import('./pages/random-password-generator/random-password-generator.component').then(m => m.RandomPasswordGeneratorComponent), data: { id: 'random-password-generator' } },
+            { path: 'jwt-decode-encode', loadComponent: () => import('./pages/jwt-decode-encode/jwt-decode-encode.component').then(m => m.JwtDecodeEncodeComponent), data: { id: 'jwt-decode-encode' } },
+            { path: 'opengraph-generator', loadComponent: () => import('./pages/opengraph-generator/opengraph-generator.component').then(m => m.OpengraphGeneratorComponent), data: { id: 'opengraph-generator' } },
+            { path: 'swagger-editor', loadComponent: () => import('./pages/swagger-editor/swagger-editor.component').then(m => m.SwaggerEditorComponent), data: { id: 'swagger-editor' } },
+            { path: 'markdown-to-excel', loadComponent: () => import('./pages/markdown-to-excel/markdown-to-excel.component').then(m => m.MarkdownToExcelComponent), data: { id: 'markdown-to-excel' } },
+            { path: 'markdown-to-pdf', loadComponent: () => import('./pages/markdown-to-pdf/markdown-to-pdf.component').then(m => m.MarkdownToPdfComponent), data: { id: 'markdown-to-pdf' } },
+            { path: 'markdown-to-html', loadComponent: () => import('./pages/markdown-to-html/markdown-to-html.component').then(m => m.MarkdownToHtmlComponent), data: { id: 'markdown-to-html' } },
+            { path: 'audio-editor', loadComponent: () => import('./pages/audio-editor/audio-editor.component').then(m => m.AudioEditorComponent), data: { id: 'audio-editor' } },
         ],
         component: BaseComponent
     },
     {
+        path: 'legal/:doc',
+        loadComponent: () => import('./pages/legal/legal.component').then(m => m.LegalComponent)
+    },
+    {
         path: '**',
-        redirectTo: '/error'
+        redirectTo: '/'
     }
 ];

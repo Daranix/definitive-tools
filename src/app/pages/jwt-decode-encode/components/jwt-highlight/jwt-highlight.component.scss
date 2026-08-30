@@ -1,0 +1,26 @@
+/* jwt-editor.component.css */
+.editor-container {
+    font-family: "Roboto Mono", monospace;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.ace_header {
+    color: #fb7185;
+    /* Tailwind rose-400 */
+}
+
+.ace_payload {
+    color: #22c55e;
+    /* Tailwind green-500 */
+}
+
+.ace_signature {
+    color: #3b82f6;
+    /* Tailwind blue-500 */
+}
+
+.ace_dot {
+    color: #94a3b8;
+    /* Tailwind slate-400 */
+}

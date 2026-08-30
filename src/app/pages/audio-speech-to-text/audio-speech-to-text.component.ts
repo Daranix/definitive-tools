@@ -2,7 +2,7 @@ import { SelectButtonComponent } from '@/app/components/select-button/select-but
 import { isPlatformBrowser, KeyValuePipe, TitleCasePipe } from '@angular/common';
 import { Component, computed, inject, model, NgZone, OnDestroy, OnInit, output, PLATFORM_ID, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import { ModelDownloadProgressComponent, ProgressInfo } from '@/app/components/model-download-progress/model-download-progress.component';
 import { LoadingSpinnerSmallComponent } from '@/app/components/loading-spinner-small/loading-spinner-small.component';
 import { DragAndDropFileComponent } from '@/app/components/drag-and-drop-file/drag-and-drop-file.component';
@@ -52,7 +52,7 @@ type WhisperDoneEvent = {
 @Component({
   selector: 'app-audio-speech-to-text',
   imports: [
-    LucideAngularModule,
+    LucideIconComponent,
     FormsModule,
     SelectButtonComponent,
     LoadingSpinnerSmallComponent,
@@ -122,6 +122,13 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
 
   clearTranscript() {
     this.transcript.set('');
+  }
+
+  async copyToClipboard() {
+    if (!this.transcript()) return;
+    await navigator.clipboard.writeText(this.transcript()!);
+    this.copied.set(true);
+    setTimeout(() => this.copied.set(false), 2000);
   }
 
   stopRecording() {

@@ -2,12 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "highlight.js/styles/github.css";
+
 html,body {
     width: 100%;
     height: 100vh;
-    max-height: 100vh;
 }
 
 .ng-invalid:not(form).ng-touched {
     @apply border-red-500 focus:border-red-600 focus:ring-red-200;
 }
+
+*,*:focus,*:hover{
+    outline:none;
+    @apply focus:ring-indigo-500 focus:border-indigo-500
+}
+

@@ -1,0 +1,20 @@
+@import "swagger-ui-dist/swagger-ui.css";
+
+app-swagger-editor {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.swagger-ui {
+  .scheme-container {
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .info {
+    margin: 0;
+  }
+}
+
+

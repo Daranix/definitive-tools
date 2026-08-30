@@ -1,0 +1,312 @@
+<div class="min-h-screen flex flex-col bg-gray-50">
+  <app-top-navbar></app-top-navbar>
+
+  <main class="flex-grow container mx-auto px-4 py-8 max-w-6xl">
+    <div class="mb-8 text-center md:text-left">
+      <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Client-Side Image Converter</h1>
+      <p class="mt-2 text-md text-gray-600">
+        Convert and resize your images directly in your browser. Powered by WebAssembly for 100% privacy and local-only processing.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <!-- File Workspace (Left Panel) -->
+      <div class="lg:col-span-8 flex flex-col gap-6">
+        @if (!file()) {
+          <!-- Upload Area -->
+          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 flex flex-col items-center justify-center min-h-[400px] transition-all hover:shadow-md">
+            <app-drag-and-drop-file 
+              name="image-file" 
+              [validExtensions]="allowedExtensions" 
+              (onFileChange)="onFileSelected($event)" 
+              class="w-full h-full flex flex-col justify-center items-center">
+            </app-drag-and-drop-file>
+          </div>
+        } @else {
+          <!-- Selected Image Workspace -->
+          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex flex-col gap-6">
+            <div class="flex items-center justify-between border-b border-gray-100 pb-4">
+              <div class="flex items-center gap-3">
+                <div class="p-2 bg-indigo-50 text-indigo-600 rounded-lg">
+                  <lucide-angular name="image" class="h-5 w-5"></lucide-angular>
+                </div>
+                <div>
+                  <h2 class="text-lg font-bold text-gray-900 truncate max-w-[250px] md:max-w-[400px]">
+                    {{ file()?.name }}
+                  </h2>
+                  <p class="text-xs text-gray-500">
+                    Original Size: {{ (originalSize() | number:'1.0-0') }} bytes ({{ (originalSize() / 1024) | number:'1.1-1' }} KB)
+                  </p>
+                </div>
+              </div>
+              <button 
+                (click)="clear()" 
+                [disabled]="converting()"
+                class="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition disabled:opacity-50">
+                <lucide-angular name="trash-2" class="h-5 w-5"></lucide-angular>
+              </button>
+            </div>
+
+            <!-- View Mode Selector (Segmented control) -->
+            @if (outputUrl() && !converting()) {
+              <div class="flex justify-center border-b border-gray-100 pb-4">
+                <div class="inline-flex p-1 bg-gray-100 rounded-xl">
+                  <button 
+                    (click)="viewMode.set('side-by-side')"
+                    [ngClass]="{
+                      'bg-white text-gray-900 shadow-sm border-transparent': viewMode() === 'side-by-side',
+                      'text-gray-500 hover:text-gray-900': viewMode() !== 'side-by-side'
+                    }"
+                    class="px-4 py-1.5 text-xs font-semibold rounded-lg transition-all flex items-center gap-2 border border-transparent">
+                    <lucide-angular name="columns-2" class="h-3.5 w-3.5"></lucide-angular>
+                    Side by Side
+                  </button>
+                  <button 
+                    (click)="viewMode.set('slider')"
+                    [ngClass]="{
+                      'bg-white text-gray-900 shadow-sm border-transparent': viewMode() === 'slider',
+                      'text-gray-500 hover:text-gray-900': viewMode() !== 'slider'
+                    }"
+                    class="px-4 py-1.5 text-xs font-semibold rounded-lg transition-all flex items-center gap-2 border border-transparent">
+                    <lucide-angular name="split" class="h-3.5 w-3.5"></lucide-angular>
+                    Split Slider
+                  </button>
+                </div>
+              </div>
+            }
+
+            <!-- Workspace Cards Grid or Split Slider -->
+            @if (viewMode() === 'slider' && outputUrl() && !converting()) {
+              <!-- Split Slider View -->
+              <div class="flex flex-col gap-2">
+                <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Before & After Comparison</span>
+                <div class="relative bg-gray-950 rounded-xl overflow-hidden border border-gray-150 aspect-video flex items-center justify-center select-none shadow-inner group">
+                  <!-- Labels -->
+                  <span class="absolute top-3 left-3 px-2 py-1 bg-black/60 text-[10px] font-bold text-white rounded-md uppercase tracking-wider backdrop-blur-sm z-10 pointer-events-none">Original</span>
+                  <span class="absolute top-3 right-3 px-2 py-1 bg-indigo-600/90 text-[10px] font-bold text-white rounded-md uppercase tracking-wider backdrop-blur-sm z-10 pointer-events-none">Converted</span>
+
+                  <!-- Bottom Layer: Original Image -->
+                  <img 
+                    [src]="fileUrl()" 
+                    alt="Original preview" 
+                    class="max-w-full max-h-full object-contain pointer-events-none select-none" />
+
+                  <!-- Top Layer: Converted Image (Clipped) -->
+                  <div 
+                    class="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden"
+                    [style.clip-path]="'inset(0 0 0 ' + sliderPercent() + '%)'">
+                    <img 
+                      [src]="outputUrl()" 
+                      alt="Converted preview" 
+                      class="max-w-full max-h-full object-contain pointer-events-none select-none" />
+                  </div>
+
+                  <!-- Slider Line Divider & Handle -->
+                  <div 
+                    class="absolute top-0 bottom-0 w-0.5 bg-white shadow-lg pointer-events-none z-20"
+                    [style.left.%]="sliderPercent()">
+                    <div class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-white shadow-2xl border border-gray-100 flex items-center justify-center text-indigo-600 transition-transform group-hover:scale-110">
+                      <lucide-angular name="arrow-right-left" class="h-3.5 w-3.5"></lucide-angular>
+                    </div>
+                  </div>
+
+                  <!-- Transparent Input Overlay for dragging -->
+                  <input 
+                    type="range" 
+                    min="0" 
+                    max="100" 
+                    [value]="sliderPercent()" 
+                    (input)="onSliderChange($event)" 
+                    class="absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-30 m-0" />
+                </div>
+              </div>
+            } @else {
+              <!-- Standard Side-by-Side View -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Input Preview -->
+                <div class="flex flex-col gap-2">
+                  <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Source Image</span>
+                  <div class="relative bg-gray-50 rounded-xl overflow-hidden border border-gray-100 aspect-video flex items-center justify-center p-2 group">
+                    @if (fileUrl()) {
+                      <img 
+                        [src]="fileUrl()" 
+                        alt="Source preview" 
+                        class="max-w-full max-h-full object-contain rounded-lg shadow-sm transition group-hover:scale-105" />
+                    }
+                  </div>
+                </div>
+
+                <!-- Output Preview -->
+                <div class="flex flex-col gap-2">
+                  <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Converted Result</span>
+                  <div class="relative bg-gray-50 rounded-xl overflow-hidden border border-gray-100 aspect-video flex items-center justify-center p-2">
+                    @if (converting()) {
+                      <div class="flex flex-col items-center gap-3">
+                        <div class="relative flex items-center justify-center">
+                          <div class="w-12 h-12 rounded-full border-4 border-indigo-100 border-t-indigo-600 animate-spin"></div>
+                        </div>
+                        <div class="text-center">
+                          <p class="text-sm font-semibold text-gray-700">Converting...</p>
+                          @if (progress() > 0) {
+                            <p class="text-xs text-indigo-600 font-mono mt-1">{{ progress() }}%</p>
+                          }
+                        </div>
+                      </div>
+                    } @else if (outputUrl()) {
+                      <img 
+                        [src]="outputUrl()" 
+                        alt="Output preview" 
+                        class="max-w-full max-h-full object-contain rounded-lg shadow-sm" />
+                    } @else {
+                      <div class="flex flex-col items-center text-center p-4 text-gray-400">
+                        <lucide-angular name="arrow-right-left" class="h-8 w-8 mb-2 opacity-40"></lucide-angular>
+                        <p class="text-xs">Adjust configurations and hit "Convert Image" to render the output.</p>
+                      </div>
+                    }
+                  </div>
+                </div>
+              </div>
+            }
+
+            <!-- Conversion Meta Cards (Post-conversion) -->
+            @if (outputBlob() && !converting()) {
+              <div class="bg-indigo-50/50 rounded-xl border border-indigo-100/50 p-4 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
+                  <div class="p-2 bg-emerald-500/10 text-emerald-600 rounded-lg">
+                    <lucide-angular name="check" class="h-5 w-5"></lucide-angular>
+                  </div>
+                  <div>
+                    <h4 class="text-sm font-semibold text-gray-900">Conversion Successful!</h4>
+                    <p class="text-xs text-gray-600 mt-0.5">
+                      New Size: {{ (convertedSize() / 1024) | number:'1.1-1' }} KB
+                      @if (sizeChangePercent() > 0) {
+                        • <span class="text-emerald-600 font-bold">Saved {{ sizeChangePercent() }}%</span>
+                      } @else if (sizeChangePercent() < 0) {
+                        • <span class="text-amber-600 font-bold">Increased by {{ -sizeChangePercent() }}%</span>
+                      }
+                    </p>
+                  </div>
+                </div>
+
+                <button 
+                  (click)="handleDownload()" 
+                  class="w-full md:w-auto px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl shadow-sm hover:shadow transition flex items-center justify-center gap-2 text-sm font-semibold">
+                  <lucide-angular name="download" class="h-4 w-4"></lucide-angular>
+                  Download Output
+                </button>
+              </div>
+            }
+          </div>
+        }
+
+        <!-- Real-time Logger Console -->
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+          <button 
+            (click)="showLogs.set(!showLogs())"
+            class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-50 transition border-b border-gray-50">
+            <div class="flex items-center gap-2">
+              <lucide-angular name="sliders" class="h-4 w-4 text-gray-400"></lucide-angular>
+              <span class="text-sm font-semibold text-gray-700">Execution Console Logger</span>
+            </div>
+            <lucide-angular 
+              name="chevron-down" 
+              class="h-4 w-4 text-gray-400 transition-transform duration-200"
+              [ngClass]="{'rotate-180': showLogs()}">
+            </lucide-angular>
+          </button>
+          
+          @if (showLogs()) {
+            <div class="p-6 bg-gray-950 font-mono text-[11px] leading-relaxed text-emerald-400 h-64 overflow-y-auto flex flex-col gap-1">
+              @if (logs().length === 0) {
+                <span class="text-gray-500 italic">No logs recorded yet. Start converting to see logs.</span>
+              } @else {
+                @for (log of logs(); track $index) {
+                  <div>{{ log }}</div>
+                }
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Configurations Sidebar (Right Panel) -->
+      <div class="lg:col-span-4 flex flex-col gap-6">
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex flex-col gap-6">
+          <h3 class="text-lg font-bold text-gray-900 border-b border-gray-50 pb-3">Conversion Options</h3>
+
+          <!-- Format Choice -->
+          <div class="flex flex-col gap-2">
+            <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Target Format</label>
+            <div class="grid grid-cols-3 gap-2">
+              @for (fmt of formats; track fmt) {
+                <button 
+                  (click)="optionsForm.targetFormat().value.set(fmt)"
+                  [disabled]="converting()"
+                  [ngClass]="{
+                    'bg-indigo-600 text-white shadow-sm border-indigo-600': optionsForm.targetFormat().value() === fmt,
+                    'bg-white text-gray-700 border-gray-200 hover:bg-gray-50': optionsForm.targetFormat().value() !== fmt
+                  }"
+                  class="py-2.5 px-3 text-xs font-semibold rounded-xl border text-center transition capitalize disabled:opacity-50">
+                  {{ fmt }}
+                </button>
+              }
+            </div>
+          </div>
+
+          <!-- Quality Slider (Conditional) -->
+          @if (optionsForm.targetFormat().value() === 'webp' || optionsForm.targetFormat().value() === 'jpeg') {
+            <div class="flex flex-col gap-3">
+              <div class="flex items-center justify-between">
+                <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Quality Compression</label>
+                <span class="text-xs font-mono font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">
+                  {{ optionsForm.quality().value() }}%
+                </span>
+              </div>
+              <input 
+                type="range" 
+                [formField]="optionsForm.quality"
+                class="w-full accent-indigo-600 h-1.5 bg-gray-100 rounded-lg appearance-none cursor-pointer" />
+              <span class="text-[10px] text-gray-400">Lower quality results in smaller files, but can blur high-frequency details.</span>
+            </div>
+          }
+
+          <!-- Image Resizing -->
+          <div class="flex flex-col gap-3">
+            <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Resize Dimensions (Optional)</label>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="flex flex-col gap-1.5">
+                <span class="text-[10px] text-gray-400 font-semibold uppercase">Width (px)</span>
+                <input 
+                  type="number" 
+                  [formField]="optionsForm.resizeWidth"
+                  placeholder="Auto"
+                  class="w-full text-sm py-2 px-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition outline-none" />
+                @if (optionsForm.resizeWidth().invalid() && optionsForm.resizeWidth().touched()) {
+                  <span class="text-[10px] text-red-500 font-medium">
+                    {{ optionsForm.resizeWidth().errors()[0]?.message || 'Invalid width' }}
+                  </span>
+                }
+              </div>
+              <div class="flex flex-col gap-1.5">
+                <span class="text-[10px] text-gray-400 font-semibold uppercase">Height (px)</span>
+                <input 
+                  type="number" 
+                  [formField]="optionsForm.resizeHeight"
+                  placeholder="Auto"
+                  class="w-full text-sm py-2 px-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition outline-none" />
+                @if (optionsForm.resizeHeight().invalid() && optionsForm.resizeHeight().touched()) {
+                  <span class="text-[10px] text-red-500 font-medium">
+                    {{ optionsForm.resizeHeight().errors()[0]?.message || 'Invalid height' }}
+                  </span>
+                }
+              </div>
+            </div>
+            <span class="text-[10px] text-gray-400">Leave any dimensions blank to auto-calculate maintaining the native aspect ratio.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <app-footer></app-footer>
+</div>

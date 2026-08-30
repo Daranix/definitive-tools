@@ -35,10 +35,10 @@ export function formatBytes(bytes: number): string {
 export function webgl_detect(return_context?: boolean) {
     if (!!window.WebGLRenderingContext) {
         let canvas = document.createElement("canvas"),
-             names = ["webgl2", "webgl", "experimental-webgl", "moz-webgl", "webkit-3d"],
-           context: RenderingContext | boolean | null = false;
+            names = ["webgl2", "webgl", "experimental-webgl", "moz-webgl", "webkit-3d"],
+            context: RenderingContext | boolean | null = false;
 
-        for(var i=0;i< names.length;i++) {
+        for (var i = 0; i < names.length; i++) {
             try {
                 context = canvas.getContext(names[i]);
                 /** @ts-ignore */
@@ -46,12 +46,12 @@ export function webgl_detect(return_context?: boolean) {
                     // WebGL is enabled
                     if (return_context) {
                         // return WebGL object if the function's argument is present
-                        return {name:names[i], gl:context};
+                        return { name: names[i], gl: context };
                     }
                     // else, return just true
                     return true;
                 }
-            } catch(e) {}
+            } catch (e) { }
         }
 
         // WebGL is supported, but disabled
@@ -60,4 +60,13 @@ export function webgl_detect(return_context?: boolean) {
 
     // WebGL not supported
     return false;
+}
+
+// Ref: https://gist.github.com/bilelz/c96fb0b1f62983d061910e8d310a5162
+export async function getChecksumSha256(blob: Blob): Promise<string> {
+    const uint8Array = await blob.arrayBuffer();
+    const hashBuffer = await crypto.subtle.digest('SHA-256', uint8Array);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+
+    return hashArray.map((h) => h.toString(16).padStart(2, '0')).join('');
 }

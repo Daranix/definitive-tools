@@ -1,0 +1,151 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+/* Slide-in Sidebar Drawer Animation */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in {
+  animation: slideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Custom scrollbars inside dark containers */
+.overflow-y-auto {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(100, 116, 139, 0.4) transparent;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(100, 116, 139, 0.3);
+    border-radius: 9999px;
+
+    &:hover {
+      background: rgba(99, 102, 241, 0.5);
+    }
+  }
+}
+
+/* Viewport structure adjustments */
+#preview-viewport {
+  position: relative;
+  transition: background-color 0.3s ease;
+  min-height: 100%;
+}
+
+/* HTML highlightjs support colors */
+::ng-deep {
+  .hljs {
+    display: block;
+    overflow-x: auto;
+    padding: 1em;
+    background: #0f172a;
+    color: #f8fafc;
+  }
+
+  .hljs-comment,
+  .hljs-quote {
+    color: #64748b;
+    font-style: italic;
+  }
+
+  .hljs-keyword,
+  .hljs-selector-tag,
+  .hljs-literal,
+  .hljs-section,
+  .hljs-link {
+    color: #818cf8;
+    font-weight: 600;
+  }
+
+  .hljs-string,
+  .hljs-doctag,
+  .hljs-type,
+  .hljs-addition,
+  .hljs-attribute,
+  .hljs-bullet,
+  .hljs-variable,
+  .hljs-template-variable {
+    color: #34d399;
+  }
+
+  .hljs-title,
+  .hljs-name,
+  .hljs-selector-id,
+  .hljs-selector-class {
+    color: #fb7185;
+  }
+
+  .hljs-symbol,
+  .hljs-bullet,
+  .hljs-subst,
+  .hljs-meta,
+  .hljs-regexp,
+  .hljs-selector-attr,
+  .hljs-selector-pseudo {
+    color: #fb923c;
+  }
+
+  .hljs-built_in,
+  .hljs-class,
+  .hljs-params {
+    color: #60a5fa;
+  }
+
+  .hljs-number {
+    color: #f472b6;
+  }
+
+  .hljs-emphasis {
+    font-style: italic;
+  }
+
+  .hljs-strong {
+    font-weight: bold;
+  }
+
+  /* CSS Reset for Markdown Elements to override global Tailwind preflight resets */
+  .markdown-body {
+    ul {
+      list-style-type: disc !important;
+      margin-block-start: 1em !important;
+      margin-block-end: 1em !important;
+      padding-inline-start: 40px !important;
+    }
+    ol {
+      list-style-type: decimal !important;
+      margin-block-start: 1em !important;
+      margin-block-end: 1em !important;
+      padding-inline-start: 40px !important;
+    }
+    li {
+      display: list-item !important;
+    }
+    table {
+      display: table !important;
+      border-collapse: collapse !important;
+      width: 100% !important;
+    }
+    tr {
+      display: table-row !important;
+    }
+    th, td {
+      display: table-cell !important;
+    }
+  }
+}

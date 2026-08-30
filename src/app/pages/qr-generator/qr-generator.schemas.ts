@@ -127,5 +127,16 @@ export const QrSchemas = {
     geo: QrGeoSchema
 } as const;
 
-export type QrZodSchema = typeof QrSchemas[keyof typeof QrSchemas];
-export type QrFormData = z.infer<QrZodSchema>;
+export const QrUnionSchema = z.discriminatedUnion('contentType', [
+    QrUrlSchema,
+    QrTextSchema,
+    QrEmailSchema,
+    QrPhoneSchema,
+    QrSmsSchema,
+    QrVcardSchema,
+    QrWifiSchema,
+    QrGeoSchema
+]);
+
+export type QrFormModel = z.infer<typeof QrUnionSchema>;
+export type QrFormData = QrFormModel;

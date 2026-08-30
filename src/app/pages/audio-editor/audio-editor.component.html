@@ -1,0 +1,123 @@
+<div class="min-h-screen flex flex-col bg-gray-50">
+  <app-top-navbar></app-top-navbar>
+
+  <main class="flex-grow container mx-auto px-4 py-8 max-w-7xl">
+    <!-- Header -->
+    <div class="mb-8 text-center md:text-left">
+      <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Client-Side Audio Editor & Multi-Track Studio</h1>
+      <p class="mt-2 text-md text-gray-600">
+        Trim, cut out parts, split into clips, layer multiple tracks, and connect clips with smooth crossfades — 100% private, processed in your browser with WebAssembly.
+      </p>
+    </div>
+
+    <!-- Mode Switcher Tabs -->
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-2 mb-6 flex flex-wrap gap-2">
+      <button
+        (click)="setEditMode('trim')"
+        [ngClass]="{
+          'bg-indigo-600 text-white shadow-sm font-bold': editMode() === 'trim',
+          'bg-gray-50 text-gray-700 hover:bg-gray-100 font-medium': editMode() !== 'trim'
+        }"
+        class="flex-1 min-w-[140px] py-2.5 px-4 rounded-xl text-xs md:text-sm flex items-center justify-center gap-2 transition">
+        <lucide-angular name="scissors" class="h-4 w-4"></lucide-angular>
+        Trim (Keep Range)
+      </button>
+
+      <button
+        (click)="setEditMode('remove')"
+        [ngClass]="{
+          'bg-rose-600 text-white shadow-sm font-bold': editMode() === 'remove',
+          'bg-gray-50 text-gray-700 hover:bg-gray-100 font-medium': editMode() !== 'remove'
+        }"
+        class="flex-1 min-w-[140px] py-2.5 px-4 rounded-xl text-xs md:text-sm flex items-center justify-center gap-2 transition">
+        <lucide-angular name="trash-2" class="h-4 w-4"></lucide-angular>
+        Cut Out (Remove & Join)
+      </button>
+
+      <button
+        (click)="setEditMode('split')"
+        [ngClass]="{
+          'bg-emerald-600 text-white shadow-sm font-bold': editMode() === 'split',
+          'bg-gray-50 text-gray-700 hover:bg-gray-100 font-medium': editMode() !== 'split'
+        }"
+        class="flex-1 min-w-[140px] py-2.5 px-4 rounded-xl text-xs md:text-sm flex items-center justify-center gap-2 transition">
+        <lucide-angular name="split" class="h-4 w-4"></lucide-angular>
+        Split into Clips (Multi-Export)
+      </button>
+
+      <button
+        (click)="setEditMode('multitrack')"
+        [ngClass]="{
+          'bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-sm font-bold': editMode() === 'multitrack',
+          'bg-gray-50 text-gray-700 hover:bg-gray-100 font-medium': editMode() !== 'multitrack'
+        }"
+        class="flex-1 min-w-[170px] py-2.5 px-4 rounded-xl text-xs md:text-sm flex items-center justify-center gap-2 transition">
+        <lucide-angular name="layers-2" class="h-4 w-4"></lucide-angular>
+        Multi-Track Studio (Mix & Fades)
+      </button>
+    </div>
+
+    <!-- ══ 1. SINGLE TRACK MODES (Trim, Remove, Split) ═════════════════════ -->
+    @if (editMode() !== 'multitrack') {
+      <app-single-track-editor
+        #singleEditor
+        [(editMode)]="editMode"
+        [(targetFormat)]="targetFormat"
+        [(bitrate)]="bitrate"
+        [(sampleRate)]="sampleRate"
+        [(trimStart)]="trimStart"
+        [(trimEnd)]="trimEnd"
+        [(zoom)]="zoom">
+      </app-single-track-editor>
+    }
+
+    <!-- ══ 2. MULTI-TRACK STUDIO (Layers, Fades, Mix) ══════════════════════ -->
+    @if (editMode() === 'multitrack') {
+      <app-multi-track-studio
+        #multiStudio
+        [(tracks)]="tracks"
+        [(timelineClips)]="timelineClips"
+        [(selectedClipId)]="selectedClipId"
+        [(masterVolume)]="masterVolume"
+        [(zoom)]="zoom"
+        [(activeTool)]="activeTool"
+        [(targetFormat)]="targetFormat"
+        [(bitrate)]="bitrate"
+        [(sampleRate)]="sampleRate">
+      </app-multi-track-studio>
+    }
+
+    <!-- Execution Console Logger -->
+    <div class="mt-8 bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+      <button
+        (click)="showLogs.set(!showLogs())"
+        class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-50 transition border-b border-gray-50">
+        <div class="flex items-center gap-2">
+          <lucide-angular name="terminal" class="h-4 w-4 text-gray-400"></lucide-angular>
+          <span class="text-sm font-semibold text-gray-700">Execution Console Logger</span>
+          @if (audioExport.logs().length > 0) {
+            <span class="text-[10px] bg-indigo-100 text-indigo-600 font-bold px-1.5 py-0.5 rounded-full">{{ audioExport.logs().length }}</span>
+          }
+        </div>
+        <lucide-angular
+          name="chevron-down"
+          class="h-4 w-4 text-gray-400 transition-transform duration-200"
+          [ngClass]="{'rotate-180': showLogs()}">
+        </lucide-angular>
+      </button>
+      @if (showLogs()) {
+        <div class="p-6 bg-gray-950 font-mono text-[11px] leading-relaxed text-emerald-400 h-56 overflow-y-auto flex flex-col gap-1">
+          @if (audioExport.logs().length === 0) {
+            <span class="text-gray-500 italic">No logs recorded yet. Export an audio file to see logs.</span>
+          } @else {
+            @for (log of audioExport.logs(); track $index) {
+              <div>{{ log }}</div>
+            }
+          }
+        </div>
+      }
+    </div>
+  </main>
+
+  <app-footer></app-footer>
+</div>

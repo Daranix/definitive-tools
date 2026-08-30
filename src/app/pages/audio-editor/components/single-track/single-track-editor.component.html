@@ -1,0 +1,664 @@
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+  <!-- ══ LEFT PANEL ════════════════════════════════════════════════════ -->
+  <div class="lg:col-span-8 flex flex-col gap-6">
+
+    @if (!file()) {
+      <!-- Upload Area -->
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 flex flex-col items-center justify-center min-h-[400px] transition-all hover:shadow-md">
+        <app-drag-and-drop-file
+          name="audio-file"
+          [validExtensions]="allowedExtensions"
+          (onFileChange)="onFileSelected($event)"
+          class="w-full h-full flex flex-col justify-center items-center">
+        </app-drag-and-drop-file>
+      </div>
+    } @else {
+      <!-- Waveform Workspace -->
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex flex-col gap-5">
+        <!-- File header -->
+        <div class="flex items-center justify-between border-b border-gray-100 pb-4">
+          <div class="flex items-center gap-3">
+            <div class="p-2 bg-indigo-50 text-indigo-600 rounded-lg">
+              <lucide-angular name="music" class="h-5 w-5"></lucide-angular>
+            </div>
+            <div>
+              <h2 class="text-lg font-bold text-gray-900 truncate max-w-[250px] md:max-w-[400px]">
+                {{ file()?.name }}
+              </h2>
+              <p class="text-xs text-gray-500">
+                {{ formatFileSize(file()?.size || 0) }} &nbsp;·&nbsp; Duration: {{ formatTime(duration()) }}
+              </p>
+            </div>
+          </div>
+          <button
+            (click)="clear()"
+            [disabled]="exporting()"
+            class="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition disabled:opacity-50"
+            title="Remove file">
+            <lucide-angular name="trash-2" class="h-5 w-5"></lucide-angular>
+          </button>
+        </div>
+
+        <!-- Waveform Canvas -->
+        @if (waveformReady()) {
+          <div class="flex flex-col gap-2">
+            <!-- Toolbar Header with Mode Info and Zoom Controls -->
+            <div class="flex items-center justify-between flex-wrap gap-2">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">
+                  @switch (editMode()) {
+                    @case ('trim') { Waveform · Trim Mode }
+                    @case ('remove') { Waveform · Cut Out / Splice Mode }
+                    @case ('split') { Waveform · Split Clips Mode }
+                  }
+                </span>
+              </div>
+
+              <!-- Zoom Toolbar (1x to 32x) -->
+              <div class="flex items-center gap-2">
+                <div class="flex items-center gap-1 bg-slate-100 hover:bg-slate-200/80 rounded-xl p-1 transition border border-gray-200">
+                  <button
+                    (click)="zoomOut()"
+                    [disabled]="zoom() <= 1"
+                    class="p-1 text-gray-500 hover:text-gray-900 disabled:opacity-30 rounded-lg hover:bg-white transition"
+                    title="Zoom Out">
+                    <lucide-angular name="zoom-out" class="h-3.5 w-3.5"></lucide-angular>
+                  </button>
+
+                  <div class="flex items-center gap-1 px-1">
+                    <input
+                      type="range"
+                      min="1"
+                      max="32"
+                      step="0.5"
+                      [ngModel]="zoom()"
+                      (ngModelChange)="setZoom($event)"
+                      class="w-20 h-1.5 bg-gray-300 rounded-lg appearance-none cursor-pointer accent-indigo-600" />
+                    <span class="text-[11px] font-mono font-bold text-gray-700 min-w-[32px] text-center">
+                      {{ zoom() }}x
+                    </span>
+                  </div>
+
+                  <button
+                    (click)="zoomIn()"
+                    [disabled]="zoom() >= 32"
+                    class="p-1 text-gray-500 hover:text-gray-900 disabled:opacity-30 rounded-lg hover:bg-white transition"
+                    title="Zoom In">
+                    <lucide-angular name="zoom-in" class="h-3.5 w-3.5"></lucide-angular>
+                  </button>
+
+                  @if (zoom() > 1) {
+                    <button
+                      (click)="resetZoom()"
+                      class="text-[10px] px-1.5 py-0.5 bg-white hover:bg-gray-50 text-gray-600 border border-gray-200 rounded-md font-semibold transition">
+                      1x
+                    </button>
+                  }
+                </div>
+              </div>
+            </div>
+
+            <!-- Scrollable Waveform Viewport -->
+            <div
+              #waveformContainer
+              (wheel)="onTimelineWheel($event)"
+              (dragover)="onSingleTrackDragOver($event)"
+              (drop)="onSingleTrackDrop($event)"
+              class="relative rounded-xl overflow-x-auto overflow-y-hidden border border-slate-800 bg-slate-900 shadow-inner waveform-scroll-container">
+              <canvas
+                #waveformCanvas
+                class="block waveform-canvas"
+                [style.width.%]="zoom() * 100"
+                (mousemove)="updateCursor($event)">
+              </canvas>
+            </div>
+
+            <!-- Helper caption -->
+            <div class="flex items-center justify-between text-[11px] text-gray-400 mt-0.5">
+              <span class="italic">
+                @switch (editMode()) {
+                  @case ('trim') { Drag cyan and pink handles to adjust start and end. [Space] to Play/Pause. Mouse wheel to zoom. }
+                  @case ('remove') { Drag red handles to adjust cut intervals. Click "Add Cut at Playhead" for more cuts. }
+                  @case ('split') { Drag handles between clips to adjust split boundaries. Click "Split at Playhead" to slice. }
+                }
+              </span>
+              @if (zoom() > 1) {
+                <span class="font-mono text-indigo-600 font-semibold bg-indigo-50 px-2 py-0.5 rounded-md">
+                  Zoom active ({{ zoom() }}x) · Dynamic high-resolution wave sampling
+                </span>
+              }
+            </div>
+
+            <!-- Transport Controls -->
+            <div class="flex items-center gap-2 mt-2 flex-wrap">
+              <button
+                (click)="togglePlay()"
+                [disabled]="exporting()"
+                class="flex items-center justify-center gap-2 px-4 py-2 min-w-[124px] flex-shrink-0 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-sm font-semibold transition disabled:opacity-50">
+                @if (playing()) {
+                  <lucide-angular name="pause" class="h-4 w-4 flex-shrink-0"></lucide-angular>
+                  <span>Pause</span>
+                } @else {
+                  <lucide-angular name="play" class="h-4 w-4 flex-shrink-0"></lucide-angular>
+                  <span>Play</span>
+                }
+                <span class="text-[10px] opacity-60 font-mono flex-shrink-0">[Space]</span>
+              </button>
+
+              <!-- Mode-specific transport actions -->
+              @if (editMode() === 'trim') {
+                <button
+                  (click)="playTrimmed()"
+                  [disabled]="exporting() || playing()"
+                  class="flex items-center gap-2 px-4 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-xl text-sm font-semibold transition disabled:opacity-50">
+                  <lucide-angular name="scissors" class="h-4 w-4"></lucide-angular>
+                  Play Trimmed
+                </button>
+                <button
+                  (click)="resetTrim()"
+                  [disabled]="exporting()"
+                  class="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-xl text-sm font-semibold transition disabled:opacity-50">
+                  <lucide-angular name="rotate-cw" class="h-4 w-4"></lucide-angular>
+                  Reset
+                </button>
+              } @else if (editMode() === 'remove') {
+                <button
+                  (click)="addCutAtPlayhead()"
+                  [disabled]="exporting()"
+                  class="flex items-center gap-2 px-4 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 rounded-xl text-sm font-semibold transition disabled:opacity-50">
+                  <lucide-angular name="plus" class="h-4 w-4"></lucide-angular>
+                  Add Cut at Playhead
+                </button>
+              } @else if (editMode() === 'split') {
+                <button
+                  (click)="splitAtPlayhead()"
+                  [disabled]="exporting()"
+                  class="flex items-center gap-2 px-4 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-xl text-sm font-semibold transition disabled:opacity-50">
+                  <lucide-angular name="split" class="h-4 w-4"></lucide-angular>
+                  Split at Playhead
+                </button>
+                <button
+                  (click)="resetClips()"
+                  [disabled]="exporting()"
+                  class="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-xl text-sm font-semibold transition disabled:opacity-50">
+                  <lucide-angular name="rotate-cw" class="h-4 w-4"></lucide-angular>
+                  Reset
+                </button>
+              }
+
+              <div class="ml-auto flex items-center gap-2 text-sm font-mono text-gray-500">
+                <lucide-angular name="clock" class="h-4 w-4 text-yellow-400"></lucide-angular>
+                {{ formatTime(currentTime()) }} / {{ formatTime(duration()) }}
+              </div>
+            </div>
+
+            <!-- Trim visual status bar in trim mode -->
+            @if (editMode() === 'trim') {
+              <div class="relative h-2 bg-gray-100 rounded-full overflow-hidden mt-1">
+                <div
+                  class="absolute h-full bg-gradient-to-r from-cyan-400 to-pink-400 rounded-full transition-all"
+                  [style.left.%]="(trimStart() / duration()) * 100"
+                  [style.right.%]="100 - (trimEnd() / duration()) * 100">
+                </div>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="h-32 bg-slate-900 rounded-xl flex items-center justify-center">
+            <div class="flex items-center gap-3 text-slate-400">
+              <div class="w-6 h-6 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin"></div>
+              <span class="text-sm font-medium">Decoding audio & building high-res peak pyramid...</span>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Mode Details & List Management Cards -->
+      @if (waveformReady()) {
+        <!-- 1. Remove Mode: Cut list manager -->
+        @if (editMode() === 'remove') {
+          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex flex-col gap-4">
+            <div class="flex items-center justify-between border-b border-gray-50 pb-3">
+              <div>
+                <h3 class="text-lg font-bold text-gray-900">Cut Regions (Parts to Remove)</h3>
+                <p class="text-xs text-gray-500 mt-0.5">
+                  These intervals will be extirpated. The rest will be seamlessly spliced into one audio.
+                </p>
+              </div>
+              <button
+                (click)="addCutAtPlayhead()"
+                [disabled]="exporting()"
+                class="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition disabled:opacity-50">
+                <lucide-angular name="plus" class="h-3.5 w-3.5"></lucide-angular>
+                Add Cut
+              </button>
+            </div>
+
+            @if (cuts().length === 0) {
+              <div class="p-4 bg-gray-50 rounded-xl text-center text-xs text-gray-500">
+                No parts marked for removal yet. Click "Add Cut at Playhead" or drag on the waveform.
+              </div>
+            } @else {
+              <div class="flex flex-col gap-3">
+                @for (cut of cuts(); track cut.id; let idx = $index) {
+                  <div
+                    class="p-3.5 rounded-xl border transition flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
+                    [ngClass]="{
+                      'bg-rose-50/60 border-rose-200': activeCutId() === cut.id,
+                      'bg-gray-50/80 border-gray-100': activeCutId() !== cut.id
+                    }">
+                    <div class="flex items-center gap-2.5">
+                      <span class="px-2 py-0.5 bg-rose-100 text-rose-700 font-bold rounded-lg text-xs">
+                        #{{ idx + 1 }}
+                      </span>
+                      <span class="text-xs font-semibold text-gray-700">
+                        Cut Duration: {{ (cut.end - cut.start).toFixed(2) }}s
+                      </span>
+                    </div>
+
+                    <div class="flex items-center gap-2 w-full sm:w-auto">
+                      <div class="flex items-center gap-1">
+                        <span class="text-[10px] uppercase font-bold text-gray-400">Start:</span>
+                        <input
+                          type="number"
+                          [ngModel]="cut.start"
+                          (ngModelChange)="updateCutValue(cut.id, 'start', $event)"
+                          [disabled]="exporting()"
+                          step="0.01"
+                          min="0"
+                          [max]="cut.end"
+                          class="w-20 text-xs py-1.5 px-2 bg-white border border-gray-200 rounded-lg font-mono outline-none focus:ring-1 focus:ring-rose-400" />
+                      </div>
+
+                      <div class="flex items-center gap-1">
+                        <span class="text-[10px] uppercase font-bold text-gray-400">End:</span>
+                        <input
+                          type="number"
+                          [ngModel]="cut.end"
+                          (ngModelChange)="updateCutValue(cut.id, 'end', $event)"
+                          [disabled]="exporting()"
+                          step="0.01"
+                          [min]="cut.start"
+                          [max]="duration()"
+                          class="w-20 text-xs py-1.5 px-2 bg-white border border-gray-200 rounded-lg font-mono outline-none focus:ring-1 focus:ring-rose-400" />
+                      </div>
+
+                      <button
+                        (click)="removeCut(cut.id)"
+                        [disabled]="exporting()"
+                        class="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition disabled:opacity-50"
+                        title="Delete cut">
+                        <lucide-angular name="trash-2" class="h-4 w-4"></lucide-angular>
+                      </button>
+                    </div>
+                  </div>
+                }
+              </div>
+            }
+
+            <!-- Remove mode duration calculation -->
+            <div class="bg-gray-50 rounded-xl p-3.5 grid grid-cols-3 gap-2 text-center">
+              <div>
+                <span class="text-[10px] text-gray-400 uppercase font-bold">Original</span>
+                <p class="text-sm font-mono font-bold text-gray-700">{{ formatTime(duration()) }}</p>
+              </div>
+              <div>
+                <span class="text-[10px] text-rose-500 uppercase font-bold">Removed</span>
+                <p class="text-sm font-mono font-bold text-rose-600">-{{ formatTime(totalCutDuration()) }}</p>
+              </div>
+              <div>
+                <span class="text-[10px] text-emerald-500 uppercase font-bold">Final Duration</span>
+                <p class="text-sm font-mono font-bold text-emerald-600">{{ formatTime(removeKeptDuration()) }}</p>
+              </div>
+            </div>
+          </div>
+        }
+
+        <!-- 2. Split Mode: Clip manager -->
+        @if (editMode() === 'split') {
+          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex flex-col gap-4">
+            <div class="flex items-center justify-between border-b border-gray-50 pb-3">
+              <div>
+                <h3 class="text-lg font-bold text-gray-900">Audio Clips ({{ clips().length }})</h3>
+                <p class="text-xs text-gray-500 mt-0.5">
+                  Each clip will be exported as a distinct file and packed into a .ZIP archive.
+                </p>
+              </div>
+              <button
+                (click)="splitAtPlayhead()"
+                [disabled]="exporting()"
+                class="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition disabled:opacity-50">
+                <lucide-angular name="split" class="h-3.5 w-3.5"></lucide-angular>
+                Split at Playhead
+              </button>
+            </div>
+
+            <div class="flex flex-col gap-2.5">
+              @for (clip of clips(); track clip.id; let idx = $index) {
+                <div
+                  class="p-3.5 rounded-xl border transition flex flex-col md:flex-row items-start md:items-center justify-between gap-3"
+                  [ngClass]="{
+                    'bg-emerald-50/50 border-emerald-200': activeClipId() === clip.id,
+                    'bg-gray-50/80 border-gray-100': activeClipId() !== clip.id
+                  }">
+                  <div class="flex items-center gap-2.5 flex-grow">
+                    <span class="px-2 py-0.5 bg-emerald-100 text-emerald-700 font-bold rounded-lg text-xs">
+                      #{{ idx + 1 }}
+                    </span>
+                    <input
+                      type="text"
+                      [ngModel]="clip.name"
+                      (ngModelChange)="updateClipName(clip.id, $event)"
+                      [disabled]="exporting()"
+                      placeholder="Clip name"
+                      class="text-xs font-semibold py-1 px-2 bg-white border border-gray-200 rounded-lg outline-none focus:ring-1 focus:ring-emerald-400 w-36 md:w-48" />
+                    <span class="text-xs font-mono text-gray-500">
+                      ({{ formatTime(clip.end - clip.start) }})
+                    </span>
+                  </div>
+
+                  <div class="flex items-center gap-2 w-full md:w-auto justify-end">
+                    <span class="text-xs font-mono text-gray-400">
+                      {{ formatTime(clip.start) }} → {{ formatTime(clip.end) }}
+                    </span>
+
+                    <button
+                      (click)="playClip(clip)"
+                      [disabled]="exporting()"
+                      class="px-2.5 py-1 bg-white hover:bg-gray-100 text-gray-700 border border-gray-200 rounded-lg text-xs font-semibold flex items-center gap-1 transition disabled:opacity-50">
+                      <lucide-angular name="play" class="h-3.5 w-3.5 text-emerald-600"></lucide-angular>
+                      Play
+                    </button>
+
+                    @if (clips().length > 1) {
+                      <button
+                        (click)="removeClip(clip.id)"
+                        [disabled]="exporting()"
+                        class="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition disabled:opacity-50"
+                        title="Remove clip boundary">
+                        <lucide-angular name="trash-2" class="h-4 w-4"></lucide-angular>
+                      </button>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      }
+
+      <!-- Single File Export Result (Trim & Remove) -->
+      @if (outputBlob() && !exporting() && (editMode() === 'trim' || editMode() === 'remove')) {
+        <div class="bg-emerald-50/70 rounded-2xl border border-emerald-100 shadow-sm p-5 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div class="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
+            <div class="p-2 bg-emerald-500/10 text-emerald-600 rounded-lg flex-shrink-0">
+              <lucide-angular name="check-circle" class="h-6 w-6"></lucide-angular>
+            </div>
+            <div>
+              <h4 class="text-sm font-semibold text-gray-900">
+                {{ editMode() === 'trim' ? 'Trim' : 'Splicing' }} Export Successful!
+              </h4>
+              <p class="text-xs text-gray-600 mt-0.5">
+                Output: {{ formatFileSize(outputBlob()?.size || 0) }}
+              </p>
+            </div>
+          </div>
+          <button
+            (click)="handleDownload()"
+            class="w-full md:w-auto px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl shadow-sm hover:shadow transition flex items-center justify-center gap-2 text-sm font-semibold">
+            <lucide-angular name="download" class="h-4 w-4"></lucide-angular>
+            Download {{ outputFileName() }}
+          </button>
+        </div>
+      }
+
+      <!-- Multi-Clip Export Result (Split Mode) -->
+      @if (exportedClips().length > 0 && !exporting() && editMode() === 'split') {
+        <div class="bg-emerald-50/70 rounded-2xl border border-emerald-100 shadow-sm p-6 flex flex-col gap-4">
+          <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 border-b border-emerald-100/80 pb-4">
+            <div class="flex items-center gap-3">
+              <div class="p-2 bg-emerald-500/10 text-emerald-600 rounded-lg">
+                <lucide-angular name="check-circle" class="h-6 w-6"></lucide-angular>
+              </div>
+              <div>
+                <h4 class="text-sm font-bold text-gray-900">
+                  Successfully Exported {{ exportedClips().length }} Clips!
+                </h4>
+                <p class="text-xs text-gray-600">
+                  Download individual clips or the complete ZIP archive below.
+                </p>
+              </div>
+            </div>
+
+            @if (zipUrl()) {
+              <button
+                (click)="handleDownloadZip()"
+                class="w-full md:w-auto px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl shadow-sm hover:shadow transition flex items-center justify-center gap-2 text-sm font-semibold">
+                <lucide-angular name="archive" class="h-4 w-4"></lucide-angular>
+                Download All (.ZIP)
+              </button>
+            }
+          </div>
+
+          <!-- List of clips -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            @for (clip of exportedClips(); track clip.id) {
+              <div class="bg-white p-3.5 rounded-xl border border-gray-100 shadow-2xs flex items-center justify-between gap-2">
+                <div class="truncate">
+                  <p class="text-xs font-bold text-gray-800 truncate">{{ clip.name }}</p>
+                  <p class="text-[10px] text-gray-400 font-mono">
+                    {{ formatFileSize(clip.size) }} · {{ formatTime(clip.duration) }}
+                  </p>
+                </div>
+                <button
+                  (click)="handleDownloadClip(clip)"
+                  class="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition flex-shrink-0">
+                  <lucide-angular name="download" class="h-3.5 w-3.5"></lucide-angular>
+                  Save
+                </button>
+              </div>
+            }
+          </div>
+        </div>
+      }
+
+      <!-- Exporting Progress Bar -->
+      @if (exporting()) {
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-5 h-5 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin flex-shrink-0"></div>
+            <div class="flex flex-col">
+              <span class="text-sm font-semibold text-gray-700">Exporting audio with FFmpeg...</span>
+              @if (currentExportStep()) {
+                <span class="text-xs text-indigo-600 font-medium">{{ currentExportStep() }}</span>
+              }
+            </div>
+            @if (progress() > 0) {
+              <span class="ml-auto text-xs font-mono font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">{{ progress() }}%</span>
+            }
+          </div>
+          <div class="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+            <div
+              class="h-full bg-gradient-to-r from-indigo-500 to-violet-500 rounded-full transition-all duration-300"
+              [style.width.%]="progress() || 50">
+            </div>
+          </div>
+        </div>
+      }
+    }
+  </div>
+
+  <!-- ══ RIGHT PANEL ═══════════════════════════════════════════════════ -->
+  <div class="lg:col-span-4 flex flex-col gap-6">
+    <!-- Export Options -->
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex flex-col gap-5">
+      <h3 class="text-lg font-bold text-gray-900 border-b border-gray-50 pb-3">Export Options</h3>
+
+      <!-- Format picker -->
+      <div class="flex flex-col gap-2">
+        <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Target Format</label>
+        <div class="grid grid-cols-3 gap-2">
+          @for (fmt of formats; track fmt) {
+            <button
+              (click)="targetFormat.set(fmt)"
+              [disabled]="exporting()"
+              [ngClass]="{
+                'bg-indigo-600 text-white shadow-sm border-indigo-600': targetFormat() === fmt,
+                'bg-white text-gray-700 border-gray-200 hover:bg-gray-50': targetFormat() !== fmt
+              }"
+              class="py-2.5 px-3 text-xs font-semibold rounded-xl border text-center transition uppercase disabled:opacity-50">
+              {{ fmt }}
+            </button>
+          }
+        </div>
+      </div>
+
+      <!-- Bitrate (lossy only) -->
+      @if (isLossyFormat()) {
+        <div class="flex flex-col gap-2">
+          <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Bitrate</label>
+          <div class="grid grid-cols-3 gap-2">
+            @for (br of bitrateOptions; track br) {
+              <button
+                (click)="bitrate.set(br)"
+                [disabled]="exporting()"
+                [ngClass]="{
+                  'bg-violet-600 text-white shadow-sm border-violet-600': bitrate() === br,
+                  'bg-white text-gray-700 border-gray-200 hover:bg-gray-50': bitrate() !== br
+                }"
+                class="py-2 text-xs font-semibold rounded-xl border text-center transition disabled:opacity-50">
+                {{ br }}k
+              </button>
+            }
+          </div>
+        </div>
+      }
+
+      <!-- Sample Rate -->
+      <div class="flex flex-col gap-2">
+        <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Sample Rate</label>
+        <div class="flex flex-col gap-1.5">
+          @for (sr of sampleRateOptions; track sr) {
+            <button
+              (click)="sampleRate.set(sr)"
+              [disabled]="exporting()"
+              [ngClass]="{
+                'bg-slate-800 text-white border-slate-700': sampleRate() === sr,
+                'bg-white text-gray-700 border-gray-200 hover:bg-gray-50': sampleRate() !== sr
+              }"
+              class="w-full py-2.5 px-4 text-xs font-semibold rounded-xl border text-left flex items-center justify-between transition disabled:opacity-50">
+              <span>{{ sr | number }} Hz</span>
+              <span class="text-[10px] font-normal opacity-60">
+                @switch (sr) {
+                  @case (22050) { FM quality }
+                  @case (44100) { CD quality }
+                  @case (48000) { Pro / DVD }
+                }
+              </span>
+            </button>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Trim Info (Trim Mode only) -->
+    @if (file() && waveformReady() && editMode() === 'trim') {
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex flex-col gap-4">
+        <h3 class="text-lg font-bold text-gray-900 border-b border-gray-50 pb-3">Trim Selection</h3>
+
+        <fieldset [disabled]="exporting()" class="contents">
+          <div class="grid grid-cols-2 gap-3">
+            <div class="flex flex-col gap-1.5">
+              <label class="text-[10px] font-bold text-cyan-500 uppercase tracking-wider">Start (sec)</label>
+              <input
+                type="number"
+                [ngModel]="trimStart()"
+                (ngModelChange)="trimStart.set($event)"
+                step="0.01"
+                class="w-full text-sm py-2 px-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-cyan-400/30 focus:border-cyan-400 transition outline-none font-mono disabled:opacity-50" />
+            </div>
+            <div class="flex flex-col gap-1.5">
+              <label class="text-[10px] font-bold text-pink-500 uppercase tracking-wider">End (sec)</label>
+              <input
+                type="number"
+                [ngModel]="trimEnd()"
+                (ngModelChange)="trimEnd.set($event)"
+                step="0.01"
+                class="w-full text-sm py-2 px-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-400/30 focus:border-pink-400 transition outline-none font-mono disabled:opacity-50" />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Duration summary -->
+        <div class="bg-gray-50 rounded-xl p-3 flex items-center justify-between">
+          <div class="text-center flex-1">
+            <p class="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Start</p>
+            <p class="text-sm font-mono font-bold text-cyan-600">{{ formatTime(trimStart()) }}</p>
+          </div>
+          <div class="text-gray-200 text-xl">→</div>
+          <div class="text-center flex-1">
+            <p class="text-[10px] text-gray-400 uppercase font-bold tracking-wider">End</p>
+            <p class="text-sm font-mono font-bold text-pink-600">{{ formatTime(trimEnd()) }}</p>
+          </div>
+          <div class="text-gray-200 text-xl">→</div>
+          <div class="text-center flex-1">
+            <p class="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Duration</p>
+            <p class="text-sm font-mono font-bold text-indigo-600">{{ formatTime(trimDuration()) }}</p>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- Export Summary Card in Remove/Split Modes -->
+    @if (file() && waveformReady() && editMode() !== 'trim') {
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex flex-col gap-3">
+        <h3 class="text-lg font-bold text-gray-900 border-b border-gray-50 pb-2">
+          {{ editMode() === 'remove' ? 'Cut Out Summary' : 'Split Clips Summary' }}
+        </h3>
+
+        @if (editMode() === 'remove') {
+          <div class="text-xs text-gray-600 space-y-1.5">
+            <p><span class="font-semibold text-gray-700">Total Cuts:</span> {{ cuts().length }} region(s)</p>
+            <p><span class="font-semibold text-gray-700">Kept Segments:</span> {{ keptIntervals().length }} part(s)</p>
+            <p><span class="font-semibold text-gray-700">Estimated Output Length:</span> {{ formatTime(removeKeptDuration()) }}</p>
+          </div>
+        } @else if (editMode() === 'split') {
+          <div class="text-xs text-gray-600 space-y-1.5">
+            <p><span class="font-semibold text-gray-700">Total Clips:</span> {{ clips().length }} file(s)</p>
+            <p><span class="font-semibold text-gray-700">Packaging:</span> Individual downloads + .ZIP bundle</p>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- Export Button -->
+    @if (file()) {
+      <button
+        (click)="handleExport()"
+        [disabled]="exporting() || !waveformReady()"
+        class="w-full py-3.5 px-6 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white rounded-2xl shadow-md hover:shadow-lg transition flex items-center justify-center gap-3 text-sm font-bold disabled:opacity-50 disabled:cursor-not-allowed">
+        @if (exporting()) {
+          <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+          Exporting...
+        } @else {
+          <lucide-angular name="download" class="h-5 w-5"></lucide-angular>
+          @switch (editMode()) {
+            @case ('trim') { Export Trimmed Audio }
+            @case ('remove') { Export Spliced Audio }
+            @case ('split') { Export All Clips (ZIP) }
+          }
+        }
+      </button>
+    }
+  </div>
+</div>
+
+<!-- Hidden audio element for single-track playback -->
+<audio
+  #audioEl
+  (play)="onAudioPlay()"
+  (pause)="onAudioPause()"
+  (ended)="onAudioEnded()"
+  class="hidden"
+  preload="metadata">
+</audio>
