@@ -5,13 +5,11 @@ import {
   signal,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { DragAndDropFileComponent } from '@/app/components/drag-and-drop-file/drag-and-drop-file.component';
 import { FormsModule } from '@angular/forms';
 import { MetadataService } from '@/app/services/metadata.service';
 import { BlobPipe } from '@/app/pipes/blob.pipe';
 import {
-  ImageSegmentationPipelineOutput,
   env,
   AutoModel,
   PreTrainedModel,

@@ -17,22 +17,22 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^22.0.4",
-    "@angular/cdk": "^22.0.3",
-    "@angular/common": "^22.0.4",
-    "@angular/compiler": "^22.0.4",
-    "@angular/core": "^22.0.4",
-    "@angular/forms": "^22.0.4",
-    "@angular/platform-browser": "^22.0.4",
-    "@angular/platform-browser-dynamic": "^22.0.4",
-    "@angular/platform-server": "^22.0.4",
-    "@angular/router": "^22.0.4",
-    "@angular/ssr": "^22.0.5",
+    "@angular/animations": "^22.1.4",
+    "@angular/cdk": "^22.1.4",
+    "@angular/common": "^22.1.4",
+    "@angular/compiler": "^22.1.4",
+    "@angular/core": "^22.1.4",
+    "@angular/forms": "^22.1.4",
+    "@angular/platform-browser": "^22.1.4",
+    "@angular/platform-browser-dynamic": "^22.1.4",
+    "@angular/platform-server": "^22.1.4",
+    "@angular/router": "^22.1.4",
+    "@angular/ssr": "^22.1.4",
     "@diffusionstudio/vits-web": "^1.0.3",
     "@ffmpeg/core": "^0.12.10",
     "@ffmpeg/ffmpeg": "^0.12.10",
     "@ffmpeg/util": "^0.12.2",
-    "@huggingface/transformers": "^3.7.2",
+    "@huggingface/transformers": "^4.2.0",
     "@lucide/angular": "^1.23.0",
     "express": "^4.21.2",
     "front-matter": "^4.0.2",
@@ -56,9 +56,9 @@
     "zone.js": "^0.15.1"
   },
   "devDependencies": {
-    "@angular/build": "^22.0.5",
-    "@angular/cli": "^22.0.5",
-    "@angular/compiler-cli": "^22.0.4",
+    "@angular/build": "^22.1.4",
+    "@angular/cli": "^22.1.4",
+    "@angular/compiler-cli": "^22.1.4",
     "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.49.0",
     "@types/dom-speech-recognition": "^0.0.4",
@@ -75,5 +75,9 @@
     "tailwindcss": "^3.4.17",
     "typescript": "~6.0.3",
     "typescript-eslint": "8.67.0"
+  },
+  "overrides": {
+    "adm-zip": "^0.6.0",
+    "sharp": "^0.35.4"
   }
 }
