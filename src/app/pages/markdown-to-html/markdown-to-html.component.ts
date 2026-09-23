@@ -78,6 +78,7 @@ export class MarkdownToHtmlComponent implements AfterViewInit {
   readonly previewHtml = signal<string>('');
   readonly customCss = signal<string>('');
   readonly activeTab = signal<'preview' | 'code'>('code');
+  readonly mobilePanel = signal<'editor' | 'preview'>('editor');
   readonly isStylesDrawerOpen = signal<boolean>(false);
   readonly selectedPreset = signal<'github' | 'indigo' | 'warm'>('github');
   readonly leftWidthPercent = signal<number>(50);

@@ -1,5 +1,6 @@
-<div class="flex flex-col h-dvh">
+<div class="flex flex-col h-full">
   <app-swagger-editor-toolbar 
+    [(activePanel)]="activePanel"
     (onLoadExample)="loadExampleDefinition()"
     (onClear)="handleClear()"
     (onImportUrl)="handleImportUrl()"
@@ -13,12 +14,12 @@
   <div class="flex-1 min-h-0">
     @if(isBrowser()) {
     <div class="flex w-full h-full min-h-0">
-      <div class="flex-1 min-w-0 min-h-0 border-r border-gray-200">
+      <div [class]="(activePanel() === 'editor' ? 'flex' : 'hidden') + ' md:flex flex-1 min-w-0 min-h-0 border-r border-gray-200 flex-col'">
         <app-monaco-editor class="h-full w-full" [options]="editorOptions()" (onPaste)="handleOnPaste($event)"
           (onEditorLoaded)="handleEditorLoaded($event)" [(code)]="definitionSpec"
           (codeChange)="onContentChanges($event)"></app-monaco-editor>
       </div>
-      <div class="flex-1 min-w-0 min-h-0 overflow-hidden relative">
+      <div [class]="(activePanel() === 'preview' ? 'flex' : 'hidden') + ' md:flex flex-1 min-w-0 min-h-0 overflow-hidden relative flex-col'">
 
         <div class="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-white/80 backdrop-blur-sm"
           [class.invisible]="!isLoading()">

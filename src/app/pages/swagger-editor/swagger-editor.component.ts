@@ -78,6 +78,7 @@ export class SwaggerEditorComponent implements AfterContentInit {
   readonly importUrlInput = signal<string>('');
 
   readonly activeGenerator = signal<GeneratorConfig | null>(null);
+  readonly activePanel = signal<'editor' | 'preview'>('editor');
 
   constructor() {}
 

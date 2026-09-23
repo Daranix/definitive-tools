@@ -1,4 +1,4 @@
-import { Component, output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, model, output, ChangeDetectionStrategy } from '@angular/core';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 
 @Component({
@@ -9,6 +9,7 @@ import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.co
   styleUrl: './swagger-editor-toolbar.component.scss',
 })
 export class SwaggerEditorToolbarComponent {
+  readonly activePanel = model<'editor' | 'preview'>('editor');
   readonly onImportUrl = output<void>();
   readonly onImportFile = output<void>();
   readonly onSaveYaml = output<void>();

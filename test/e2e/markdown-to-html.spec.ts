@@ -21,7 +21,7 @@ test.describe('Markdown to HTML Tool', () => {
 
     const copyBtn = page.getByTestId('md-html-copy-btn');
     await expect(copyBtn).toBeVisible();
-    
+
     // Copy button starts enabled because welcome.md preset text is loaded initially
     await expect(copyBtn).toBeEnabled();
 
@@ -52,5 +52,26 @@ test.describe('Markdown to HTML Tool', () => {
     await expect(card.locator('button[title="Zoom In"]').first()).toBeAttached();
     await expect(card.locator('button[title="Download SVG"]').first()).toBeAttached();
     await expect(card.locator('button[title="Download PNG"]').first()).toBeAttached();
+  });
+
+  test('should toggle between markdown editor and output on mobile viewport', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+
+    const toOutputBtn = page.getByTestId('md-html-mobile-to-output-btn');
+    await expect(toOutputBtn).toBeVisible();
+
+    const leftEditor = page.locator('app-monaco-editor').first();
+    await expect(leftEditor).toBeVisible();
+
+    // Switch to output panel
+    await toOutputBtn.click();
+    await expect(leftEditor).toBeHidden();
+
+    const toEditorBtn = page.getByTestId('md-html-mobile-to-editor-btn');
+    await expect(toEditorBtn).toBeVisible();
+
+    // Switch back to editor panel
+    await toEditorBtn.click();
+    await expect(leftEditor).toBeVisible();
   });
 });

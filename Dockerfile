@@ -1,5 +1,5 @@
 # Runtime stage
-FROM node:24-alpine AS app
+FROM node:26-alpine AS app
 
 WORKDIR /app
 
