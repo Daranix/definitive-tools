@@ -1,0 +1,49 @@
+name: Feature Request / New Tool
+description: Suggest an idea or propose a new tool for Definitive Tools
+title: "[FEATURE]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting an idea! We love adding useful in-browser tools.
+  - type: dropdown
+    id: request-type
+    attributes:
+      label: Request Type
+      description: Is this an improvement to an existing tool or a brand new tool?
+      options:
+        - New Tool Suggestion
+        - Improvement to Existing Tool
+        - UI/UX / Core Enhancement
+    validations:
+      required: true
+  - type: input
+    id: tool-name
+    attributes:
+      label: Tool Name
+      description: Name of the existing tool or suggested tool name.
+      placeholder: e.g. Image Upscaler, Audio Editor
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or Motivation
+      description: What problem would this tool solve or what is missing?
+      placeholder: A clear description of the use case...
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution / Desired Behavior
+      description: Describe how the feature or tool should work.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Any alternative solutions or features you considered.
+

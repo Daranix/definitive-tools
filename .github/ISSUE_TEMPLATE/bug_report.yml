@@ -1,0 +1,75 @@
+name: Bug Report
+description: Create a report to help us improve Definitive Tools
+title: "[BUG]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report an issue! Please provide as much relevant information as possible.
+  - type: dropdown
+    id: tool
+    attributes:
+      label: Affected Tool
+      description: Which tool in the collection is experiencing the problem?
+      options:
+        - None / General App
+        - QR Generator
+        - Base64 Encode / Decode
+        - Image to Base64 Converter
+        - Background Removal Tool
+        - Random Password Generator
+        - JWT Encode / Decoder & Validator
+        - Open Graph Generator
+        - Swagger Editor & Generator
+        - Markdown to HTML
+        - Markdown to Excel
+        - Markdown to PDF
+        - Meme Generator
+        - Image Format Converter
+        - Text to Speech
+        - Audio Editor
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is.
+      placeholder: Describe the problem...
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Steps to reproduce the behavior.
+      placeholder: |
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: A clear and concise description of what you expected to happen.
+    validations:
+      required: true
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots or Logs
+      description: If applicable, add screenshots or console error logs to help explain your problem.
+  - type: input
+    id: environment
+    attributes:
+      label: Browser & OS
+      description: What browser and operating system were you using?
+      placeholder: e.g. Chrome 124 on macOS 14.4 / Windows 11
+    validations:
+      required: false
+
