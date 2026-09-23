@@ -9,13 +9,9 @@ import { DragAndDropFileComponent } from '@/app/components/drag-and-drop-file/dr
 import { FormsModule } from '@angular/forms';
 import { MetadataService } from '@/app/services/metadata.service';
 import { BlobPipe } from '@/app/pipes/blob.pipe';
-import {
-  env,
-  AutoModel,
+import type {
   PreTrainedModel,
-  AutoProcessor,
   Processor,
-  RawImage,
 } from '@huggingface/transformers';
 import { webgl_detect } from '@/app/utils/functions';
 import { ImageComparisonComponent } from '@/app/components/image-comparison/image-comparison.component';
@@ -75,6 +71,9 @@ export class BackgroundRemoverComponent {
 
   async removeBackground() {
     this.loading.set(true);
+    const { env, AutoModel, AutoProcessor, RawImage } = await import(
+      '@huggingface/transformers'
+    );
     const isWebGlAvailable = webgl_detect();
     if (!this.model || !this.processor) {
       env.backends.onnx.wasm!.proxy = true;
