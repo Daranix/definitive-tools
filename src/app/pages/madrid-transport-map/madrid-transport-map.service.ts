@@ -315,13 +315,13 @@ export class MadridTransportMapService {
             wheelchairAccessible: f.properties['wheelchairAccessible'],
             coordinates: f.geometry.coordinates as [number, number]
           });
-        } else if (f.geometry.type === 'LineString' && f.properties?.['type'] === 'line') {
+        } else if ((f.geometry.type === 'LineString' || f.geometry.type === 'MultiLineString') && f.properties?.['type'] === 'line') {
           lines.push({
             network: 'metro',
             line: f.properties['line'],
             name: f.properties['name'] || `Línea ${f.properties['line']}`,
             color: f.properties['color'] || '#00A9E0',
-            coordinates: f.geometry.coordinates as [number, number][]
+            coordinates: (f.geometry.coordinates?.[0] || f.geometry.coordinates) as [number, number][]
           });
         }
       }
@@ -337,13 +337,13 @@ export class MadridTransportMapService {
             wheelchairAccessible: f.properties['wheelchairAccessible'],
             coordinates: f.geometry.coordinates as [number, number]
           });
-        } else if (f.geometry.type === 'LineString' && f.properties?.['type'] === 'line') {
+        } else if ((f.geometry.type === 'LineString' || f.geometry.type === 'MultiLineString') && f.properties?.['type'] === 'line') {
           lines.push({
             network: 'cercanias',
             line: f.properties['line'],
             name: f.properties['name'] || `Línea ${f.properties['line']}`,
             color: f.properties['color'] || '#E4002B',
-            coordinates: f.geometry.coordinates as [number, number][]
+            coordinates: (f.geometry.coordinates?.[0] || f.geometry.coordinates) as [number, number][]
           });
         }
       }
@@ -376,13 +376,13 @@ export class MadridTransportMapService {
             wheelchairAccessible: f.properties?.['wheelchairAccessible'],
             coordinates: f.geometry.coordinates as [number, number]
           });
-        } else if (f.geometry.type === 'LineString' && f.properties?.['type'] === 'line') {
+        } else if ((f.geometry.type === 'LineString' || f.geometry.type === 'MultiLineString') && f.properties?.['type'] === 'line') {
           lines.push({
             network,
             line: f.properties['line'],
             name: f.properties['name'] || `Línea ${f.properties['line']}`,
             color: f.properties['color'] || (network === 'emt' ? '#0284C7' : '#16A34A'),
-            coordinates: f.geometry.coordinates as [number, number][]
+            coordinates: (f.geometry.coordinates?.[0] || f.geometry.coordinates) as [number, number][]
           });
         }
       }

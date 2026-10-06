@@ -1063,7 +1063,8 @@ export class MadridTransportMapComponent implements OnDestroy {
 
     // Extract the line feature and all stops serving this line
     const lineFeatures = (geojson.features || []).filter((f: any) => {
-      if (f.geometry?.type === 'LineString' && f.properties?.line === selected.line) {
+      const isLine = f.geometry?.type === 'LineString' || f.geometry?.type === 'MultiLineString';
+      if (isLine && f.properties?.line === selected.line) {
         return true;
       }
       if (f.geometry?.type === 'Point') {
@@ -1096,6 +1097,15 @@ export class MadridTransportMapComponent implements OnDestroy {
           maxLng = Math.max(maxLng, coord[0]);
           minLat = Math.min(minLat, coord[1]);
           maxLat = Math.max(maxLat, coord[1]);
+        }
+      } else if (f.geometry.type === 'MultiLineString') {
+        for (const segment of f.geometry.coordinates) {
+          for (const coord of segment) {
+            minLng = Math.min(minLng, coord[0]);
+            maxLng = Math.max(maxLng, coord[0]);
+            minLat = Math.min(minLat, coord[1]);
+            maxLat = Math.max(maxLat, coord[1]);
+          }
         }
       } else if (f.geometry.type === 'Point') {
         minLng = Math.min(minLng, f.geometry.coordinates[0]);
