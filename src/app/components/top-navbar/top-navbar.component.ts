@@ -3,6 +3,8 @@ import {
   Component,
   computed,
   inject,
+  input,
+  model,
   signal,
   effect,
   ChangeDetectionStrategy,
@@ -25,10 +27,19 @@ export class TopNavbarComponent {
   readonly toastService = inject(ToastService);
   private readonly githubService = inject(GithubService);
 
+  readonly compact = input<boolean>(false);
+  readonly collapsible = input<boolean>(false);
+  readonly hideHero = input<boolean>(false);
+  readonly isCollapsed = model<boolean>(false);
+
   readonly stars = toSignal(this.githubService.getRepoStars(), { initialValue: 0 });
   readonly info = computed(() => this.getToolInfo());
   readonly isMobileMenuOpen = signal<boolean>(false);
   readonly isFavorite = signal<boolean>(false);
+
+  toggleCollapse() {
+    this.isCollapsed.set(!this.isCollapsed());
+  }
 
   constructor() {
     effect(() => {

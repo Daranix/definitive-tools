@@ -1,0 +1,4023 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "metro-line-1",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -3.6669,
+            40.4801
+          ],
+          [
+            -3.6766,
+            40.4768
+          ],
+          [
+            -3.6823,
+            40.4721
+          ],
+          [
+            -3.6892,
+            40.4667
+          ],
+          [
+            -3.6961,
+            40.4639
+          ],
+          [
+            -3.6983,
+            40.4601
+          ],
+          [
+            -3.7018,
+            40.4536
+          ],
+          [
+            -3.7031,
+            40.4501
+          ],
+          [
+            -3.7042,
+            40.4468
+          ],
+          [
+            -3.7011,
+            40.4414
+          ],
+          [
+            -3.6998,
+            40.4352
+          ],
+          [
+            -3.7022,
+            40.4289
+          ],
+          [
+            -3.7008,
+            40.4261
+          ],
+          [
+            -3.7015,
+            40.4201
+          ],
+          [
+            -3.7038,
+            40.4168
+          ],
+          [
+            -3.7049,
+            40.4124
+          ],
+          [
+            -3.6992,
+            40.4121
+          ],
+          [
+            -3.6934,
+            40.4088
+          ],
+          [
+            -3.6922,
+            40.4065
+          ],
+          [
+            -3.6791,
+            40.4034
+          ],
+          [
+            -3.6749,
+            40.4007
+          ],
+          [
+            -3.6685,
+            40.3982
+          ],
+          [
+            -3.6624,
+            40.3955
+          ],
+          [
+            -3.6565,
+            40.3927
+          ],
+          [
+            -3.6508,
+            40.3905
+          ],
+          [
+            -3.6455,
+            40.3887
+          ],
+          [
+            -3.6401,
+            40.3869
+          ],
+          [
+            -3.6267,
+            40.3875
+          ],
+          [
+            -3.6202,
+            40.3792
+          ],
+          [
+            -3.6151,
+            40.3725
+          ],
+          [
+            -3.6082,
+            40.3672
+          ],
+          [
+            -3.5991,
+            40.3621
+          ],
+          [
+            -3.5898,
+            40.3582
+          ]
+        ]
+      },
+      "properties": {
+        "type": "line",
+        "network": "metro",
+        "line": "1",
+        "name": "Línea 1 (Pinar de Chamartín - Valdecarros)",
+        "color": "#00A9E0"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-line-2",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -3.7042,
+            40.4468
+          ],
+          [
+            -3.7047,
+            40.4397
+          ],
+          [
+            -3.7051,
+            40.4338
+          ],
+          [
+            -3.7061,
+            40.4299
+          ],
+          [
+            -3.7078,
+            40.4252
+          ],
+          [
+            -3.7089,
+            40.4208
+          ],
+          [
+            -3.7099,
+            40.4181
+          ],
+          [
+            -3.7038,
+            40.4168
+          ],
+          [
+            -3.6997,
+            40.4174
+          ],
+          [
+            -3.6948,
+            40.4189
+          ],
+          [
+            -3.6875,
+            40.4209
+          ],
+          [
+            -3.6798,
+            40.4225
+          ],
+          [
+            -3.6749,
+            40.4243
+          ],
+          [
+            -3.6672,
+            40.4298
+          ],
+          [
+            -3.6625,
+            40.4312
+          ],
+          [
+            -3.6521,
+            40.4278
+          ],
+          [
+            -3.6398,
+            40.4241
+          ],
+          [
+            -3.6265,
+            40.4198
+          ],
+          [
+            -3.6142,
+            40.4231
+          ],
+          [
+            -3.6021,
+            40.4265
+          ]
+        ]
+      },
+      "properties": {
+        "type": "line",
+        "network": "metro",
+        "line": "2",
+        "name": "Línea 2 (Cuatro Caminos - Las Rosas)",
+        "color": "#E4002B"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-line-3",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -3.7196,
+            40.4354
+          ],
+          [
+            -3.7158,
+            40.4308
+          ],
+          [
+            -3.7121,
+            40.4267
+          ],
+          [
+            -3.7126,
+            40.4234
+          ],
+          [
+            -3.7058,
+            40.4202
+          ],
+          [
+            -3.7038,
+            40.4168
+          ],
+          [
+            -3.7011,
+            40.4089
+          ],
+          [
+            -3.7029,
+            40.4052
+          ],
+          [
+            -3.6958,
+            40.4025
+          ],
+          [
+            -3.6931,
+            40.3982
+          ],
+          [
+            -3.6951,
+            40.3912
+          ],
+          [
+            -3.7001,
+            40.3842
+          ],
+          [
+            -3.6985,
+            40.3778
+          ],
+          [
+            -3.6961,
+            40.3705
+          ],
+          [
+            -3.6952,
+            40.3601
+          ],
+          [
+            -3.6981,
+            40.3518
+          ],
+          [
+            -3.6931,
+            40.3445
+          ],
+          [
+            -3.7108,
+            40.3421
+          ]
+        ]
+      },
+      "properties": {
+        "type": "line",
+        "network": "metro",
+        "line": "3",
+        "name": "Línea 3 (Moncloa - Villaverde Alto)",
+        "color": "#FFCC00"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-line-6",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -3.7042,
+            40.4468
+          ],
+          [
+            -3.6917,
+            40.4464
+          ],
+          [
+            -3.6828,
+            40.4442
+          ],
+          [
+            -3.6769,
+            40.4381
+          ],
+          [
+            -3.6751,
+            40.4335
+          ],
+          [
+            -3.6672,
+            40.4298
+          ],
+          [
+            -3.6651,
+            40.4218
+          ],
+          [
+            -3.6698,
+            40.4149
+          ],
+          [
+            -3.6719,
+            40.4072
+          ],
+          [
+            -3.6749,
+            40.4007
+          ],
+          [
+            -3.6781,
+            40.3956
+          ],
+          [
+            -3.6881,
+            40.3921
+          ],
+          [
+            -3.6951,
+            40.3912
+          ],
+          [
+            -3.7071,
+            40.3881
+          ],
+          [
+            -3.7181,
+            40.3852
+          ],
+          [
+            -3.7221,
+            40.3879
+          ],
+          [
+            -3.7311,
+            40.3888
+          ],
+          [
+            -3.7412,
+            40.3929
+          ],
+          [
+            -3.7451,
+            40.3992
+          ],
+          [
+            -3.7421,
+            40.4055
+          ],
+          [
+            -3.7335,
+            40.4109
+          ],
+          [
+            -3.7275,
+            40.4132
+          ],
+          [
+            -3.7198,
+            40.4208
+          ],
+          [
+            -3.7158,
+            40.4308
+          ],
+          [
+            -3.7196,
+            40.4354
+          ],
+          [
+            -3.7258,
+            40.4439
+          ],
+          [
+            -3.7188,
+            40.4475
+          ],
+          [
+            -3.7121,
+            40.4461
+          ]
+        ]
+      },
+      "properties": {
+        "type": "line",
+        "network": "metro",
+        "line": "6",
+        "name": "Línea 6 (Circular)",
+        "color": "#A1A5A8"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-line-8",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -3.6917,
+            40.4464
+          ],
+          [
+            -3.6775,
+            40.4571
+          ],
+          [
+            -3.6558,
+            40.4682
+          ],
+          [
+            -3.6382,
+            40.4695
+          ],
+          [
+            -3.6152,
+            40.4645
+          ],
+          [
+            -3.5786,
+            40.4682
+          ],
+          [
+            -3.5825,
+            40.4761
+          ],
+          [
+            -3.5932,
+            40.4918
+          ]
+        ]
+      },
+      "properties": {
+        "type": "line",
+        "network": "metro",
+        "line": "8",
+        "name": "Línea 8 (Nuevos Ministerios - Aeropuerto T4)",
+        "color": "#F184B7"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-line-10",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -3.6148,
+            40.5592
+          ],
+          [
+            -3.6275,
+            40.5518
+          ],
+          [
+            -3.6338,
+            40.5482
+          ],
+          [
+            -3.6391,
+            40.5428
+          ],
+          [
+            -3.6512,
+            40.5312
+          ],
+          [
+            -3.6625,
+            40.5175
+          ],
+          [
+            -3.6698,
+            40.5085
+          ],
+          [
+            -3.6895,
+            40.5051
+          ],
+          [
+            -3.6938,
+            40.4988
+          ],
+          [
+            -3.6922,
+            40.4912
+          ],
+          [
+            -3.6872,
+            40.4811
+          ],
+          [
+            -3.6823,
+            40.4721
+          ],
+          [
+            -3.6892,
+            40.4667
+          ],
+          [
+            -3.6901,
+            40.4582
+          ],
+          [
+            -3.6911,
+            40.4521
+          ],
+          [
+            -3.6917,
+            40.4464
+          ],
+          [
+            -3.6919,
+            40.4372
+          ],
+          [
+            -3.6958,
+            40.4281
+          ],
+          [
+            -3.7008,
+            40.4261
+          ],
+          [
+            -3.7126,
+            40.4234
+          ],
+          [
+            -3.7198,
+            40.4208
+          ],
+          [
+            -3.7365,
+            40.4172
+          ],
+          [
+            -3.7531,
+            40.4068
+          ],
+          [
+            -3.7582,
+            40.4172
+          ],
+          [
+            -3.7745,
+            40.3981
+          ],
+          [
+            -3.7845,
+            40.3842
+          ],
+          [
+            -3.7938,
+            40.3732
+          ],
+          [
+            -3.8112,
+            40.3582
+          ],
+          [
+            -3.8242,
+            40.3475
+          ]
+        ]
+      },
+      "properties": {
+        "type": "line",
+        "network": "metro",
+        "line": "10",
+        "name": "Línea 10 (Hospital Infanta Sofía - Puerta del Sur)",
+        "color": "#002D72"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-line-12",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -3.8242,
+            40.3475
+          ],
+          [
+            -3.7745,
+            40.3342
+          ],
+          [
+            -3.7663,
+            40.3308
+          ],
+          [
+            -3.7582,
+            40.3242
+          ],
+          [
+            -3.7621,
+            40.3201
+          ],
+          [
+            -3.7681,
+            40.3152
+          ],
+          [
+            -3.7612,
+            40.3105
+          ],
+          [
+            -3.7198,
+            40.3168
+          ],
+          [
+            -3.7242,
+            40.3112
+          ],
+          [
+            -3.7315,
+            40.3075
+          ],
+          [
+            -3.7365,
+            40.2982
+          ],
+          [
+            -3.7425,
+            40.2921
+          ],
+          [
+            -3.7512,
+            40.2865
+          ],
+          [
+            -3.7825,
+            40.2842
+          ],
+          [
+            -3.7937,
+            40.2828
+          ],
+          [
+            -3.8052,
+            40.2812
+          ],
+          [
+            -3.8198,
+            40.2835
+          ],
+          [
+            -3.8375,
+            40.2952
+          ],
+          [
+            -3.8542,
+            40.3082
+          ],
+          [
+            -3.8612,
+            40.3155
+          ],
+          [
+            -3.8642,
+            40.3201
+          ],
+          [
+            -3.8646,
+            40.3235
+          ],
+          [
+            -3.8682,
+            40.3335
+          ],
+          [
+            -3.8475,
+            40.3421
+          ],
+          [
+            -3.8291,
+            40.3486
+          ]
+        ]
+      },
+      "properties": {
+        "type": "line",
+        "network": "metro",
+        "line": "12",
+        "name": "Línea 12 (MetroSur)",
+        "color": "#B1A934"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-pinar-de-chamart-n",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6669,
+          40.4801
+        ]
+      },
+      "properties": {
+        "id": "metro-st-pinar-de-chamart-n",
+        "name": "Pinar de Chamartín",
+        "network": "metro",
+        "lines": [
+          "1",
+          "4"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-bamb-",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6766,
+          40.4768
+        ]
+      },
+      "properties": {
+        "id": "metro-st-bamb-",
+        "name": "Bambú",
+        "network": "metro",
+        "lines": [
+          "1"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-chamart-n",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6823,
+          40.4721
+        ]
+      },
+      "properties": {
+        "id": "metro-st-chamart-n",
+        "name": "Chamartín",
+        "network": "metro",
+        "lines": [
+          "1",
+          "10",
+          "C-1",
+          "C-2",
+          "C-3",
+          "C-4",
+          "C-7",
+          "C-8",
+          "C-10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-plaza-de-castilla",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6892,
+          40.4667
+        ]
+      },
+      "properties": {
+        "id": "metro-st-plaza-de-castilla",
+        "name": "Plaza de Castilla",
+        "network": "metro",
+        "lines": [
+          "1",
+          "9",
+          "10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-valdeacederas",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6961,
+          40.4639
+        ]
+      },
+      "properties": {
+        "id": "metro-st-valdeacederas",
+        "name": "Valdeacederas",
+        "network": "metro",
+        "lines": [
+          "1"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-tetu-n",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6983,
+          40.4601
+        ]
+      },
+      "properties": {
+        "id": "metro-st-tetu-n",
+        "name": "Tetuán",
+        "network": "metro",
+        "lines": [
+          "1"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-estrecho",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7018,
+          40.4536
+        ]
+      },
+      "properties": {
+        "id": "metro-st-estrecho",
+        "name": "Estrecho",
+        "network": "metro",
+        "lines": [
+          "1"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-alvarado",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7031,
+          40.4501
+        ]
+      },
+      "properties": {
+        "id": "metro-st-alvarado",
+        "name": "Alvarado",
+        "network": "metro",
+        "lines": [
+          "1"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-cuatro-caminos",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7042,
+          40.4468
+        ]
+      },
+      "properties": {
+        "id": "metro-st-cuatro-caminos",
+        "name": "Cuatro Caminos",
+        "network": "metro",
+        "lines": [
+          "1",
+          "2",
+          "6"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-r-os-rosas",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7011,
+          40.4414
+        ]
+      },
+      "properties": {
+        "id": "metro-st-r-os-rosas",
+        "name": "Ríos Rosas",
+        "network": "metro",
+        "lines": [
+          "1"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-iglesia",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6998,
+          40.4352
+        ]
+      },
+      "properties": {
+        "id": "metro-st-iglesia",
+        "name": "Iglesia",
+        "network": "metro",
+        "lines": [
+          "1"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-bilbao",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7022,
+          40.4289
+        ]
+      },
+      "properties": {
+        "id": "metro-st-bilbao",
+        "name": "Bilbao",
+        "network": "metro",
+        "lines": [
+          "1",
+          "4"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-tribunal",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7008,
+          40.4261
+        ]
+      },
+      "properties": {
+        "id": "metro-st-tribunal",
+        "name": "Tribunal",
+        "network": "metro",
+        "lines": [
+          "1",
+          "10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-gran-v-a",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7015,
+          40.4201
+        ]
+      },
+      "properties": {
+        "id": "metro-st-gran-v-a",
+        "name": "Gran Vía",
+        "network": "metro",
+        "lines": [
+          "1",
+          "5"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-sol",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7038,
+          40.4168
+        ]
+      },
+      "properties": {
+        "id": "metro-st-sol",
+        "name": "Sol",
+        "network": "metro",
+        "lines": [
+          "1",
+          "2",
+          "3"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-tirso-de-molina",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7049,
+          40.4124
+        ]
+      },
+      "properties": {
+        "id": "metro-st-tirso-de-molina",
+        "name": "Tirso de Molina",
+        "network": "metro",
+        "lines": [
+          "1"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-ant-n-mart-n",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6992,
+          40.4121
+        ]
+      },
+      "properties": {
+        "id": "metro-st-ant-n-mart-n",
+        "name": "Antón Martín",
+        "network": "metro",
+        "lines": [
+          "1"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-estaci-n-del-arte",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6934,
+          40.4088
+        ]
+      },
+      "properties": {
+        "id": "metro-st-estaci-n-del-arte",
+        "name": "Estación del Arte",
+        "network": "metro",
+        "lines": [
+          "1"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-atocha",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6922,
+          40.4065
+        ]
+      },
+      "properties": {
+        "id": "metro-st-atocha",
+        "name": "Atocha",
+        "network": "metro",
+        "lines": [
+          "1",
+          "C-1",
+          "C-2",
+          "C-3",
+          "C-4",
+          "C-5",
+          "C-7",
+          "C-10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-men-ndez-pelayo",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6791,
+          40.4034
+        ]
+      },
+      "properties": {
+        "id": "metro-st-men-ndez-pelayo",
+        "name": "Menéndez Pelayo",
+        "network": "metro",
+        "lines": [
+          "1"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-pac-fico",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6749,
+          40.4007
+        ]
+      },
+      "properties": {
+        "id": "metro-st-pac-fico",
+        "name": "Pacífico",
+        "network": "metro",
+        "lines": [
+          "1",
+          "6"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-puente-de-vallecas",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6685,
+          40.3982
+        ]
+      },
+      "properties": {
+        "id": "metro-st-puente-de-vallecas",
+        "name": "Puente de Vallecas",
+        "network": "metro",
+        "lines": [
+          "1"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-nueva-numancia",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6624,
+          40.3955
+        ]
+      },
+      "properties": {
+        "id": "metro-st-nueva-numancia",
+        "name": "Nueva Numancia",
+        "network": "metro",
+        "lines": [
+          "1"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-portazgo",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6565,
+          40.3927
+        ]
+      },
+      "properties": {
+        "id": "metro-st-portazgo",
+        "name": "Portazgo",
+        "network": "metro",
+        "lines": [
+          "1"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-buenos-aires",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6508,
+          40.3905
+        ]
+      },
+      "properties": {
+        "id": "metro-st-buenos-aires",
+        "name": "Buenos Aires",
+        "network": "metro",
+        "lines": [
+          "1"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-alto-del-arenal",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6455,
+          40.3887
+        ]
+      },
+      "properties": {
+        "id": "metro-st-alto-del-arenal",
+        "name": "Alto del Arenal",
+        "network": "metro",
+        "lines": [
+          "1"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-miguel-hern-ndez",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6401,
+          40.3869
+        ]
+      },
+      "properties": {
+        "id": "metro-st-miguel-hern-ndez",
+        "name": "Miguel Hernández",
+        "network": "metro",
+        "lines": [
+          "1"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-sierra-de-guadalupe",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6267,
+          40.3875
+        ]
+      },
+      "properties": {
+        "id": "metro-st-sierra-de-guadalupe",
+        "name": "Sierra de Guadalupe",
+        "network": "metro",
+        "lines": [
+          "1",
+          "C-2",
+          "C-7",
+          "C-8"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-villa-de-vallecas",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6202,
+          40.3792
+        ]
+      },
+      "properties": {
+        "id": "metro-st-villa-de-vallecas",
+        "name": "Villa de Vallecas",
+        "network": "metro",
+        "lines": [
+          "1"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-congosto",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6151,
+          40.3725
+        ]
+      },
+      "properties": {
+        "id": "metro-st-congosto",
+        "name": "Congosto",
+        "network": "metro",
+        "lines": [
+          "1"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-la-gavia",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6082,
+          40.3672
+        ]
+      },
+      "properties": {
+        "id": "metro-st-la-gavia",
+        "name": "La Gavia",
+        "network": "metro",
+        "lines": [
+          "1"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-las-suertes",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.5991,
+          40.3621
+        ]
+      },
+      "properties": {
+        "id": "metro-st-las-suertes",
+        "name": "Las Suertes",
+        "network": "metro",
+        "lines": [
+          "1"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-valdecarros",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.5898,
+          40.3582
+        ]
+      },
+      "properties": {
+        "id": "metro-st-valdecarros",
+        "name": "Valdecarros",
+        "network": "metro",
+        "lines": [
+          "1"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-canal",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7047,
+          40.4397
+        ]
+      },
+      "properties": {
+        "id": "metro-st-canal",
+        "name": "Canal",
+        "network": "metro",
+        "lines": [
+          "2",
+          "7"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-quevedo",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7051,
+          40.4338
+        ]
+      },
+      "properties": {
+        "id": "metro-st-quevedo",
+        "name": "Quevedo",
+        "network": "metro",
+        "lines": [
+          "2"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-san-bernardo",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7061,
+          40.4299
+        ]
+      },
+      "properties": {
+        "id": "metro-st-san-bernardo",
+        "name": "San Bernardo",
+        "network": "metro",
+        "lines": [
+          "2",
+          "4"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-noviciado",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7078,
+          40.4252
+        ]
+      },
+      "properties": {
+        "id": "metro-st-noviciado",
+        "name": "Noviciado",
+        "network": "metro",
+        "lines": [
+          "2",
+          "3",
+          "10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-santo-domingo",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7089,
+          40.4208
+        ]
+      },
+      "properties": {
+        "id": "metro-st-santo-domingo",
+        "name": "Santo Domingo",
+        "network": "metro",
+        "lines": [
+          "2"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st--pera",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7099,
+          40.4181
+        ]
+      },
+      "properties": {
+        "id": "metro-st--pera",
+        "name": "Ópera",
+        "network": "metro",
+        "lines": [
+          "2",
+          "5",
+          "Ramal"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-sevilla",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6997,
+          40.4174
+        ]
+      },
+      "properties": {
+        "id": "metro-st-sevilla",
+        "name": "Sevilla",
+        "network": "metro",
+        "lines": [
+          "2"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-banco-de-espa-a",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6948,
+          40.4189
+        ]
+      },
+      "properties": {
+        "id": "metro-st-banco-de-espa-a",
+        "name": "Banco de España",
+        "network": "metro",
+        "lines": [
+          "2"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-retiro",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6875,
+          40.4209
+        ]
+      },
+      "properties": {
+        "id": "metro-st-retiro",
+        "name": "Retiro",
+        "network": "metro",
+        "lines": [
+          "2"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-pr-ncipe-de-vergara",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6798,
+          40.4225
+        ]
+      },
+      "properties": {
+        "id": "metro-st-pr-ncipe-de-vergara",
+        "name": "Príncipe de Vergara",
+        "network": "metro",
+        "lines": [
+          "2",
+          "9"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-goya",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6749,
+          40.4243
+        ]
+      },
+      "properties": {
+        "id": "metro-st-goya",
+        "name": "Goya",
+        "network": "metro",
+        "lines": [
+          "2",
+          "4"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-manuel-becerra",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6672,
+          40.4298
+        ]
+      },
+      "properties": {
+        "id": "metro-st-manuel-becerra",
+        "name": "Manuel Becerra",
+        "network": "metro",
+        "lines": [
+          "2",
+          "6"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-ventas",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6625,
+          40.4312
+        ]
+      },
+      "properties": {
+        "id": "metro-st-ventas",
+        "name": "Ventas",
+        "network": "metro",
+        "lines": [
+          "2",
+          "5"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-la-elipa",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6521,
+          40.4278
+        ]
+      },
+      "properties": {
+        "id": "metro-st-la-elipa",
+        "name": "La Elipa",
+        "network": "metro",
+        "lines": [
+          "2"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-la-almudena",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6398,
+          40.4241
+        ]
+      },
+      "properties": {
+        "id": "metro-st-la-almudena",
+        "name": "La Almudena",
+        "network": "metro",
+        "lines": [
+          "2"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-alsacia",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6265,
+          40.4198
+        ]
+      },
+      "properties": {
+        "id": "metro-st-alsacia",
+        "name": "Alsacia",
+        "network": "metro",
+        "lines": [
+          "2"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-guadalajara",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6142,
+          40.4231
+        ]
+      },
+      "properties": {
+        "id": "metro-st-guadalajara",
+        "name": "Guadalajara",
+        "network": "metro",
+        "lines": [
+          "2"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-las-rosas",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6021,
+          40.4265
+        ]
+      },
+      "properties": {
+        "id": "metro-st-las-rosas",
+        "name": "Las Rosas",
+        "network": "metro",
+        "lines": [
+          "2"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-moncloa",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7196,
+          40.4354
+        ]
+      },
+      "properties": {
+        "id": "metro-st-moncloa",
+        "name": "Moncloa",
+        "network": "metro",
+        "lines": [
+          "3",
+          "6"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-arg-elles",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7158,
+          40.4308
+        ]
+      },
+      "properties": {
+        "id": "metro-st-arg-elles",
+        "name": "Argüelles",
+        "network": "metro",
+        "lines": [
+          "3",
+          "4",
+          "6"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-ventura-rodr-guez",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7121,
+          40.4267
+        ]
+      },
+      "properties": {
+        "id": "metro-st-ventura-rodr-guez",
+        "name": "Ventura Rodríguez",
+        "network": "metro",
+        "lines": [
+          "3"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-plaza-de-espa-a",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7126,
+          40.4234
+        ]
+      },
+      "properties": {
+        "id": "metro-st-plaza-de-espa-a",
+        "name": "Plaza de España",
+        "network": "metro",
+        "lines": [
+          "3",
+          "10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-callao",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7058,
+          40.4202
+        ]
+      },
+      "properties": {
+        "id": "metro-st-callao",
+        "name": "Callao",
+        "network": "metro",
+        "lines": [
+          "3",
+          "5"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-lavapi-s",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7011,
+          40.4089
+        ]
+      },
+      "properties": {
+        "id": "metro-st-lavapi-s",
+        "name": "Lavapiés",
+        "network": "metro",
+        "lines": [
+          "3"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-embajadores",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7029,
+          40.4052
+        ]
+      },
+      "properties": {
+        "id": "metro-st-embajadores",
+        "name": "Embajadores",
+        "network": "metro",
+        "lines": [
+          "3",
+          "C-5"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-palos-de-la-frontera",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6958,
+          40.4025
+        ]
+      },
+      "properties": {
+        "id": "metro-st-palos-de-la-frontera",
+        "name": "Palos de la Frontera",
+        "network": "metro",
+        "lines": [
+          "3"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-delicias",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6931,
+          40.3982
+        ]
+      },
+      "properties": {
+        "id": "metro-st-delicias",
+        "name": "Delicias",
+        "network": "metro",
+        "lines": [
+          "3",
+          "C-1",
+          "C-10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-legazpi",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6951,
+          40.3912
+        ]
+      },
+      "properties": {
+        "id": "metro-st-legazpi",
+        "name": "Legazpi",
+        "network": "metro",
+        "lines": [
+          "3",
+          "6"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-almendrales",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7001,
+          40.3842
+        ]
+      },
+      "properties": {
+        "id": "metro-st-almendrales",
+        "name": "Almendrales",
+        "network": "metro",
+        "lines": [
+          "3"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-hospital-12-de-octubre",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6985,
+          40.3778
+        ]
+      },
+      "properties": {
+        "id": "metro-st-hospital-12-de-octubre",
+        "name": "Hospital 12 de Octubre",
+        "network": "metro",
+        "lines": [
+          "3"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-san-ferm-n-orcasur",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6961,
+          40.3705
+        ]
+      },
+      "properties": {
+        "id": "metro-st-san-ferm-n-orcasur",
+        "name": "San Fermín-Orcasur",
+        "network": "metro",
+        "lines": [
+          "3"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-ciudad-de-los--ngeles",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6952,
+          40.3601
+        ]
+      },
+      "properties": {
+        "id": "metro-st-ciudad-de-los--ngeles",
+        "name": "Ciudad de los Ángeles",
+        "network": "metro",
+        "lines": [
+          "3"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-villaverde-bajo-cruce",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6981,
+          40.3518
+        ]
+      },
+      "properties": {
+        "id": "metro-st-villaverde-bajo-cruce",
+        "name": "Villaverde Bajo-Cruce",
+        "network": "metro",
+        "lines": [
+          "3"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-san-crist-bal",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6931,
+          40.3445
+        ]
+      },
+      "properties": {
+        "id": "metro-st-san-crist-bal",
+        "name": "San Cristóbal",
+        "network": "metro",
+        "lines": [
+          "3"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-villaverde-alto",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7108,
+          40.3421
+        ]
+      },
+      "properties": {
+        "id": "metro-st-villaverde-alto",
+        "name": "Villaverde Alto",
+        "network": "metro",
+        "lines": [
+          "3",
+          "C-4",
+          "C-5"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-nuevos-ministerios",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6917,
+          40.4464
+        ]
+      },
+      "properties": {
+        "id": "metro-st-nuevos-ministerios",
+        "name": "Nuevos Ministerios",
+        "network": "metro",
+        "lines": [
+          "6",
+          "8",
+          "10",
+          "C-1",
+          "C-2",
+          "C-3",
+          "C-4",
+          "C-7",
+          "C-8",
+          "C-10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-rep-blica-argentina",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6828,
+          40.4442
+        ]
+      },
+      "properties": {
+        "id": "metro-st-rep-blica-argentina",
+        "name": "República Argentina",
+        "network": "metro",
+        "lines": [
+          "6"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-avenida-de-am-rica",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6769,
+          40.4381
+        ]
+      },
+      "properties": {
+        "id": "metro-st-avenida-de-am-rica",
+        "name": "Avenida de América",
+        "network": "metro",
+        "lines": [
+          "4",
+          "6",
+          "7",
+          "9"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-diego-de-le-n",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6751,
+          40.4335
+        ]
+      },
+      "properties": {
+        "id": "metro-st-diego-de-le-n",
+        "name": "Diego de León",
+        "network": "metro",
+        "lines": [
+          "4",
+          "5",
+          "6"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-o-donnell",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6651,
+          40.4218
+        ]
+      },
+      "properties": {
+        "id": "metro-st-o-donnell",
+        "name": "O'Donnell",
+        "network": "metro",
+        "lines": [
+          "6"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-sainz-de-baranda",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6698,
+          40.4149
+        ]
+      },
+      "properties": {
+        "id": "metro-st-sainz-de-baranda",
+        "name": "Sainz de Baranda",
+        "network": "metro",
+        "lines": [
+          "6",
+          "9"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-conde-de-casal",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6719,
+          40.4072
+        ]
+      },
+      "properties": {
+        "id": "metro-st-conde-de-casal",
+        "name": "Conde de Casal",
+        "network": "metro",
+        "lines": [
+          "6"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-m-ndez--lvaro",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6781,
+          40.3956
+        ]
+      },
+      "properties": {
+        "id": "metro-st-m-ndez--lvaro",
+        "name": "Méndez Álvaro",
+        "network": "metro",
+        "lines": [
+          "6",
+          "C-1",
+          "C-5",
+          "C-7",
+          "C-10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-arganzuela-planetario",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6881,
+          40.3921
+        ]
+      },
+      "properties": {
+        "id": "metro-st-arganzuela-planetario",
+        "name": "Arganzuela-Planetario",
+        "network": "metro",
+        "lines": [
+          "6"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-usera",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7071,
+          40.3881
+        ]
+      },
+      "properties": {
+        "id": "metro-st-usera",
+        "name": "Usera",
+        "network": "metro",
+        "lines": [
+          "6"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-plaza-el-ptica",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7181,
+          40.3852
+        ]
+      },
+      "properties": {
+        "id": "metro-st-plaza-el-ptica",
+        "name": "Plaza Elíptica",
+        "network": "metro",
+        "lines": [
+          "6",
+          "11"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-opa-el",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7221,
+          40.3879
+        ]
+      },
+      "properties": {
+        "id": "metro-st-opa-el",
+        "name": "Opañel",
+        "network": "metro",
+        "lines": [
+          "6"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-oporto",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7311,
+          40.3888
+        ]
+      },
+      "properties": {
+        "id": "metro-st-oporto",
+        "name": "Oporto",
+        "network": "metro",
+        "lines": [
+          "5",
+          "6"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-carpetana",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7412,
+          40.3929
+        ]
+      },
+      "properties": {
+        "id": "metro-st-carpetana",
+        "name": "Carpetana",
+        "network": "metro",
+        "lines": [
+          "6"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-laguna",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7451,
+          40.3992
+        ]
+      },
+      "properties": {
+        "id": "metro-st-laguna",
+        "name": "Laguna",
+        "network": "metro",
+        "lines": [
+          "6",
+          "C-5"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-lucero",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7421,
+          40.4055
+        ]
+      },
+      "properties": {
+        "id": "metro-st-lucero",
+        "name": "Lucero",
+        "network": "metro",
+        "lines": [
+          "6"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-alto-de-extremadura",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7335,
+          40.4109
+        ]
+      },
+      "properties": {
+        "id": "metro-st-alto-de-extremadura",
+        "name": "Alto de Extremadura",
+        "network": "metro",
+        "lines": [
+          "6"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-puerta-del--ngel",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7275,
+          40.4132
+        ]
+      },
+      "properties": {
+        "id": "metro-st-puerta-del--ngel",
+        "name": "Puerta del Ángel",
+        "network": "metro",
+        "lines": [
+          "6"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-pr-ncipe-p-o",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7198,
+          40.4208
+        ]
+      },
+      "properties": {
+        "id": "metro-st-pr-ncipe-p-o",
+        "name": "Príncipe Pío",
+        "network": "metro",
+        "lines": [
+          "6",
+          "10",
+          "Ramal",
+          "C-1",
+          "C-7",
+          "C-10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-ciudad-universitaria",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7258,
+          40.4439
+        ]
+      },
+      "properties": {
+        "id": "metro-st-ciudad-universitaria",
+        "name": "Ciudad Universitaria",
+        "network": "metro",
+        "lines": [
+          "6"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-metropolitano",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7188,
+          40.4475
+        ]
+      },
+      "properties": {
+        "id": "metro-st-metropolitano",
+        "name": "Metropolitano",
+        "network": "metro",
+        "lines": [
+          "6"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-guzm-n-el-bueno",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7121,
+          40.4461
+        ]
+      },
+      "properties": {
+        "id": "metro-st-guzm-n-el-bueno",
+        "name": "Guzmán el Bueno",
+        "network": "metro",
+        "lines": [
+          "6",
+          "7"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-colombia",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6775,
+          40.4571
+        ]
+      },
+      "properties": {
+        "id": "metro-st-colombia",
+        "name": "Colombia",
+        "network": "metro",
+        "lines": [
+          "8",
+          "9"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-pinar-del-rey",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6558,
+          40.4682
+        ]
+      },
+      "properties": {
+        "id": "metro-st-pinar-del-rey",
+        "name": "Pinar del Rey",
+        "network": "metro",
+        "lines": [
+          "8"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-mar-de-cristal",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6382,
+          40.4695
+        ]
+      },
+      "properties": {
+        "id": "metro-st-mar-de-cristal",
+        "name": "Mar de Cristal",
+        "network": "metro",
+        "lines": [
+          "4",
+          "8"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-feria-de-madrid",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6152,
+          40.4645
+        ]
+      },
+      "properties": {
+        "id": "metro-st-feria-de-madrid",
+        "name": "Feria de Madrid",
+        "network": "metro",
+        "lines": [
+          "8"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-aeropuerto-t1-t2-t3",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.5786,
+          40.4682
+        ]
+      },
+      "properties": {
+        "id": "metro-st-aeropuerto-t1-t2-t3",
+        "name": "Aeropuerto T1-T2-T3",
+        "network": "metro",
+        "lines": [
+          "8"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-barajas",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.5825,
+          40.4761
+        ]
+      },
+      "properties": {
+        "id": "metro-st-barajas",
+        "name": "Barajas",
+        "network": "metro",
+        "lines": [
+          "8"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-aeropuerto-t4",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.5932,
+          40.4918
+        ]
+      },
+      "properties": {
+        "id": "metro-st-aeropuerto-t4",
+        "name": "Aeropuerto T4",
+        "network": "metro",
+        "lines": [
+          "8",
+          "C-1",
+          "C-10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-hospital-infanta-sof-a",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6148,
+          40.5592
+        ]
+      },
+      "properties": {
+        "id": "metro-st-hospital-infanta-sof-a",
+        "name": "Hospital Infanta Sofía",
+        "network": "metro",
+        "lines": [
+          "10"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-baunatal",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6275,
+          40.5518
+        ]
+      },
+      "properties": {
+        "id": "metro-st-baunatal",
+        "name": "Baunatal",
+        "network": "metro",
+        "lines": [
+          "10"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-manuel-de-falla",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6338,
+          40.5482
+        ]
+      },
+      "properties": {
+        "id": "metro-st-manuel-de-falla",
+        "name": "Manuel de Falla",
+        "network": "metro",
+        "lines": [
+          "10"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-marqu-s-de-la-valdavia",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6391,
+          40.5428
+        ]
+      },
+      "properties": {
+        "id": "metro-st-marqu-s-de-la-valdavia",
+        "name": "Marqués de la Valdavia",
+        "network": "metro",
+        "lines": [
+          "10"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-la-moraleja",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6512,
+          40.5312
+        ]
+      },
+      "properties": {
+        "id": "metro-st-la-moraleja",
+        "name": "La Moraleja",
+        "network": "metro",
+        "lines": [
+          "10"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-ronda-de-la-comunicaci-n",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6625,
+          40.5175
+        ]
+      },
+      "properties": {
+        "id": "metro-st-ronda-de-la-comunicaci-n",
+        "name": "Ronda de la Comunicación",
+        "network": "metro",
+        "lines": [
+          "10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-las-tablas",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6698,
+          40.5085
+        ]
+      },
+      "properties": {
+        "id": "metro-st-las-tablas",
+        "name": "Las Tablas",
+        "network": "metro",
+        "lines": [
+          "10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-montecarmelo",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6895,
+          40.5051
+        ]
+      },
+      "properties": {
+        "id": "metro-st-montecarmelo",
+        "name": "Montecarmelo",
+        "network": "metro",
+        "lines": [
+          "10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-tres-olivos",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6938,
+          40.4988
+        ]
+      },
+      "properties": {
+        "id": "metro-st-tres-olivos",
+        "name": "Tres Olivos",
+        "network": "metro",
+        "lines": [
+          "10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-fuencarral",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6922,
+          40.4912
+        ]
+      },
+      "properties": {
+        "id": "metro-st-fuencarral",
+        "name": "Fuencarral",
+        "network": "metro",
+        "lines": [
+          "10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-bego-a",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6872,
+          40.4811
+        ]
+      },
+      "properties": {
+        "id": "metro-st-bego-a",
+        "name": "Begoña",
+        "network": "metro",
+        "lines": [
+          "10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-cuzco",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6901,
+          40.4582
+        ]
+      },
+      "properties": {
+        "id": "metro-st-cuzco",
+        "name": "Cuzco",
+        "network": "metro",
+        "lines": [
+          "10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-santiago-bernab-u",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6911,
+          40.4521
+        ]
+      },
+      "properties": {
+        "id": "metro-st-santiago-bernab-u",
+        "name": "Santiago Bernabéu",
+        "network": "metro",
+        "lines": [
+          "10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-gregorio-mara--n",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6919,
+          40.4372
+        ]
+      },
+      "properties": {
+        "id": "metro-st-gregorio-mara--n",
+        "name": "Gregorio Marañón",
+        "network": "metro",
+        "lines": [
+          "7",
+          "10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-alonso-mart-nez",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6958,
+          40.4281
+        ]
+      },
+      "properties": {
+        "id": "metro-st-alonso-mart-nez",
+        "name": "Alonso Martínez",
+        "network": "metro",
+        "lines": [
+          "4",
+          "5",
+          "10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-lago",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7365,
+          40.4172
+        ]
+      },
+      "properties": {
+        "id": "metro-st-lago",
+        "name": "Lago",
+        "network": "metro",
+        "lines": [
+          "10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-bat-n",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7531,
+          40.4068
+        ]
+      },
+      "properties": {
+        "id": "metro-st-bat-n",
+        "name": "Batán",
+        "network": "metro",
+        "lines": [
+          "10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-casa-de-campo",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7582,
+          40.4172
+        ]
+      },
+      "properties": {
+        "id": "metro-st-casa-de-campo",
+        "name": "Casa de Campo",
+        "network": "metro",
+        "lines": [
+          "5",
+          "10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-colonia-jard-n",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7745,
+          40.3981
+        ]
+      },
+      "properties": {
+        "id": "metro-st-colonia-jard-n",
+        "name": "Colonia Jardín",
+        "network": "metro",
+        "lines": [
+          "10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-aviaci-n-espa-ola",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7845,
+          40.3842
+        ]
+      },
+      "properties": {
+        "id": "metro-st-aviaci-n-espa-ola",
+        "name": "Aviación Española",
+        "network": "metro",
+        "lines": [
+          "10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-cuatro-vientos",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7938,
+          40.3732
+        ]
+      },
+      "properties": {
+        "id": "metro-st-cuatro-vientos",
+        "name": "Cuatro Vientos",
+        "network": "metro",
+        "lines": [
+          "10",
+          "C-5"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-joaqu-n-vilumbrales",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.8112,
+          40.3582
+        ]
+      },
+      "properties": {
+        "id": "metro-st-joaqu-n-vilumbrales",
+        "name": "Joaquín Vilumbrales",
+        "network": "metro",
+        "lines": [
+          "10"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-puerta-del-sur",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.8242,
+          40.3475
+        ]
+      },
+      "properties": {
+        "id": "metro-st-puerta-del-sur",
+        "name": "Puerta del Sur",
+        "network": "metro",
+        "lines": [
+          "10",
+          "12"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-san-nicasio",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7745,
+          40.3342
+        ]
+      },
+      "properties": {
+        "id": "metro-st-san-nicasio",
+        "name": "San Nicasio",
+        "network": "metro",
+        "lines": [
+          "12"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-legan-s-central",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7663,
+          40.3308
+        ]
+      },
+      "properties": {
+        "id": "metro-st-legan-s-central",
+        "name": "Leganés Central",
+        "network": "metro",
+        "lines": [
+          "12",
+          "C-5"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-hospital-severo-ochoa",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7582,
+          40.3242
+        ]
+      },
+      "properties": {
+        "id": "metro-st-hospital-severo-ochoa",
+        "name": "Hospital Severo Ochoa",
+        "network": "metro",
+        "lines": [
+          "12"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-casa-del-reloj",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7621,
+          40.3201
+        ]
+      },
+      "properties": {
+        "id": "metro-st-casa-del-reloj",
+        "name": "Casa del Reloj",
+        "network": "metro",
+        "lines": [
+          "12"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-juli-n-besteiro",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7681,
+          40.3152
+        ]
+      },
+      "properties": {
+        "id": "metro-st-juli-n-besteiro",
+        "name": "Julián Besteiro",
+        "network": "metro",
+        "lines": [
+          "12"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-el-carrascal",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7612,
+          40.3105
+        ]
+      },
+      "properties": {
+        "id": "metro-st-el-carrascal",
+        "name": "El Carrascal",
+        "network": "metro",
+        "lines": [
+          "12"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-el-casar",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7198,
+          40.3168
+        ]
+      },
+      "properties": {
+        "id": "metro-st-el-casar",
+        "name": "El Casar",
+        "network": "metro",
+        "lines": [
+          "12",
+          "C-3"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-juan-de-la-cierva",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7242,
+          40.3112
+        ]
+      },
+      "properties": {
+        "id": "metro-st-juan-de-la-cierva",
+        "name": "Juan de la Cierva",
+        "network": "metro",
+        "lines": [
+          "12"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-getafe-central",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7315,
+          40.3075
+        ]
+      },
+      "properties": {
+        "id": "metro-st-getafe-central",
+        "name": "Getafe Central",
+        "network": "metro",
+        "lines": [
+          "12",
+          "C-4"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-alonso-de-mendoza",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7365,
+          40.2982
+        ]
+      },
+      "properties": {
+        "id": "metro-st-alonso-de-mendoza",
+        "name": "Alonso de Mendoza",
+        "network": "metro",
+        "lines": [
+          "12"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-conservatorio",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7425,
+          40.2921
+        ]
+      },
+      "properties": {
+        "id": "metro-st-conservatorio",
+        "name": "Conservatorio",
+        "network": "metro",
+        "lines": [
+          "12"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-arroyo-culebro",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7512,
+          40.2865
+        ]
+      },
+      "properties": {
+        "id": "metro-st-arroyo-culebro",
+        "name": "Arroyo Culebro",
+        "network": "metro",
+        "lines": [
+          "12"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-parque-de-los-estados",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7825,
+          40.2842
+        ]
+      },
+      "properties": {
+        "id": "metro-st-parque-de-los-estados",
+        "name": "Parque de los Estados",
+        "network": "metro",
+        "lines": [
+          "12"
+        ],
+        "zone": "B2",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-fuenlabrada-central",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7937,
+          40.2828
+        ]
+      },
+      "properties": {
+        "id": "metro-st-fuenlabrada-central",
+        "name": "Fuenlabrada Central",
+        "network": "metro",
+        "lines": [
+          "12",
+          "C-5"
+        ],
+        "zone": "B2",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-parque-europa",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.8052,
+          40.2812
+        ]
+      },
+      "properties": {
+        "id": "metro-st-parque-europa",
+        "name": "Parque Europa",
+        "network": "metro",
+        "lines": [
+          "12"
+        ],
+        "zone": "B2",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-hospital-de-fuenlabrada",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.8198,
+          40.2835
+        ]
+      },
+      "properties": {
+        "id": "metro-st-hospital-de-fuenlabrada",
+        "name": "Hospital de Fuenlabrada",
+        "network": "metro",
+        "lines": [
+          "12"
+        ],
+        "zone": "B2",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-loranca",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.8375,
+          40.2952
+        ]
+      },
+      "properties": {
+        "id": "metro-st-loranca",
+        "name": "Loranca",
+        "network": "metro",
+        "lines": [
+          "12"
+        ],
+        "zone": "B2",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-manuela-malasa-a",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.8542,
+          40.3082
+        ]
+      },
+      "properties": {
+        "id": "metro-st-manuela-malasa-a",
+        "name": "Manuela Malasaña",
+        "network": "metro",
+        "lines": [
+          "12"
+        ],
+        "zone": "B2",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-hospital-de-m-stoles",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.8612,
+          40.3155
+        ]
+      },
+      "properties": {
+        "id": "metro-st-hospital-de-m-stoles",
+        "name": "Hospital de Móstoles",
+        "network": "metro",
+        "lines": [
+          "12"
+        ],
+        "zone": "B2",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-pradillo",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.8642,
+          40.3201
+        ]
+      },
+      "properties": {
+        "id": "metro-st-pradillo",
+        "name": "Pradillo",
+        "network": "metro",
+        "lines": [
+          "12"
+        ],
+        "zone": "B2",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-m-stoles-central",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.8646,
+          40.3235
+        ]
+      },
+      "properties": {
+        "id": "metro-st-m-stoles-central",
+        "name": "Móstoles Central",
+        "network": "metro",
+        "lines": [
+          "12",
+          "C-5"
+        ],
+        "zone": "B2",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-universidad-rey-juan-carlos",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.8682,
+          40.3335
+        ]
+      },
+      "properties": {
+        "id": "metro-st-universidad-rey-juan-carlos",
+        "name": "Universidad Rey Juan Carlos",
+        "network": "metro",
+        "lines": [
+          "12"
+        ],
+        "zone": "B2",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-parque-oeste",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.8475,
+          40.3421
+        ]
+      },
+      "properties": {
+        "id": "metro-st-parque-oeste",
+        "name": "Parque Oeste",
+        "network": "metro",
+        "lines": [
+          "12"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "metro-st-alcorc-n-central",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.8291,
+          40.3486
+        ]
+      },
+      "properties": {
+        "id": "metro-st-alcorc-n-central",
+        "name": "Alcorcón Central",
+        "network": "metro",
+        "lines": [
+          "12",
+          "C-5"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    }
+  ]
+}

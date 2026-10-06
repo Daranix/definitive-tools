@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
-import { TOOLS } from '../../utils/constants';
+import { TOOLS, CATEGORIES } from '../../utils/constants';
 import { MetadataService } from '@app/services/metadata.service';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { GithubService } from '../../services/github.service';
@@ -24,6 +24,7 @@ export class HomeComponent {
   private readonly metadataService = inject(MetadataService);
   private readonly githubService = inject(GithubService);
 
+  readonly categories = CATEGORIES;
   readonly stars = toSignal(this.githubService.getRepoStars(), { initialValue: 0 });
   readonly searchQuery = signal<string>('');
   readonly selectedCategory = signal<string>('All');

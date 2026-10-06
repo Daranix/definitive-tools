@@ -1,0 +1,52 @@
+<div class="flex flex-col h-full w-full overflow-hidden bg-slate-900 relative">
+  <!-- Top Navbar with compact & collapsible hero -->
+  <app-top-navbar [compact]="true" [collapsible]="true"></app-top-navbar>
+
+  <!-- Error Notification Banner -->
+  @if (service.networkError()) {
+    <div
+      class="absolute top-20 left-1/2 transform -translate-x-1/2 z-50 bg-red-600/90 text-white text-xs font-medium px-4 py-2.5 rounded-xl shadow-xl backdrop-blur-md flex items-center gap-2.5 max-w-lg animate-in fade-in slide-in-from-top-2"
+      role="alert"
+    >
+      <lucide-icon name="circle-off" class="w-4 h-4 flex-shrink-0"></lucide-icon>
+      <span class="flex-1">{{ service.networkError() }}</span>
+      <button
+        type="button"
+        (click)="dismissError()"
+        aria-label="Dismiss error"
+        class="text-white/80 hover:text-white p-0.5 rounded-full hover:bg-white/20 transition-colors"
+      >
+        <lucide-icon name="x" class="w-3.5 h-3.5"></lucide-icon>
+      </button>
+    </div>
+  }
+
+  <!-- Main Map Canvas & Overlays -->
+  <div class="relative flex-1 min-h-0 w-full overflow-hidden">
+    <!-- WebGL Map Container -->
+    <div #mapContainer class="w-full h-full absolute inset-0 z-0"></div>
+
+    <!-- Floating UI Controls Layer -->
+    <div class="pointer-events-none absolute inset-0 z-10 p-4 sm:p-6 pb-8 sm:pb-12 flex flex-col justify-between">
+      <!-- Top Row: Search (Left) & Network Layer Controls (Right) -->
+      <div class="flex flex-col sm:flex-row items-start justify-between gap-3 w-full">
+        <div class="pointer-events-auto w-full sm:w-auto">
+          <app-map-search></app-map-search>
+        </div>
+        <div class="pointer-events-auto self-end sm:self-auto">
+          <app-layer-controls></app-layer-controls>
+        </div>
+      </div>
+
+      <!-- Bottom Row: Zone Legend (Left) & Station/Zone Detail Drawer (Right) -->
+      <div class="flex flex-col sm:flex-row items-end justify-between gap-4 w-full mt-auto mb-2 sm:mb-4">
+        <div class="pointer-events-auto self-start sm:self-auto">
+          <app-zone-legend></app-zone-legend>
+        </div>
+        <div class="pointer-events-auto w-full sm:w-auto">
+          <app-detail-drawer></app-detail-drawer>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

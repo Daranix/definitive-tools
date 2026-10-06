@@ -42,43 +42,108 @@
       }
     </nav>
 
-    <!-- Tool Header Section with Premium Gradient -->
-    <div class="relative bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white py-12 overflow-hidden border-b border-indigo-900/40">
-        <!-- Decorative Glow Effects -->
-        <div class="absolute top-0 left-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
-        
-        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between relative z-10">
-            <div class="mb-6 md:mb-0 text-center md:text-left">
-                <div class="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 mb-3">
-                    <div [class]="'bg-' + toolInfo.color + '-100 p-3 rounded-full shadow-sm flex items-center justify-center bg-indigo-500/10 border border-indigo-500/20'">
-                        <lucide-icon [name]="toolInfo.icon" [class]="'text-3xl text-' + toolInfo.color + '-300'"></lucide-icon>
-                    </div>
-                    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">{{ toolInfo.name }}</h1>
+    @if (!hideHero() && !isCollapsed()) {
+      @if (compact()) {
+        <!-- Compact Tool Header Section -->
+        <div class="relative bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white py-3 px-4 border-b border-indigo-900/40 shadow-sm transition-all">
+          <div class="container mx-auto flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-3 min-w-0">
+              <div [class]="'bg-' + toolInfo.color + '-100 p-2 rounded-lg flex items-center justify-center bg-indigo-500/10 border border-indigo-500/20 flex-shrink-0'">
+                <lucide-icon [name]="toolInfo.icon" [class]="'w-5 h-5 text-' + toolInfo.color + '-300'"></lucide-icon>
+              </div>
+              <div class="min-w-0">
+                <div class="flex items-baseline gap-2">
+                  <h1 class="text-lg sm:text-xl font-bold tracking-tight text-white truncate">{{ toolInfo.name }}</h1>
+                  <span class="hidden md:inline text-xs text-slate-300 truncate max-w-md">{{ toolInfo.description }}</span>
                 </div>
-                <p class="text-lg text-slate-300 max-w-2xl">{{ toolInfo.description }}</p>
+              </div>
             </div>
-            <div class="flex space-x-3">
-                <button (click)="toggleFavorite()" 
-                        [class]="'font-medium py-2.5 px-5 rounded-lg border transition-all flex items-center justify-center gap-2 shadow-sm text-sm ' + 
-                                 (isFavorite() ? 'bg-indigo-600 hover:bg-indigo-700 text-white border-indigo-500' : 'bg-white/10 hover:bg-white/15 backdrop-blur-sm text-white border-white/10 hover:border-white/20')">
-                    <lucide-icon [name]="isFavorite() ? 'check' : 'bookmark'" class="w-4 h-4"></lucide-icon>
-                    {{ isFavorite() ? 'Favorited' : 'Save to Favorites' }}
+
+            <div class="flex items-center gap-2">
+              <button (click)="toggleFavorite()" 
+                      [class]="'font-medium py-1.5 px-3 rounded-md border transition-all flex items-center gap-1.5 shadow-sm text-xs ' + 
+                               (isFavorite() ? 'bg-indigo-600 hover:bg-indigo-700 text-white border-indigo-500' : 'bg-white/10 hover:bg-white/15 backdrop-blur-sm text-white border-white/10')">
+                  <lucide-icon [name]="isFavorite() ? 'check' : 'bookmark'" class="w-3.5 h-3.5"></lucide-icon>
+                  <span class="hidden sm:inline">{{ isFavorite() ? 'Favorited' : 'Save' }}</span>
+              </button>
+              <button (click)="shareTool()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-1.5 px-3 rounded-md transition-all flex items-center gap-1.5 shadow-sm text-xs border border-indigo-500">
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 10.742l4.632-2.316m0 0a3 3 0 10-2.222-2.518m2.222 2.518a3 3 0 102.222 2.518m-2.222-2.518a3 3 0 102.222 2.518m-2.222-2.518a3 3 0 11-2.222-.224m-2.222-.224A3 3 0 118 14.316m-2 0a3 3 0 102.222 2.518m-2.222-2.518l4.632 2.316" /></svg>
+                  <span class="hidden sm:inline">Share</span>
+              </button>
+              @if (collapsible()) {
+                <button
+                  type="button"
+                  (click)="toggleCollapse()"
+                  class="bg-white/10 hover:bg-white/20 text-white/90 p-1.5 rounded-md border border-white/10 transition-colors"
+                  title="Hide header"
+                >
+                  <lucide-icon name="chevron-up" class="w-4 h-4"></lucide-icon>
                 </button>
-                <button (click)="shareTool()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-5 rounded-lg transition-all flex items-center justify-center gap-2 shadow-md text-sm border border-indigo-500">
-                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 10.742l4.632-2.316m0 0a3 3 0 10-2.222-2.518m2.222 2.518a3 3 0 102.222 2.518m-2.222-2.518a3 3 0 102.222 2.518m-2.222-2.518a3 3 0 11-2.222-.224m-2.222-.224A3 3 0 118 14.316m-2 0a3 3 0 102.222 2.518m-2.222-2.518l4.632 2.316" /></svg>
-                    Share
-                </button>
+              }
+            </div>
+          </div>
+        </div>
+      } @else {
+        <!-- Tool Header Section with Premium Gradient -->
+        <div class="relative bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white py-12 overflow-hidden border-b border-indigo-900/40">
+            <!-- Decorative Glow Effects -->
+            <div class="absolute top-0 left-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between relative z-10">
+                <div class="mb-6 md:mb-0 text-center md:text-left">
+                    <div class="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 mb-3">
+                        <div [class]="'bg-' + toolInfo.color + '-100 p-3 rounded-full shadow-sm flex items-center justify-center bg-indigo-500/10 border border-indigo-500/20'">
+                            <lucide-icon [name]="toolInfo.icon" [class]="'text-3xl text-' + toolInfo.color + '-300'"></lucide-icon>
+                        </div>
+                        <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">{{ toolInfo.name }}</h1>
+                    </div>
+                    <p class="text-lg text-slate-300 max-w-2xl">{{ toolInfo.description }}</p>
+                </div>
+                <div class="flex space-x-3 items-center">
+                    <button (click)="toggleFavorite()" 
+                            [class]="'font-medium py-2.5 px-5 rounded-lg border transition-all flex items-center justify-center gap-2 shadow-sm text-sm ' + 
+                                     (isFavorite() ? 'bg-indigo-600 hover:bg-indigo-700 text-white border-indigo-500' : 'bg-white/10 hover:bg-white/15 backdrop-blur-sm text-white border-white/10 hover:border-white/20')">
+                        <lucide-icon [name]="isFavorite() ? 'check' : 'bookmark'" class="w-4 h-4"></lucide-icon>
+                        {{ isFavorite() ? 'Favorited' : 'Save to Favorites' }}
+                    </button>
+                    <button (click)="shareTool()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-5 rounded-lg transition-all flex items-center justify-center gap-2 shadow-md text-sm border border-indigo-500">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 10.742l4.632-2.316m0 0a3 3 0 10-2.222-2.518m2.222 2.518a3 3 0 102.222 2.518m-2.222-2.518a3 3 0 102.222 2.518m-2.222-2.518a3 3 0 11-2.222-.224m-2.222-.224A3 3 0 118 14.316m-2 0a3 3 0 102.222 2.518m-2.222-2.518l4.632 2.316" /></svg>
+                        Share
+                    </button>
+                    @if (collapsible()) {
+                      <button
+                        type="button"
+                        (click)="toggleCollapse()"
+                        class="bg-white/10 hover:bg-white/20 text-white/90 p-2.5 rounded-lg border border-white/10 transition-colors"
+                        title="Hide header"
+                      >
+                        <lucide-icon name="chevron-up" class="w-4 h-4"></lucide-icon>
+                      </button>
+                    }
+                </div>
             </div>
         </div>
-    </div>
+      }
+    }
 
     <!-- Breadcrumbs -->
-    <div class="container mx-auto px-4 py-4">
-        <div class="text-sm text-slate-500 flex items-center gap-1.5">
-            <a routerLink="/" class="hover:text-indigo-600 transition">Home</a>
-            <span class="text-slate-400">/</span>
-            <span class="text-slate-800 font-medium">{{ toolInfo.name }}</span>
+    <div class="container mx-auto px-4 py-2 flex items-center justify-between">
+        <div class="text-xs sm:text-sm text-slate-400 flex items-center gap-1.5">
+            <a routerLink="/" class="hover:text-indigo-400 transition-colors">Home</a>
+            <span class="text-slate-600">/</span>
+            <span class="text-slate-200 font-medium">{{ toolInfo.name }}</span>
         </div>
+        @if (collapsible() && isCollapsed()) {
+          <button
+            type="button"
+            (click)="toggleCollapse()"
+            class="text-xs flex items-center gap-1 text-slate-300 hover:text-white transition-colors py-1 px-2.5 rounded-lg bg-white/10 hover:bg-white/20 border border-white/10"
+            title="Expand tool header"
+          >
+            <lucide-icon name="chevron-down" class="w-3.5 h-3.5"></lucide-icon>
+            <span>Show header</span>
+          </button>
+        }
     </div>
 }

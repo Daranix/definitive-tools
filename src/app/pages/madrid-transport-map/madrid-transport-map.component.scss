@@ -1,0 +1,16 @@
+@import 'maplibre-gl/dist/maplibre-gl.css';
+
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.maplibregl-map {
+  font-family: inherit;
+}
+
+.maplibregl-ctrl-top-right,
+.maplibregl-ctrl-bottom-right {
+  z-index: 5 !important;
+}

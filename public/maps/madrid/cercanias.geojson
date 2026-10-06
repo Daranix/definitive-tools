@@ -1,0 +1,1897 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "cercanias-line-C-1",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -3.7198,
+            40.4208
+          ],
+          [
+            -3.7121,
+            40.4022
+          ],
+          [
+            -3.6931,
+            40.3982
+          ],
+          [
+            -3.6781,
+            40.3956
+          ],
+          [
+            -3.6908,
+            40.4068
+          ],
+          [
+            -3.6912,
+            40.4225
+          ],
+          [
+            -3.6917,
+            40.4464
+          ],
+          [
+            -3.6823,
+            40.4721
+          ],
+          [
+            -3.6631,
+            40.4842
+          ],
+          [
+            -3.6212,
+            40.4891
+          ],
+          [
+            -3.5932,
+            40.4918
+          ]
+        ]
+      },
+      "properties": {
+        "type": "line",
+        "network": "cercanias",
+        "line": "C-1",
+        "name": "Línea C-1 (Príncipe Pío - Chamartín - Aeropuerto T4)",
+        "color": "#009FE3"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-line-C-2",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -3.1788,
+            40.6402
+          ],
+          [
+            -3.2642,
+            40.5695
+          ],
+          [
+            -3.3242,
+            40.5312
+          ],
+          [
+            -3.3452,
+            40.5052
+          ],
+          [
+            -3.3615,
+            40.4891
+          ],
+          [
+            -3.3951,
+            40.4802
+          ],
+          [
+            -3.4421,
+            40.4621
+          ],
+          [
+            -3.4795,
+            40.4578
+          ],
+          [
+            -3.5352,
+            40.4308
+          ],
+          [
+            -3.5623,
+            40.4258
+          ],
+          [
+            -3.6052,
+            40.4038
+          ],
+          [
+            -3.6148,
+            40.3882
+          ],
+          [
+            -3.6267,
+            40.3875
+          ],
+          [
+            -3.6558,
+            40.3901
+          ],
+          [
+            -3.6685,
+            40.3942
+          ],
+          [
+            -3.6908,
+            40.4068
+          ]
+        ]
+      },
+      "properties": {
+        "type": "line",
+        "network": "cercanias",
+        "line": "C-2",
+        "name": "Línea C-2 (Guadalajara - Atocha - Chamartín)",
+        "color": "#00843D"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-line-C-3",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -3.6167,
+            40.0384
+          ],
+          [
+            -3.6148,
+            40.1582
+          ],
+          [
+            -3.6738,
+            40.1892
+          ],
+          [
+            -3.6998,
+            40.2435
+          ],
+          [
+            -3.7082,
+            40.2982
+          ],
+          [
+            -3.7198,
+            40.3168
+          ],
+          [
+            -3.6958,
+            40.3375
+          ],
+          [
+            -3.6931,
+            40.3445
+          ],
+          [
+            -3.6901,
+            40.3582
+          ],
+          [
+            -3.6908,
+            40.4068
+          ],
+          [
+            -3.7038,
+            40.4168
+          ],
+          [
+            -3.6917,
+            40.4464
+          ],
+          [
+            -3.6823,
+            40.4721
+          ]
+        ]
+      },
+      "properties": {
+        "type": "line",
+        "network": "cercanias",
+        "line": "C-3",
+        "name": "Línea C-3 (Aranjuez - Atocha - Chamartín - El Escorial)",
+        "color": "#782F40"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-line-C-4",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -3.7712,
+            40.2371
+          ],
+          [
+            -3.7371,
+            40.2922
+          ],
+          [
+            -3.7315,
+            40.3075
+          ],
+          [
+            -3.7225,
+            40.3201
+          ],
+          [
+            -3.7108,
+            40.3421
+          ],
+          [
+            -3.6901,
+            40.3582
+          ],
+          [
+            -3.6908,
+            40.4068
+          ],
+          [
+            -3.7038,
+            40.4168
+          ],
+          [
+            -3.6917,
+            40.4464
+          ],
+          [
+            -3.6823,
+            40.4721
+          ],
+          [
+            -3.6922,
+            40.4912
+          ],
+          [
+            -3.6958,
+            40.5422
+          ],
+          [
+            -3.7128,
+            40.5982
+          ],
+          [
+            -3.7621,
+            40.6482
+          ]
+        ]
+      },
+      "properties": {
+        "type": "line",
+        "network": "cercanias",
+        "line": "C-4",
+        "name": "Línea C-4 (Parla - Atocha - Chamartín - Colmenar / Alcobendas)",
+        "color": "#003865"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-line-C-5",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -3.8824,
+            40.3168
+          ],
+          [
+            -3.8646,
+            40.3235
+          ],
+          [
+            -3.8421,
+            40.3392
+          ],
+          [
+            -3.8291,
+            40.3486
+          ],
+          [
+            -3.8082,
+            40.3601
+          ],
+          [
+            -3.7938,
+            40.3732
+          ],
+          [
+            -3.7765,
+            40.3802
+          ],
+          [
+            -3.7652,
+            40.3851
+          ],
+          [
+            -3.7558,
+            40.3892
+          ],
+          [
+            -3.7451,
+            40.3992
+          ],
+          [
+            -3.7029,
+            40.4052
+          ],
+          [
+            -3.6908,
+            40.4068
+          ],
+          [
+            -3.6781,
+            40.3956
+          ],
+          [
+            -3.6975,
+            40.3782
+          ],
+          [
+            -3.7082,
+            40.3685
+          ],
+          [
+            -3.7125,
+            40.3551
+          ],
+          [
+            -3.7108,
+            40.3421
+          ],
+          [
+            -3.7482,
+            40.3385
+          ],
+          [
+            -3.7663,
+            40.3308
+          ],
+          [
+            -3.7801,
+            40.3152
+          ],
+          [
+            -3.7885,
+            40.2982
+          ],
+          [
+            -3.7937,
+            40.2828
+          ],
+          [
+            -3.8341,
+            40.2523
+          ]
+        ]
+      },
+      "properties": {
+        "type": "line",
+        "network": "cercanias",
+        "line": "C-5",
+        "name": "Línea C-5 (Móstoles El Soto - Atocha - Humanes)",
+        "color": "#F1B434"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-pr-ncipe-p-o",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7198,
+          40.4208
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-pr-ncipe-p-o",
+        "name": "Príncipe Pío",
+        "network": "cercanias",
+        "lines": [
+          "C-1",
+          "C-7",
+          "C-10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-pir-mides",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7121,
+          40.4022
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-pir-mides",
+        "name": "Pirámides",
+        "network": "cercanias",
+        "lines": [
+          "C-1",
+          "C-10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-delicias",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6931,
+          40.3982
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-delicias",
+        "name": "Delicias",
+        "network": "cercanias",
+        "lines": [
+          "C-1",
+          "C-10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-m-ndez--lvaro",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6781,
+          40.3956
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-m-ndez--lvaro",
+        "name": "Méndez Álvaro",
+        "network": "cercanias",
+        "lines": [
+          "C-1",
+          "C-5",
+          "C-7",
+          "C-10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-atocha",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6908,
+          40.4068
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-atocha",
+        "name": "Atocha",
+        "network": "cercanias",
+        "lines": [
+          "C-1",
+          "C-2",
+          "C-3",
+          "C-4",
+          "C-5",
+          "C-7",
+          "C-8",
+          "C-10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-recoletos",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6912,
+          40.4225
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-recoletos",
+        "name": "Recoletos",
+        "network": "cercanias",
+        "lines": [
+          "C-1",
+          "C-2",
+          "C-7",
+          "C-8",
+          "C-10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-nuevos-ministerios",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6917,
+          40.4464
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-nuevos-ministerios",
+        "name": "Nuevos Ministerios",
+        "network": "cercanias",
+        "lines": [
+          "C-1",
+          "C-2",
+          "C-3",
+          "C-4",
+          "C-7",
+          "C-8",
+          "C-10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-chamart-n",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6823,
+          40.4721
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-chamart-n",
+        "name": "Chamartín",
+        "network": "cercanias",
+        "lines": [
+          "C-1",
+          "C-2",
+          "C-3",
+          "C-4",
+          "C-7",
+          "C-8",
+          "C-10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-fuente-de-la-mora",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6631,
+          40.4842
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-fuente-de-la-mora",
+        "name": "Fuente de la Mora",
+        "network": "cercanias",
+        "lines": [
+          "C-1",
+          "C-10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-valdebebas",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6212,
+          40.4891
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-valdebebas",
+        "name": "Valdebebas",
+        "network": "cercanias",
+        "lines": [
+          "C-1",
+          "C-10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-aeropuerto-t4",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.5932,
+          40.4918
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-aeropuerto-t4",
+        "name": "Aeropuerto T4",
+        "network": "cercanias",
+        "lines": [
+          "C-1",
+          "C-10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-guadalajara",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.1788,
+          40.6402
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-guadalajara",
+        "name": "Guadalajara",
+        "network": "cercanias",
+        "lines": [
+          "C-2",
+          "C-8"
+        ],
+        "zone": "E1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-azuqueca",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.2642,
+          40.5695
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-azuqueca",
+        "name": "Azuqueca",
+        "network": "cercanias",
+        "lines": [
+          "C-2",
+          "C-8"
+        ],
+        "zone": "E1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-meco",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.3242,
+          40.5312
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-meco",
+        "name": "Meco",
+        "network": "cercanias",
+        "lines": [
+          "C-2",
+          "C-8"
+        ],
+        "zone": "B3",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-alcal--de-henares-universidad",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.3452,
+          40.5052
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-alcal--de-henares-universidad",
+        "name": "Alcalá de Henares Universidad",
+        "network": "cercanias",
+        "lines": [
+          "C-2",
+          "C-8"
+        ],
+        "zone": "B3",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-alcal--de-henares",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.3615,
+          40.4891
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-alcal--de-henares",
+        "name": "Alcalá de Henares",
+        "network": "cercanias",
+        "lines": [
+          "C-2",
+          "C-7",
+          "C-8"
+        ],
+        "zone": "B3",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-la-garena",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.3951,
+          40.4802
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-la-garena",
+        "name": "La Garena",
+        "network": "cercanias",
+        "lines": [
+          "C-2",
+          "C-7",
+          "C-8"
+        ],
+        "zone": "B3",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-soto-del-henares",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.4421,
+          40.4621
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-soto-del-henares",
+        "name": "Soto del Henares",
+        "network": "cercanias",
+        "lines": [
+          "C-2",
+          "C-7",
+          "C-8"
+        ],
+        "zone": "B2",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-torrej-n-de-ardoz",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.4795,
+          40.4578
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-torrej-n-de-ardoz",
+        "name": "Torrejón de Ardoz",
+        "network": "cercanias",
+        "lines": [
+          "C-2",
+          "C-7",
+          "C-8"
+        ],
+        "zone": "B2",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-san-fernando",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.5352,
+          40.4308
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-san-fernando",
+        "name": "San Fernando",
+        "network": "cercanias",
+        "lines": [
+          "C-2",
+          "C-7"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-coslada",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.5623,
+          40.4258
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-coslada",
+        "name": "Coslada",
+        "network": "cercanias",
+        "lines": [
+          "C-2",
+          "C-7"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-vic-lvaro",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6052,
+          40.4038
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-vic-lvaro",
+        "name": "Vicálvaro",
+        "network": "cercanias",
+        "lines": [
+          "C-2",
+          "C-7",
+          "C-8"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-santa-eugenia",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6148,
+          40.3882
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-santa-eugenia",
+        "name": "Santa Eugenia",
+        "network": "cercanias",
+        "lines": [
+          "C-2",
+          "C-7",
+          "C-8"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-vallecas",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6267,
+          40.3875
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-vallecas",
+        "name": "Vallecas",
+        "network": "cercanias",
+        "lines": [
+          "C-2",
+          "C-7",
+          "C-8"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-el-pozo",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6558,
+          40.3901
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-el-pozo",
+        "name": "El Pozo",
+        "network": "cercanias",
+        "lines": [
+          "C-2",
+          "C-7",
+          "C-8"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-asamblea-de-madrid-entrev-as",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6685,
+          40.3942
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-asamblea-de-madrid-entrev-as",
+        "name": "Asamblea de Madrid-Entrevías",
+        "network": "cercanias",
+        "lines": [
+          "C-2",
+          "C-7",
+          "C-8"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-aranjuez",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6167,
+          40.0384
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-aranjuez",
+        "name": "Aranjuez",
+        "network": "cercanias",
+        "lines": [
+          "C-3"
+        ],
+        "zone": "C1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-ciempozuelos",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6148,
+          40.1582
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-ciempozuelos",
+        "name": "Ciempozuelos",
+        "network": "cercanias",
+        "lines": [
+          "C-3"
+        ],
+        "zone": "B3",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-valdemoro",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6738,
+          40.1892
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-valdemoro",
+        "name": "Valdemoro",
+        "network": "cercanias",
+        "lines": [
+          "C-3"
+        ],
+        "zone": "B3",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-pinto",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6998,
+          40.2435
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-pinto",
+        "name": "Pinto",
+        "network": "cercanias",
+        "lines": [
+          "C-3"
+        ],
+        "zone": "B2",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-getafe-industrial",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7082,
+          40.2982
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-getafe-industrial",
+        "name": "Getafe Industrial",
+        "network": "cercanias",
+        "lines": [
+          "C-3"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-el-casar",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7198,
+          40.3168
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-el-casar",
+        "name": "El Casar",
+        "network": "cercanias",
+        "lines": [
+          "C-3",
+          "12"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-san-crist-bal-industrial",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6958,
+          40.3375
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-san-crist-bal-industrial",
+        "name": "San Cristóbal Industrial",
+        "network": "cercanias",
+        "lines": [
+          "C-3"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-san-crist-bal-de-los--ngeles",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6931,
+          40.3445
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-san-crist-bal-de-los--ngeles",
+        "name": "San Cristóbal de los Ángeles",
+        "network": "cercanias",
+        "lines": [
+          "C-3"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-villaverde-bajo",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6901,
+          40.3582
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-villaverde-bajo",
+        "name": "Villaverde Bajo",
+        "network": "cercanias",
+        "lines": [
+          "C-3",
+          "C-4"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-sol",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7038,
+          40.4168
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-sol",
+        "name": "Sol",
+        "network": "cercanias",
+        "lines": [
+          "C-3",
+          "C-4",
+          "1",
+          "2",
+          "3"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-parla",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7712,
+          40.2371
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-parla",
+        "name": "Parla",
+        "network": "cercanias",
+        "lines": [
+          "C-4"
+        ],
+        "zone": "B2",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-getafe-sector-3",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7371,
+          40.2922
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-getafe-sector-3",
+        "name": "Getafe Sector 3",
+        "network": "cercanias",
+        "lines": [
+          "C-4"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-getafe-centro",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7315,
+          40.3075
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-getafe-centro",
+        "name": "Getafe Centro",
+        "network": "cercanias",
+        "lines": [
+          "C-4",
+          "12"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-las-margaritas-universidad",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7225,
+          40.3201
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-las-margaritas-universidad",
+        "name": "Las Margaritas Universidad",
+        "network": "cercanias",
+        "lines": [
+          "C-4"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-villaverde-alto",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7108,
+          40.3421
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-villaverde-alto",
+        "name": "Villaverde Alto",
+        "network": "cercanias",
+        "lines": [
+          "C-4",
+          "C-5",
+          "3"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-fuencarral",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6922,
+          40.4912
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-fuencarral",
+        "name": "Fuencarral",
+        "network": "cercanias",
+        "lines": [
+          "C-4"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-cantoblanco-universidad",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6958,
+          40.5422
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-cantoblanco-universidad",
+        "name": "Cantoblanco Universidad",
+        "network": "cercanias",
+        "lines": [
+          "C-4"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-tres-cantos",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7128,
+          40.5982
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-tres-cantos",
+        "name": "Tres Cantos",
+        "network": "cercanias",
+        "lines": [
+          "C-4"
+        ],
+        "zone": "B2",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-colmenar-viejo",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7621,
+          40.6482
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-colmenar-viejo",
+        "name": "Colmenar Viejo",
+        "network": "cercanias",
+        "lines": [
+          "C-4"
+        ],
+        "zone": "B3",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-m-stoles-el-soto",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.8824,
+          40.3168
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-m-stoles-el-soto",
+        "name": "Móstoles El Soto",
+        "network": "cercanias",
+        "lines": [
+          "C-5"
+        ],
+        "zone": "B2",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-m-stoles",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.8646,
+          40.3235
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-m-stoles",
+        "name": "Móstoles",
+        "network": "cercanias",
+        "lines": [
+          "C-5",
+          "12"
+        ],
+        "zone": "B2",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-las-retamas",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.8421,
+          40.3392
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-las-retamas",
+        "name": "Las Retamas",
+        "network": "cercanias",
+        "lines": [
+          "C-5"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-alcorc-n",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.8291,
+          40.3486
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-alcorc-n",
+        "name": "Alcorcón",
+        "network": "cercanias",
+        "lines": [
+          "C-5",
+          "12"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-san-jos--de-valderas",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.8082,
+          40.3601
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-san-jos--de-valderas",
+        "name": "San José de Valderas",
+        "network": "cercanias",
+        "lines": [
+          "C-5"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-cuatro-vientos",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7938,
+          40.3732
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-cuatro-vientos",
+        "name": "Cuatro Vientos",
+        "network": "cercanias",
+        "lines": [
+          "C-5",
+          "10"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-las--guilas",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7765,
+          40.3802
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-las--guilas",
+        "name": "Las Águilas",
+        "network": "cercanias",
+        "lines": [
+          "C-5"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-fanjul",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7652,
+          40.3851
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-fanjul",
+        "name": "Fanjul",
+        "network": "cercanias",
+        "lines": [
+          "C-5"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-aluche",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7558,
+          40.3892
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-aluche",
+        "name": "Aluche",
+        "network": "cercanias",
+        "lines": [
+          "C-5",
+          "5"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-laguna",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7451,
+          40.3992
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-laguna",
+        "name": "Laguna",
+        "network": "cercanias",
+        "lines": [
+          "C-5",
+          "6"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-embajadores",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7029,
+          40.4052
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-embajadores",
+        "name": "Embajadores",
+        "network": "cercanias",
+        "lines": [
+          "C-5",
+          "3"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-doce-de-octubre",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6975,
+          40.3782
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-doce-de-octubre",
+        "name": "Doce de Octubre",
+        "network": "cercanias",
+        "lines": [
+          "C-5"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-orcasitas",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7082,
+          40.3685
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-orcasitas",
+        "name": "Orcasitas",
+        "network": "cercanias",
+        "lines": [
+          "C-5"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-puente-alcocer",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7125,
+          40.3551
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-puente-alcocer",
+        "name": "Puente Alcocer",
+        "network": "cercanias",
+        "lines": [
+          "C-5"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-zarzaquemada",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7482,
+          40.3385
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-zarzaquemada",
+        "name": "Zarzaquemada",
+        "network": "cercanias",
+        "lines": [
+          "C-5"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-legan-s",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7663,
+          40.3308
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-legan-s",
+        "name": "Leganés",
+        "network": "cercanias",
+        "lines": [
+          "C-5",
+          "12"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-parque-polvoranca",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7801,
+          40.3152
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-parque-polvoranca",
+        "name": "Parque Polvoranca",
+        "network": "cercanias",
+        "lines": [
+          "C-5"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-la-serna",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7885,
+          40.2982
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-la-serna",
+        "name": "La Serna",
+        "network": "cercanias",
+        "lines": [
+          "C-5"
+        ],
+        "zone": "B2",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-fuenlabrada",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7937,
+          40.2828
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-fuenlabrada",
+        "name": "Fuenlabrada",
+        "network": "cercanias",
+        "lines": [
+          "C-5",
+          "12"
+        ],
+        "zone": "B2",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cercanias-st-humanes",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.8341,
+          40.2523
+        ]
+      },
+      "properties": {
+        "id": "cercanias-st-humanes",
+        "name": "Humanes",
+        "network": "cercanias",
+        "lines": [
+          "C-5"
+        ],
+        "zone": "B3",
+        "wheelchairAccessible": true,
+        "type": "station"
+      }
+    }
+  ]
+}

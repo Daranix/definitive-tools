@@ -1,0 +1,130 @@
+@if (selection()) {
+  <div
+    class="bg-white/95 backdrop-blur-md border border-slate-200/90 rounded-2xl shadow-2xl shadow-slate-900/10 p-5 max-w-sm w-full animate-in fade-in slide-in-from-bottom-3 duration-200"
+    role="dialog"
+    aria-labelledby="detail-drawer-title"
+  >
+    <!-- Header with Close Button -->
+    <div class="flex items-start justify-between gap-3 mb-3">
+      <div class="min-w-0">
+        @if (isStation() && stationData()) {
+          @let station = stationData()!;
+          <div class="flex items-center gap-2 mb-1">
+            <span
+              [class]="'text-[11px] font-bold px-2 py-0.5 rounded-full border ' + (networkMeta()?.badgeClass || 'bg-slate-100 text-slate-800')"
+            >
+              {{ networkMeta()?.shortName }}
+            </span>
+            <span
+              class="text-[11px] font-bold px-2 py-0.5 rounded-full text-white"
+              [style.backgroundColor]="zoneData()?.color || '#2563EB'"
+            >
+              Zona {{ station.zone }}
+            </span>
+            @if (station.wheelchairAccessible) {
+              <span class="inline-flex items-center text-emerald-600 text-[11px] font-medium" title="Accessible">
+                ♿
+              </span>
+            }
+          </div>
+          <h3 id="detail-drawer-title" class="text-lg font-bold text-slate-900 leading-snug truncate">
+            {{ station.name }}
+          </h3>
+        } @else if (isZone() && zoneData()) {
+          @let zone = zoneData()!;
+          <div class="flex items-center gap-2 mb-1">
+            <span
+              class="w-3 h-3 rounded-full flex-shrink-0"
+              [style.backgroundColor]="zone.color"
+            ></span>
+            <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">
+              CRTM Tariff Zone
+            </span>
+          </div>
+          <h3 id="detail-drawer-title" class="text-lg font-bold text-slate-900 leading-snug">
+            {{ zone.name }}
+          </h3>
+        }
+      </div>
+
+      <button
+        type="button"
+        (click)="close()"
+        aria-label="Close station detail card"
+        class="p-1 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors flex-shrink-0"
+      >
+        <lucide-icon name="x" class="w-5 h-5"></lucide-icon>
+      </button>
+    </div>
+
+    <!-- Body Information -->
+    @if (isStation() && stationData()) {
+      @let station = stationData()!;
+      <div class="space-y-3 pt-2 border-t border-slate-100 text-xs">
+        <!-- Lines Served -->
+        <div>
+          <span class="text-slate-500 font-medium block mb-1.5">Lines Served:</span>
+          <div class="flex flex-wrap gap-1.5">
+            @for (line of station.lines; track line) {
+              <span class="px-2.5 py-1 rounded-lg bg-slate-100 border border-slate-200/80 font-bold text-slate-800 text-xs">
+                {{ line }}
+              </span>
+            }
+          </div>
+        </div>
+
+        <!-- Tariff Details -->
+        @if (zoneData()) {
+          @let zone = zoneData()!;
+          <div class="bg-slate-50 rounded-xl p-3 border border-slate-150 space-y-1.5">
+            <div class="flex justify-between items-center text-slate-700">
+              <span class="font-medium">Abono Transporte (30d):</span>
+              <span class="font-bold text-indigo-600 text-sm">€{{ zone.monthlyPassPriceEur.toFixed(2) }}</span>
+            </div>
+            <div class="flex justify-between items-center text-slate-600 text-[11px]">
+              <span>Metrobús / 10 Viajes:</span>
+              <span class="font-medium text-slate-800">€{{ zone.tenTripPriceEur.toFixed(2) }}</span>
+            </div>
+            <p class="text-[10px] text-slate-500 italic pt-1 border-t border-slate-200/60 leading-tight">
+              {{ zone.coverageDescription }}
+            </p>
+          </div>
+        }
+
+        <!-- Center Camera Action -->
+        @if (station.coordinates) {
+          <button
+            type="button"
+            (click)="centerStation()"
+            class="w-full py-2 px-3 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-semibold rounded-xl transition-colors flex items-center justify-center gap-1.5 text-xs"
+          >
+            <lucide-icon name="map-pin" class="w-3.5 h-3.5"></lucide-icon>
+            Center on Map
+          </button>
+        }
+      </div>
+    } @else if (isZone() && zoneData()) {
+      @let zone = zoneData()!;
+      <div class="space-y-3 pt-2 border-t border-slate-100 text-xs">
+        <p class="text-slate-600 leading-relaxed">
+          {{ zone.coverageDescription }}
+        </p>
+
+        <div class="bg-slate-50 rounded-xl p-3 border border-slate-150 space-y-2">
+          <div class="flex justify-between items-center text-slate-700">
+            <span class="font-medium">Abono Transporte 30 Días:</span>
+            <span class="font-bold text-indigo-600 text-sm">€{{ zone.monthlyPassPriceEur.toFixed(2) }}</span>
+          </div>
+          <div class="flex justify-between items-center text-slate-600 text-[11px]">
+            <span>Billete 10 Viajes:</span>
+            <span class="font-medium text-slate-800">€{{ zone.tenTripPriceEur.toFixed(2) }}</span>
+          </div>
+        </div>
+
+        <div class="text-[11px] text-slate-500 bg-amber-50 border border-amber-200 text-amber-800 p-2.5 rounded-xl">
+          💡 Passes are valid for all transit modes (Metro, Cercanías, EMT, and Interurban) within this zone.
+        </div>
+      </div>
+    }
+  </div>
+}

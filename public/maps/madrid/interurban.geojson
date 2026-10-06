@@ -1,0 +1,1005 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "interurban-stop-1",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6375,
+          40.5471
+        ]
+      },
+      "properties": {
+        "id": "interurban-2",
+        "name": "Alcobendas (Av. España)",
+        "corridor": "Corredor 1 (A-1 Burgos)",
+        "network": "interurban",
+        "lines": [
+          "151",
+          "152C",
+          "153",
+          "158"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-2",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6275,
+          40.5518
+        ]
+      },
+      "properties": {
+        "id": "interurban-3",
+        "name": "San Sebastián de los Reyes",
+        "corridor": "Corredor 1 (A-1 Burgos)",
+        "network": "interurban",
+        "lines": [
+          "152C",
+          "154",
+          "156"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-3",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6165,
+          40.6782
+        ]
+      },
+      "properties": {
+        "id": "interurban-4",
+        "name": "San Agustín del Guadalix",
+        "corridor": "Corredor 1 (A-1 Burgos)",
+        "network": "interurban",
+        "lines": [
+          "191",
+          "193"
+        ],
+        "zone": "B3",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-4",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.5821,
+          40.7342
+        ]
+      },
+      "properties": {
+        "id": "interurban-5",
+        "name": "El Molar",
+        "corridor": "Corredor 1 (A-1 Burgos)",
+        "network": "interurban",
+        "lines": [
+          "191",
+          "193",
+          "197D"
+        ],
+        "zone": "C1",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-5",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6375,
+          40.9932
+        ]
+      },
+      "properties": {
+        "id": "interurban-6",
+        "name": "Buitrago del Lozoya",
+        "corridor": "Corredor 1 (A-1 Burgos)",
+        "network": "interurban",
+        "lines": [
+          "191"
+        ],
+        "zone": "C2",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-6",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.5623,
+          40.4258
+        ]
+      },
+      "properties": {
+        "id": "interurban-7",
+        "name": "Coslada (Plaza Mayor)",
+        "corridor": "Corredor 2 (A-2 Barcelona)",
+        "network": "interurban",
+        "lines": [
+          "281",
+          "282",
+          "283",
+          "284"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-7",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.5352,
+          40.4308
+        ]
+      },
+      "properties": {
+        "id": "interurban-8",
+        "name": "San Fernando de Henares",
+        "corridor": "Corredor 2 (A-2 Barcelona)",
+        "network": "interurban",
+        "lines": [
+          "281",
+          "282",
+          "284"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-8",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.4795,
+          40.4578
+        ]
+      },
+      "properties": {
+        "id": "interurban-9",
+        "name": "Torrejón de Ardoz (Terminal)",
+        "corridor": "Corredor 2 (A-2 Barcelona)",
+        "network": "interurban",
+        "lines": [
+          "223",
+          "224",
+          "224A",
+          "226"
+        ],
+        "zone": "B2",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-9",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.3615,
+          40.4891
+        ]
+      },
+      "properties": {
+        "id": "interurban-10",
+        "name": "Alcalá de Henares (Vía Complutense)",
+        "corridor": "Corredor 2 (A-2 Barcelona)",
+        "network": "interurban",
+        "lines": [
+          "223",
+          "227",
+          "229",
+          "252"
+        ],
+        "zone": "B3",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-10",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.2642,
+          40.5695
+        ]
+      },
+      "properties": {
+        "id": "interurban-11",
+        "name": "Azuqueca de Henares",
+        "corridor": "Corredor 2 (A-2 Barcelona)",
+        "network": "interurban",
+        "lines": [
+          "221A"
+        ],
+        "zone": "E1",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-11",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.1675,
+          40.6321
+        ]
+      },
+      "properties": {
+        "id": "interurban-12",
+        "name": "Guadalajara (Estación de Autobuses)",
+        "corridor": "Corredor 2 (A-2 Barcelona)",
+        "network": "interurban",
+        "lines": [
+          "221",
+          "VAC-243"
+        ],
+        "zone": "E1",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-12",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.5412,
+          40.3582
+        ]
+      },
+      "properties": {
+        "id": "interurban-13",
+        "name": "Rivas Urbanizaciones",
+        "corridor": "Corredor 3 (A-3 Valencia)",
+        "network": "interurban",
+        "lines": [
+          "331",
+          "332",
+          "333",
+          "334"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-13",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.5185,
+          40.3421
+        ]
+      },
+      "properties": {
+        "id": "interurban-14",
+        "name": "Rivas Futura",
+        "corridor": "Corredor 3 (A-3 Valencia)",
+        "network": "interurban",
+        "lines": [
+          "331",
+          "332",
+          "334"
+        ],
+        "zone": "B2",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-14",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.4447,
+          40.2982
+        ]
+      },
+      "properties": {
+        "id": "interurban-15",
+        "name": "Arganda del Rey (Plaza de la Constitución)",
+        "corridor": "Corredor 3 (A-3 Valencia)",
+        "network": "interurban",
+        "lines": [
+          "312",
+          "312A",
+          "313",
+          "350A"
+        ],
+        "zone": "B3",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-15",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.3512,
+          40.2341
+        ]
+      },
+      "properties": {
+        "id": "interurban-16",
+        "name": "Perales de Tajuña",
+        "corridor": "Corredor 3 (A-3 Valencia)",
+        "network": "interurban",
+        "lines": [
+          "351",
+          "352",
+          "353"
+        ],
+        "zone": "B3",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-16",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.4242,
+          40.1412
+        ]
+      },
+      "properties": {
+        "id": "interurban-17",
+        "name": "Chinchón",
+        "corridor": "Corredor 3 (A-3 Valencia)",
+        "network": "interurban",
+        "lines": [
+          "337"
+        ],
+        "zone": "C1",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-17",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.0075,
+          40.0105
+        ]
+      },
+      "properties": {
+        "id": "interurban-18",
+        "name": "Tarancón",
+        "corridor": "Corredor 3 (A-3 Valencia)",
+        "network": "interurban",
+        "lines": [
+          "352",
+          "353"
+        ],
+        "zone": "E2",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-18",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7315,
+          40.3075
+        ]
+      },
+      "properties": {
+        "id": "interurban-19",
+        "name": "Getafe (Calle Madrid)",
+        "corridor": "Corredor 4 (A-4 / A-42 Andalucía & Toledo)",
+        "network": "interurban",
+        "lines": [
+          "441",
+          "442",
+          "443",
+          "444",
+          "448"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-19",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7663,
+          40.3308
+        ]
+      },
+      "properties": {
+        "id": "interurban-20",
+        "name": "Leganés (Av. Fuenlabrada)",
+        "corridor": "Corredor 4 (A-4 / A-42 Andalucía & Toledo)",
+        "network": "interurban",
+        "lines": [
+          "480",
+          "481",
+          "484",
+          "485",
+          "486"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-20",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7712,
+          40.2371
+        ]
+      },
+      "properties": {
+        "id": "interurban-21",
+        "name": "Parla (Calle Real)",
+        "corridor": "Corredor 4 (A-4 / A-42 Andalucía & Toledo)",
+        "network": "interurban",
+        "lines": [
+          "461",
+          "462",
+          "463",
+          "469"
+        ],
+        "zone": "B2",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-21",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6998,
+          40.2435
+        ]
+      },
+      "properties": {
+        "id": "interurban-22",
+        "name": "Pinto (Parque Egido)",
+        "corridor": "Corredor 4 (A-4 / A-42 Andalucía & Toledo)",
+        "network": "interurban",
+        "lines": [
+          "421",
+          "422",
+          "428"
+        ],
+        "zone": "B2",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-22",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6738,
+          40.1892
+        ]
+      },
+      "properties": {
+        "id": "interurban-23",
+        "name": "Valdemoro (Paseo de la Estación)",
+        "corridor": "Corredor 4 (A-4 / A-42 Andalucía & Toledo)",
+        "network": "interurban",
+        "lines": [
+          "422",
+          "424",
+          "428"
+        ],
+        "zone": "B3",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-23",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6148,
+          40.1582
+        ]
+      },
+      "properties": {
+        "id": "interurban-24",
+        "name": "Ciempozuelos",
+        "corridor": "Corredor 4 (A-4 / A-42 Andalucía & Toledo)",
+        "network": "interurban",
+        "lines": [
+          "425",
+          "426"
+        ],
+        "zone": "B3",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-24",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6067,
+          40.0321
+        ]
+      },
+      "properties": {
+        "id": "interurban-25",
+        "name": "Aranjuez (Infantas)",
+        "corridor": "Corredor 4 (A-4 / A-42 Andalucía & Toledo)",
+        "network": "interurban",
+        "lines": [
+          "423",
+          "429",
+          "430"
+        ],
+        "zone": "C1",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-25",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.8475,
+          40.1282
+        ]
+      },
+      "properties": {
+        "id": "interurban-26",
+        "name": "Illescas (Señorío)",
+        "corridor": "Corredor 4 (A-4 / A-42 Andalucía & Toledo)",
+        "network": "interurban",
+        "lines": [
+          "VAC-023"
+        ],
+        "zone": "E1",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-26",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -4.0201,
+          39.8652
+        ]
+      },
+      "properties": {
+        "id": "interurban-27",
+        "name": "Toledo (Estación de Autobuses)",
+        "corridor": "Corredor 4 (A-4 / A-42 Andalucía & Toledo)",
+        "network": "interurban",
+        "lines": [
+          "VAC-023"
+        ],
+        "zone": "E2",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-27",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.8291,
+          40.3486
+        ]
+      },
+      "properties": {
+        "id": "interurban-28",
+        "name": "Alcorcón (Los Castillos)",
+        "corridor": "Corredor 5 (A-5 Extremadura)",
+        "network": "interurban",
+        "lines": [
+          "511",
+          "512",
+          "513",
+          "514",
+          "516"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-28",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.8646,
+          40.3235
+        ]
+      },
+      "properties": {
+        "id": "interurban-29",
+        "name": "Móstoles (Av. Portugal)",
+        "corridor": "Corredor 5 (A-5 Extremadura)",
+        "network": "interurban",
+        "lines": [
+          "521",
+          "522",
+          "523",
+          "524",
+          "526"
+        ],
+        "zone": "B2",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-29",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.9031,
+          40.3582
+        ]
+      },
+      "properties": {
+        "id": "interurban-30",
+        "name": "Villaviciosa de Odón",
+        "corridor": "Corredor 5 (A-5 Extremadura)",
+        "network": "interurban",
+        "lines": [
+          "518",
+          "519"
+        ],
+        "zone": "B2",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-30",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -4.0152,
+          40.2882
+        ]
+      },
+      "properties": {
+        "id": "interurban-31",
+        "name": "Navalcarnero (Plaza de Toros)",
+        "corridor": "Corredor 5 (A-5 Extremadura)",
+        "network": "interurban",
+        "lines": [
+          "528",
+          "529",
+          "530",
+          "531"
+        ],
+        "zone": "B3",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-31",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -4.4021,
+          40.3621
+        ]
+      },
+      "properties": {
+        "id": "interurban-32",
+        "name": "San Martín de Valdeiglesias",
+        "corridor": "Corredor 5 (A-5 Extremadura)",
+        "network": "interurban",
+        "lines": [
+          "551"
+        ],
+        "zone": "C1",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-32",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -4.8312,
+          39.9601
+        ]
+      },
+      "properties": {
+        "id": "interurban-33",
+        "name": "Talavera de la Reina (Estación Central)",
+        "corridor": "Corredor 5 (A-5 Extremadura)",
+        "network": "interurban",
+        "lines": [
+          "VAC-087"
+        ],
+        "zone": "E2",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-33",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.8058,
+          40.4431
+        ]
+      },
+      "properties": {
+        "id": "interurban-34",
+        "name": "Pozuelo de Alarcón (Av. Europa)",
+        "corridor": "Corredor 6 (A-6 Coruña)",
+        "network": "interurban",
+        "lines": [
+          "656",
+          "656A",
+          "657",
+          "658"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-34",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.8631,
+          40.4682
+        ]
+      },
+      "properties": {
+        "id": "interurban-35",
+        "name": "Majadahonda (Doctor Marañón)",
+        "corridor": "Corredor 6 (A-6 Coruña)",
+        "network": "interurban",
+        "lines": [
+          "651",
+          "652",
+          "653",
+          "654",
+          "655"
+        ],
+        "zone": "B1",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-35",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.8741,
+          40.4934
+        ]
+      },
+      "properties": {
+        "id": "interurban-36",
+        "name": "Las Rozas (Burgo)",
+        "corridor": "Corredor 6 (A-6 Coruña)",
+        "network": "interurban",
+        "lines": [
+          "621",
+          "622",
+          "624",
+          "625",
+          "626"
+        ],
+        "zone": "B2",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-36",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.9312,
+          40.5752
+        ]
+      },
+      "properties": {
+        "id": "interurban-37",
+        "name": "Torrelodones (Pueblo)",
+        "corridor": "Corredor 6 (A-6 Coruña)",
+        "network": "interurban",
+        "lines": [
+          "611",
+          "612",
+          "613"
+        ],
+        "zone": "B3",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-37",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.9984,
+          40.6288
+        ]
+      },
+      "properties": {
+        "id": "interurban-38",
+        "name": "Collado Villalba (Estación Zoco)",
+        "corridor": "Corredor 6 (A-6 Coruña)",
+        "network": "interurban",
+        "lines": [
+          "681",
+          "682",
+          "684",
+          "687"
+        ],
+        "zone": "B3",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-38",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -4.1264,
+          40.5832
+        ]
+      },
+      "properties": {
+        "id": "interurban-39",
+        "name": "El Escorial / San Lorenzo",
+        "corridor": "Corredor 6 (A-6 Coruña)",
+        "network": "interurban",
+        "lines": [
+          "661",
+          "664"
+        ],
+        "zone": "C1",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-39",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -4.0891,
+          40.6721
+        ]
+      },
+      "properties": {
+        "id": "interurban-40",
+        "name": "Guadarrama",
+        "corridor": "Corredor 6 (A-6 Coruña)",
+        "network": "interurban",
+        "lines": [
+          "682",
+          "684",
+          "688"
+        ],
+        "zone": "C1",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "interurban-stop-40",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -4.0578,
+          40.7389
+        ]
+      },
+      "properties": {
+        "id": "interurban-41",
+        "name": "Cercedilla (Plaza Mayor)",
+        "corridor": "Corredor 6 (A-6 Coruña)",
+        "network": "interurban",
+        "lines": [
+          "684"
+        ],
+        "zone": "C2",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    }
+  ]
+}
