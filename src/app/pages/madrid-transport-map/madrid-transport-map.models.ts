@@ -33,6 +33,15 @@ export interface ActiveSelection {
   coordinates?: [number, number];
 }
 
+export interface SelectedLineInfo {
+  network: NetworkId;
+  line: string;
+  name: string;
+  color: string;
+  coordinates?: [number, number][];
+  stationsCount?: number;
+}
+
 export interface SearchResultItem {
   id: string;
   name: string;
@@ -201,5 +210,16 @@ export const BASEMAP_CONFIGS: Record<BasemapType, BasemapOption> = {
     ],
     attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ'
   }
+};
+
+export const ZONE_CENTERS: Record<TariffZoneCode, { coordinates: [number, number]; zoom: number }> = {
+  A: { coordinates: [-3.7038, 40.4168], zoom: 12 },
+  B1: { coordinates: [-3.68, 40.46], zoom: 11 },
+  B2: { coordinates: [-3.76, 40.38], zoom: 10.5 },
+  B3: { coordinates: [-3.60, 40.42], zoom: 10 },
+  C1: { coordinates: [-3.70, 40.25], zoom: 9.5 },
+  C2: { coordinates: [-3.85, 40.75], zoom: 9 },
+  E1: { coordinates: [-3.25, 40.55], zoom: 9 },
+  E2: { coordinates: [-4.02, 39.95], zoom: 8.5 }
 };
 

@@ -645,93 +645,287 @@ fs.writeFileSync(
 // ─── 4. EMT BUSES (MADRID CAPITAL) ──────────────────────────────────────────
 console.log('Generating emt.geojson...');
 
-// Real central bus hubs & routes across Madrid
-const emtHubs = [
-  { name: 'Plaza de Cibeles', coords: [-3.6922, 40.4196], lines: ['1', '2', '9', '14', '15', '20', '27', '34', '51', '52', '53', '74', '146', '203'] },
-  { name: 'Puerta de Alcalá', coords: [-3.6888, 40.4199], lines: ['1', '2', '9', '15', '19', '20', '28', '51', '52', '74', '146'] },
-  { name: 'Plaza de Colón', coords: [-3.6901, 40.4252], lines: ['5', '14', '21', '27', '45', '53', '150'] },
-  { name: 'Paseo del Prado - Atocha', coords: [-3.6931, 40.4101], lines: ['6', '10', '14', '26', '27', '32', '34', '45', 'C1', 'C2'] },
-  { name: 'Plaza de Neptuno', coords: [-3.6942, 40.4152], lines: ['10', '14', '27', '34', '37', '45', '001'] },
-  { name: 'Plaza de Callao', coords: [-3.7058, 40.4202], lines: ['44', '75', '133', '146', '147', '148'] },
-  { name: 'Plaza de España', coords: [-3.7126, 40.4234], lines: ['1', '2', '3', '25', '39', '44', '46', '74', '75', '133', '138', '148'] },
-  { name: 'Moncloa (Intercambiador EMT)', coords: [-3.7196, 40.4354], lines: ['1', '16', '44', '46', '61', '82', '83', '132', '133', '160', '161', '162', 'A', 'G'] },
-  { name: 'Plaza de Castilla (Intercambiador EMT)', coords: [-3.6892, 40.4667], lines: ['5', '27', '42', '49', '66', '67', '70', '107', '124', '129', '134', '135', '147', '173'] },
-  { name: 'Nuevos Ministerios EMT', coords: [-3.6917, 40.4464], lines: ['7', '14', '27', '40', '126', '147', '150', 'C1', 'C2'] },
-  { name: 'Cuatro Caminos EMT', coords: [-3.7042, 40.4468], lines: ['3', '37', '45', '64', '66', '124', '127', '128', 'F', 'C1', 'C2'] },
-  { name: 'Manuel Becerra EMT', coords: [-3.6672, 40.4298], lines: ['2', '12', '21', '38', '43', '48', '53', '56', '71', '106', '110', '143', '146', '156', 'C1', 'C2'] },
-  { name: 'Avenida de América EMT', coords: [-3.6769, 40.4381], lines: ['12', '72', '73', '114', '115', '122', '200', 'C1', 'C2'] },
-  { name: 'Plaza Elíptica EMT', coords: [-3.7181, 40.3852], lines: ['47', '55', '60', '81', '116', '155', '247', 'E1'] },
-  { name: 'Legazpi EMT', coords: [-3.6951, 40.3912], zone: 'A', lines: ['6', '8', '18', '19', '22', '45', '47', '59', '62', '76', '78', '79', '85', '86', '123', '148', '156'] },
-  { name: 'Aluche EMT', coords: [-3.7558, 40.3892], zone: 'A', lines: ['17', '31', '121', '131', '138', '139', '155', 'H'] },
-  { name: 'Oporto EMT', coords: [-3.7311, 40.3888], zone: 'A', lines: ['34', '35', '55', '81', '108', '118'] },
-  { name: 'Méndez Álvaro EMT', coords: [-3.6781, 40.3956], zone: 'A', lines: ['8', '102', '113', '148', '152'] },
-  { name: 'Conde de Casal EMT', coords: [-3.6719, 40.4072], zone: 'A', lines: ['14', '32', '56', '63', '143', '145', '156'] },
-  { name: 'Feria de Madrid EMT', coords: [-3.6152, 40.4645], zone: 'A', lines: ['73', '104', '112', '122'] },
-  { name: 'Aeropuerto T1-T2 EMT', coords: [-3.5786, 40.4682], zone: 'A', lines: ['101', '200', '203'] },
-  { name: 'Aeropuerto T4 EMT', coords: [-3.5932, 40.4918], zone: 'A', lines: ['200', '203'] }
+const emtLinesData = [
+  {
+    line: '27',
+    name: 'Línea 27 (Embajadores - Plaza de Castilla)',
+    color: '#0284C7',
+    stations: [
+      { name: 'Glorieta de Embajadores (EMT)', coords: [-3.7029, 40.4052], zone: 'A', lines: ['27', 'C1', 'C2'] },
+      { name: 'Ronda de Atocha', coords: [-3.6975, 40.4072], zone: 'A', lines: ['27', '34'] },
+      { name: 'Paseo del Prado - Atocha', coords: [-3.6931, 40.4101], zone: 'A', lines: ['14', '27', '34', 'C1', '001'] },
+      { name: 'Museo del Prado - Jardín Botánico', coords: [-3.6928, 40.4132], zone: 'A', lines: ['14', '27', '34', '001'] },
+      { name: 'Plaza de Cánovas del Castillo (Neptuno)', coords: [-3.6942, 40.4152], zone: 'A', lines: ['14', '27', '34', '001'] },
+      { name: 'Plaza de Cibeles', coords: [-3.6922, 40.4196], zone: 'A', lines: ['1', '2', '14', '27', '34', '001', '203'] },
+      { name: 'Paseo de Recoletos - Biblioteca Nacional', coords: [-3.6912, 40.4225], zone: 'A', lines: ['14', '27', '150'] },
+      { name: 'Plaza de Colón', coords: [-3.6901, 40.4252], zone: 'A', lines: ['14', '27', '150'] },
+      { name: 'Paseo de la Castellana - Rubén Darío', coords: [-3.6898, 40.4312], zone: 'A', lines: ['14', '27', '150'] },
+      { name: 'Paseo de la Castellana - Emilio Castelar', coords: [-3.6895, 40.4358], zone: 'A', lines: ['14', '27', '150'] },
+      { name: 'Paseo de la Castellana - Gregorio Marañón', coords: [-3.6902, 40.4385], zone: 'A', lines: ['14', '27', '147', '150'] },
+      { name: 'Museo de Ciencias Naturales', coords: [-3.6908, 40.4418], zone: 'A', lines: ['14', '27', '147', '150'] },
+      { name: 'Nuevos Ministerios - Castellana', coords: [-3.6917, 40.4464], zone: 'A', lines: ['14', '27', '147', '150', 'C1', 'C2'] },
+      { name: 'Paseo de la Castellana - Raimundo Fernández Villaverde', coords: [-3.6912, 40.4485], zone: 'A', lines: ['14', '27', '147', '150'] },
+      { name: 'Paseo de la Castellana - San Germán', coords: [-3.6905, 40.4528], zone: 'A', lines: ['14', '27', '147', '150'] },
+      { name: 'Santiago Bernabéu', coords: [-3.6899, 40.4552], zone: 'A', lines: ['14', '27', '147', '150'] },
+      { name: 'Paseo de la Castellana - Rafael Salgado', coords: [-3.6895, 40.4585], zone: 'A', lines: ['14', '27', '147'] },
+      { name: 'Paseo de la Castellana - Cuzco', coords: [-3.6892, 40.4612], zone: 'A', lines: ['14', '27', '147'] },
+      { name: 'Paseo de la Castellana - Alberto Alcocer', coords: [-3.6888, 40.4638], zone: 'A', lines: ['14', '27', '147'] },
+      { name: 'Plaza de Castilla (Intercambiador EMT)', coords: [-3.6892, 40.4667], zone: 'A', lines: ['27', '70', '147'] }
+    ]
+  },
+  {
+    line: '34',
+    name: 'Línea 34 (Cibeles - Las Águilas)',
+    color: '#0284C7',
+    stations: [
+      { name: 'Plaza de Cibeles', coords: [-3.6922, 40.4196], zone: 'A', lines: ['1', '2', '14', '27', '34', '001', '203'] },
+      { name: 'Sevilla - Alcalá', coords: [-3.6997, 40.4174], zone: 'A', lines: ['2', '34', '150'] },
+      { name: 'Sol - Benavente', coords: [-3.7038, 40.4145], zone: 'A', lines: ['34'] },
+      { name: 'Tirso de Molina (EMT)', coords: [-3.7049, 40.4124], zone: 'A', lines: ['34'] },
+      { name: 'Plaza de la Cebada - La Latina', coords: [-3.7095, 40.4112], zone: 'A', lines: ['34'] },
+      { name: 'Puerta de Toledo (EMT)', coords: [-3.7118, 40.4068], zone: 'A', lines: ['34', 'C1', 'C2'] },
+      { name: 'Glorieta de Pirámides', coords: [-3.7142, 40.4021], zone: 'A', lines: ['34'] },
+      { name: 'Marqués de Vadillo', coords: [-3.7168, 40.3982], zone: 'A', lines: ['34'] },
+      { name: 'General Ricardos - Comillas', coords: [-3.7212, 40.3951], zone: 'A', lines: ['34'] },
+      { name: 'General Ricardos - Urgel', coords: [-3.7258, 40.3921], zone: 'A', lines: ['34'] },
+      { name: 'Oporto (Intercambiador EMT)', coords: [-3.7311, 40.3888], zone: 'A', lines: ['34'] },
+      { name: 'General Ricardos - Vista Alegre', coords: [-3.7365, 40.3852], zone: 'A', lines: ['34'] },
+      { name: 'Eugenia de Montijo (EMT)', coords: [-3.7425, 40.3802], zone: 'A', lines: ['34'] },
+      { name: 'Avenida de los Poblados - Empalme', coords: [-3.7501, 40.3831], zone: 'A', lines: ['34'] },
+      { name: 'Aluche (Intercambiador EMT)', coords: [-3.7558, 40.3892], zone: 'A', lines: ['34'] },
+      { name: 'Avenida de las Águilas', coords: [-3.7652, 40.3845], zone: 'A', lines: ['34'] },
+      { name: 'Las Águilas - Cercanías (Terminal)', coords: [-3.7765, 40.3802], zone: 'A', lines: ['34'] }
+    ]
+  },
+  {
+    line: '1',
+    name: 'Línea 1 (Cristo Rey - Prosperidad)',
+    color: '#0284C7',
+    stations: [
+      { name: 'Plaza de Cristo Rey (Terminal)', coords: [-3.7185, 40.4398], zone: 'A', lines: ['1', 'C1', 'C2'] },
+      { name: 'Moncloa (Intercambiador EMT)', coords: [-3.7196, 40.4354], zone: 'A', lines: ['1', 'C1', 'C2', '001'] },
+      { name: 'Princesa - Alberto Aguilera', coords: [-3.7158, 40.4308], zone: 'A', lines: ['1', '001', 'C1'] },
+      { name: 'Plaza de España - Princesa', coords: [-3.7126, 40.4234], zone: 'A', lines: ['1', '001'] },
+      { name: 'Gran Vía - Santo Domingo', coords: [-3.7089, 40.4208], zone: 'A', lines: ['1', '001', '146', '147'] },
+      { name: 'Gran Vía - Callao', coords: [-3.7058, 40.4202], zone: 'A', lines: ['1', '001', '146', '147'] },
+      { name: 'Gran Vía - Red de San Luis', coords: [-3.7015, 40.4201], zone: 'A', lines: ['1', '001', '146', '147'] },
+      { name: 'Plaza de Cibeles', coords: [-3.6922, 40.4196], zone: 'A', lines: ['1', '2', '14', '27', '34', '001', '203'] },
+      { name: 'Puerta de Alcalá', coords: [-3.6888, 40.4199], zone: 'A', lines: ['1', '2', '146'] },
+      { name: 'Velázquez - Villanueva', coords: [-3.6852, 40.4231], zone: 'A', lines: ['1'] },
+      { name: 'Velázquez - Goya', coords: [-3.6841, 40.4262], zone: 'A', lines: ['1'] },
+      { name: 'Velázquez - Diego de León', coords: [-3.6828, 40.4345], zone: 'A', lines: ['1'] },
+      { name: 'Avenida de América (Intercambiador EMT)', coords: [-3.6769, 40.4381], zone: 'A', lines: ['1', 'C1', 'C2', '200'] },
+      { name: 'Prosperidad - Cartagena (Terminal)', coords: [-3.6712, 40.4425], zone: 'A', lines: ['1'] }
+    ]
+  },
+  {
+    line: '2',
+    name: 'Línea 2 (Manuel Becerra - Reina Victoria)',
+    color: '#0284C7',
+    stations: [
+      { name: 'Manuel Becerra (Terminal EMT)', coords: [-3.6672, 40.4298], zone: 'A', lines: ['2', 'C1', 'C2'] },
+      { name: 'Goya - Conde de Peñalver', coords: [-3.6749, 40.4243], zone: 'A', lines: ['2'] },
+      { name: 'Goya - Príncipe de Vergara', coords: [-3.6798, 40.4225], zone: 'A', lines: ['2'] },
+      { name: 'Puerta de Alcalá', coords: [-3.6888, 40.4199], zone: 'A', lines: ['1', '2', '146'] },
+      { name: 'Plaza de Cibeles', coords: [-3.6922, 40.4196], zone: 'A', lines: ['1', '2', '14', '27', '34', '001', '203'] },
+      { name: 'Sevilla - Alcalá', coords: [-3.6997, 40.4174], zone: 'A', lines: ['2', '34', '150'] },
+      { name: 'San Bernardo - Glorieta de Ruiz Jiménez', coords: [-3.7061, 40.4299], zone: 'A', lines: ['2', '147'] },
+      { name: 'Glorieta de Quevedo', coords: [-3.7051, 40.4338], zone: 'A', lines: ['2', '147'] },
+      { name: 'Cuatro Caminos (Intercambiador EMT)', coords: [-3.7042, 40.4468], zone: 'A', lines: ['2', 'C1', 'C2'] },
+      { name: 'Avenida de Reina Victoria (Terminal)', coords: [-3.7112, 40.4478], zone: 'A', lines: ['2', 'C1', 'C2'] }
+    ]
+  },
+  {
+    line: '14',
+    name: 'Línea 14 (Conde de Casal - Avenida Pío XII)',
+    color: '#0284C7',
+    stations: [
+      { name: 'Conde de Casal (Intercambiador EMT)', coords: [-3.6719, 40.4072], zone: 'A', lines: ['14', 'C1', 'C2'] },
+      { name: 'Mariano de Cavia', coords: [-3.6781, 40.4085], zone: 'A', lines: ['14'] },
+      { name: 'Paseo de la Reina Cristina', coords: [-3.6852, 40.4095], zone: 'A', lines: ['14'] },
+      { name: 'Paseo del Prado - Atocha', coords: [-3.6931, 40.4101], zone: 'A', lines: ['14', '27', '34', 'C1', '001'] },
+      { name: 'Plaza de Cánovas del Castillo (Neptuno)', coords: [-3.6942, 40.4152], zone: 'A', lines: ['14', '27', '34', '001'] },
+      { name: 'Plaza de Cibeles', coords: [-3.6922, 40.4196], zone: 'A', lines: ['1', '2', '14', '27', '34', '001', '203'] },
+      { name: 'Plaza de Colón', coords: [-3.6901, 40.4252], zone: 'A', lines: ['14', '27', '150'] },
+      { name: 'Paseo de la Castellana - Gregorio Marañón', coords: [-3.6902, 40.4385], zone: 'A', lines: ['14', '27', '147', '150'] },
+      { name: 'Nuevos Ministerios - Castellana', coords: [-3.6917, 40.4464], zone: 'A', lines: ['14', '27', '147', '150', 'C1', 'C2'] },
+      { name: 'Santiago Bernabéu', coords: [-3.6899, 40.4552], zone: 'A', lines: ['14', '27', '147', '150'] },
+      { name: 'Plaza de Cuzco', coords: [-3.6892, 40.4612], zone: 'A', lines: ['14', '27', '147'] },
+      { name: 'Alberto Alcocer - Padre Damián', coords: [-3.6821, 40.4625], zone: 'A', lines: ['14'] },
+      { name: 'Plaza de la República Dominicana', coords: [-3.6761, 40.4608], zone: 'A', lines: ['14'] },
+      { name: 'Avenida de Pío XII (Terminal)', coords: [-3.6728, 40.4682], zone: 'A', lines: ['14', '70'] }
+    ]
+  },
+  {
+    line: '70',
+    name: 'Línea 70 (Plaza de Castilla - Alsacia)',
+    color: '#0284C7',
+    stations: [
+      { name: 'Plaza de Castilla (Intercambiador EMT)', coords: [-3.6892, 40.4667], zone: 'A', lines: ['27', '70', '147'] },
+      { name: 'Mateo Inurria - Chamartín', coords: [-3.6823, 40.4685], zone: 'A', lines: ['70'] },
+      { name: 'Pío XII - Arturo Soria', coords: [-3.6698, 40.4695], zone: 'A', lines: ['14', '70'] },
+      { name: 'Arturo Soria - Gran Vía de Hortaleza', coords: [-3.6645, 40.4652], zone: 'A', lines: ['70'] },
+      { name: 'Arturo Soria - Arturo Soria Plaza', coords: [-3.6601, 40.4558], zone: 'A', lines: ['70'] },
+      { name: 'Arturo Soria - Avenida de América', coords: [-3.6558, 40.4442], zone: 'A', lines: ['70'] },
+      { name: 'Arturo Soria - Condesa de Venadito', coords: [-3.6521, 40.4385], zone: 'A', lines: ['70'] },
+      { name: 'Ciudad Lineal (Intercambiador)', coords: [-3.6482, 40.4352], zone: 'A', lines: ['70', '146'] },
+      { name: 'Hermanos García Noblejas - Alcalá', coords: [-3.6412, 40.4312], zone: 'A', lines: ['70'] },
+      { name: 'Hermanos García Noblejas - Simancas', coords: [-3.6358, 40.4265], zone: 'A', lines: ['70'] },
+      { name: 'Alsacia (Intercambiador EMT)', coords: [-3.6265, 40.4198], zone: 'A', lines: ['70'] }
+    ]
+  },
+  {
+    line: 'C1',
+    name: 'Línea C1 (Circular 1 - Moncloa por Cuatro Caminos)',
+    color: '#0284C7',
+    stations: [
+      { name: 'Moncloa (Intercambiador EMT)', coords: [-3.7196, 40.4354], zone: 'A', lines: ['1', 'C1', 'C2', '001'] },
+      { name: 'Plaza de Cristo Rey (EMT)', coords: [-3.7185, 40.4398], zone: 'A', lines: ['1', 'C1', 'C2'] },
+      { name: 'Avenida Reina Victoria', coords: [-3.7112, 40.4478], zone: 'A', lines: ['2', 'C1', 'C2'] },
+      { name: 'Cuatro Caminos (EMT)', coords: [-3.7042, 40.4468], zone: 'A', lines: ['2', 'C1', 'C2'] },
+      { name: 'Raimundo Fernández Villaverde - Castellana', coords: [-3.6917, 40.4464], zone: 'A', lines: ['14', '27', 'C1', 'C2'] },
+      { name: 'República Argentina', coords: [-3.6841, 40.4452], zone: 'A', lines: ['C1', 'C2'] },
+      { name: 'Avenida de América (EMT)', coords: [-3.6769, 40.4381], zone: 'A', lines: ['1', 'C1', 'C2', '200'] },
+      { name: 'Francisco Silvela - Diego de León', coords: [-3.6732, 40.4345], zone: 'A', lines: ['C1', 'C2'] },
+      { name: 'Manuel Becerra (EMT)', coords: [-3.6672, 40.4298], zone: 'A', lines: ['2', 'C1', 'C2'] },
+      { name: 'Doctor Esquerdo - O\'Donnell', coords: [-3.6685, 40.4215], zone: 'A', lines: ['C1', 'C2', '203'] },
+      { name: 'Doctor Esquerdo - Sainz de Baranda', coords: [-3.6698, 40.4158], zone: 'A', lines: ['C1', 'C2'] },
+      { name: 'Conde de Casal (EMT)', coords: [-3.6719, 40.4072], zone: 'A', lines: ['14', 'C1', 'C2'] },
+      { name: 'Paseo de la Reina Cristina', coords: [-3.6852, 40.4095], zone: 'A', lines: ['14', 'C1', 'C2'] },
+      { name: 'Atocha (Intercambiador EMT)', coords: [-3.6931, 40.4101], zone: 'A', lines: ['14', '27', '34', 'C1', '001', '203'] },
+      { name: 'Glorieta de Embajadores (EMT)', coords: [-3.7029, 40.4052], zone: 'A', lines: ['27', 'C1', 'C2'] },
+      { name: 'Puerta de Toledo (EMT)', coords: [-3.7118, 40.4068], zone: 'A', lines: ['34', 'C1', 'C2'] },
+      { name: 'Ronda de Segovia', coords: [-3.7165, 40.4112], zone: 'A', lines: ['C1', 'C2'] },
+      { name: 'Príncipe Pío (EMT)', coords: [-3.7198, 40.4208], zone: 'A', lines: ['C1', 'C2'] },
+      { name: 'Moncloa (Intercambiador EMT)', coords: [-3.7196, 40.4354], zone: 'A', lines: ['1', 'C1', 'C2', '001'] }
+    ]
+  },
+  {
+    line: '001',
+    name: 'Línea 001 Cero Emisiones (Atocha - Moncloa)',
+    color: '#0284C7',
+    stations: [
+      { name: 'Atocha (Intercambiador EMT)', coords: [-3.6931, 40.4101], zone: 'A', lines: ['14', '27', '34', 'C1', '001', '203'] },
+      { name: 'Paseo del Prado - Jardín Botánico', coords: [-3.6928, 40.4132], zone: 'A', lines: ['14', '27', '34', '001'] },
+      { name: 'Plaza de Cánovas del Castillo (Neptuno)', coords: [-3.6942, 40.4152], zone: 'A', lines: ['14', '27', '34', '001'] },
+      { name: 'Plaza de Cibeles', coords: [-3.6922, 40.4196], zone: 'A', lines: ['1', '2', '14', '27', '34', '001', '203'] },
+      { name: 'Gran Vía - Alcalá', coords: [-3.6985, 40.4189], zone: 'A', lines: ['1', '001'] },
+      { name: 'Gran Vía - Red de San Luis', coords: [-3.7015, 40.4201], zone: 'A', lines: ['1', '001', '146', '147'] },
+      { name: 'Gran Vía - Callao', coords: [-3.7058, 40.4202], zone: 'A', lines: ['1', '001', '146', '147'] },
+      { name: 'Gran Vía - Plaza de España', coords: [-3.7126, 40.4234], zone: 'A', lines: ['1', '001'] },
+      { name: 'Princesa - Ventura Rodríguez', coords: [-3.7142, 40.4272], zone: 'A', lines: ['1', '001'] },
+      { name: 'Princesa - Argüelles', coords: [-3.7158, 40.4308], zone: 'A', lines: ['1', '001', 'C1'] },
+      { name: 'Moncloa (Intercambiador EMT)', coords: [-3.7196, 40.4354], zone: 'A', lines: ['1', 'C1', 'C2', '001'] }
+    ]
+  },
+  {
+    line: '203',
+    name: 'Línea 203 Exprés Aeropuerto (Atocha - Cibeles - Barajas T4)',
+    color: '#F59E0B',
+    stations: [
+      { name: 'Atocha (Intercambiador EMT)', coords: [-3.6931, 40.4101], zone: 'A', lines: ['14', '27', '34', 'C1', '001', '203'] },
+      { name: 'Plaza de Cibeles', coords: [-3.6922, 40.4196], zone: 'A', lines: ['1', '2', '14', '27', '34', '001', '203'] },
+      { name: 'O\'Donnell (EMT Exprés)', coords: [-3.6685, 40.4215], zone: 'A', lines: ['C1', 'C2', '203'] },
+      { name: 'Aeropuerto T1 (Llegadas)', coords: [-3.5786, 40.4682], zone: 'A', lines: ['200', '203'] },
+      { name: 'Aeropuerto T2 (Salidas)', coords: [-3.5762, 40.4725], zone: 'A', lines: ['200', '203'] },
+      { name: 'Aeropuerto T4 (Terminal)', coords: [-3.5932, 40.4918], zone: 'A', lines: ['200', '203'] }
+    ]
+  }
 ];
 
-// Generate comprehensive EMT stops along main urban avenues
 const emtFeatures = [];
-let stopIndex = 1;
+const uniqueEmtStops = new Map();
 
-// Add principal hubs
-for (const hub of emtHubs) {
+for (const lineDef of emtLinesData) {
+  const lineCoords = lineDef.stations.map((s) => [round5(s.coords[0]), round5(s.coords[1])]);
   emtFeatures.push({
     type: 'Feature',
-    id: `emt-stop-${stopIndex++}`,
+    id: `emt-line-${lineDef.line}`,
     geometry: {
-      type: 'Point',
-      coordinates: [round5(hub.coords[0]), round5(hub.coords[1])]
+      type: 'LineString',
+      coordinates: lineCoords
     },
     properties: {
-      id: `emt-${stopIndex}`,
-      name: hub.name,
+      type: 'line',
       network: 'emt',
-      lines: hub.lines,
-      zone: 'A',
-      wheelchairAccessible: true,
+      line: lineDef.line,
+      name: lineDef.name,
+      color: lineDef.color
+    }
+  });
+
+  for (const st of lineDef.stations) {
+    const key = `${st.name}-${st.zone}`;
+    if (!uniqueEmtStops.has(key)) {
+      uniqueEmtStops.set(key, {
+        id: `emt-stop-${st.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}`,
+        name: st.name,
+        network: 'emt',
+        zone: st.zone,
+        coordinates: [round5(st.coords[0]), round5(st.coords[1])],
+        lines: [...st.lines],
+        wheelchairAccessible: true
+      });
+    } else {
+      const existing = uniqueEmtStops.get(key);
+      for (const l of st.lines) {
+        if (!existing.lines.includes(l)) existing.lines.push(l);
+      }
+    }
+  }
+}
+
+// Add intermediate stops along key avenues to provide complete citywide density
+const avenueCorridors = [
+  { name: 'Paseo de la Castellana', start: [-3.6892, 40.4667], end: [-3.6917, 40.4252], count: 18, lines: ['14', '27', '147', '150'] },
+  { name: 'Calle de Alcalá', start: [-3.7015, 40.4181], end: [-3.6265, 40.4352], count: 20, lines: ['2', '70', '146'] },
+  { name: 'Calle Bravo Murillo', start: [-3.7042, 40.4468], end: [-3.6961, 40.4639], count: 12, lines: ['2', 'C1', 'C2'] },
+  { name: 'Gran Vía', start: [-3.6948, 40.4189], end: [-3.7126, 40.4234], count: 8, lines: ['1', '001', '146', '147'] },
+  { name: 'General Ricardos', start: [-3.7181, 40.3952], end: [-3.7425, 40.3802], count: 10, lines: ['34'] },
+  { name: 'Avenida de la Albufera', start: [-3.6685, 40.3982], end: [-3.6267, 40.3875], count: 12, lines: ['10', '54', '58'] },
+  { name: 'Arturo Soria', start: [-3.6558, 40.4402], end: [-3.6669, 40.4801], count: 14, lines: ['70'] }
+];
+
+let extraStopIndex = 1;
+for (const c of avenueCorridors) {
+  for (let i = 1; i <= c.count; i++) {
+    const fraction = i / (c.count + 1);
+    const lng = c.start[0] + (c.end[0] - c.start[0]) * fraction + (Math.sin(i * 1.5) * 0.0004);
+    const lat = c.start[1] + (c.end[1] - c.start[1]) * fraction + (Math.cos(i * 1.5) * 0.0004);
+    const stName = `${c.name} - Parada ${i}`;
+    const key = `${stName}-A`;
+    if (!uniqueEmtStops.has(key)) {
+      uniqueEmtStops.set(key, {
+        id: `emt-stop-extra-${extraStopIndex++}`,
+        name: stName,
+        network: 'emt',
+        zone: 'A',
+        coordinates: [round5(lng), round5(lat)],
+        lines: [...c.lines],
+        wheelchairAccessible: true
+      });
+    }
+  }
+}
+
+for (const st of uniqueEmtStops.values()) {
+  emtFeatures.push({
+    type: 'Feature',
+    id: st.id,
+    geometry: {
+      type: 'Point',
+      coordinates: st.coordinates
+    },
+    properties: {
+      id: st.id,
+      name: st.name,
+      network: 'emt',
+      lines: st.lines,
+      zone: st.zone,
+      wheelchairAccessible: st.wheelchairAccessible,
       type: 'stop'
     }
   });
-}
-
-// Generate intermediate stops along major avenues (Castellana, Bravo Murillo, Alcalá, Gran Vía, etc.)
-const corridors = [
-  { name: 'Paseo de la Castellana', start: [-3.6892, 40.4667], end: [-3.6917, 40.4252], count: 20, lines: ['14', '27', '40', '147', '150'] },
-  { name: 'Calle de Alcalá', start: [-3.7015, 40.4181], end: [-3.6265, 40.4352], count: 24, lines: ['21', '38', '53', '70', '106', '146'] },
-  { name: 'Calle Bravo Murillo', start: [-3.7042, 40.4468], end: [-3.6961, 40.4639], count: 14, lines: ['3', '64', '66', '124', '128'] },
-  { name: 'Gran Vía', start: [-3.6948, 40.4189], end: [-3.7126, 40.4234], count: 8, lines: ['1', '2', '46', '74', '146', '001'] },
-  { name: 'Princesa', start: [-3.7126, 40.4234], end: [-3.7196, 40.4354], count: 10, lines: ['1', '44', '133', 'C1', 'C2'] },
-  { name: 'General Ricardos', start: [-3.7181, 40.3952], end: [-3.7425, 40.3802], count: 12, lines: ['34', '35', '118', '119'] },
-  { name: 'Albufera', start: [-3.6685, 40.3982], end: [-3.6267, 40.3875], count: 14, lines: ['10', '24', '54', '57', '58', '111', '144'] },
-  { name: 'Santa María de la Cabeza', start: [-3.6958, 40.4025], end: [-3.7181, 40.3852], count: 12, lines: ['47', '55', '60', '81', '247'] },
-  { name: 'Arturo Soria', start: [-3.6558, 40.4402], end: [-3.6669, 40.4801], count: 18, lines: ['9', '11', '70', '72', '73'] }
-];
-
-for (const c of corridors) {
-  for (let i = 1; i <= c.count; i++) {
-    const fraction = i / (c.count + 1);
-    const lng = c.start[0] + (c.end[0] - c.start[0]) * fraction + (Math.sin(i * 1.5) * 0.0006);
-    const lat = c.start[1] + (c.end[1] - c.start[1]) * fraction + (Math.cos(i * 1.5) * 0.0006);
-    emtFeatures.push({
-      type: 'Feature',
-      id: `emt-stop-${stopIndex++}`,
-      geometry: {
-        type: 'Point',
-        coordinates: [round5(lng), round5(lat)]
-      },
-      properties: {
-        id: `emt-${stopIndex}`,
-        name: `${c.name} - Parada ${i}`,
-        network: 'emt',
-        lines: c.lines,
-        zone: 'A',
-        wheelchairAccessible: i % 5 !== 0,
-        type: 'stop'
-      }
-    });
-  }
 }
 
 fs.writeFileSync(
@@ -742,110 +936,226 @@ fs.writeFileSync(
 // ─── 5. INTERURBAN BUSES (CRTM CORRIDORS) ───────────────────────────────────
 console.log('Generating interurban.geojson...');
 
-const interurbanFeatures = [];
-let interStopIndex = 1;
-
-const interurbanCorridors = [
+const interurbanLinesData = [
   {
-    corridor: 'Corredor 1 (A-1 Burgos)',
-    hub: 'Plaza de Castilla',
-    destinations: [
-      { name: 'Alcobendas (Av. España)', coords: [-3.6375, 40.5471], zone: 'B1', lines: ['151', '152C', '153', '158'] },
-      { name: 'San Sebastián de los Reyes', coords: [-3.6275, 40.5518], zone: 'B1', lines: ['152C', '154', '156'] },
-      { name: 'San Agustín del Guadalix', coords: [-3.6165, 40.6782], zone: 'B3', lines: ['191', '193'] },
-      { name: 'El Molar', coords: [-3.5821, 40.7342], zone: 'C1', lines: ['191', '193', '197D'] },
-      { name: 'Buitrago del Lozoya', coords: [-3.6375, 40.9932], zone: 'C2', lines: ['191'] }
+    line: '151',
+    name: 'Línea 151 (Plaza de Castilla - Alcobendas)',
+    color: '#16A34A',
+    stations: [
+      { name: 'Plaza de Castilla (Intercambiador)', coords: [-3.6892, 40.4667], zone: 'A', lines: ['151', '191'] },
+      { name: 'Paseo de la Castellana - Las Cuatro Torres', coords: [-3.6875, 40.4782], zone: 'A', lines: ['151', '191'] },
+      { name: 'A-1 Fuencarral', coords: [-3.6752, 40.5012], zone: 'A', lines: ['151', '191'] },
+      { name: 'A-1 Las Tablas', coords: [-3.6621, 40.5185], zone: 'A', lines: ['151', '191'] },
+      { name: 'Alcobendas - La Moraleja', coords: [-3.6482, 40.5342], zone: 'B1', lines: ['151'] },
+      { name: 'Alcobendas - Avenida de España', coords: [-3.6375, 40.5471], zone: 'B1', lines: ['151'] }
     ]
   },
   {
-    corridor: 'Corredor 2 (A-2 Barcelona)',
-    hub: 'Avenida de América',
-    destinations: [
-      { name: 'Coslada (Plaza Mayor)', coords: [-3.5623, 40.4258], zone: 'B1', lines: ['281', '282', '283', '284'] },
-      { name: 'San Fernando de Henares', coords: [-3.5352, 40.4308], zone: 'B1', lines: ['281', '282', '284'] },
-      { name: 'Torrejón de Ardoz (Terminal)', coords: [-3.4795, 40.4578], zone: 'B2', lines: ['223', '224', '224A', '226'] },
-      { name: 'Alcalá de Henares (Vía Complutense)', coords: [-3.3615, 40.4891], zone: 'B3', lines: ['223', '227', '229', '252'] },
-      { name: 'Azuqueca de Henares', coords: [-3.2642, 40.5695], zone: 'E1', lines: ['221A'] },
-      { name: 'Guadalajara (Estación de Autobuses)', coords: [-3.1675, 40.6321], zone: 'E1', lines: ['221', 'VAC-243'] }
+    line: '191',
+    name: 'Línea 191 (Plaza de Castilla - Buitrago del Lozoya)',
+    color: '#16A34A',
+    stations: [
+      { name: 'Plaza de Castilla (Intercambiador)', coords: [-3.6892, 40.4667], zone: 'A', lines: ['151', '191'] },
+      { name: 'San Sebastián de los Reyes (A-1)', coords: [-3.6275, 40.5518], zone: 'B1', lines: ['191'] },
+      { name: 'San Agustín del Guadalix', coords: [-3.6165, 40.6782], zone: 'B3', lines: ['191'] },
+      { name: 'El Molar (Centro)', coords: [-3.5821, 40.7342], zone: 'C1', lines: ['191'] },
+      { name: 'Venturada', coords: [-3.6185, 40.7982], zone: 'C1', lines: ['191'] },
+      { name: 'La Cabrera', coords: [-3.6125, 40.8621], zone: 'C1', lines: ['191'] },
+      { name: 'Buitrago del Lozoya (Terminal)', coords: [-3.6375, 40.9932], zone: 'C2', lines: ['191'] }
     ]
   },
   {
-    corridor: 'Corredor 3 (A-3 Valencia)',
-    hub: 'Conde de Casal',
-    destinations: [
-      { name: 'Rivas Urbanizaciones', coords: [-3.5412, 40.3582], zone: 'B1', lines: ['331', '332', '333', '334'] },
-      { name: 'Rivas Futura', coords: [-3.5185, 40.3421], zone: 'B2', lines: ['331', '332', '334'] },
-      { name: 'Arganda del Rey (Plaza de la Constitución)', coords: [-3.4447, 40.2982], zone: 'B3', lines: ['312', '312A', '313', '350A'] },
-      { name: 'Perales de Tajuña', coords: [-3.3512, 40.2341], zone: 'B3', lines: ['351', '352', '353'] },
-      { name: 'Chinchón', coords: [-3.4242, 40.1412], zone: 'C1', lines: ['337'] },
-      { name: 'Tarancón', coords: [-3.0075, 40.0105], zone: 'E2', lines: ['352', '353'] }
+    line: '223',
+    name: 'Línea 223 (Avenida de América - Alcalá de Henares)',
+    color: '#16A34A',
+    stations: [
+      { name: 'Avenida de América (Intercambiador)', coords: [-3.6769, 40.4381], zone: 'A', lines: ['223', '281'] },
+      { name: 'A-2 Canillejas', coords: [-3.6082, 40.4485], zone: 'A', lines: ['223', '281'] },
+      { name: 'A-2 San Fernando de Henares', coords: [-3.5352, 40.4308], zone: 'B1', lines: ['223'] },
+      { name: 'Torrejón de Ardoz (Terminal)', coords: [-3.4795, 40.4578], zone: 'B2', lines: ['223'] },
+      { name: 'La Garena (Alcalá)', coords: [-3.3982, 40.4812], zone: 'B3', lines: ['223'] },
+      { name: 'Alcalá de Henares (Vía Complutense)', coords: [-3.3615, 40.4891], zone: 'B3', lines: ['223'] }
     ]
   },
   {
-    corridor: 'Corredor 4 (A-4 / A-42 Andalucía & Toledo)',
-    hub: 'Plaza Elíptica / Méndez Álvaro',
-    destinations: [
-      { name: 'Getafe (Calle Madrid)', coords: [-3.7315, 40.3075], zone: 'B1', lines: ['441', '442', '443', '444', '448'] },
-      { name: 'Leganés (Av. Fuenlabrada)', coords: [-3.7663, 40.3308], zone: 'B1', lines: ['480', '481', '484', '485', '486'] },
-      { name: 'Parla (Calle Real)', coords: [-3.7712, 40.2371], zone: 'B2', lines: ['461', '462', '463', '469'] },
-      { name: 'Pinto (Parque Egido)', coords: [-3.6998, 40.2435], zone: 'B2', lines: ['421', '422', '428'] },
-      { name: 'Valdemoro (Paseo de la Estación)', coords: [-3.6738, 40.1892], zone: 'B3', lines: ['422', '424', '428'] },
-      { name: 'Ciempozuelos', coords: [-3.6148, 40.1582], zone: 'B3', lines: ['425', '426'] },
-      { name: 'Aranjuez (Infantas)', coords: [-3.6067, 40.0321], zone: 'C1', lines: ['423', '429', '430'] },
-      { name: 'Illescas (Señorío)', coords: [-3.8475, 40.1282], zone: 'E1', lines: ['VAC-023'] },
-      { name: 'Toledo (Estación de Autobuses)', coords: [-4.0201, 39.8652], zone: 'E2', lines: ['VAC-023'] }
+    line: '281',
+    name: 'Línea 281 (Avenida de América - San Fernando)',
+    color: '#16A34A',
+    stations: [
+      { name: 'Avenida de América (Intercambiador)', coords: [-3.6769, 40.4381], zone: 'A', lines: ['223', '281'] },
+      { name: 'Coslada (Plaza Mayor)', coords: [-3.5623, 40.4258], zone: 'B1', lines: ['281'] },
+      { name: 'San Fernando de Henares (Centro)', coords: [-3.5352, 40.4308], zone: 'B1', lines: ['281'] }
     ]
   },
   {
-    corridor: 'Corredor 5 (A-5 Extremadura)',
-    hub: 'Príncipe Pío',
-    destinations: [
-      { name: 'Alcorcón (Los Castillos)', coords: [-3.8291, 40.3486], zone: 'B1', lines: ['511', '512', '513', '514', '516'] },
-      { name: 'Móstoles (Av. Portugal)', coords: [-3.8646, 40.3235], zone: 'B2', lines: ['521', '522', '523', '524', '526'] },
-      { name: 'Villaviciosa de Odón', coords: [-3.9031, 40.3582], zone: 'B2', lines: ['518', '519'] },
-      { name: 'Navalcarnero (Plaza de Toros)', coords: [-4.0152, 40.2882], zone: 'B3', lines: ['528', '529', '530', '531'] },
-      { name: 'San Martín de Valdeiglesias', coords: [-4.4021, 40.3621], zone: 'C1', lines: ['551'] },
-      { name: 'Talavera de la Reina (Estación Central)', coords: [-4.8312, 39.9601], zone: 'E2', lines: ['VAC-087'] }
+    line: '331',
+    name: 'Línea 331 (Conde de Casal - Rivas Futura)',
+    color: '#16A34A',
+    stations: [
+      { name: 'Conde de Casal (Intercambiador)', coords: [-3.6719, 40.4072], zone: 'A', lines: ['331', '352'] },
+      { name: 'A-3 Santa Eugenia', coords: [-3.6012, 40.3812], zone: 'A', lines: ['331', '352'] },
+      { name: 'Rivas Urbanizaciones', coords: [-3.5412, 40.3582], zone: 'B1', lines: ['331'] },
+      { name: 'Rivas Futura', coords: [-3.5185, 40.3421], zone: 'B2', lines: ['331'] }
     ]
   },
   {
-    corridor: 'Corredor 6 (A-6 Coruña)',
-    hub: 'Moncloa',
-    destinations: [
-      { name: 'Pozuelo de Alarcón (Av. Europa)', coords: [-3.8058, 40.4431], zone: 'B1', lines: ['656', '656A', '657', '658'] },
-      { name: 'Majadahonda (Doctor Marañón)', coords: [-3.8631, 40.4682], zone: 'B1', lines: ['651', '652', '653', '654', '655'] },
-      { name: 'Las Rozas (Burgo)', coords: [-3.8741, 40.4934], zone: 'B2', lines: ['621', '622', '624', '625', '626'] },
-      { name: 'Torrelodones (Pueblo)', coords: [-3.9312, 40.5752], zone: 'B3', lines: ['611', '612', '613'] },
-      { name: 'Collado Villalba (Estación Zoco)', coords: [-3.9984, 40.6288], zone: 'B3', lines: ['681', '682', '684', '687'] },
-      { name: 'El Escorial / San Lorenzo', coords: [-4.1264, 40.5832], zone: 'C1', lines: ['661', '664'] },
-      { name: 'Guadarrama', coords: [-4.0891, 40.6721], zone: 'C1', lines: ['682', '684', '688'] },
-      { name: 'Cercedilla (Plaza Mayor)', coords: [-4.0578, 40.7389], zone: 'C2', lines: ['684'] }
+    line: '352',
+    name: 'Línea 352 (Conde de Casal - Tarancón)',
+    color: '#16A34A',
+    stations: [
+      { name: 'Conde de Casal (Intercambiador)', coords: [-3.6719, 40.4072], zone: 'A', lines: ['331', '352'] },
+      { name: 'Arganda del Rey (Plaza)', coords: [-3.4447, 40.2982], zone: 'B3', lines: ['352'] },
+      { name: 'Perales de Tajuña', coords: [-3.3512, 40.2341], zone: 'B3', lines: ['352'] },
+      { name: 'Villarejo de Salvanés', coords: [-3.2758, 40.1685], zone: 'C1', lines: ['352'] },
+      { name: 'Tarancón (Terminal)', coords: [-3.0075, 40.0105], zone: 'E2', lines: ['352'] }
+    ]
+  },
+  {
+    line: '441',
+    name: 'Línea 441 (Plaza Elíptica - Getafe)',
+    color: '#16A34A',
+    stations: [
+      { name: 'Plaza Elíptica (Intercambiador)', coords: [-3.7181, 40.3852], zone: 'A', lines: ['441', '461', '481'] },
+      { name: 'A-42 Villaverde', coords: [-3.7125, 40.3551], zone: 'A', lines: ['441', '461'] },
+      { name: 'Getafe (Calle Madrid)', coords: [-3.7315, 40.3075], zone: 'B1', lines: ['441'] },
+      { name: 'Getafe Sector 3', coords: [-3.7371, 40.2922], zone: 'B1', lines: ['441'] }
+    ]
+  },
+  {
+    line: '461',
+    name: 'Línea 461 (Plaza Elíptica - Parla)',
+    color: '#16A34A',
+    stations: [
+      { name: 'Plaza Elíptica (Intercambiador)', coords: [-3.7181, 40.3852], zone: 'A', lines: ['441', '461', '481'] },
+      { name: 'Getafe (A-42)', coords: [-3.7251, 40.3012], zone: 'B1', lines: ['461'] },
+      { name: 'Pinto (A-42)', coords: [-3.6998, 40.2435], zone: 'B2', lines: ['461'] },
+      { name: 'Parla (Calle Real)', coords: [-3.7712, 40.2371], zone: 'B2', lines: ['461'] }
+    ]
+  },
+  {
+    line: '481',
+    name: 'Línea 481 (Plaza Elíptica - Leganés)',
+    color: '#16A34A',
+    stations: [
+      { name: 'Plaza Elíptica (Intercambiador)', coords: [-3.7181, 40.3852], zone: 'A', lines: ['441', '461', '481'] },
+      { name: 'Oporto (Intercambiador)', coords: [-3.7311, 40.3888], zone: 'A', lines: ['481'] },
+      { name: 'Leganés (Avenida de Fuenlabrada)', coords: [-3.7663, 40.3308], zone: 'B1', lines: ['481'] }
+    ]
+  },
+  {
+    line: '511',
+    name: 'Línea 511 (Príncipe Pío - Alcorcón)',
+    color: '#16A34A',
+    stations: [
+      { name: 'Príncipe Pío (Intercambiador)', coords: [-3.7198, 40.4208], zone: 'A', lines: ['511', '521'] },
+      { name: 'Campamento (A-5)', coords: [-3.7682, 40.3921], zone: 'A', lines: ['511', '521'] },
+      { name: 'Cuatro Vientos (A-5)', coords: [-3.7938, 40.3732], zone: 'A', lines: ['511', '521'] },
+      { name: 'Alcorcón (Los Castillos)', coords: [-3.8291, 40.3486], zone: 'B1', lines: ['511'] }
+    ]
+  },
+  {
+    line: '521',
+    name: 'Línea 521 (Príncipe Pío - Móstoles)',
+    color: '#16A34A',
+    stations: [
+      { name: 'Príncipe Pío (Intercambiador)', coords: [-3.7198, 40.4208], zone: 'A', lines: ['511', '521'] },
+      { name: 'Campamento (A-5)', coords: [-3.7682, 40.3921], zone: 'A', lines: ['511', '521'] },
+      { name: 'Alcorcón (A-5)', coords: [-3.8212, 40.3551], zone: 'B1', lines: ['521'] },
+      { name: 'Móstoles (Avenida de Portugal)', coords: [-3.8646, 40.3235], zone: 'B2', lines: ['521'] }
+    ]
+  },
+  {
+    line: '621',
+    name: 'Línea 621 (Moncloa - Las Rozas)',
+    color: '#16A34A',
+    stations: [
+      { name: 'Moncloa (Intercambiador)', coords: [-3.7196, 40.4354], zone: 'A', lines: ['621', '651', '681'] },
+      { name: 'A-6 Puerta de Hierro', coords: [-3.7482, 40.4582], zone: 'A', lines: ['621', '651', '681'] },
+      { name: 'Las Rozas (El Burgo)', coords: [-3.8741, 40.4934], zone: 'B2', lines: ['621'] }
+    ]
+  },
+  {
+    line: '651',
+    name: 'Línea 651 (Moncloa - Majadahonda)',
+    color: '#16A34A',
+    stations: [
+      { name: 'Moncloa (Intercambiador)', coords: [-3.7196, 40.4354], zone: 'A', lines: ['621', '651', '681'] },
+      { name: 'Pozuelo de Alarcón (A-6)', coords: [-3.8058, 40.4431], zone: 'B1', lines: ['651'] },
+      { name: 'Majadahonda (Doctor Marañón)', coords: [-3.8631, 40.4682], zone: 'B1', lines: ['651'] }
+    ]
+  },
+  {
+    line: '681',
+    name: 'Línea 681 (Moncloa - Collado Villalba)',
+    color: '#16A34A',
+    stations: [
+      { name: 'Moncloa (Intercambiador)', coords: [-3.7196, 40.4354], zone: 'A', lines: ['621', '651', '681'] },
+      { name: 'Torrelodones (A-6)', coords: [-3.9312, 40.5752], zone: 'B3', lines: ['681'] },
+      { name: 'Collado Villalba (Estación Zoco)', coords: [-3.9984, 40.6288], zone: 'B3', lines: ['681'] }
     ]
   }
 ];
 
-// Corridors lines
-for (const corr of interurbanCorridors) {
-  for (const dest of corr.destinations) {
-    interurbanFeatures.push({
-      type: 'Feature',
-      id: `interurban-stop-${interStopIndex++}`,
-      geometry: {
-        type: 'Point',
-        coordinates: [round5(dest.coords[0]), round5(dest.coords[1])]
-      },
-      properties: {
-        id: `interurban-${interStopIndex}`,
-        name: dest.name,
-        corridor: corr.corridor,
+const interurbanFeatures = [];
+const uniqueInterurbanStops = new Map();
+
+for (const lineDef of interurbanLinesData) {
+  const lineCoords = lineDef.stations.map((s) => [round5(s.coords[0]), round5(s.coords[1])]);
+  interurbanFeatures.push({
+    type: 'Feature',
+    id: `interurban-line-${lineDef.line}`,
+    geometry: {
+      type: 'LineString',
+      coordinates: lineCoords
+    },
+    properties: {
+      type: 'line',
+      network: 'interurban',
+      line: lineDef.line,
+      name: lineDef.name,
+      color: lineDef.color
+    }
+  });
+
+  for (const st of lineDef.stations) {
+    const key = `${st.name}-${st.zone}`;
+    if (!uniqueInterurbanStops.has(key)) {
+      uniqueInterurbanStops.set(key, {
+        id: `interurban-stop-${st.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}`,
+        name: st.name,
         network: 'interurban',
-        lines: dest.lines,
-        zone: dest.zone,
-        wheelchairAccessible: true,
-        type: 'stop'
+        zone: st.zone,
+        coordinates: [round5(st.coords[0]), round5(st.coords[1])],
+        lines: [...st.lines],
+        wheelchairAccessible: true
+      });
+    } else {
+      const existing = uniqueInterurbanStops.get(key);
+      for (const l of st.lines) {
+        if (!existing.lines.includes(l)) existing.lines.push(l);
       }
-    });
+    }
   }
+}
+
+for (const st of uniqueInterurbanStops.values()) {
+  interurbanFeatures.push({
+    type: 'Feature',
+    id: st.id,
+    geometry: {
+      type: 'Point',
+      coordinates: st.coordinates
+    },
+    properties: {
+      id: st.id,
+      name: st.name,
+      network: 'interurban',
+      lines: st.lines,
+      zone: st.zone,
+      wheelchairAccessible: st.wheelchairAccessible,
+      type: 'stop'
+    }
+  });
 }
 
 fs.writeFileSync(

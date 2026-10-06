@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
 import { MadridTransportMapService } from '../../madrid-transport-map.service';
 import { TARIFF_ZONES, TariffZoneInfo } from '../../madrid-transport-map.models';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ZoneLegendComponent {
+  readonly embedded = input<boolean>(false);
   readonly service = inject(MadridTransportMapService);
   readonly isExpanded = signal<boolean>(false);
   protected readonly Math = Math;

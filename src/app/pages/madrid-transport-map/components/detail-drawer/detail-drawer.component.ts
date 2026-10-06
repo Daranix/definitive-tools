@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { MadridTransportMapService } from '../../madrid-transport-map.service';
 import {
   ActiveSelection,
@@ -19,6 +19,7 @@ import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.co
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DetailDrawerComponent {
+  readonly embedded = input<boolean>(false);
   readonly service = inject(MadridTransportMapService);
 
   readonly selection = computed(() => this.service.selectedItem());
@@ -42,6 +43,29 @@ export class DetailDrawerComponent {
     const station = this.stationData();
     return station ? NETWORK_METAS[station.network] : null;
   });
+
+  readonly selectedLine = computed(() => this.service.selectedLine());
+  readonly lineNetworkMeta = computed(() => {
+    const l = this.selectedLine();
+    return l ? NETWORK_METAS[l.network] : null;
+  });
+
+  onSelectLine(lineId: string): void {
+    const station = this.stationData();
+    if (!station) return;
+    this.service.selectLine(station.network, lineId);
+  }
+
+  onClearLine(): void {
+    this.service.clearSelectedLine();
+  }
+
+  isLineSelected(lineId: string): boolean {
+    const active = this.selectedLine();
+    const station = this.stationData();
+    if (!active || !station) return false;
+    return active.network === station.network && active.line === lineId;
+  }
 
   close(): void {
     this.service.clearSelection();

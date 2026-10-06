@@ -19,8 +19,72 @@ import { MapSearchComponent } from './components/map-search/map-search.component
 import { LayerControlsComponent } from './components/layer-controls/layer-controls.component';
 import { ZoneLegendComponent } from './components/zone-legend/zone-legend.component';
 import { DetailDrawerComponent } from './components/detail-drawer/detail-drawer.component';
-import { BasemapType, TariffZoneInfo, TransitStopProperties } from './madrid-transport-map.models';
+import {
+  BasemapType,
+  NetworkId,
+  SelectedLineInfo,
+  TariffZoneInfo,
+  TransitStopProperties
+} from './madrid-transport-map.models';
 import type * as MapLibreGL from 'maplibre-gl';
+
+const METRO_ICON_SVG = `
+<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36">
+  <circle cx="18" cy="18" r="16.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.5"/>
+  <polygon points="18,3.5 30.5,18 18,32.5 5.5,18" fill="#E4002B"/>
+  <polygon points="18,7 26.5,18 18,29 9.5,18" fill="#FFFFFF"/>
+  <rect x="3" y="14" width="30" height="8" rx="1.5" fill="#002F6C"/>
+  <text x="18" y="19.5" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="5.8" letter-spacing="0.5" text-anchor="middle" dominant-baseline="central">METRO</text>
+</svg>`;
+
+const CERCANIAS_ICON_SVG = `
+<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36">
+  <circle cx="18" cy="18" r="16.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.5"/>
+  <circle cx="18" cy="18" r="13.5" fill="#E4002B"/>
+  <text x="18" y="19" fill="#FFFFFF" font-family="'Arial Black', Impact, sans-serif" font-weight="900" font-size="18" text-anchor="middle" dominant-baseline="central">C</text>
+</svg>`;
+
+const EMT_ICON_SVG = `
+<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36">
+  <circle cx="18" cy="18" r="16.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.5"/>
+  <circle cx="18" cy="18" r="13.5" fill="#0284C7"/>
+  <g fill="#FFFFFF" transform="translate(1, 0)">
+    <rect x="9.5" y="8" width="15" height="15" rx="3"/>
+    <rect x="11.5" y="10" width="11" height="5.5" rx="1" fill="#0284C7"/>
+    <circle cx="12.5" cy="19.5" r="1.6" fill="#0284C7"/>
+    <circle cx="21.5" cy="19.5" r="1.6" fill="#0284C7"/>
+    <rect x="11" y="23" width="2.5" height="2" rx="0.5"/>
+    <rect x="20.5" y="23" width="2.5" height="2" rx="0.5"/>
+  </g>
+</svg>`;
+
+const INTERURBAN_ICON_SVG = `
+<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36">
+  <circle cx="18" cy="18" r="16.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.5"/>
+  <circle cx="18" cy="18" r="13.5" fill="#16A34A"/>
+  <g fill="#FFFFFF" transform="translate(0.5, 0)">
+    <rect x="8.5" y="9" width="18" height="14" rx="3"/>
+    <rect x="10.5" y="11" width="14" height="4.5" rx="1" fill="#16A34A"/>
+    <rect x="11" y="17.5" width="2.5" height="2" rx="0.5" fill="#16A34A"/>
+    <rect x="21.5" y="17.5" width="2.5" height="2" rx="0.5" fill="#16A34A"/>
+    <circle cx="12" cy="23" r="1.5"/>
+    <circle cx="23" cy="23" r="1.5"/>
+  </g>
+</svg>`;
+
+function createSvgImage(svg: string, width = 36, height = 36): Promise<HTMLImageElement> {
+  return new Promise((resolve) => {
+    const img = new Image(width, height);
+    img.crossOrigin = 'anonymous';
+    img.onload = () => resolve(img);
+    img.onerror = () => {
+      const fallback = new Image(width, height);
+      fallback.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+      resolve(fallback);
+    };
+    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg.trim());
+  });
+}
 
 @Component({
   selector: 'app-madrid-transport-map',
@@ -48,6 +112,8 @@ export class MadridTransportMapComponent implements OnDestroy {
   private maplibreglModule: typeof MapLibreGL | null = null;
   private emtLoaded = false;
   private interurbanLoaded = false;
+  private activeStationMarker: MapLibreGL.Marker | null = null;
+  private loadedGeojsonData: Record<string, any> = {};
   readonly isMapReady = signal<boolean>(false);
 
   constructor() {
@@ -104,7 +170,7 @@ export class MadridTransportMapComponent implements OnDestroy {
       }
     });
 
-    // Reactive effect for selected zone highlight
+    // Reactive effect for selected zone & station highlight
     effect(() => {
       const selected = this.service.selectedItem();
       if (!this.map || !this.isMapReady()) return;
@@ -112,23 +178,113 @@ export class MadridTransportMapComponent implements OnDestroy {
       let zoneCode = '';
       if (selected && selected.type === 'zone') {
         zoneCode = (selected.data as TariffZoneInfo).code;
+        this.clearStationMarker();
       } else if (selected && selected.type === 'station') {
         const station = selected.data as TransitStopProperties;
         if (station.zone) {
           zoneCode = station.zone;
         }
+        if (station.coordinates) {
+          this.setStationMarker(station.coordinates, station.name);
+        }
+      } else {
+        this.clearStationMarker();
       }
 
+      const safeFilter: any = zoneCode ? ['==', ['get', 'code'], zoneCode] : ['==', ['get', 'code'], '__none__'];
       if (this.map.getLayer('zones-selected-fill')) {
-        this.map.setFilter('zones-selected-fill', ['==', ['get', 'code'], zoneCode]);
+        this.map.setFilter('zones-selected-fill', safeFilter);
       }
       if (this.map.getLayer('zones-selected-outline-casing')) {
-        this.map.setFilter('zones-selected-outline-casing', ['==', ['get', 'code'], zoneCode]);
+        this.map.setFilter('zones-selected-outline-casing', safeFilter);
       }
       if (this.map.getLayer('zones-selected-outline')) {
-        this.map.setFilter('zones-selected-outline', ['==', ['get', 'code'], zoneCode]);
+        this.map.setFilter('zones-selected-outline', safeFilter);
       }
     });
+  }
+
+  readonly isDrawerExpanded = signal<boolean>(false);
+  private touchStartY = 0;
+  private currentTouchY = 0;
+  private isDragging = false;
+
+  toggleDrawerExpand(): void {
+    this.isDrawerExpanded.update((v) => !v);
+  }
+
+  onDrawerTouchStart(event: TouchEvent): void {
+    if (event.touches.length > 0) {
+      this.touchStartY = event.touches[0].clientY;
+      this.currentTouchY = event.touches[0].clientY;
+      this.isDragging = true;
+    }
+  }
+
+  onDrawerTouchMove(event: TouchEvent): void {
+    if (!this.isDragging || event.touches.length === 0) return;
+    this.currentTouchY = event.touches[0].clientY;
+  }
+
+  onDrawerTouchEnd(): void {
+    if (!this.isDragging) return;
+    this.isDragging = false;
+    const deltaY = this.currentTouchY - this.touchStartY;
+
+    // Dragged UP by more than 35px -> expand
+    if (deltaY < -35) {
+      this.isDrawerExpanded.set(true);
+    }
+    // Dragged DOWN by more than 40px while expanded -> collapse to compact
+    else if (deltaY > 40 && this.isDrawerExpanded()) {
+      this.isDrawerExpanded.set(false);
+    }
+    // Dragged DOWN by more than 75px while compact -> dismiss drawer
+    else if (deltaY > 75 && !this.isDrawerExpanded()) {
+      this.closeMobileDrawer();
+    }
+  }
+
+  openMobileLayers(): void {
+    this.service.openMobileDrawer('layers');
+  }
+
+  openMobileZones(): void {
+    this.service.openMobileDrawer('zones');
+  }
+
+  closeMobileDrawer(): void {
+    this.isDrawerExpanded.set(false);
+    this.service.closeMobileDrawer();
+  }
+
+  private setStationMarker(coords: [number, number], name: string): void {
+    if (!this.map || !this.maplibreglModule) return;
+
+    this.clearStationMarker();
+
+    const el = document.createElement('div');
+    el.className = 'relative flex items-center justify-center -translate-x-1/2 -translate-y-1/2 pointer-events-none';
+    el.innerHTML = `
+      <div class="absolute w-9 h-9 rounded-full bg-indigo-500/40 animate-ping"></div>
+      <div class="relative w-6 h-6 rounded-full bg-indigo-600 border-2 border-white shadow-xl flex items-center justify-center text-white text-[11px] font-bold">
+        📍
+      </div>
+    `;
+
+    this.activeStationMarker = new this.maplibreglModule.Marker({
+      element: el,
+      anchor: 'center'
+    })
+      .setLngLat(coords)
+      .addTo(this.map);
+  }
+
+  private clearStationMarker(): void {
+    if (this.activeStationMarker) {
+      this.activeStationMarker.remove();
+      this.activeStationMarker = null;
+    }
   }
 
   private async initMap(): Promise<void> {
@@ -161,7 +317,7 @@ export class MadridTransportMapComponent implements OnDestroy {
               'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
             ],
             tileSize: 256,
-            maxzoom: 17,
+            maxzoom: 19,
             attribution: 'Tiles &copy; Esri, Maxar, Earthstar Geographics'
           },
           'esri-gray': {
@@ -211,7 +367,7 @@ export class MadridTransportMapComponent implements OnDestroy {
         center: [-3.7038, 40.4168], // Madrid Puerta del Sol
         zoom: 11,
         minZoom: 7,
-        maxZoom: 18
+        maxZoom: 18.5
       });
 
       this.map.on('error', (err) => {
@@ -224,7 +380,7 @@ export class MadridTransportMapComponent implements OnDestroy {
       );
 
       this.map.on('load', () => {
-        this.onMapLoaded();
+        void this.onMapLoaded();
       });
     } catch (err) {
       console.error('Failed to initialize MapLibre GL:', err);
@@ -232,8 +388,24 @@ export class MadridTransportMapComponent implements OnDestroy {
     }
   }
 
-  private onMapLoaded(): void {
+  private async onMapLoaded(): Promise<void> {
     if (!this.map) return;
+
+    // Register custom high-contrast network badges (Retina 2x resolution)
+    try {
+      const [metroImg, cercaniasImg, emtImg, interurbanImg] = await Promise.all([
+        createSvgImage(METRO_ICON_SVG, 36, 36),
+        createSvgImage(CERCANIAS_ICON_SVG, 36, 36),
+        createSvgImage(EMT_ICON_SVG, 36, 36),
+        createSvgImage(INTERURBAN_ICON_SVG, 36, 36)
+      ]);
+      this.map.addImage('icon-metro', metroImg, { pixelRatio: 2 });
+      this.map.addImage('icon-cercanias', cercaniasImg, { pixelRatio: 2 });
+      this.map.addImage('icon-emt', emtImg, { pixelRatio: 2 });
+      this.map.addImage('icon-interurban', interurbanImg, { pixelRatio: 2 });
+    } catch (e) {
+      console.warn('Failed to register network icon sprites:', e);
+    }
 
     // ─── 1. Add Tariff Zones ────────────────────────────────────────────────
     this.map.addSource('zones-source', {
@@ -262,39 +434,15 @@ export class MadridTransportMapComponent implements OnDestroy {
       }
     });
 
-    // Dedicated selected zone highlight layers (high-contrast dual outline + tint fill)
+    // Dedicated selected zone highlight fill (rendered beneath transit lines)
     this.map.addLayer({
       id: 'zones-selected-fill',
       type: 'fill',
       source: 'zones-source',
-      filter: ['==', ['get', 'code'], ''],
+      filter: ['==', ['get', 'code'], '__none__'],
       paint: {
         'fill-color': ['get', 'color'],
         'fill-opacity': 0.55
-      }
-    });
-
-    this.map.addLayer({
-      id: 'zones-selected-outline-casing',
-      type: 'line',
-      source: 'zones-source',
-      filter: ['==', ['get', 'code'], ''],
-      paint: {
-        'line-color': '#000000',
-        'line-width': 7,
-        'line-opacity': 0.95
-      }
-    });
-
-    this.map.addLayer({
-      id: 'zones-selected-outline',
-      type: 'line',
-      source: 'zones-source',
-      filter: ['==', ['get', 'code'], ''],
-      paint: {
-        'line-color': '#FACC15',
-        'line-width': 4.5,
-        'line-opacity': 1
       }
     });
 
@@ -322,14 +470,14 @@ export class MadridTransportMapComponent implements OnDestroy {
 
     this.map.addLayer({
       id: 'metro-stations',
-      type: 'circle',
+      type: 'symbol',
       source: 'metro-source',
       filter: ['==', ['get', 'type'], 'station'],
-      paint: {
-        'circle-radius': 5.5,
-        'circle-color': '#FFFFFF',
-        'circle-stroke-color': '#00A9E0',
-        'circle-stroke-width': 2.5
+      layout: {
+        'icon-image': 'icon-metro',
+        'icon-size': 0.65,
+        'icon-allow-overlap': true,
+        'icon-ignore-placement': true
       }
     });
 
@@ -358,13 +506,89 @@ export class MadridTransportMapComponent implements OnDestroy {
 
     this.map.addLayer({
       id: 'cercanias-stations',
-      type: 'circle',
+      type: 'symbol',
       source: 'cercanias-source',
       filter: ['==', ['get', 'type'], 'station'],
+      layout: {
+        'icon-image': 'icon-cercanias',
+        'icon-size': 0.65,
+        'icon-allow-overlap': true,
+        'icon-ignore-placement': true
+      }
+    });
+
+    // Dedicated selected zone outlines (rendered ON TOP of lines and stations)
+    this.map.addLayer({
+      id: 'zones-selected-outline-casing',
+      type: 'line',
+      source: 'zones-source',
+      filter: ['==', ['get', 'code'], '__none__'],
       paint: {
-        'circle-radius': 5.5,
-        'circle-color': '#FFFFFF',
-        'circle-stroke-color': '#E4002B',
+        'line-color': '#0F172A',
+        'line-width': 7.5,
+        'line-opacity': 0.95
+      }
+    });
+
+    this.map.addLayer({
+      id: 'zones-selected-outline',
+      type: 'line',
+      source: 'zones-source',
+      filter: ['==', ['get', 'code'], '__none__'],
+      paint: {
+        'line-color': '#FACC15',
+        'line-width': 5,
+        'line-opacity': 1
+      }
+    });
+
+    // ─── 4. Selected Line Highlight Layers (glow & animated focus) ──────────
+    this.map.addSource('selected-line-source', {
+      type: 'geojson',
+      data: { type: 'FeatureCollection', features: [] }
+    });
+
+    this.map.addLayer({
+      id: 'selected-line-casing',
+      type: 'line',
+      source: 'selected-line-source',
+      filter: ['==', ['get', 'type'], 'line'],
+      layout: {
+        'line-join': 'round',
+        'line-cap': 'round'
+      },
+      paint: {
+        'line-color': '#0F172A',
+        'line-width': 8.5,
+        'line-opacity': 0.95
+      }
+    });
+
+    this.map.addLayer({
+      id: 'selected-line-core',
+      type: 'line',
+      source: 'selected-line-source',
+      filter: ['==', ['get', 'type'], 'line'],
+      layout: {
+        'line-join': 'round',
+        'line-cap': 'round'
+      },
+      paint: {
+        'line-color': '#FACC15',
+        'line-width': 5.5,
+        'line-opacity': 1
+      }
+    });
+
+    this.map.addLayer({
+      id: 'selected-line-stops',
+      type: 'circle',
+      source: 'selected-line-source',
+      filter: ['!=', ['get', 'type'], 'line'],
+      paint: {
+        'circle-color': '#FACC15',
+        'circle-radius': 7,
+        'circle-stroke-color': '#0F172A',
         'circle-stroke-width': 2.5
       }
     });
@@ -442,6 +666,28 @@ export class MadridTransportMapComponent implements OnDestroy {
         });
       }
     });
+
+    // Transit Line clicks (selects & highlights full line route)
+    const lineLayers = ['metro-lines', 'cercanias-lines'];
+    for (const lid of lineLayers) {
+      this.map.on('mouseenter', lid, () => {
+        if (this.map) this.map.getCanvas().style.cursor = 'pointer';
+      });
+      this.map.on('mouseleave', lid, () => {
+        if (this.map) this.map.getCanvas().style.cursor = '';
+      });
+      this.map.on('click', lid, (e) => {
+        const feat = e.features?.[0];
+        if (feat?.properties) {
+          const net = feat.properties['network'] as NetworkId;
+          const line = feat.properties['line'];
+          if (net && line) {
+            this.service.selectLine(net, line);
+            this.service.openMobileDrawer('detail');
+          }
+        }
+      });
+    }
 
     // Tariff zone click handler
     const handleZoneClick = (
@@ -540,12 +786,31 @@ export class MadridTransportMapComponent implements OnDestroy {
     const data = await this.service.loadBusData('emt');
     if (!data) return;
 
+    this.loadedGeojsonData['emt'] = data;
+
     this.map.addSource('emt-source', {
       type: 'geojson',
       data,
       cluster: true,
-      clusterMaxZoom: 14,
-      clusterRadius: 40
+      clusterMaxZoom: 12,
+      clusterRadius: 35
+    });
+
+    // EMT Lines layer
+    this.map.addLayer({
+      id: 'emt-lines',
+      type: 'line',
+      source: 'emt-source',
+      filter: ['==', ['get', 'type'], 'line'],
+      layout: {
+        'line-join': 'round',
+        'line-cap': 'round'
+      },
+      paint: {
+        'line-color': '#0284C7',
+        'line-width': 3,
+        'line-opacity': 0.85
+      }
     });
 
     this.map.addLayer({
@@ -578,14 +843,13 @@ export class MadridTransportMapComponent implements OnDestroy {
 
     this.map.addLayer({
       id: 'emt-unclustered',
-      type: 'circle',
+      type: 'symbol',
       source: 'emt-source',
       filter: ['!', ['has', 'point_count']],
-      paint: {
-        'circle-color': '#0284C7',
-        'circle-radius': 4.5,
-        'circle-stroke-width': 1.5,
-        'circle-stroke-color': '#FFFFFF'
+      layout: {
+        'icon-image': 'icon-emt',
+        'icon-size': 0.55,
+        'icon-allow-overlap': true
       }
     });
 
@@ -599,12 +863,32 @@ export class MadridTransportMapComponent implements OnDestroy {
     const data = await this.service.loadBusData('interurban');
     if (!data) return;
 
+    this.loadedGeojsonData['interurban'] = data;
+
     this.map.addSource('interurban-source', {
       type: 'geojson',
       data,
       cluster: true,
-      clusterMaxZoom: 14,
-      clusterRadius: 40
+      clusterMaxZoom: 12,
+      clusterRadius: 35
+    });
+
+    // Interurban Lines layer
+    this.map.addLayer({
+      id: 'interurban-lines',
+      type: 'line',
+      source: 'interurban-source',
+      filter: ['==', ['get', 'type'], 'line'],
+      layout: {
+        'line-join': 'round',
+        'line-cap': 'round'
+      },
+      paint: {
+        'line-color': '#16A34A',
+        'line-width': 3,
+        'line-dasharray': [3, 1],
+        'line-opacity': 0.85
+      }
     });
 
     this.map.addLayer({
@@ -637,14 +921,13 @@ export class MadridTransportMapComponent implements OnDestroy {
 
     this.map.addLayer({
       id: 'interurban-unclustered',
-      type: 'circle',
+      type: 'symbol',
       source: 'interurban-source',
       filter: ['!', ['has', 'point_count']],
-      paint: {
-        'circle-color': '#16A34A',
-        'circle-radius': 4.5,
-        'circle-stroke-width': 1.5,
-        'circle-stroke-color': '#FFFFFF'
+      layout: {
+        'icon-image': 'icon-interurban',
+        'icon-size': 0.55,
+        'icon-allow-overlap': true
       }
     });
 
@@ -657,6 +940,7 @@ export class MadridTransportMapComponent implements OnDestroy {
 
     const unclusteredLayer = `${network}-unclustered`;
     const clusterLayer = `${network}-clusters`;
+    const lineLayer = `${network}-lines`;
 
     this.map.on('mouseenter', unclusteredLayer, () => {
       if (this.map) this.map.getCanvas().style.cursor = 'pointer';
@@ -669,6 +953,24 @@ export class MadridTransportMapComponent implements OnDestroy {
     });
     this.map.on('mouseleave', clusterLayer, () => {
       if (this.map) this.map.getCanvas().style.cursor = '';
+    });
+    this.map.on('mouseenter', lineLayer, () => {
+      if (this.map) this.map.getCanvas().style.cursor = 'pointer';
+    });
+    this.map.on('mouseleave', lineLayer, () => {
+      if (this.map) this.map.getCanvas().style.cursor = '';
+    });
+
+    // Line click: select & highlight full route
+    this.map.on('click', lineLayer, (e) => {
+      const feat = e.features?.[0];
+      if (feat?.properties) {
+        const line = feat.properties['line'];
+        if (line) {
+          this.service.selectLine(network, line);
+          this.service.openMobileDrawer('detail');
+        }
+      }
     });
 
     // Unclustered stop click
@@ -720,11 +1022,101 @@ export class MadridTransportMapComponent implements OnDestroy {
 
   private setBusLayerVisibility(network: 'emt' | 'interurban', visibility: 'visible' | 'none'): void {
     if (!this.map) return;
-    const layers = [`${network}-clusters`, `${network}-cluster-count`, `${network}-unclustered`];
+    const layers = [`${network}-lines`, `${network}-clusters`, `${network}-cluster-count`, `${network}-unclustered`];
     for (const l of layers) {
       if (this.map.getLayer(l)) {
         this.map.setLayoutProperty(l, 'visibility', visibility);
       }
+    }
+  }
+
+  private async updateSelectedLineHighlight(selected: SelectedLineInfo | null): Promise<void> {
+    if (!this.map) return;
+    const source = this.map.getSource('selected-line-source') as MapLibreGL.GeoJSONSource | undefined;
+    if (!source) return;
+
+    if (!selected) {
+      source.setData({ type: 'FeatureCollection', features: [] });
+      return;
+    }
+
+    // Ensure bus layer data is loaded if selected line belongs to EMT or Interurban
+    if (selected.network === 'emt' && !this.emtLoaded) {
+      await this.loadEmtBusLayer();
+    } else if (selected.network === 'interurban' && !this.interurbanLoaded) {
+      await this.loadInterurbanBusLayer();
+    }
+
+    // Load and cache GeoJSON for the target network
+    let geojson = this.loadedGeojsonData[selected.network];
+    if (!geojson) {
+      try {
+        const url = `/maps/madrid/${selected.network}.geojson`;
+        const res = await fetch(url);
+        geojson = await res.json();
+        this.loadedGeojsonData[selected.network] = geojson;
+      } catch (err) {
+        console.warn('Could not fetch line geometry:', err);
+        return;
+      }
+    }
+
+    // Extract the line feature and all stops serving this line
+    const lineFeatures = (geojson.features || []).filter((f: any) => {
+      if (f.geometry?.type === 'LineString' && f.properties?.line === selected.line) {
+        return true;
+      }
+      if (f.geometry?.type === 'Point') {
+        let lines: string[] = [];
+        try {
+          lines = typeof f.properties?.lines === 'string' ? JSON.parse(f.properties.lines) : (f.properties?.lines || []);
+        } catch {
+          lines = [];
+        }
+        return lines.includes(selected.line);
+      }
+      return false;
+    });
+
+    source.setData({
+      type: 'FeatureCollection',
+      features: lineFeatures
+    });
+
+    // Compute bounding box and fit bounds to show the entire route
+    let minLng = Infinity;
+    let minLat = Infinity;
+    let maxLng = -Infinity;
+    let maxLat = -Infinity;
+
+    for (const f of lineFeatures) {
+      if (f.geometry.type === 'LineString') {
+        for (const coord of f.geometry.coordinates) {
+          minLng = Math.min(minLng, coord[0]);
+          maxLng = Math.max(maxLng, coord[0]);
+          minLat = Math.min(minLat, coord[1]);
+          maxLat = Math.max(maxLat, coord[1]);
+        }
+      } else if (f.geometry.type === 'Point') {
+        minLng = Math.min(minLng, f.geometry.coordinates[0]);
+        maxLng = Math.max(maxLng, f.geometry.coordinates[0]);
+        minLat = Math.min(minLat, f.geometry.coordinates[1]);
+        maxLat = Math.max(maxLat, f.geometry.coordinates[1]);
+      }
+    }
+
+    if (minLng !== Infinity && maxLng !== -Infinity) {
+      this.map.fitBounds(
+        [
+          [minLng, minLat],
+          [maxLng, maxLat]
+        ],
+        {
+          padding: { top: 90, bottom: 90, left: 100, right: 100 },
+          maxZoom: 15,
+          duration: 1200
+        }
+      );
     }
   }
 
@@ -733,6 +1125,7 @@ export class MadridTransportMapComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.clearStationMarker();
     if (this.map) {
       this.map.remove();
       this.map = null;

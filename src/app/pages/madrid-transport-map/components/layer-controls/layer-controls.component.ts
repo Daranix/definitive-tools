@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, signal } from '@angular/core';
 import { MadridTransportMapService } from '../../madrid-transport-map.service';
 import {
   BASEMAP_CONFIGS,
@@ -17,6 +17,7 @@ import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.co
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LayerControlsComponent {
+  readonly embedded = input<boolean>(false);
   readonly service = inject(MadridTransportMapService);
   readonly networkMetas = NETWORK_METAS;
   readonly basemapConfigs = BASEMAP_CONFIGS;

@@ -3,122 +3,652 @@
   "features": [
     {
       "type": "Feature",
-      "id": "emt-stop-1",
+      "id": "emt-line-27",
       "geometry": {
-        "type": "Point",
+        "type": "LineString",
         "coordinates": [
-          -3.6922,
-          40.4196
+          [
+            -3.7029,
+            40.4052
+          ],
+          [
+            -3.6975,
+            40.4072
+          ],
+          [
+            -3.6931,
+            40.4101
+          ],
+          [
+            -3.6928,
+            40.4132
+          ],
+          [
+            -3.6942,
+            40.4152
+          ],
+          [
+            -3.6922,
+            40.4196
+          ],
+          [
+            -3.6912,
+            40.4225
+          ],
+          [
+            -3.6901,
+            40.4252
+          ],
+          [
+            -3.6898,
+            40.4312
+          ],
+          [
+            -3.6895,
+            40.4358
+          ],
+          [
+            -3.6902,
+            40.4385
+          ],
+          [
+            -3.6908,
+            40.4418
+          ],
+          [
+            -3.6917,
+            40.4464
+          ],
+          [
+            -3.6912,
+            40.4485
+          ],
+          [
+            -3.6905,
+            40.4528
+          ],
+          [
+            -3.6899,
+            40.4552
+          ],
+          [
+            -3.6895,
+            40.4585
+          ],
+          [
+            -3.6892,
+            40.4612
+          ],
+          [
+            -3.6888,
+            40.4638
+          ],
+          [
+            -3.6892,
+            40.4667
+          ]
         ]
       },
       "properties": {
-        "id": "emt-2",
-        "name": "Plaza de Cibeles",
+        "type": "line",
         "network": "emt",
-        "lines": [
-          "1",
-          "2",
-          "9",
-          "14",
-          "15",
-          "20",
-          "27",
-          "34",
-          "51",
-          "52",
-          "53",
-          "74",
-          "146",
-          "203"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
+        "line": "27",
+        "name": "Línea 27 (Embajadores - Plaza de Castilla)",
+        "color": "#0284C7"
       }
     },
     {
       "type": "Feature",
-      "id": "emt-stop-2",
+      "id": "emt-line-34",
       "geometry": {
-        "type": "Point",
+        "type": "LineString",
         "coordinates": [
-          -3.6888,
-          40.4199
+          [
+            -3.6922,
+            40.4196
+          ],
+          [
+            -3.6997,
+            40.4174
+          ],
+          [
+            -3.7038,
+            40.4145
+          ],
+          [
+            -3.7049,
+            40.4124
+          ],
+          [
+            -3.7095,
+            40.4112
+          ],
+          [
+            -3.7118,
+            40.4068
+          ],
+          [
+            -3.7142,
+            40.4021
+          ],
+          [
+            -3.7168,
+            40.3982
+          ],
+          [
+            -3.7212,
+            40.3951
+          ],
+          [
+            -3.7258,
+            40.3921
+          ],
+          [
+            -3.7311,
+            40.3888
+          ],
+          [
+            -3.7365,
+            40.3852
+          ],
+          [
+            -3.7425,
+            40.3802
+          ],
+          [
+            -3.7501,
+            40.3831
+          ],
+          [
+            -3.7558,
+            40.3892
+          ],
+          [
+            -3.7652,
+            40.3845
+          ],
+          [
+            -3.7765,
+            40.3802
+          ]
         ]
       },
       "properties": {
-        "id": "emt-3",
-        "name": "Puerta de Alcalá",
+        "type": "line",
         "network": "emt",
-        "lines": [
-          "1",
-          "2",
-          "9",
-          "15",
-          "19",
-          "20",
-          "28",
-          "51",
-          "52",
-          "74",
-          "146"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
+        "line": "34",
+        "name": "Línea 34 (Cibeles - Las Águilas)",
+        "color": "#0284C7"
       }
     },
     {
       "type": "Feature",
-      "id": "emt-stop-3",
+      "id": "emt-line-1",
       "geometry": {
-        "type": "Point",
+        "type": "LineString",
         "coordinates": [
-          -3.6901,
-          40.4252
+          [
+            -3.7185,
+            40.4398
+          ],
+          [
+            -3.7196,
+            40.4354
+          ],
+          [
+            -3.7158,
+            40.4308
+          ],
+          [
+            -3.7126,
+            40.4234
+          ],
+          [
+            -3.7089,
+            40.4208
+          ],
+          [
+            -3.7058,
+            40.4202
+          ],
+          [
+            -3.7015,
+            40.4201
+          ],
+          [
+            -3.6922,
+            40.4196
+          ],
+          [
+            -3.6888,
+            40.4199
+          ],
+          [
+            -3.6852,
+            40.4231
+          ],
+          [
+            -3.6841,
+            40.4262
+          ],
+          [
+            -3.6828,
+            40.4345
+          ],
+          [
+            -3.6769,
+            40.4381
+          ],
+          [
+            -3.6712,
+            40.4425
+          ]
         ]
       },
       "properties": {
-        "id": "emt-4",
-        "name": "Plaza de Colón",
+        "type": "line",
         "network": "emt",
-        "lines": [
-          "5",
-          "14",
-          "21",
-          "27",
-          "45",
-          "53",
-          "150"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
+        "line": "1",
+        "name": "Línea 1 (Cristo Rey - Prosperidad)",
+        "color": "#0284C7"
       }
     },
     {
       "type": "Feature",
-      "id": "emt-stop-4",
+      "id": "emt-line-2",
       "geometry": {
-        "type": "Point",
+        "type": "LineString",
         "coordinates": [
-          -3.6931,
-          40.4101
+          [
+            -3.6672,
+            40.4298
+          ],
+          [
+            -3.6749,
+            40.4243
+          ],
+          [
+            -3.6798,
+            40.4225
+          ],
+          [
+            -3.6888,
+            40.4199
+          ],
+          [
+            -3.6922,
+            40.4196
+          ],
+          [
+            -3.6997,
+            40.4174
+          ],
+          [
+            -3.7061,
+            40.4299
+          ],
+          [
+            -3.7051,
+            40.4338
+          ],
+          [
+            -3.7042,
+            40.4468
+          ],
+          [
+            -3.7112,
+            40.4478
+          ]
         ]
       },
       "properties": {
-        "id": "emt-5",
-        "name": "Paseo del Prado - Atocha",
+        "type": "line",
+        "network": "emt",
+        "line": "2",
+        "name": "Línea 2 (Manuel Becerra - Reina Victoria)",
+        "color": "#0284C7"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-line-14",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -3.6719,
+            40.4072
+          ],
+          [
+            -3.6781,
+            40.4085
+          ],
+          [
+            -3.6852,
+            40.4095
+          ],
+          [
+            -3.6931,
+            40.4101
+          ],
+          [
+            -3.6942,
+            40.4152
+          ],
+          [
+            -3.6922,
+            40.4196
+          ],
+          [
+            -3.6901,
+            40.4252
+          ],
+          [
+            -3.6902,
+            40.4385
+          ],
+          [
+            -3.6917,
+            40.4464
+          ],
+          [
+            -3.6899,
+            40.4552
+          ],
+          [
+            -3.6892,
+            40.4612
+          ],
+          [
+            -3.6821,
+            40.4625
+          ],
+          [
+            -3.6761,
+            40.4608
+          ],
+          [
+            -3.6728,
+            40.4682
+          ]
+        ]
+      },
+      "properties": {
+        "type": "line",
+        "network": "emt",
+        "line": "14",
+        "name": "Línea 14 (Conde de Casal - Avenida Pío XII)",
+        "color": "#0284C7"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-line-70",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -3.6892,
+            40.4667
+          ],
+          [
+            -3.6823,
+            40.4685
+          ],
+          [
+            -3.6698,
+            40.4695
+          ],
+          [
+            -3.6645,
+            40.4652
+          ],
+          [
+            -3.6601,
+            40.4558
+          ],
+          [
+            -3.6558,
+            40.4442
+          ],
+          [
+            -3.6521,
+            40.4385
+          ],
+          [
+            -3.6482,
+            40.4352
+          ],
+          [
+            -3.6412,
+            40.4312
+          ],
+          [
+            -3.6358,
+            40.4265
+          ],
+          [
+            -3.6265,
+            40.4198
+          ]
+        ]
+      },
+      "properties": {
+        "type": "line",
+        "network": "emt",
+        "line": "70",
+        "name": "Línea 70 (Plaza de Castilla - Alsacia)",
+        "color": "#0284C7"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-line-C1",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -3.7196,
+            40.4354
+          ],
+          [
+            -3.7185,
+            40.4398
+          ],
+          [
+            -3.7112,
+            40.4478
+          ],
+          [
+            -3.7042,
+            40.4468
+          ],
+          [
+            -3.6917,
+            40.4464
+          ],
+          [
+            -3.6841,
+            40.4452
+          ],
+          [
+            -3.6769,
+            40.4381
+          ],
+          [
+            -3.6732,
+            40.4345
+          ],
+          [
+            -3.6672,
+            40.4298
+          ],
+          [
+            -3.6685,
+            40.4215
+          ],
+          [
+            -3.6698,
+            40.4158
+          ],
+          [
+            -3.6719,
+            40.4072
+          ],
+          [
+            -3.6852,
+            40.4095
+          ],
+          [
+            -3.6931,
+            40.4101
+          ],
+          [
+            -3.7029,
+            40.4052
+          ],
+          [
+            -3.7118,
+            40.4068
+          ],
+          [
+            -3.7165,
+            40.4112
+          ],
+          [
+            -3.7198,
+            40.4208
+          ],
+          [
+            -3.7196,
+            40.4354
+          ]
+        ]
+      },
+      "properties": {
+        "type": "line",
+        "network": "emt",
+        "line": "C1",
+        "name": "Línea C1 (Circular 1 - Moncloa por Cuatro Caminos)",
+        "color": "#0284C7"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-line-001",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -3.6931,
+            40.4101
+          ],
+          [
+            -3.6928,
+            40.4132
+          ],
+          [
+            -3.6942,
+            40.4152
+          ],
+          [
+            -3.6922,
+            40.4196
+          ],
+          [
+            -3.6985,
+            40.4189
+          ],
+          [
+            -3.7015,
+            40.4201
+          ],
+          [
+            -3.7058,
+            40.4202
+          ],
+          [
+            -3.7126,
+            40.4234
+          ],
+          [
+            -3.7142,
+            40.4272
+          ],
+          [
+            -3.7158,
+            40.4308
+          ],
+          [
+            -3.7196,
+            40.4354
+          ]
+        ]
+      },
+      "properties": {
+        "type": "line",
+        "network": "emt",
+        "line": "001",
+        "name": "Línea 001 Cero Emisiones (Atocha - Moncloa)",
+        "color": "#0284C7"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-line-203",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -3.6931,
+            40.4101
+          ],
+          [
+            -3.6922,
+            40.4196
+          ],
+          [
+            -3.6685,
+            40.4215
+          ],
+          [
+            -3.5786,
+            40.4682
+          ],
+          [
+            -3.5762,
+            40.4725
+          ],
+          [
+            -3.5932,
+            40.4918
+          ]
+        ]
+      },
+      "properties": {
+        "type": "line",
+        "network": "emt",
+        "line": "203",
+        "name": "Línea 203 Exprés Aeropuerto (Atocha - Cibeles - Barajas T4)",
+        "color": "#F59E0B"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-glorieta-de-embajadores--emt-",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7029,
+          40.4052
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-glorieta-de-embajadores--emt-",
+        "name": "Glorieta de Embajadores (EMT)",
         "network": "emt",
         "lines": [
-          "6",
-          "10",
-          "14",
-          "26",
           "27",
-          "32",
-          "34",
-          "45",
           "C1",
           "C2"
         ],
@@ -129,25 +659,46 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-5",
+      "id": "emt-stop-ronda-de-atocha",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.6942,
-          40.4152
+          -3.6975,
+          40.4072
         ]
       },
       "properties": {
-        "id": "emt-6",
-        "name": "Plaza de Neptuno",
+        "id": "emt-stop-ronda-de-atocha",
+        "name": "Ronda de Atocha",
         "network": "emt",
         "lines": [
-          "10",
+          "27",
+          "34"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-paseo-del-prado---atocha",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6931,
+          40.4101
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-paseo-del-prado---atocha",
+        "name": "Paseo del Prado - Atocha",
+        "network": "emt",
+        "lines": [
           "14",
           "27",
           "34",
-          "37",
-          "45",
+          "C1",
           "001"
         ],
         "zone": "A",
@@ -157,25 +708,23 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-6",
+      "id": "emt-stop-museo-del-prado---jard-n-bot-nico",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.7058,
-          40.4202
+          -3.6928,
+          40.4132
         ]
       },
       "properties": {
-        "id": "emt-7",
-        "name": "Plaza de Callao",
+        "id": "emt-stop-museo-del-prado---jard-n-bot-nico",
+        "name": "Museo del Prado - Jardín Botánico",
         "network": "emt",
         "lines": [
-          "44",
-          "75",
-          "133",
-          "146",
-          "147",
-          "148"
+          "14",
+          "27",
+          "34",
+          "001"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -184,101 +733,51 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-7",
+      "id": "emt-stop-plaza-de-c-novas-del-castillo--neptuno-",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.7126,
-          40.4234
+          -3.6942,
+          40.4152
         ]
       },
       "properties": {
-        "id": "emt-8",
-        "name": "Plaza de España",
+        "id": "emt-stop-plaza-de-c-novas-del-castillo--neptuno-",
+        "name": "Plaza de Cánovas del Castillo (Neptuno)",
+        "network": "emt",
+        "lines": [
+          "14",
+          "27",
+          "34",
+          "001"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-plaza-de-cibeles",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6922,
+          40.4196
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-plaza-de-cibeles",
+        "name": "Plaza de Cibeles",
         "network": "emt",
         "lines": [
           "1",
           "2",
-          "3",
-          "25",
-          "39",
-          "44",
-          "46",
-          "74",
-          "75",
-          "133",
-          "138",
-          "148"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-8",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.7196,
-          40.4354
-        ]
-      },
-      "properties": {
-        "id": "emt-9",
-        "name": "Moncloa (Intercambiador EMT)",
-        "network": "emt",
-        "lines": [
-          "1",
-          "16",
-          "44",
-          "46",
-          "61",
-          "82",
-          "83",
-          "132",
-          "133",
-          "160",
-          "161",
-          "162",
-          "A",
-          "G"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-9",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.6892,
-          40.4667
-        ]
-      },
-      "properties": {
-        "id": "emt-10",
-        "name": "Plaza de Castilla (Intercambiador EMT)",
-        "network": "emt",
-        "lines": [
-          "5",
+          "14",
           "27",
-          "42",
-          "49",
-          "66",
-          "67",
-          "70",
-          "107",
-          "124",
-          "129",
-          "134",
-          "135",
-          "147",
-          "173"
+          "34",
+          "001",
+          "203"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -287,7 +786,153 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-10",
+      "id": "emt-stop-paseo-de-recoletos---biblioteca-nacional",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6912,
+          40.4225
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-paseo-de-recoletos---biblioteca-nacional",
+        "name": "Paseo de Recoletos - Biblioteca Nacional",
+        "network": "emt",
+        "lines": [
+          "14",
+          "27",
+          "150"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-plaza-de-col-n",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6901,
+          40.4252
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-plaza-de-col-n",
+        "name": "Plaza de Colón",
+        "network": "emt",
+        "lines": [
+          "14",
+          "27",
+          "150"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-paseo-de-la-castellana---rub-n-dar-o",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6898,
+          40.4312
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-paseo-de-la-castellana---rub-n-dar-o",
+        "name": "Paseo de la Castellana - Rubén Darío",
+        "network": "emt",
+        "lines": [
+          "14",
+          "27",
+          "150"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-paseo-de-la-castellana---emilio-castelar",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6895,
+          40.4358
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-paseo-de-la-castellana---emilio-castelar",
+        "name": "Paseo de la Castellana - Emilio Castelar",
+        "network": "emt",
+        "lines": [
+          "14",
+          "27",
+          "150"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-paseo-de-la-castellana---gregorio-mara--n",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6902,
+          40.4385
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-paseo-de-la-castellana---gregorio-mara--n",
+        "name": "Paseo de la Castellana - Gregorio Marañón",
+        "network": "emt",
+        "lines": [
+          "14",
+          "27",
+          "147",
+          "150"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-museo-de-ciencias-naturales",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6908,
+          40.4418
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-museo-de-ciencias-naturales",
+        "name": "Museo de Ciencias Naturales",
+        "network": "emt",
+        "lines": [
+          "14",
+          "27",
+          "147",
+          "150"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-nuevos-ministerios---castellana",
       "geometry": {
         "type": "Point",
         "coordinates": [
@@ -296,15 +941,12 @@
         ]
       },
       "properties": {
-        "id": "emt-11",
-        "name": "Nuevos Ministerios EMT",
+        "id": "emt-stop-nuevos-ministerios---castellana",
+        "name": "Nuevos Ministerios - Castellana",
         "network": "emt",
         "lines": [
-          "7",
           "14",
           "27",
-          "40",
-          "126",
           "147",
           "150",
           "C1",
@@ -317,30 +959,23 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-11",
+      "id": "emt-stop-paseo-de-la-castellana---raimundo-fern-ndez-villaverde",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.7042,
-          40.4468
+          -3.6912,
+          40.4485
         ]
       },
       "properties": {
-        "id": "emt-12",
-        "name": "Cuatro Caminos EMT",
+        "id": "emt-stop-paseo-de-la-castellana---raimundo-fern-ndez-villaverde",
+        "name": "Paseo de la Castellana - Raimundo Fernández Villaverde",
         "network": "emt",
         "lines": [
-          "3",
-          "37",
-          "45",
-          "64",
-          "66",
-          "124",
-          "127",
-          "128",
-          "F",
-          "C1",
-          "C2"
+          "14",
+          "27",
+          "147",
+          "150"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -349,33 +984,256 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-12",
+      "id": "emt-stop-paseo-de-la-castellana---san-germ-n",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.6672,
-          40.4298
+          -3.6905,
+          40.4528
         ]
       },
       "properties": {
-        "id": "emt-13",
-        "name": "Manuel Becerra EMT",
+        "id": "emt-stop-paseo-de-la-castellana---san-germ-n",
+        "name": "Paseo de la Castellana - San Germán",
+        "network": "emt",
+        "lines": [
+          "14",
+          "27",
+          "147",
+          "150"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-santiago-bernab-u",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6899,
+          40.4552
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-santiago-bernab-u",
+        "name": "Santiago Bernabéu",
+        "network": "emt",
+        "lines": [
+          "14",
+          "27",
+          "147",
+          "150"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-paseo-de-la-castellana---rafael-salgado",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6895,
+          40.4585
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-paseo-de-la-castellana---rafael-salgado",
+        "name": "Paseo de la Castellana - Rafael Salgado",
+        "network": "emt",
+        "lines": [
+          "14",
+          "27",
+          "147"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-paseo-de-la-castellana---cuzco",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6892,
+          40.4612
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-paseo-de-la-castellana---cuzco",
+        "name": "Paseo de la Castellana - Cuzco",
+        "network": "emt",
+        "lines": [
+          "14",
+          "27",
+          "147"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-paseo-de-la-castellana---alberto-alcocer",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6888,
+          40.4638
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-paseo-de-la-castellana---alberto-alcocer",
+        "name": "Paseo de la Castellana - Alberto Alcocer",
+        "network": "emt",
+        "lines": [
+          "14",
+          "27",
+          "147"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-plaza-de-castilla--intercambiador-emt-",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6892,
+          40.4667
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-plaza-de-castilla--intercambiador-emt-",
+        "name": "Plaza de Castilla (Intercambiador EMT)",
+        "network": "emt",
+        "lines": [
+          "27",
+          "70",
+          "147"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-sevilla---alcal-",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6997,
+          40.4174
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-sevilla---alcal-",
+        "name": "Sevilla - Alcalá",
         "network": "emt",
         "lines": [
           "2",
-          "12",
-          "21",
-          "38",
-          "43",
-          "48",
-          "53",
-          "56",
-          "71",
-          "106",
-          "110",
-          "143",
-          "146",
-          "156",
+          "34",
+          "150"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-sol---benavente",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7038,
+          40.4145
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-sol---benavente",
+        "name": "Sol - Benavente",
+        "network": "emt",
+        "lines": [
+          "34"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-tirso-de-molina--emt-",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7049,
+          40.4124
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-tirso-de-molina--emt-",
+        "name": "Tirso de Molina (EMT)",
+        "network": "emt",
+        "lines": [
+          "34"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-plaza-de-la-cebada---la-latina",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7095,
+          40.4112
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-plaza-de-la-cebada---la-latina",
+        "name": "Plaza de la Cebada - La Latina",
+        "network": "emt",
+        "lines": [
+          "34"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-puerta-de-toledo--emt-",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7118,
+          40.4068
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-puerta-de-toledo--emt-",
+        "name": "Puerta de Toledo (EMT)",
+        "network": "emt",
+        "lines": [
+          "34",
           "C1",
           "C2"
         ],
@@ -386,28 +1244,20 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-13",
+      "id": "emt-stop-glorieta-de-pir-mides",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.6769,
-          40.4381
+          -3.7142,
+          40.4021
         ]
       },
       "properties": {
-        "id": "emt-14",
-        "name": "Avenida de América EMT",
+        "id": "emt-stop-glorieta-de-pir-mides",
+        "name": "Glorieta de Pirámides",
         "network": "emt",
         "lines": [
-          "12",
-          "72",
-          "73",
-          "114",
-          "115",
-          "122",
-          "200",
-          "C1",
-          "C2"
+          "34"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -416,27 +1266,20 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-14",
+      "id": "emt-stop-marqu-s-de-vadillo",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.7181,
-          40.3852
+          -3.7168,
+          40.3982
         ]
       },
       "properties": {
-        "id": "emt-15",
-        "name": "Plaza Elíptica EMT",
+        "id": "emt-stop-marqu-s-de-vadillo",
+        "name": "Marqués de Vadillo",
         "network": "emt",
         "lines": [
-          "47",
-          "55",
-          "60",
-          "81",
-          "116",
-          "155",
-          "247",
-          "E1"
+          "34"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -445,36 +1288,20 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-15",
+      "id": "emt-stop-general-ricardos---comillas",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.6951,
-          40.3912
+          -3.7212,
+          40.3951
         ]
       },
       "properties": {
-        "id": "emt-16",
-        "name": "Legazpi EMT",
+        "id": "emt-stop-general-ricardos---comillas",
+        "name": "General Ricardos - Comillas",
         "network": "emt",
         "lines": [
-          "6",
-          "8",
-          "18",
-          "19",
-          "22",
-          "45",
-          "47",
-          "59",
-          "62",
-          "76",
-          "78",
-          "79",
-          "85",
-          "86",
-          "123",
-          "148",
-          "156"
+          "34"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -483,27 +1310,20 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-16",
+      "id": "emt-stop-general-ricardos---urgel",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.7558,
-          40.3892
+          -3.7258,
+          40.3921
         ]
       },
       "properties": {
-        "id": "emt-17",
-        "name": "Aluche EMT",
+        "id": "emt-stop-general-ricardos---urgel",
+        "name": "General Ricardos - Urgel",
         "network": "emt",
         "lines": [
-          "17",
-          "31",
-          "121",
-          "131",
-          "138",
-          "139",
-          "155",
-          "H"
+          "34"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -512,7 +1332,7 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-17",
+      "id": "emt-stop-oporto--intercambiador-emt-",
       "geometry": {
         "type": "Point",
         "coordinates": [
@@ -521,16 +1341,11 @@
         ]
       },
       "properties": {
-        "id": "emt-18",
-        "name": "Oporto EMT",
+        "id": "emt-stop-oporto--intercambiador-emt-",
+        "name": "Oporto (Intercambiador EMT)",
         "network": "emt",
         "lines": [
-          "34",
-          "35",
-          "55",
-          "81",
-          "108",
-          "118"
+          "34"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -539,24 +1354,20 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-18",
+      "id": "emt-stop-general-ricardos---vista-alegre",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.6781,
-          40.3956
+          -3.7365,
+          40.3852
         ]
       },
       "properties": {
-        "id": "emt-19",
-        "name": "Méndez Álvaro EMT",
+        "id": "emt-stop-general-ricardos---vista-alegre",
+        "name": "General Ricardos - Vista Alegre",
         "network": "emt",
         "lines": [
-          "8",
-          "102",
-          "113",
-          "148",
-          "152"
+          "34"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -565,7 +1376,587 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-19",
+      "id": "emt-stop-eugenia-de-montijo--emt-",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7425,
+          40.3802
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-eugenia-de-montijo--emt-",
+        "name": "Eugenia de Montijo (EMT)",
+        "network": "emt",
+        "lines": [
+          "34"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-avenida-de-los-poblados---empalme",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7501,
+          40.3831
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-avenida-de-los-poblados---empalme",
+        "name": "Avenida de los Poblados - Empalme",
+        "network": "emt",
+        "lines": [
+          "34"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-aluche--intercambiador-emt-",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7558,
+          40.3892
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-aluche--intercambiador-emt-",
+        "name": "Aluche (Intercambiador EMT)",
+        "network": "emt",
+        "lines": [
+          "34"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-avenida-de-las--guilas",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7652,
+          40.3845
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-avenida-de-las--guilas",
+        "name": "Avenida de las Águilas",
+        "network": "emt",
+        "lines": [
+          "34"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-las--guilas---cercan-as--terminal-",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7765,
+          40.3802
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-las--guilas---cercan-as--terminal-",
+        "name": "Las Águilas - Cercanías (Terminal)",
+        "network": "emt",
+        "lines": [
+          "34"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-plaza-de-cristo-rey--terminal-",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7185,
+          40.4398
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-plaza-de-cristo-rey--terminal-",
+        "name": "Plaza de Cristo Rey (Terminal)",
+        "network": "emt",
+        "lines": [
+          "1",
+          "C1",
+          "C2"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-moncloa--intercambiador-emt-",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7196,
+          40.4354
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-moncloa--intercambiador-emt-",
+        "name": "Moncloa (Intercambiador EMT)",
+        "network": "emt",
+        "lines": [
+          "1",
+          "C1",
+          "C2",
+          "001"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-princesa---alberto-aguilera",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7158,
+          40.4308
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-princesa---alberto-aguilera",
+        "name": "Princesa - Alberto Aguilera",
+        "network": "emt",
+        "lines": [
+          "1",
+          "001",
+          "C1"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-plaza-de-espa-a---princesa",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7126,
+          40.4234
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-plaza-de-espa-a---princesa",
+        "name": "Plaza de España - Princesa",
+        "network": "emt",
+        "lines": [
+          "1",
+          "001"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-gran-v-a---santo-domingo",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7089,
+          40.4208
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-gran-v-a---santo-domingo",
+        "name": "Gran Vía - Santo Domingo",
+        "network": "emt",
+        "lines": [
+          "1",
+          "001",
+          "146",
+          "147"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-gran-v-a---callao",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7058,
+          40.4202
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-gran-v-a---callao",
+        "name": "Gran Vía - Callao",
+        "network": "emt",
+        "lines": [
+          "1",
+          "001",
+          "146",
+          "147"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-gran-v-a---red-de-san-luis",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7015,
+          40.4201
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-gran-v-a---red-de-san-luis",
+        "name": "Gran Vía - Red de San Luis",
+        "network": "emt",
+        "lines": [
+          "1",
+          "001",
+          "146",
+          "147"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-puerta-de-alcal-",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6888,
+          40.4199
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-puerta-de-alcal-",
+        "name": "Puerta de Alcalá",
+        "network": "emt",
+        "lines": [
+          "1",
+          "2",
+          "146"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-vel-zquez---villanueva",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6852,
+          40.4231
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-vel-zquez---villanueva",
+        "name": "Velázquez - Villanueva",
+        "network": "emt",
+        "lines": [
+          "1"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-vel-zquez---goya",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6841,
+          40.4262
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-vel-zquez---goya",
+        "name": "Velázquez - Goya",
+        "network": "emt",
+        "lines": [
+          "1"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-vel-zquez---diego-de-le-n",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6828,
+          40.4345
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-vel-zquez---diego-de-le-n",
+        "name": "Velázquez - Diego de León",
+        "network": "emt",
+        "lines": [
+          "1"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-avenida-de-am-rica--intercambiador-emt-",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6769,
+          40.4381
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-avenida-de-am-rica--intercambiador-emt-",
+        "name": "Avenida de América (Intercambiador EMT)",
+        "network": "emt",
+        "lines": [
+          "1",
+          "C1",
+          "C2",
+          "200"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-prosperidad---cartagena--terminal-",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6712,
+          40.4425
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-prosperidad---cartagena--terminal-",
+        "name": "Prosperidad - Cartagena (Terminal)",
+        "network": "emt",
+        "lines": [
+          "1"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-manuel-becerra--terminal-emt-",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6672,
+          40.4298
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-manuel-becerra--terminal-emt-",
+        "name": "Manuel Becerra (Terminal EMT)",
+        "network": "emt",
+        "lines": [
+          "2",
+          "C1",
+          "C2"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-goya---conde-de-pe-alver",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6749,
+          40.4243
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-goya---conde-de-pe-alver",
+        "name": "Goya - Conde de Peñalver",
+        "network": "emt",
+        "lines": [
+          "2"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-goya---pr-ncipe-de-vergara",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6798,
+          40.4225
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-goya---pr-ncipe-de-vergara",
+        "name": "Goya - Príncipe de Vergara",
+        "network": "emt",
+        "lines": [
+          "2"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-san-bernardo---glorieta-de-ruiz-jim-nez",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7061,
+          40.4299
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-san-bernardo---glorieta-de-ruiz-jim-nez",
+        "name": "San Bernardo - Glorieta de Ruiz Jiménez",
+        "network": "emt",
+        "lines": [
+          "2",
+          "147"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-glorieta-de-quevedo",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7051,
+          40.4338
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-glorieta-de-quevedo",
+        "name": "Glorieta de Quevedo",
+        "network": "emt",
+        "lines": [
+          "2",
+          "147"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-cuatro-caminos--intercambiador-emt-",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7042,
+          40.4468
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-cuatro-caminos--intercambiador-emt-",
+        "name": "Cuatro Caminos (Intercambiador EMT)",
+        "network": "emt",
+        "lines": [
+          "2",
+          "C1",
+          "C2"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-avenida-de-reina-victoria--terminal-",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7112,
+          40.4478
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-avenida-de-reina-victoria--terminal-",
+        "name": "Avenida de Reina Victoria (Terminal)",
+        "network": "emt",
+        "lines": [
+          "2",
+          "C1",
+          "C2"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-conde-de-casal--intercambiador-emt-",
       "geometry": {
         "type": "Point",
         "coordinates": [
@@ -574,17 +1965,13 @@
         ]
       },
       "properties": {
-        "id": "emt-20",
-        "name": "Conde de Casal EMT",
+        "id": "emt-stop-conde-de-casal--intercambiador-emt-",
+        "name": "Conde de Casal (Intercambiador EMT)",
         "network": "emt",
         "lines": [
           "14",
-          "32",
-          "56",
-          "63",
-          "143",
-          "145",
-          "156"
+          "C1",
+          "C2"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -593,23 +1980,20 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-20",
+      "id": "emt-stop-mariano-de-cavia",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.6152,
-          40.4645
+          -3.6781,
+          40.4085
         ]
       },
       "properties": {
-        "id": "emt-21",
-        "name": "Feria de Madrid EMT",
+        "id": "emt-stop-mariano-de-cavia",
+        "name": "Mariano de Cavia",
         "network": "emt",
         "lines": [
-          "73",
-          "104",
-          "112",
-          "122"
+          "14"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -618,7 +2002,822 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-21",
+      "id": "emt-stop-paseo-de-la-reina-cristina",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6852,
+          40.4095
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-paseo-de-la-reina-cristina",
+        "name": "Paseo de la Reina Cristina",
+        "network": "emt",
+        "lines": [
+          "14",
+          "C1",
+          "C2"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-plaza-de-cuzco",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6892,
+          40.4612
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-plaza-de-cuzco",
+        "name": "Plaza de Cuzco",
+        "network": "emt",
+        "lines": [
+          "14",
+          "27",
+          "147"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-alberto-alcocer---padre-dami-n",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6821,
+          40.4625
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-alberto-alcocer---padre-dami-n",
+        "name": "Alberto Alcocer - Padre Damián",
+        "network": "emt",
+        "lines": [
+          "14"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-plaza-de-la-rep-blica-dominicana",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6761,
+          40.4608
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-plaza-de-la-rep-blica-dominicana",
+        "name": "Plaza de la República Dominicana",
+        "network": "emt",
+        "lines": [
+          "14"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-avenida-de-p-o-xii--terminal-",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6728,
+          40.4682
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-avenida-de-p-o-xii--terminal-",
+        "name": "Avenida de Pío XII (Terminal)",
+        "network": "emt",
+        "lines": [
+          "14",
+          "70"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-mateo-inurria---chamart-n",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6823,
+          40.4685
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-mateo-inurria---chamart-n",
+        "name": "Mateo Inurria - Chamartín",
+        "network": "emt",
+        "lines": [
+          "70"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-p-o-xii---arturo-soria",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6698,
+          40.4695
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-p-o-xii---arturo-soria",
+        "name": "Pío XII - Arturo Soria",
+        "network": "emt",
+        "lines": [
+          "14",
+          "70"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-arturo-soria---gran-v-a-de-hortaleza",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6645,
+          40.4652
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-arturo-soria---gran-v-a-de-hortaleza",
+        "name": "Arturo Soria - Gran Vía de Hortaleza",
+        "network": "emt",
+        "lines": [
+          "70"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-arturo-soria---arturo-soria-plaza",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6601,
+          40.4558
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-arturo-soria---arturo-soria-plaza",
+        "name": "Arturo Soria - Arturo Soria Plaza",
+        "network": "emt",
+        "lines": [
+          "70"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-arturo-soria---avenida-de-am-rica",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6558,
+          40.4442
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-arturo-soria---avenida-de-am-rica",
+        "name": "Arturo Soria - Avenida de América",
+        "network": "emt",
+        "lines": [
+          "70"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-arturo-soria---condesa-de-venadito",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6521,
+          40.4385
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-arturo-soria---condesa-de-venadito",
+        "name": "Arturo Soria - Condesa de Venadito",
+        "network": "emt",
+        "lines": [
+          "70"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-ciudad-lineal--intercambiador-",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6482,
+          40.4352
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-ciudad-lineal--intercambiador-",
+        "name": "Ciudad Lineal (Intercambiador)",
+        "network": "emt",
+        "lines": [
+          "70",
+          "146"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-hermanos-garc-a-noblejas---alcal-",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6412,
+          40.4312
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-hermanos-garc-a-noblejas---alcal-",
+        "name": "Hermanos García Noblejas - Alcalá",
+        "network": "emt",
+        "lines": [
+          "70"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-hermanos-garc-a-noblejas---simancas",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6358,
+          40.4265
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-hermanos-garc-a-noblejas---simancas",
+        "name": "Hermanos García Noblejas - Simancas",
+        "network": "emt",
+        "lines": [
+          "70"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-alsacia--intercambiador-emt-",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6265,
+          40.4198
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-alsacia--intercambiador-emt-",
+        "name": "Alsacia (Intercambiador EMT)",
+        "network": "emt",
+        "lines": [
+          "70"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-plaza-de-cristo-rey--emt-",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7185,
+          40.4398
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-plaza-de-cristo-rey--emt-",
+        "name": "Plaza de Cristo Rey (EMT)",
+        "network": "emt",
+        "lines": [
+          "1",
+          "C1",
+          "C2"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-avenida-reina-victoria",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7112,
+          40.4478
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-avenida-reina-victoria",
+        "name": "Avenida Reina Victoria",
+        "network": "emt",
+        "lines": [
+          "2",
+          "C1",
+          "C2"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-cuatro-caminos--emt-",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7042,
+          40.4468
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-cuatro-caminos--emt-",
+        "name": "Cuatro Caminos (EMT)",
+        "network": "emt",
+        "lines": [
+          "2",
+          "C1",
+          "C2"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-raimundo-fern-ndez-villaverde---castellana",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6917,
+          40.4464
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-raimundo-fern-ndez-villaverde---castellana",
+        "name": "Raimundo Fernández Villaverde - Castellana",
+        "network": "emt",
+        "lines": [
+          "14",
+          "27",
+          "C1",
+          "C2"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-rep-blica-argentina",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6841,
+          40.4452
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-rep-blica-argentina",
+        "name": "República Argentina",
+        "network": "emt",
+        "lines": [
+          "C1",
+          "C2"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-avenida-de-am-rica--emt-",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6769,
+          40.4381
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-avenida-de-am-rica--emt-",
+        "name": "Avenida de América (EMT)",
+        "network": "emt",
+        "lines": [
+          "1",
+          "C1",
+          "C2",
+          "200"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-francisco-silvela---diego-de-le-n",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6732,
+          40.4345
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-francisco-silvela---diego-de-le-n",
+        "name": "Francisco Silvela - Diego de León",
+        "network": "emt",
+        "lines": [
+          "C1",
+          "C2"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-manuel-becerra--emt-",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6672,
+          40.4298
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-manuel-becerra--emt-",
+        "name": "Manuel Becerra (EMT)",
+        "network": "emt",
+        "lines": [
+          "2",
+          "C1",
+          "C2"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-doctor-esquerdo---o-donnell",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6685,
+          40.4215
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-doctor-esquerdo---o-donnell",
+        "name": "Doctor Esquerdo - O'Donnell",
+        "network": "emt",
+        "lines": [
+          "C1",
+          "C2",
+          "203"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-doctor-esquerdo---sainz-de-baranda",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6698,
+          40.4158
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-doctor-esquerdo---sainz-de-baranda",
+        "name": "Doctor Esquerdo - Sainz de Baranda",
+        "network": "emt",
+        "lines": [
+          "C1",
+          "C2"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-conde-de-casal--emt-",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6719,
+          40.4072
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-conde-de-casal--emt-",
+        "name": "Conde de Casal (EMT)",
+        "network": "emt",
+        "lines": [
+          "14",
+          "C1",
+          "C2"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-atocha--intercambiador-emt-",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6931,
+          40.4101
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-atocha--intercambiador-emt-",
+        "name": "Atocha (Intercambiador EMT)",
+        "network": "emt",
+        "lines": [
+          "14",
+          "27",
+          "34",
+          "C1",
+          "001",
+          "203"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-ronda-de-segovia",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7165,
+          40.4112
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-ronda-de-segovia",
+        "name": "Ronda de Segovia",
+        "network": "emt",
+        "lines": [
+          "C1",
+          "C2"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-pr-ncipe-p-o--emt-",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7198,
+          40.4208
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-pr-ncipe-p-o--emt-",
+        "name": "Príncipe Pío (EMT)",
+        "network": "emt",
+        "lines": [
+          "C1",
+          "C2"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-paseo-del-prado---jard-n-bot-nico",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6928,
+          40.4132
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-paseo-del-prado---jard-n-bot-nico",
+        "name": "Paseo del Prado - Jardín Botánico",
+        "network": "emt",
+        "lines": [
+          "14",
+          "27",
+          "34",
+          "001"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-gran-v-a---alcal-",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6985,
+          40.4189
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-gran-v-a---alcal-",
+        "name": "Gran Vía - Alcalá",
+        "network": "emt",
+        "lines": [
+          "1",
+          "001"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-gran-v-a---plaza-de-espa-a",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7126,
+          40.4234
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-gran-v-a---plaza-de-espa-a",
+        "name": "Gran Vía - Plaza de España",
+        "network": "emt",
+        "lines": [
+          "1",
+          "001"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-princesa---ventura-rodr-guez",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7142,
+          40.4272
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-princesa---ventura-rodr-guez",
+        "name": "Princesa - Ventura Rodríguez",
+        "network": "emt",
+        "lines": [
+          "1",
+          "001"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-princesa---arg-elles",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7158,
+          40.4308
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-princesa---arg-elles",
+        "name": "Princesa - Argüelles",
+        "network": "emt",
+        "lines": [
+          "1",
+          "001",
+          "C1"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-o-donnell--emt-expr-s-",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6685,
+          40.4215
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-o-donnell--emt-expr-s-",
+        "name": "O'Donnell (EMT Exprés)",
+        "network": "emt",
+        "lines": [
+          "C1",
+          "C2",
+          "203"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-aeropuerto-t1--llegadas-",
       "geometry": {
         "type": "Point",
         "coordinates": [
@@ -627,11 +2826,10 @@
         ]
       },
       "properties": {
-        "id": "emt-22",
-        "name": "Aeropuerto T1-T2 EMT",
+        "id": "emt-stop-aeropuerto-t1--llegadas-",
+        "name": "Aeropuerto T1 (Llegadas)",
         "network": "emt",
         "lines": [
-          "101",
           "200",
           "203"
         ],
@@ -642,7 +2840,30 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-22",
+      "id": "emt-stop-aeropuerto-t2--salidas-",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.5762,
+          40.4725
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-aeropuerto-t2--salidas-",
+        "name": "Aeropuerto T2 (Salidas)",
+        "network": "emt",
+        "lines": [
+          "200",
+          "203"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-aeropuerto-t4--terminal-",
       "geometry": {
         "type": "Point",
         "coordinates": [
@@ -651,8 +2872,8 @@
         ]
       },
       "properties": {
-        "id": "emt-23",
-        "name": "Aeropuerto T4 EMT",
+        "id": "emt-stop-aeropuerto-t4--terminal-",
+        "name": "Aeropuerto T4 (Terminal)",
         "network": "emt",
         "lines": [
           "200",
@@ -665,22 +2886,21 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-23",
+      "id": "emt-stop-extra-1",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.68872,
-          40.46477
+          -3.68893,
+          40.46454
         ]
       },
       "properties": {
-        "id": "emt-24",
+        "id": "emt-stop-extra-1",
         "name": "Paseo de la Castellana - Parada 1",
         "network": "emt",
         "lines": [
           "14",
           "27",
-          "40",
           "147",
           "150"
         ],
@@ -691,22 +2911,21 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-24",
+      "id": "emt-stop-extra-2",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.68935,
-          40.46215
+          -3.68941,
+          40.46194
         ]
       },
       "properties": {
-        "id": "emt-25",
+        "id": "emt-stop-extra-2",
         "name": "Paseo de la Castellana - Parada 2",
         "network": "emt",
         "lines": [
           "14",
           "27",
-          "40",
           "147",
           "150"
         ],
@@ -717,22 +2936,21 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-25",
+      "id": "emt-stop-extra-3",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.69014,
-          40.46064
+          -3.68999,
+          40.46006
         ]
       },
       "properties": {
-        "id": "emt-26",
+        "id": "emt-stop-extra-3",
         "name": "Paseo de la Castellana - Parada 3",
         "network": "emt",
         "lines": [
           "14",
           "27",
-          "40",
           "147",
           "150"
         ],
@@ -743,22 +2961,21 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-26",
+      "id": "emt-stop-extra-4",
       "geometry": {
         "type": "Point",
         "coordinates": [
           -3.68984,
-          40.45937
+          40.45835
         ]
       },
       "properties": {
-        "id": "emt-27",
+        "id": "emt-stop-extra-4",
         "name": "Paseo de la Castellana - Parada 4",
         "network": "emt",
         "lines": [
           "14",
           "27",
-          "40",
           "147",
           "150"
         ],
@@ -769,48 +2986,46 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-27",
+      "id": "emt-stop-extra-5",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.68923,
-          40.45703
+          -3.68948,
+          40.45592
         ]
       },
       "properties": {
-        "id": "emt-28",
+        "id": "emt-stop-extra-5",
         "name": "Paseo de la Castellana - Parada 5",
         "network": "emt",
         "lines": [
           "14",
           "27",
-          "40",
           "147",
           "150"
         ],
         "zone": "A",
-        "wheelchairAccessible": false,
+        "wheelchairAccessible": true,
         "type": "stop"
       }
     },
     {
       "type": "Feature",
-      "id": "emt-stop-28",
+      "id": "emt-stop-extra-6",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.68967,
-          40.4543
+          -3.68982,
+          40.45323
         ]
       },
       "properties": {
-        "id": "emt-29",
+        "id": "emt-stop-extra-6",
         "name": "Paseo de la Castellana - Parada 6",
         "network": "emt",
         "lines": [
           "14",
           "27",
-          "40",
           "147",
           "150"
         ],
@@ -821,22 +3036,21 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-29",
+      "id": "emt-stop-extra-7",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.69056,
-          40.45258
+          -3.69047,
+          40.45122
         ]
       },
       "properties": {
-        "id": "emt-30",
+        "id": "emt-stop-extra-7",
         "name": "Paseo de la Castellana - Parada 7",
         "network": "emt",
         "lines": [
           "14",
           "27",
-          "40",
           "147",
           "150"
         ],
@@ -847,22 +3061,21 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-30",
+      "id": "emt-stop-extra-8",
       "geometry": {
         "type": "Point",
         "coordinates": [
           -3.69047,
-          40.4514
+          40.44956
         ]
       },
       "properties": {
-        "id": "emt-31",
+        "id": "emt-stop-extra-8",
         "name": "Paseo de la Castellana - Parada 8",
         "network": "emt",
         "lines": [
           "14",
           "27",
-          "40",
           "147",
           "150"
         ],
@@ -873,22 +3086,21 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-31",
+      "id": "emt-stop-extra-9",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.68979,
-          40.44927
+          -3.69006,
+          40.44728
         ]
       },
       "properties": {
-        "id": "emt-32",
+        "id": "emt-stop-extra-9",
         "name": "Paseo de la Castellana - Parada 9",
         "network": "emt",
         "lines": [
           "14",
           "27",
-          "40",
           "147",
           "150"
         ],
@@ -899,48 +3111,46 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-32",
+      "id": "emt-stop-extra-10",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.69,
-          40.44648
+          -3.69026,
+          40.44455
         ]
       },
       "properties": {
-        "id": "emt-33",
+        "id": "emt-stop-extra-10",
         "name": "Paseo de la Castellana - Parada 10",
         "network": "emt",
         "lines": [
           "14",
           "27",
-          "40",
           "147",
           "150"
         ],
         "zone": "A",
-        "wheelchairAccessible": false,
+        "wheelchairAccessible": true,
         "type": "stop"
       }
     },
     {
       "type": "Feature",
-      "id": "emt-stop-33",
+      "id": "emt-stop-extra-11",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.69094,
-          40.44454
+          -3.69093,
+          40.44239
         ]
       },
       "properties": {
-        "id": "emt-34",
+        "id": "emt-stop-extra-11",
         "name": "Paseo de la Castellana - Parada 11",
         "network": "emt",
         "lines": [
           "14",
           "27",
-          "40",
           "147",
           "150"
         ],
@@ -951,22 +3161,21 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-34",
+      "id": "emt-stop-extra-12",
       "geometry": {
         "type": "Point",
         "coordinates": [
           -3.69108,
-          40.44338
+          40.44075
         ]
       },
       "properties": {
-        "id": "emt-35",
+        "id": "emt-stop-extra-12",
         "name": "Paseo de la Castellana - Parada 12",
         "network": "emt",
         "lines": [
           "14",
           "27",
-          "40",
           "147",
           "150"
         ],
@@ -977,22 +3186,21 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-35",
+      "id": "emt-stop-extra-13",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.69038,
-          40.44149
+          -3.69067,
+          40.43862
         ]
       },
       "properties": {
-        "id": "emt-36",
+        "id": "emt-stop-extra-13",
         "name": "Paseo de la Castellana - Parada 13",
         "network": "emt",
         "lines": [
           "14",
           "27",
-          "40",
           "147",
           "150"
         ],
@@ -1003,22 +3211,21 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-36",
+      "id": "emt-stop-extra-14",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.69036,
-          40.4387
+          -3.69071,
+          40.4359
         ]
       },
       "properties": {
-        "id": "emt-37",
+        "id": "emt-stop-extra-14",
         "name": "Paseo de la Castellana - Parada 14",
         "network": "emt",
         "lines": [
           "14",
           "27",
-          "40",
           "147",
           "150"
         ],
@@ -1029,48 +3236,46 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-37",
+      "id": "emt-stop-extra-15",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.69128,
-          40.43653
+          -3.69137,
+          40.43359
         ]
       },
       "properties": {
-        "id": "emt-38",
+        "id": "emt-stop-extra-15",
         "name": "Paseo de la Castellana - Parada 15",
         "network": "emt",
         "lines": [
           "14",
           "27",
-          "40",
           "147",
           "150"
         ],
         "zone": "A",
-        "wheelchairAccessible": false,
+        "wheelchairAccessible": true,
         "type": "stop"
       }
     },
     {
       "type": "Feature",
-      "id": "emt-stop-38",
+      "id": "emt-stop-extra-16",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.69165,
-          40.43534
+          -3.69167,
+          40.43192
         ]
       },
       "properties": {
-        "id": "emt-39",
+        "id": "emt-stop-extra-16",
         "name": "Paseo de la Castellana - Parada 16",
         "network": "emt",
         "lines": [
           "14",
           "27",
-          "40",
           "147",
           "150"
         ],
@@ -1081,22 +3286,21 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-39",
+      "id": "emt-stop-extra-17",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.69101,
-          40.43366
+          -3.69129,
+          40.42994
         ]
       },
       "properties": {
-        "id": "emt-40",
+        "id": "emt-stop-extra-17",
         "name": "Paseo de la Castellana - Parada 17",
         "network": "emt",
         "lines": [
           "14",
           "27",
-          "40",
           "147",
           "150"
         ],
@@ -1107,22 +3311,21 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-40",
+      "id": "emt-stop-extra-18",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.69077,
-          40.43095
+          -3.69119,
+          40.42727
         ]
       },
       "properties": {
-        "id": "emt-41",
+        "id": "emt-stop-extra-18",
         "name": "Paseo de la Castellana - Parada 18",
         "network": "emt",
         "lines": [
           "14",
           "27",
-          "40",
           "147",
           "150"
         ],
@@ -1133,76 +3336,21 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-41",
+      "id": "emt-stop-extra-19",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.6916,
-          40.42857
+          -3.69753,
+          40.41894
         ]
       },
       "properties": {
-        "id": "emt-42",
-        "name": "Paseo de la Castellana - Parada 19",
-        "network": "emt",
-        "lines": [
-          "14",
-          "27",
-          "40",
-          "147",
-          "150"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-42",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.69217,
-          40.42727
-        ]
-      },
-      "properties": {
-        "id": "emt-43",
-        "name": "Paseo de la Castellana - Parada 20",
-        "network": "emt",
-        "lines": [
-          "14",
-          "27",
-          "40",
-          "147",
-          "150"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": false,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-43",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.6979,
-          40.41883
-        ]
-      },
-      "properties": {
-        "id": "emt-44",
+        "id": "emt-stop-extra-19",
         "name": "Calle de Alcalá - Parada 1",
         "network": "emt",
         "lines": [
-          "21",
-          "38",
-          "53",
+          "2",
           "70",
-          "106",
           "146"
         ],
         "zone": "A",
@@ -1212,24 +3360,21 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-44",
+      "id": "emt-stop-extra-20",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.69542,
-          40.41887
+          -3.6943,
+          40.41933
         ]
       },
       "properties": {
-        "id": "emt-45",
+        "id": "emt-stop-extra-20",
         "name": "Calle de Alcalá - Parada 2",
         "network": "emt",
         "lines": [
-          "21",
-          "38",
-          "53",
+          "2",
           "70",
-          "106",
           "146"
         ],
         "zone": "A",
@@ -1239,24 +3384,21 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-45",
+      "id": "emt-stop-extra-21",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.69309,
-          40.42003
+          -3.69118,
+          40.42046
         ]
       },
       "properties": {
-        "id": "emt-46",
+        "id": "emt-stop-extra-21",
         "name": "Calle de Alcalá - Parada 3",
         "network": "emt",
         "lines": [
-          "21",
-          "38",
-          "53",
+          "2",
           "70",
-          "106",
           "146"
         ],
         "zone": "A",
@@ -1266,24 +3408,21 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-46",
+      "id": "emt-stop-extra-22",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.68967,
-          40.42141
+          -3.68733,
+          40.42174
         ]
       },
       "properties": {
-        "id": "emt-47",
+        "id": "emt-stop-extra-22",
         "name": "Calle de Alcalá - Parada 4",
         "network": "emt",
         "lines": [
-          "21",
-          "38",
-          "53",
+          "2",
           "70",
-          "106",
           "146"
         ],
         "zone": "A",
@@ -1293,51 +3432,45 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-47",
+      "id": "emt-stop-extra-23",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.68594,
-          40.42173
+          -3.68327,
+          40.42231
         ]
       },
       "properties": {
-        "id": "emt-48",
+        "id": "emt-stop-extra-23",
         "name": "Calle de Alcalá - Parada 5",
         "network": "emt",
         "lines": [
-          "21",
-          "38",
-          "53",
+          "2",
           "70",
-          "106",
           "146"
         ],
         "zone": "A",
-        "wheelchairAccessible": false,
+        "wheelchairAccessible": true,
         "type": "stop"
       }
     },
     {
       "type": "Feature",
-      "id": "emt-stop-48",
+      "id": "emt-stop-extra-24",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.68325,
-          40.42166
+          -3.67991,
+          40.42262
         ]
       },
       "properties": {
-        "id": "emt-49",
+        "id": "emt-stop-extra-24",
         "name": "Calle de Alcalá - Parada 6",
         "network": "emt",
         "lines": [
-          "21",
-          "38",
-          "53",
+          "2",
           "70",
-          "106",
           "146"
         ],
         "zone": "A",
@@ -1347,24 +3480,21 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-49",
+      "id": "emt-stop-extra-25",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.68103,
-          40.4226
+          -3.67685,
+          40.42361
         ]
       },
       "properties": {
-        "id": "emt-50",
+        "id": "emt-stop-extra-25",
         "name": "Calle de Alcalá - Parada 7",
         "network": "emt",
         "lines": [
-          "21",
-          "38",
-          "53",
+          "2",
           "70",
-          "106",
           "146"
         ],
         "zone": "A",
@@ -1374,24 +3504,21 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-50",
+      "id": "emt-stop-extra-26",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.67782,
-          40.42408
+          -3.67314,
+          40.42495
         ]
       },
       "properties": {
-        "id": "emt-51",
+        "id": "emt-stop-extra-26",
         "name": "Calle de Alcalá - Parada 8",
         "network": "emt",
         "lines": [
-          "21",
-          "38",
-          "53",
+          "2",
           "70",
-          "106",
           "146"
         ],
         "zone": "A",
@@ -1401,24 +3528,21 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-51",
+      "id": "emt-stop-extra-27",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.67402,
-          40.42461
+          -3.66904,
+          40.42567
         ]
       },
       "properties": {
-        "id": "emt-52",
+        "id": "emt-stop-extra-27",
         "name": "Calle de Alcalá - Parada 9",
         "network": "emt",
         "lines": [
-          "21",
-          "38",
-          "53",
+          "2",
           "70",
-          "106",
           "146"
         ],
         "zone": "A",
@@ -1428,51 +3552,45 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-52",
+      "id": "emt-stop-extra-28",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.67111,
-          40.42448
+          -3.66553,
+          40.42594
         ]
       },
       "properties": {
-        "id": "emt-53",
+        "id": "emt-stop-extra-28",
         "name": "Calle de Alcalá - Parada 10",
         "network": "emt",
         "lines": [
-          "21",
-          "38",
-          "53",
+          "2",
           "70",
-          "106",
           "146"
         ],
         "zone": "A",
-        "wheelchairAccessible": false,
+        "wheelchairAccessible": true,
         "type": "stop"
       }
     },
     {
       "type": "Feature",
-      "id": "emt-stop-53",
+      "id": "emt-stop-extra-29",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.66893,
-          40.4252
+          -3.6625,
+          40.42678
         ]
       },
       "properties": {
-        "id": "emt-54",
+        "id": "emt-stop-extra-29",
         "name": "Calle de Alcalá - Parada 11",
         "network": "emt",
         "lines": [
-          "21",
-          "38",
-          "53",
+          "2",
           "70",
-          "106",
           "146"
         ],
         "zone": "A",
@@ -1482,24 +3600,21 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-54",
+      "id": "emt-stop-extra-30",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.66595,
-          40.4267
+          -3.65894,
+          40.42814
         ]
       },
       "properties": {
-        "id": "emt-55",
+        "id": "emt-stop-extra-30",
         "name": "Calle de Alcalá - Parada 12",
         "network": "emt",
         "lines": [
-          "21",
-          "38",
-          "53",
+          "2",
           "70",
-          "106",
           "146"
         ],
         "zone": "A",
@@ -1509,24 +3624,21 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-55",
+      "id": "emt-stop-extra-31",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.66214,
-          40.42747
+          -3.65483,
+          40.429
         ]
       },
       "properties": {
-        "id": "emt-56",
+        "id": "emt-stop-extra-31",
         "name": "Calle de Alcalá - Parada 13",
         "network": "emt",
         "lines": [
-          "21",
-          "38",
-          "53",
+          "2",
           "70",
-          "106",
           "146"
         ],
         "zone": "A",
@@ -1536,24 +3648,21 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-56",
+      "id": "emt-stop-extra-32",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.659,
-          40.42735
+          -3.65117,
+          40.42928
         ]
       },
       "properties": {
-        "id": "emt-57",
+        "id": "emt-stop-extra-32",
         "name": "Calle de Alcalá - Parada 14",
         "network": "emt",
         "lines": [
-          "21",
-          "38",
-          "53",
+          "2",
           "70",
-          "106",
           "146"
         ],
         "zone": "A",
@@ -1563,51 +3672,45 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-57",
+      "id": "emt-stop-extra-33",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.65679,
-          40.42784
+          -3.64812,
+          40.42996
         ]
       },
       "properties": {
-        "id": "emt-58",
+        "id": "emt-stop-extra-33",
         "name": "Calle de Alcalá - Parada 15",
         "network": "emt",
         "lines": [
-          "21",
-          "38",
-          "53",
+          "2",
           "70",
-          "106",
           "146"
         ],
         "zone": "A",
-        "wheelchairAccessible": false,
+        "wheelchairAccessible": true,
         "type": "stop"
       }
     },
     {
       "type": "Feature",
-      "id": "emt-stop-58",
+      "id": "emt-stop-extra-34",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.65404,
-          40.4293
+          -3.64472,
+          40.4313
         ]
       },
       "properties": {
-        "id": "emt-59",
+        "id": "emt-stop-extra-34",
         "name": "Calle de Alcalá - Parada 16",
         "network": "emt",
         "lines": [
-          "21",
-          "38",
-          "53",
+          "2",
           "70",
-          "106",
           "146"
         ],
         "zone": "A",
@@ -1617,24 +3720,21 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-59",
+      "id": "emt-stop-extra-35",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.65028,
-          40.43029
+          -3.64064,
+          40.43232
         ]
       },
       "properties": {
-        "id": "emt-60",
+        "id": "emt-stop-extra-35",
         "name": "Calle de Alcalá - Parada 17",
         "network": "emt",
         "lines": [
-          "21",
-          "38",
-          "53",
+          "2",
           "70",
-          "106",
           "146"
         ],
         "zone": "A",
@@ -1644,24 +3744,21 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-60",
+      "id": "emt-stop-extra-36",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.64693,
-          40.43024
+          -3.63683,
+          40.43264
         ]
       },
       "properties": {
-        "id": "emt-61",
+        "id": "emt-stop-extra-36",
         "name": "Calle de Alcalá - Parada 18",
         "network": "emt",
         "lines": [
-          "21",
-          "38",
-          "53",
+          "2",
           "70",
-          "106",
           "146"
         ],
         "zone": "A",
@@ -1671,24 +3768,21 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-61",
+      "id": "emt-stop-extra-37",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.64463,
-          40.43051
+          -3.63373,
+          40.43318
         ]
       },
       "properties": {
-        "id": "emt-62",
+        "id": "emt-stop-extra-37",
         "name": "Calle de Alcalá - Parada 19",
         "network": "emt",
         "lines": [
-          "21",
-          "38",
-          "53",
+          "2",
           "70",
-          "106",
           "146"
         ],
         "zone": "A",
@@ -1698,51 +3792,21 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-62",
+      "id": "emt-stop-extra-38",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.64209,
-          40.43187
+          -3.63047,
+          40.43445
         ]
       },
       "properties": {
-        "id": "emt-63",
+        "id": "emt-stop-extra-38",
         "name": "Calle de Alcalá - Parada 20",
         "network": "emt",
         "lines": [
-          "21",
-          "38",
-          "53",
+          "2",
           "70",
-          "106",
-          "146"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": false,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-63",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.63845,
-          40.43306
-        ]
-      },
-      "properties": {
-        "id": "emt-64",
-        "name": "Calle de Alcalá - Parada 21",
-        "network": "emt",
-        "lines": [
-          "21",
-          "38",
-          "53",
-          "70",
-          "106",
           "146"
         ],
         "zone": "A",
@@ -1752,105 +3816,22 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-64",
+      "id": "emt-stop-extra-39",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.6349,
-          40.43314
+          -3.70318,
+          40.44814
         ]
       },
       "properties": {
-        "id": "emt-65",
-        "name": "Calle de Alcalá - Parada 22",
-        "network": "emt",
-        "lines": [
-          "21",
-          "38",
-          "53",
-          "70",
-          "106",
-          "146"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-65",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.63247,
-          40.43323
-        ]
-      },
-      "properties": {
-        "id": "emt-66",
-        "name": "Calle de Alcalá - Parada 23",
-        "network": "emt",
-        "lines": [
-          "21",
-          "38",
-          "53",
-          "70",
-          "106",
-          "146"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-66",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.6301,
-          40.43444
-        ]
-      },
-      "properties": {
-        "id": "emt-67",
-        "name": "Calle de Alcalá - Parada 24",
-        "network": "emt",
-        "lines": [
-          "21",
-          "38",
-          "53",
-          "70",
-          "106",
-          "146"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-67",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.70306,
-          40.44798
-        ]
-      },
-      "properties": {
-        "id": "emt-68",
+        "id": "emt-stop-extra-39",
         "name": "Calle Bravo Murillo - Parada 1",
         "network": "emt",
         "lines": [
-          "3",
-          "64",
-          "66",
-          "124",
-          "128"
+          "2",
+          "C1",
+          "C2"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -1859,24 +3840,22 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-68",
+      "id": "emt-stop-extra-40",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.70304,
-          40.44849
+          -3.7029,
+          40.44903
         ]
       },
       "properties": {
-        "id": "emt-69",
+        "id": "emt-stop-extra-40",
         "name": "Calle Bravo Murillo - Parada 2",
         "network": "emt",
         "lines": [
-          "3",
-          "64",
-          "66",
-          "124",
-          "128"
+          "2",
+          "C1",
+          "C2"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -1885,24 +3864,22 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-69",
+      "id": "emt-stop-extra-41",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.70317,
-          40.45009
+          -3.70272,
+          40.45066
         ]
       },
       "properties": {
-        "id": "emt-70",
+        "id": "emt-stop-extra-41",
         "name": "Calle Bravo Murillo - Parada 3",
         "network": "emt",
         "lines": [
-          "3",
-          "64",
-          "66",
-          "124",
-          "128"
+          "2",
+          "C1",
+          "C2"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -1911,24 +3888,22 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-70",
+      "id": "emt-stop-extra-42",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.70221,
-          40.45194
+          -3.70182,
+          40.45245
         ]
       },
       "properties": {
-        "id": "emt-71",
+        "id": "emt-stop-extra-42",
         "name": "Calle Bravo Murillo - Parada 4",
         "network": "emt",
         "lines": [
-          "3",
-          "64",
-          "66",
-          "124",
-          "128"
+          "2",
+          "C1",
+          "C2"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -1937,50 +3912,46 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-71",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.70094,
-          40.45271
-        ]
-      },
-      "properties": {
-        "id": "emt-72",
-        "name": "Calle Bravo Murillo - Parada 5",
-        "network": "emt",
-        "lines": [
-          "3",
-          "64",
-          "66",
-          "124",
-          "128"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": false,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-72",
+      "id": "emt-stop-extra-43",
       "geometry": {
         "type": "Point",
         "coordinates": [
           -3.70071,
-          40.45309
+          40.45352
         ]
       },
       "properties": {
-        "id": "emt-73",
+        "id": "emt-stop-extra-43",
+        "name": "Calle Bravo Murillo - Parada 5",
+        "network": "emt",
+        "lines": [
+          "2",
+          "C1",
+          "C2"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-extra-44",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7003,
+          40.45433
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-extra-44",
         "name": "Calle Bravo Murillo - Parada 6",
         "network": "emt",
         "lines": [
-          "3",
-          "64",
-          "66",
-          "124",
-          "128"
+          "2",
+          "C1",
+          "C2"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -1989,24 +3960,22 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-73",
+      "id": "emt-stop-extra-45",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.70095,
-          40.45449
+          -3.70019,
+          40.45582
         ]
       },
       "properties": {
-        "id": "emt-74",
+        "id": "emt-stop-extra-45",
         "name": "Calle Bravo Murillo - Parada 7",
         "network": "emt",
         "lines": [
-          "3",
-          "64",
-          "66",
-          "124",
-          "128"
+          "2",
+          "C1",
+          "C2"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -2015,24 +3984,22 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-74",
+      "id": "emt-stop-extra-46",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.7002,
-          40.45643
+          -3.69943,
+          40.45766
         ]
       },
       "properties": {
-        "id": "emt-75",
+        "id": "emt-stop-extra-46",
         "name": "Calle Bravo Murillo - Parada 8",
         "network": "emt",
         "lines": [
-          "3",
-          "64",
-          "66",
-          "124",
-          "128"
+          "2",
+          "C1",
+          "C2"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -2041,24 +4008,22 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-75",
+      "id": "emt-stop-extra-47",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.69886,
-          40.45742
+          -3.69827,
+          40.45888
         ]
       },
       "properties": {
-        "id": "emt-76",
+        "id": "emt-stop-extra-47",
         "name": "Calle Bravo Murillo - Parada 9",
         "network": "emt",
         "lines": [
-          "3",
-          "64",
-          "66",
-          "124",
-          "128"
+          "2",
+          "C1",
+          "C2"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -2067,50 +4032,46 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-76",
+      "id": "emt-stop-extra-48",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.69841,
-          40.45774
+          -3.69771,
+          40.45965
         ]
       },
       "properties": {
-        "id": "emt-77",
+        "id": "emt-stop-extra-48",
         "name": "Calle Bravo Murillo - Parada 10",
         "network": "emt",
         "lines": [
-          "3",
-          "64",
-          "66",
-          "124",
-          "128"
+          "2",
+          "C1",
+          "C2"
         ],
         "zone": "A",
-        "wheelchairAccessible": false,
+        "wheelchairAccessible": true,
         "type": "stop"
       }
     },
     {
       "type": "Feature",
-      "id": "emt-stop-77",
+      "id": "emt-stop-extra-49",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.69869,
-          40.45892
+          -3.69763,
+          40.46099
         ]
       },
       "properties": {
-        "id": "emt-78",
+        "id": "emt-stop-extra-49",
         "name": "Calle Bravo Murillo - Parada 11",
         "network": "emt",
         "lines": [
-          "3",
-          "64",
-          "66",
-          "124",
-          "128"
+          "2",
+          "C1",
+          "C2"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -2119,24 +4080,22 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-78",
+      "id": "emt-stop-extra-50",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.69817,
-          40.46088
+          -3.69702,
+          40.46285
         ]
       },
       "properties": {
-        "id": "emt-79",
+        "id": "emt-stop-extra-50",
         "name": "Calle Bravo Murillo - Parada 12",
         "network": "emt",
         "lines": [
-          "3",
-          "64",
-          "66",
-          "124",
-          "128"
+          "2",
+          "C1",
+          "C2"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -2145,77 +4104,23 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-79",
+      "id": "emt-stop-extra-51",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.69682,
-          40.4621
+          -3.69638,
+          40.41943
         ]
       },
       "properties": {
-        "id": "emt-80",
-        "name": "Calle Bravo Murillo - Parada 13",
-        "network": "emt",
-        "lines": [
-          "3",
-          "64",
-          "66",
-          "124",
-          "128"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-80",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.69614,
-          40.46243
-        ]
-      },
-      "properties": {
-        "id": "emt-81",
-        "name": "Calle Bravo Murillo - Parada 14",
-        "network": "emt",
-        "lines": [
-          "3",
-          "64",
-          "66",
-          "124",
-          "128"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-81",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.69618,
-          40.41944
-        ]
-      },
-      "properties": {
-        "id": "emt-82",
+        "id": "emt-stop-extra-51",
         "name": "Gran Vía - Parada 1",
         "network": "emt",
         "lines": [
           "1",
-          "2",
-          "46",
-          "74",
+          "001",
           "146",
-          "001"
+          "147"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -2224,25 +4129,23 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-82",
+      "id": "emt-stop-extra-52",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.69867,
-          40.41931
+          -3.6987,
+          40.4195
         ]
       },
       "properties": {
-        "id": "emt-83",
+        "id": "emt-stop-extra-52",
         "name": "Gran Vía - Parada 2",
         "network": "emt",
         "lines": [
           "1",
-          "2",
-          "46",
-          "74",
+          "001",
           "146",
-          "001"
+          "147"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -2251,25 +4154,23 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-83",
+      "id": "emt-stop-extra-53",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.70132,
-          40.42027
+          -3.70112,
+          40.42032
         ]
       },
       "properties": {
-        "id": "emt-84",
+        "id": "emt-stop-extra-53",
         "name": "Gran Vía - Parada 3",
         "network": "emt",
         "lines": [
           "1",
-          "2",
-          "46",
-          "74",
+          "001",
           "146",
-          "001"
+          "147"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -2278,25 +4179,23 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-84",
+      "id": "emt-stop-extra-54",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.70288,
-          40.42148
+          -3.70282,
+          40.42128
         ]
       },
       "properties": {
-        "id": "emt-85",
+        "id": "emt-stop-extra-54",
         "name": "Gran Vía - Parada 4",
         "network": "emt",
         "lines": [
           "1",
-          "2",
-          "46",
-          "74",
+          "001",
           "146",
-          "001"
+          "147"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -2305,52 +4204,48 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-85",
+      "id": "emt-stop-extra-55",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.70413,
-          40.42161
+          -3.70431,
+          40.42154
         ]
       },
       "properties": {
-        "id": "emt-86",
+        "id": "emt-stop-extra-55",
         "name": "Gran Vía - Parada 5",
         "network": "emt",
         "lines": [
           "1",
-          "2",
-          "46",
-          "74",
+          "001",
           "146",
-          "001"
+          "147"
         ],
         "zone": "A",
-        "wheelchairAccessible": false,
+        "wheelchairAccessible": true,
         "type": "stop"
       }
     },
     {
       "type": "Feature",
-      "id": "emt-stop-86",
+      "id": "emt-stop-extra-56",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.70642,
-          40.42135
+          -3.7065,
+          40.42154
         ]
       },
       "properties": {
-        "id": "emt-87",
+        "id": "emt-stop-extra-56",
         "name": "Gran Vía - Parada 6",
         "network": "emt",
         "lines": [
           "1",
-          "2",
-          "46",
-          "74",
+          "001",
           "146",
-          "001"
+          "147"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -2359,25 +4254,23 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-87",
+      "id": "emt-stop-extra-57",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.70917,
-          40.42211
+          -3.709,
+          40.42221
         ]
       },
       "properties": {
-        "id": "emt-88",
+        "id": "emt-stop-extra-57",
         "name": "Gran Vía - Parada 7",
         "network": "emt",
         "lines": [
           "1",
-          "2",
-          "46",
-          "74",
+          "001",
           "146",
-          "001"
+          "147"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -2386,25 +4279,23 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-88",
+      "id": "emt-stop-extra-58",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.71094,
-          40.42341
+          -3.71084,
+          40.42324
         ]
       },
       "properties": {
-        "id": "emt-89",
+        "id": "emt-stop-extra-58",
         "name": "Gran Vía - Parada 8",
         "network": "emt",
         "lines": [
           "1",
-          "2",
-          "46",
-          "74",
+          "001",
           "146",
-          "001"
+          "147"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -2413,283 +4304,20 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-89",
+      "id": "emt-stop-extra-59",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.71264,
-          40.42453
+          -3.71992,
+          40.39386
         ]
       },
       "properties": {
-        "id": "emt-90",
-        "name": "Princesa - Parada 1",
-        "network": "emt",
-        "lines": [
-          "1",
-          "44",
-          "133",
-          "C1",
-          "C2"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-90",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.71379,
-          40.42499
-        ]
-      },
-      "properties": {
-        "id": "emt-91",
-        "name": "Princesa - Parada 2",
-        "network": "emt",
-        "lines": [
-          "1",
-          "44",
-          "133",
-          "C1",
-          "C2"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-91",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.7151,
-          40.42655
-        ]
-      },
-      "properties": {
-        "id": "emt-92",
-        "name": "Princesa - Parada 3",
-        "network": "emt",
-        "lines": [
-          "1",
-          "44",
-          "133",
-          "C1",
-          "C2"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-92",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.71531,
-          40.42834
-        ]
-      },
-      "properties": {
-        "id": "emt-93",
-        "name": "Princesa - Parada 4",
-        "network": "emt",
-        "lines": [
-          "1",
-          "44",
-          "133",
-          "C1",
-          "C2"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-93",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.71522,
-          40.42906
-        ]
-      },
-      "properties": {
-        "id": "emt-94",
-        "name": "Princesa - Parada 5",
-        "network": "emt",
-        "lines": [
-          "1",
-          "44",
-          "133",
-          "C1",
-          "C2"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": false,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-94",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.71617,
-          40.4294
-        ]
-      },
-      "properties": {
-        "id": "emt-95",
-        "name": "Princesa - Parada 6",
-        "network": "emt",
-        "lines": [
-          "1",
-          "44",
-          "133",
-          "C1",
-          "C2"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-95",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.71758,
-          40.43075
-        ]
-      },
-      "properties": {
-        "id": "emt-96",
-        "name": "Princesa - Parada 7",
-        "network": "emt",
-        "lines": [
-          "1",
-          "44",
-          "133",
-          "C1",
-          "C2"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-96",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.71801,
-          40.43263
-        ]
-      },
-      "properties": {
-        "id": "emt-97",
-        "name": "Princesa - Parada 8",
-        "network": "emt",
-        "lines": [
-          "1",
-          "44",
-          "133",
-          "C1",
-          "C2"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-97",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.71785,
-          40.43358
-        ]
-      },
-      "properties": {
-        "id": "emt-98",
-        "name": "Princesa - Parada 9",
-        "network": "emt",
-        "lines": [
-          "1",
-          "44",
-          "133",
-          "C1",
-          "C2"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-98",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.71857,
-          40.43385
-        ]
-      },
-      "properties": {
-        "id": "emt-99",
-        "name": "Princesa - Parada 10",
-        "network": "emt",
-        "lines": [
-          "1",
-          "44",
-          "133",
-          "C1",
-          "C2"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": false,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-99",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.71938,
-          40.39409
-        ]
-      },
-      "properties": {
-        "id": "emt-100",
+        "id": "emt-stop-extra-59",
         "name": "General Ricardos - Parada 1",
         "network": "emt",
         "lines": [
-          "34",
-          "35",
-          "118",
-          "119"
+          "34"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -2698,23 +4326,20 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-100",
+      "id": "emt-stop-extra-60",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.72177,
-          40.3923
+          -3.72248,
+          40.39208
         ]
       },
       "properties": {
-        "id": "emt-101",
+        "id": "emt-stop-extra-60",
         "name": "General Ricardos - Parada 2",
         "network": "emt",
         "lines": [
-          "34",
-          "35",
-          "118",
-          "119"
+          "34"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -2723,23 +4348,20 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-101",
+      "id": "emt-stop-extra-61",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.72432,
-          40.39161
+          -3.72515,
+          40.39102
         ]
       },
       "properties": {
-        "id": "emt-102",
+        "id": "emt-stop-extra-61",
         "name": "General Ricardos - Parada 3",
         "network": "emt",
         "lines": [
-          "34",
-          "35",
-          "118",
-          "119"
+          "34"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -2748,23 +4370,20 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-102",
+      "id": "emt-stop-extra-62",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.72578,
-          40.39116
+          -3.72708,
+          40.39013
         ]
       },
       "properties": {
-        "id": "emt-103",
+        "id": "emt-stop-extra-62",
         "name": "General Ricardos - Parada 4",
         "network": "emt",
         "lines": [
-          "34",
-          "35",
-          "118",
-          "119"
+          "34"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -2773,48 +4392,42 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-103",
+      "id": "emt-stop-extra-63",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.72692,
-          40.38964
+          -3.72882,
+          40.38852
         ]
       },
       "properties": {
-        "id": "emt-104",
+        "id": "emt-stop-extra-63",
         "name": "General Ricardos - Parada 5",
         "network": "emt",
         "lines": [
-          "34",
-          "35",
-          "118",
-          "119"
+          "34"
         ],
         "zone": "A",
-        "wheelchairAccessible": false,
+        "wheelchairAccessible": true,
         "type": "stop"
       }
     },
     {
       "type": "Feature",
-      "id": "emt-stop-104",
+      "id": "emt-stop-extra-64",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.72911,
-          40.38773
+          -3.73124,
+          40.38665
         ]
       },
       "properties": {
-        "id": "emt-105",
+        "id": "emt-stop-extra-64",
         "name": "General Ricardos - Parada 6",
         "network": "emt",
         "lines": [
-          "34",
-          "35",
-          "118",
-          "119"
+          "34"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -2823,23 +4436,20 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-105",
+      "id": "emt-stop-extra-65",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.73177,
-          40.38684
+          -3.73398,
+          40.38546
         ]
       },
       "properties": {
-        "id": "emt-106",
+        "id": "emt-stop-extra-65",
         "name": "General Ricardos - Parada 7",
         "network": "emt",
         "lines": [
-          "34",
-          "35",
-          "118",
-          "119"
+          "34"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -2848,23 +4458,20 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-106",
+      "id": "emt-stop-extra-66",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.73344,
-          40.38648
+          -3.73606,
+          40.38463
         ]
       },
       "properties": {
-        "id": "emt-107",
+        "id": "emt-stop-extra-66",
         "name": "General Ricardos - Parada 8",
         "network": "emt",
         "lines": [
-          "34",
-          "35",
-          "118",
-          "119"
+          "34"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -2873,23 +4480,20 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-107",
+      "id": "emt-stop-extra-67",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.73451,
-          40.38517
+          -3.73774,
+          40.38317
         ]
       },
       "properties": {
-        "id": "emt-108",
+        "id": "emt-stop-extra-67",
         "name": "General Ricardos - Parada 9",
         "network": "emt",
         "lines": [
-          "34",
-          "35",
-          "118",
-          "119"
+          "34"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -2898,48 +4502,20 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-108",
+      "id": "emt-stop-extra-68",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.73648,
-          40.38321
+          -3.74002,
+          40.38126
         ]
       },
       "properties": {
-        "id": "emt-109",
+        "id": "emt-stop-extra-68",
         "name": "General Ricardos - Parada 10",
         "network": "emt",
         "lines": [
-          "34",
-          "35",
-          "118",
-          "119"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": false,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-109",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.73917,
-          40.38209
-        ]
-      },
-      "properties": {
-        "id": "emt-110",
-        "name": "General Ricardos - Parada 11",
-        "network": "emt",
-        "lines": [
-          "34",
-          "35",
-          "118",
-          "119"
+          "34"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -2948,51 +4524,22 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-110",
+      "id": "emt-stop-extra-69",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.74107,
-          40.38175
+          -3.66489,
+          40.39741
         ]
       },
       "properties": {
-        "id": "emt-111",
-        "name": "General Ricardos - Parada 12",
-        "network": "emt",
-        "lines": [
-          "34",
-          "35",
-          "118",
-          "119"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-111",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.66511,
-          40.39753
-        ]
-      },
-      "properties": {
-        "id": "emt-112",
-        "name": "Albufera - Parada 1",
+        "id": "emt-stop-extra-69",
+        "name": "Avenida de la Albufera - Parada 1",
         "network": "emt",
         "lines": [
           "10",
-          "24",
           "54",
-          "57",
-          "58",
-          "111",
-          "144"
+          "58"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -3001,26 +4548,22 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-112",
+      "id": "emt-stop-extra-70",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.66284,
-          40.39618
+          -3.66201,
+          40.39616
         ]
       },
       "properties": {
-        "id": "emt-113",
-        "name": "Albufera - Parada 2",
+        "id": "emt-stop-extra-70",
+        "name": "Avenida de la Albufera - Parada 2",
         "network": "emt",
         "lines": [
           "10",
-          "24",
           "54",
-          "57",
-          "58",
-          "111",
-          "144"
+          "58"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -3029,26 +4572,22 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-113",
+      "id": "emt-stop-extra-71",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.66073,
-          40.39593
+          -3.65924,
+          40.39565
         ]
       },
       "properties": {
-        "id": "emt-114",
-        "name": "Albufera - Parada 3",
+        "id": "emt-stop-extra-71",
+        "name": "Avenida de la Albufera - Parada 3",
         "network": "emt",
         "lines": [
           "10",
-          "24",
           "54",
-          "57",
-          "58",
-          "111",
-          "144"
+          "58"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -3057,26 +4596,22 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-114",
+      "id": "emt-stop-extra-72",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.65752,
-          40.39592
+          -3.65575,
+          40.39529
         ]
       },
       "properties": {
-        "id": "emt-115",
-        "name": "Albufera - Parada 4",
+        "id": "emt-stop-extra-72",
+        "name": "Avenida de la Albufera - Parada 4",
         "network": "emt",
         "lines": [
           "10",
-          "24",
           "54",
-          "57",
-          "58",
-          "111",
-          "144"
+          "58"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -3085,54 +4620,22 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-115",
+      "id": "emt-stop-extra-73",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.654,
-          40.39484
+          -3.65205,
+          40.39422
         ]
       },
       "properties": {
-        "id": "emt-116",
-        "name": "Albufera - Parada 5",
+        "id": "emt-stop-extra-73",
+        "name": "Avenida de la Albufera - Parada 5",
         "network": "emt",
         "lines": [
           "10",
-          "24",
           "54",
-          "57",
-          "58",
-          "111",
-          "144"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": false,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-116",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.65153,
-          40.39337
-        ]
-      },
-      "properties": {
-        "id": "emt-117",
-        "name": "Albufera - Parada 6",
-        "network": "emt",
-        "lines": [
-          "10",
-          "24",
-          "54",
-          "57",
-          "58",
-          "111",
-          "144"
+          "58"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -3141,404 +4644,22 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-117",
+      "id": "emt-stop-extra-74",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.64952,
-          40.39292
-        ]
-      },
-      "properties": {
-        "id": "emt-118",
-        "name": "Albufera - Parada 7",
-        "network": "emt",
-        "lines": [
-          "10",
-          "24",
-          "54",
-          "57",
-          "58",
-          "111",
-          "144"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-118",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.64653,
-          40.393
-        ]
-      },
-      "properties": {
-        "id": "emt-119",
-        "name": "Albufera - Parada 8",
-        "network": "emt",
-        "lines": [
-          "10",
-          "24",
-          "54",
-          "57",
-          "58",
-          "111",
-          "144"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-119",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.64294,
-          40.39214
-        ]
-      },
-      "properties": {
-        "id": "emt-120",
-        "name": "Albufera - Parada 9",
-        "network": "emt",
-        "lines": [
-          "10",
-          "24",
-          "54",
-          "57",
-          "58",
-          "111",
-          "144"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-120",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.64024,
-          40.39061
-        ]
-      },
-      "properties": {
-        "id": "emt-121",
-        "name": "Albufera - Parada 10",
-        "network": "emt",
-        "lines": [
-          "10",
-          "24",
-          "54",
-          "57",
-          "58",
-          "111",
-          "144"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": false,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-121",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.63827,
-          40.38993
-        ]
-      },
-      "properties": {
-        "id": "emt-122",
-        "name": "Albufera - Parada 11",
-        "network": "emt",
-        "lines": [
-          "10",
-          "24",
-          "54",
-          "57",
-          "58",
-          "111",
-          "144"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-122",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.63551,
-          40.39004
-        ]
-      },
-      "properties": {
-        "id": "emt-123",
-        "name": "Albufera - Parada 12",
-        "network": "emt",
-        "lines": [
-          "10",
-          "24",
-          "54",
-          "57",
-          "58",
-          "111",
-          "144"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-123",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.63191,
-          40.3894
-        ]
-      },
-      "properties": {
-        "id": "emt-124",
-        "name": "Albufera - Parada 13",
-        "network": "emt",
-        "lines": [
-          "10",
-          "24",
-          "54",
-          "57",
-          "58",
-          "111",
-          "144"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-124",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.62898,
-          40.38788
-        ]
-      },
-      "properties": {
-        "id": "emt-125",
-        "name": "Albufera - Parada 14",
-        "network": "emt",
-        "lines": [
-          "10",
-          "24",
-          "54",
-          "57",
-          "58",
-          "111",
-          "144"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-125",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.69692,
-          40.40121
-        ]
-      },
-      "properties": {
-        "id": "emt-126",
-        "name": "Santa María de la Cabeza - Parada 1",
-        "network": "emt",
-        "lines": [
-          "47",
-          "55",
-          "60",
-          "81",
-          "247"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-126",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.69915,
-          40.39924
-        ]
-      },
-      "properties": {
-        "id": "emt-127",
-        "name": "Santa María de la Cabeza - Parada 2",
-        "network": "emt",
-        "lines": [
-          "47",
-          "55",
-          "60",
-          "81",
-          "247"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-127",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.70153,
-          40.39838
-        ]
-      },
-      "properties": {
-        "id": "emt-128",
-        "name": "Santa María de la Cabeza - Parada 3",
-        "network": "emt",
-        "lines": [
-          "47",
-          "55",
-          "60",
-          "81",
-          "247"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-128",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.70283,
-          40.39775
-        ]
-      },
-      "properties": {
-        "id": "emt-129",
-        "name": "Santa María de la Cabeza - Parada 4",
-        "network": "emt",
-        "lines": [
-          "47",
-          "55",
-          "60",
-          "81",
-          "247"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-129",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.70381,
-          40.39605
-        ]
-      },
-      "properties": {
-        "id": "emt-130",
-        "name": "Santa María de la Cabeza - Parada 5",
-        "network": "emt",
-        "lines": [
-          "47",
-          "55",
-          "60",
-          "81",
-          "247"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": false,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-130",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.70585,
-          40.39397
-        ]
-      },
-      "properties": {
-        "id": "emt-131",
-        "name": "Santa María de la Cabeza - Parada 6",
-        "network": "emt",
-        "lines": [
-          "47",
-          "55",
-          "60",
-          "81",
-          "247"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-131",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.70834,
+          -3.64904,
           40.3929
         ]
       },
       "properties": {
-        "id": "emt-132",
-        "name": "Santa María de la Cabeza - Parada 7",
+        "id": "emt-stop-extra-74",
+        "name": "Avenida de la Albufera - Parada 6",
         "network": "emt",
         "lines": [
-          "47",
-          "55",
-          "60",
-          "81",
-          "247"
+          "10",
+          "54",
+          "58"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -3547,24 +4668,22 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-132",
+      "id": "emt-stop-extra-75",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.70985,
-          40.39236
+          -3.64634,
+          40.39225
         ]
       },
       "properties": {
-        "id": "emt-133",
-        "name": "Santa María de la Cabeza - Parada 8",
+        "id": "emt-stop-extra-75",
+        "name": "Avenida de la Albufera - Parada 7",
         "network": "emt",
         "lines": [
-          "47",
-          "55",
-          "60",
-          "81",
-          "247"
+          "10",
+          "54",
+          "58"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -3573,24 +4692,22 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-133",
+      "id": "emt-stop-extra-76",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.71076,
-          40.39088
+          -3.64299,
+          40.39195
         ]
       },
       "properties": {
-        "id": "emt-134",
-        "name": "Santa María de la Cabeza - Parada 9",
+        "id": "emt-stop-extra-76",
+        "name": "Avenida de la Albufera - Parada 8",
         "network": "emt",
         "lines": [
-          "47",
-          "55",
-          "60",
-          "81",
-          "247"
+          "10",
+          "54",
+          "58"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -3599,50 +4716,22 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-134",
+      "id": "emt-stop-extra-77",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.71256,
-          40.38874
+          -3.63924,
+          40.39103
         ]
       },
       "properties": {
-        "id": "emt-135",
-        "name": "Santa María de la Cabeza - Parada 10",
+        "id": "emt-stop-extra-77",
+        "name": "Avenida de la Albufera - Parada 9",
         "network": "emt",
         "lines": [
-          "47",
-          "55",
-          "60",
-          "81",
-          "247"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": false,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-135",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.7151,
-          40.38744
-        ]
-      },
-      "properties": {
-        "id": "emt-136",
-        "name": "Santa María de la Cabeza - Parada 11",
-        "network": "emt",
-        "lines": [
-          "47",
-          "55",
-          "60",
-          "81",
-          "247"
+          "10",
+          "54",
+          "58"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -3651,24 +4740,22 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-136",
+      "id": "emt-stop-extra-78",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.71684,
-          40.38693
+          -3.63609,
+          40.38967
         ]
       },
       "properties": {
-        "id": "emt-137",
-        "name": "Santa María de la Cabeza - Parada 12",
+        "id": "emt-stop-extra-78",
+        "name": "Avenida de la Albufera - Parada 10",
         "network": "emt",
         "lines": [
-          "47",
-          "55",
-          "60",
-          "81",
-          "247"
+          "10",
+          "54",
+          "58"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -3677,24 +4764,68 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-137",
+      "id": "emt-stop-extra-79",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.65579,
-          40.44234
+          -3.63342,
+          40.38887
         ]
       },
       "properties": {
-        "id": "emt-138",
+        "id": "emt-stop-extra-79",
+        "name": "Avenida de la Albufera - Parada 11",
+        "network": "emt",
+        "lines": [
+          "10",
+          "54",
+          "58"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-extra-80",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.63022,
+          40.38859
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-extra-80",
+        "name": "Avenida de la Albufera - Parada 12",
+        "network": "emt",
+        "lines": [
+          "10",
+          "54",
+          "58"
+        ],
+        "zone": "A",
+        "wheelchairAccessible": true,
+        "type": "stop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "emt-stop-extra-81",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.65614,
+          40.44289
+        ]
+      },
+      "properties": {
+        "id": "emt-stop-extra-81",
         "name": "Arturo Soria - Parada 1",
         "network": "emt",
         "lines": [
-          "9",
-          "11",
-          "70",
-          "72",
-          "73"
+          "70"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -3703,24 +4834,20 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-138",
+      "id": "emt-stop-extra-82",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.65688,
-          40.44381
+          -3.65722,
+          40.44512
         ]
       },
       "properties": {
-        "id": "emt-139",
+        "id": "emt-stop-extra-82",
         "name": "Arturo Soria - Parada 2",
         "network": "emt",
         "lines": [
-          "9",
-          "11",
-          "70",
-          "72",
-          "73"
+          "70"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -3729,24 +4856,20 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-139",
+      "id": "emt-stop-extra-83",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.65814,
-          40.44637
+          -3.65841,
+          40.4481
         ]
       },
       "properties": {
-        "id": "emt-140",
+        "id": "emt-stop-extra-83",
         "name": "Arturo Soria - Parada 3",
         "network": "emt",
         "lines": [
-          "9",
-          "11",
-          "70",
-          "72",
-          "73"
+          "70"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -3755,24 +4878,20 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-140",
+      "id": "emt-stop-extra-84",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.6583,
-          40.44918
+          -3.65887,
+          40.45122
         ]
       },
       "properties": {
-        "id": "emt-141",
+        "id": "emt-stop-extra-84",
         "name": "Arturo Soria - Parada 4",
         "network": "emt",
         "lines": [
-          "9",
-          "11",
-          "70",
-          "72",
-          "73"
+          "70"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -3781,50 +4900,42 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-141",
+      "id": "emt-stop-extra-85",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.65816,
-          40.45091
+          -3.65912,
+          40.45364
         ]
       },
       "properties": {
-        "id": "emt-142",
+        "id": "emt-stop-extra-85",
         "name": "Arturo Soria - Parada 5",
         "network": "emt",
         "lines": [
-          "9",
-          "11",
-          "70",
-          "72",
-          "73"
+          "70"
         ],
         "zone": "A",
-        "wheelchairAccessible": false,
+        "wheelchairAccessible": true,
         "type": "stop"
       }
     },
     {
       "type": "Feature",
-      "id": "emt-stop-142",
+      "id": "emt-stop-extra-86",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.65906,
-          40.45225
+          -3.66008,
+          40.4558
         ]
       },
       "properties": {
-        "id": "emt-143",
+        "id": "emt-stop-extra-86",
         "name": "Arturo Soria - Parada 6",
         "network": "emt",
         "lines": [
-          "9",
-          "11",
-          "70",
-          "72",
-          "73"
+          "70"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -3833,24 +4944,20 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-143",
+      "id": "emt-stop-extra-87",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.66042,
-          40.45461
+          -3.66133,
+          40.45863
         ]
       },
       "properties": {
-        "id": "emt-144",
+        "id": "emt-stop-extra-87",
         "name": "Arturo Soria - Parada 7",
         "network": "emt",
         "lines": [
-          "9",
-          "11",
-          "70",
-          "72",
-          "73"
+          "70"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -3859,24 +4966,20 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-144",
+      "id": "emt-stop-extra-88",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.6608,
-          40.45751
+          -3.66193,
+          40.46182
         ]
       },
       "properties": {
-        "id": "emt-145",
+        "id": "emt-stop-extra-88",
         "name": "Arturo Soria - Parada 8",
         "network": "emt",
         "lines": [
-          "9",
-          "11",
-          "70",
-          "72",
-          "73"
+          "70"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -3885,24 +4988,20 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-145",
+      "id": "emt-stop-extra-89",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.66058,
-          40.45946
+          -3.66214,
+          40.46438
         ]
       },
       "properties": {
-        "id": "emt-146",
+        "id": "emt-stop-extra-89",
         "name": "Arturo Soria - Parada 9",
         "network": "emt",
         "lines": [
-          "9",
-          "11",
-          "70",
-          "72",
-          "73"
+          "70"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -3911,50 +5010,42 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-146",
+      "id": "emt-stop-extra-90",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.66125,
-          40.46074
+          -3.66294,
+          40.4665
         ]
       },
       "properties": {
-        "id": "emt-147",
+        "id": "emt-stop-extra-90",
         "name": "Arturo Soria - Parada 10",
         "network": "emt",
         "lines": [
-          "9",
-          "11",
-          "70",
-          "72",
-          "73"
+          "70"
         ],
         "zone": "A",
-        "wheelchairAccessible": false,
+        "wheelchairAccessible": true,
         "type": "stop"
       }
     },
     {
       "type": "Feature",
-      "id": "emt-stop-147",
+      "id": "emt-stop-extra-91",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.66265,
-          40.46288
+          -3.66422,
+          40.46918
         ]
       },
       "properties": {
-        "id": "emt-148",
+        "id": "emt-stop-extra-91",
         "name": "Arturo Soria - Parada 11",
         "network": "emt",
         "lines": [
-          "9",
-          "11",
-          "70",
-          "72",
-          "73"
+          "70"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -3963,24 +5054,20 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-148",
+      "id": "emt-stop-extra-92",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.66326,
-          40.4658
+          -3.66498,
+          40.47238
         ]
       },
       "properties": {
-        "id": "emt-149",
+        "id": "emt-stop-extra-92",
         "name": "Arturo Soria - Parada 12",
         "network": "emt",
         "lines": [
-          "9",
-          "11",
-          "70",
-          "72",
-          "73"
+          "70"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -3989,24 +5076,20 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-149",
+      "id": "emt-stop-extra-93",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.66303,
-          40.46798
+          -3.66518,
+          40.4751
         ]
       },
       "properties": {
-        "id": "emt-150",
+        "id": "emt-stop-extra-93",
         "name": "Arturo Soria - Parada 13",
         "network": "emt",
         "lines": [
-          "9",
-          "11",
-          "70",
-          "72",
-          "73"
+          "70"
         ],
         "zone": "A",
         "wheelchairAccessible": true,
@@ -4015,128 +5098,20 @@
     },
     {
       "type": "Feature",
-      "id": "emt-stop-150",
+      "id": "emt-stop-extra-94",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -3.66348,
-          40.46927
+          -3.66583,
+          40.47722
         ]
       },
       "properties": {
-        "id": "emt-151",
+        "id": "emt-stop-extra-94",
         "name": "Arturo Soria - Parada 14",
         "network": "emt",
         "lines": [
-          "9",
-          "11",
-          "70",
-          "72",
-          "73"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-151",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.66486,
-          40.47118
-        ]
-      },
-      "properties": {
-        "id": "emt-152",
-        "name": "Arturo Soria - Parada 15",
-        "network": "emt",
-        "lines": [
-          "9",
-          "11",
-          "70",
-          "72",
-          "73"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": false,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-152",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.66569,
-          40.47405
-        ]
-      },
-      "properties": {
-        "id": "emt-153",
-        "name": "Arturo Soria - Parada 16",
-        "network": "emt",
-        "lines": [
-          "9",
-          "11",
-          "70",
-          "72",
-          "73"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-153",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.66552,
-          40.47646
-        ]
-      },
-      "properties": {
-        "id": "emt-154",
-        "name": "Arturo Soria - Parada 17",
-        "network": "emt",
-        "lines": [
-          "9",
-          "11",
-          "70",
-          "72",
-          "73"
-        ],
-        "zone": "A",
-        "wheelchairAccessible": true,
-        "type": "stop"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "emt-stop-154",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -3.66574,
-          40.47782
-        ]
-      },
-      "properties": {
-        "id": "emt-155",
-        "name": "Arturo Soria - Parada 18",
-        "network": "emt",
-        "lines": [
-          "9",
-          "11",
-          "70",
-          "72",
-          "73"
+          "70"
         ],
         "zone": "A",
         "wheelchairAccessible": true,

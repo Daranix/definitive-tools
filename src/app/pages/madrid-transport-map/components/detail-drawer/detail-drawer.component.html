@@ -1,6 +1,8 @@
-@if (selection()) {
+@if (selection() || selectedLine()) {
   <div
-    class="bg-white/95 backdrop-blur-md border border-slate-200/90 rounded-2xl shadow-2xl shadow-slate-900/10 p-5 max-w-sm w-full animate-in fade-in slide-in-from-bottom-3 duration-200"
+    [class]="embedded()
+      ? 'w-full space-y-3 pt-1'
+      : 'w-80 lg:w-96 bg-white/95 backdrop-blur-md border border-slate-200/90 rounded-2xl shadow-2xl shadow-slate-900/10 p-5 max-h-[calc(48vh-2rem)] overflow-y-auto animate-in fade-in slide-in-from-bottom-3 duration-200'"
     role="dialog"
     aria-labelledby="detail-drawer-title"
   >
@@ -44,33 +46,89 @@
           <h3 id="detail-drawer-title" class="text-lg font-bold text-slate-900 leading-snug">
             {{ zone.name }}
           </h3>
+        } @else if (selectedLine(); as line) {
+          <div class="flex items-center gap-2 mb-1">
+            <span
+              [class]="'text-[11px] font-bold px-2 py-0.5 rounded-full border ' + (lineNetworkMeta()?.badgeClass || 'bg-slate-100 text-slate-800')"
+            >
+              {{ lineNetworkMeta()?.shortName }}
+            </span>
+            <span class="text-[11px] font-semibold text-indigo-600">
+              Active Route
+            </span>
+          </div>
+          <h3 id="detail-drawer-title" class="text-lg font-bold text-slate-900 leading-snug">
+            {{ line.name }}
+          </h3>
         }
       </div>
 
-      <button
-        type="button"
-        (click)="close()"
-        aria-label="Close station detail card"
-        class="p-1 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors flex-shrink-0"
-      >
-        <lucide-icon name="x" class="w-5 h-5"></lucide-icon>
-      </button>
+      @if (!embedded()) {
+        <button
+          type="button"
+          (click)="selection() ? close() : onClearLine()"
+          aria-label="Close detail card"
+          class="p-1 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors flex-shrink-0"
+        >
+          <lucide-icon name="x" class="w-5 h-5"></lucide-icon>
+        </button>
+      }
     </div>
 
     <!-- Body Information -->
     @if (isStation() && stationData()) {
       @let station = stationData()!;
       <div class="space-y-3 pt-2 border-t border-slate-100 text-xs">
-        <!-- Lines Served -->
+        <!-- Lines Served (Click to view full route) -->
         <div>
-          <span class="text-slate-500 font-medium block mb-1.5">Lines Served:</span>
-          <div class="flex flex-wrap gap-1.5">
-            @for (line of station.lines; track line) {
-              <span class="px-2.5 py-1 rounded-lg bg-slate-100 border border-slate-200/80 font-bold text-slate-800 text-xs">
-                {{ line }}
-              </span>
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-slate-500 font-medium">Lines Served (click to view route):</span>
+            @if (selectedLine()) {
+              <button
+                type="button"
+                (click)="onClearLine()"
+                class="text-[10px] text-indigo-600 hover:text-indigo-800 font-medium underline"
+              >
+                Clear route
+              </button>
             }
           </div>
+          <div class="flex flex-wrap gap-1.5">
+            @for (line of station.lines; track line) {
+              @let isSel = isLineSelected(line);
+              <button
+                type="button"
+                (click)="onSelectLine(line)"
+                [class]="'px-2.5 py-1 rounded-lg border font-bold text-xs transition-all flex items-center gap-1 ' +
+                         (isSel
+                           ? 'bg-indigo-600 text-white border-indigo-700 shadow-md ring-2 ring-indigo-400 scale-105'
+                           : 'bg-slate-100 hover:bg-indigo-50 hover:border-indigo-300 text-slate-800 border-slate-200/80 active:scale-95')"
+                [title]="'View full route of line ' + line"
+              >
+                <span>{{ line }}</span>
+                @if (isSel) {
+                  <span class="text-[10px]">✓</span>
+                }
+              </button>
+            }
+          </div>
+
+          @if (selectedLine(); as activeLine) {
+            <div class="mt-2.5 p-2 rounded-xl bg-indigo-50/80 border border-indigo-200 flex items-center justify-between gap-2 animate-in fade-in duration-200">
+              <div class="min-w-0">
+                <span class="text-[9px] uppercase font-bold text-indigo-600 block tracking-wider">Route Displayed</span>
+                <span class="text-xs font-bold text-slate-800 truncate block">{{ activeLine.name }}</span>
+              </div>
+              <button
+                type="button"
+                (click)="onClearLine()"
+                class="p-1 rounded-lg hover:bg-indigo-200/60 text-indigo-700 text-xs font-semibold flex-shrink-0"
+                title="Dismiss route highlight"
+              >
+                ✕
+              </button>
+            </div>
+          }
         </div>
 
         <!-- Tariff Details -->
@@ -124,6 +182,21 @@
         <div class="text-[11px] text-slate-500 bg-amber-50 border border-amber-200 text-amber-800 p-2.5 rounded-xl">
           💡 Passes are valid for all transit modes (Metro, Cercanías, EMT, and Interurban) within this zone.
         </div>
+      </div>
+    } @else if (selectedLine(); as line) {
+      <div class="space-y-3 pt-2 border-t border-slate-100 text-xs">
+        <div class="p-3 rounded-xl bg-indigo-50/80 border border-indigo-200 text-indigo-950 space-y-1">
+          <p class="font-bold text-slate-900">{{ line.name }}</p>
+          <p class="text-[11px] text-slate-600">The entire route and stops for this line are highlighted on the map.</p>
+        </div>
+        <button
+          type="button"
+          (click)="onClearLine()"
+          class="w-full py-2 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl transition-colors text-xs flex items-center justify-center gap-1.5"
+        >
+          <lucide-icon name="x" class="w-3.5 h-3.5"></lucide-icon>
+          Deselect Line
+        </button>
       </div>
     }
   </div>

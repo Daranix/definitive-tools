@@ -4,7 +4,9 @@ import {
   signal,
   computed,
   ChangeDetectionStrategy,
+  PLATFORM_ID,
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import { TOOLS, CATEGORIES } from '../../utils/constants';
@@ -21,6 +23,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
+  private readonly platformId = inject(PLATFORM_ID);
   private readonly metadataService = inject(MetadataService);
   private readonly githubService = inject(GithubService);
 
@@ -37,9 +40,11 @@ export class HomeComponent {
     let list = [...TOOLS];
     if (category === 'Favorites') {
       let favs: string[] = [];
-      try {
-        favs = JSON.parse(localStorage.getItem('favorite-tools') || '[]');
-      } catch {}
+      if (isPlatformBrowser(this.platformId)) {
+        try {
+          favs = JSON.parse(localStorage.getItem('favorite-tools') || '[]');
+        } catch {}
+      }
       list = list.filter((t) => favs.includes(t.id));
     } else if (category !== 'All') {
       list = list.filter((t) => t.category === category);

@@ -8,7 +8,9 @@ import {
   signal,
   effect,
   ChangeDetectionStrategy,
+  PLATFORM_ID,
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import { ToastService } from '@app/services/toast.service';
@@ -23,6 +25,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
   styleUrl: './top-navbar.component.scss',
 })
 export class TopNavbarComponent {
+  private readonly platformId = inject(PLATFORM_ID);
   readonly activatedRoute = inject(ActivatedRoute);
   readonly toastService = inject(ToastService);
   private readonly githubService = inject(GithubService);
@@ -62,6 +65,9 @@ export class TopNavbarComponent {
   }
 
   private getFavorites(): string[] {
+    if (!isPlatformBrowser(this.platformId)) {
+      return [];
+    }
     try {
       return JSON.parse(localStorage.getItem('favorite-tools') || '[]');
     } catch {
@@ -87,7 +93,9 @@ export class TopNavbarComponent {
         message: `${toolInfo.name} added to favorites!`,
       });
     }
-    localStorage.setItem('favorite-tools', JSON.stringify(favs));
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('favorite-tools', JSON.stringify(favs));
+    }
   }
 
   shareTool() {
