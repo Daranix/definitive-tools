@@ -48,14 +48,30 @@
           </div>
           <div class="flex items-baseline justify-between text-[11px] text-slate-600 mt-0.5">
             <span>Abono:</span>
-            <span class="font-semibold text-slate-800">€{{ zone.monthlyPassPriceEur.toFixed(2) }}</span>
+            <div class="flex items-center gap-1">
+              @if (zone.nominalMonthlyPriceEur) {
+                <span class="text-[9px] text-slate-400 line-through">€{{ zone.nominalMonthlyPriceEur.toFixed(2) }}</span>
+              }
+              <span class="font-bold text-emerald-700">€{{ zone.monthlyPassPriceEur.toFixed(2) }}</span>
+            </div>
           </div>
           <div class="flex items-baseline justify-between text-[10px] text-slate-500">
             <span>10 Viajes:</span>
-            <span>€{{ zone.tenTripPriceEur.toFixed(2) }}</span>
+            <div class="flex items-center gap-1">
+              @if (zone.nominalTenTripPriceEur) {
+                <span class="text-[8px] text-slate-400 line-through">€{{ zone.nominalTenTripPriceEur.toFixed(2) }}</span>
+              }
+              <span class="font-medium text-slate-700">€{{ zone.tenTripPriceEur.toFixed(2) }}</span>
+            </div>
           </div>
         </button>
       }
+    </div>
+
+    <div class="text-[10px] text-slate-600 bg-slate-50 p-2 rounded-xl border border-slate-200/60 space-y-0.5">
+      <div class="font-medium text-slate-700">✨ Tarifas bonificadas vigentes (Descuento 50%-60% CRTM)</div>
+      <div class="text-slate-500">• Abono Joven (hasta 26 años): <span class="font-semibold text-indigo-600">10,00 €</span> (todas las zonas)</div>
+      <div class="text-slate-500">• Mayores de 65 años: <span class="font-semibold text-emerald-600">Gratuito (0,00 €)</span></div>
     </div>
 
     <p class="text-[11px] text-slate-500 italic leading-relaxed pt-2 border-t border-slate-100">
@@ -136,14 +152,30 @@
             </div>
             <div class="flex items-baseline justify-between text-[11px] text-slate-600 mt-0.5">
               <span>Abono:</span>
-              <span class="font-semibold text-slate-800">€{{ zone.monthlyPassPriceEur.toFixed(2) }}</span>
+              <div class="flex items-center gap-1">
+                @if (zone.nominalMonthlyPriceEur) {
+                  <span class="text-[9px] text-slate-400 line-through">€{{ zone.nominalMonthlyPriceEur.toFixed(2) }}</span>
+                }
+                <span class="font-bold text-emerald-700">€{{ zone.monthlyPassPriceEur.toFixed(2) }}</span>
+              </div>
             </div>
             <div class="flex items-baseline justify-between text-[10px] text-slate-500">
               <span>10 Viajes:</span>
-              <span>€{{ zone.tenTripPriceEur.toFixed(2) }}</span>
+              <div class="flex items-center gap-1">
+                @if (zone.nominalTenTripPriceEur) {
+                  <span class="text-[8px] text-slate-400 line-through">€{{ zone.nominalTenTripPriceEur.toFixed(2) }}</span>
+                }
+                <span class="font-medium text-slate-700">€{{ zone.tenTripPriceEur.toFixed(2) }}</span>
+              </div>
             </div>
           </button>
         }
+      </div>
+
+      <div class="text-[10px] text-slate-600 bg-slate-50 p-2 rounded-xl border border-slate-200/60 space-y-0.5">
+        <div class="font-medium text-slate-700">✨ Tarifas bonificadas vigentes (Descuento 50%-60% CRTM)</div>
+        <div class="text-slate-500">• Abono Joven (&le; 26 años): <span class="font-semibold text-indigo-600">10,00 €</span> (todas las zonas)</div>
+        <div class="text-slate-500">• Mayores de 65 años: <span class="font-semibold text-emerald-600">Gratuito (0,00 €)</span></div>
       </div>
 
       <p class="text-[11px] text-slate-500 italic leading-relaxed pt-1 border-t border-slate-100">

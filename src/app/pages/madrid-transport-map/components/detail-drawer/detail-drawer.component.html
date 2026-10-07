@@ -137,11 +137,26 @@
           <div class="bg-slate-50 rounded-xl p-3 border border-slate-150 space-y-1.5">
             <div class="flex justify-between items-center text-slate-700">
               <span class="font-medium">Abono Transporte (30d):</span>
-              <span class="font-bold text-indigo-600 text-sm">€{{ zone.monthlyPassPriceEur.toFixed(2) }}</span>
+              <div class="flex items-center gap-1.5">
+                @if (zone.nominalMonthlyPriceEur) {
+                  <span class="text-xs text-slate-400 line-through">€{{ zone.nominalMonthlyPriceEur.toFixed(2) }}</span>
+                }
+                <span class="font-bold text-emerald-700 text-sm">€{{ zone.monthlyPassPriceEur.toFixed(2) }}</span>
+                <span class="text-[9px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-full">Activa</span>
+              </div>
             </div>
             <div class="flex justify-between items-center text-slate-600 text-[11px]">
               <span>Metrobús / 10 Viajes:</span>
-              <span class="font-medium text-slate-800">€{{ zone.tenTripPriceEur.toFixed(2) }}</span>
+              <div class="flex items-center gap-1.5">
+                @if (zone.nominalTenTripPriceEur) {
+                  <span class="text-[10px] text-slate-400 line-through">€{{ zone.nominalTenTripPriceEur.toFixed(2) }}</span>
+                }
+                <span class="font-medium text-slate-800">€{{ zone.tenTripPriceEur.toFixed(2) }}</span>
+              </div>
+            </div>
+            <div class="flex justify-between items-center text-slate-600 text-[10px] pt-1 border-t border-slate-200/50">
+              <span>Abono Joven (&le; 26 años): <strong class="text-indigo-600">10,00 €</strong></span>
+              <span>+65 años: <strong class="text-emerald-600">Gratuito</strong></span>
             </div>
             <p class="text-[10px] text-slate-500 italic pt-1 border-t border-slate-200/60 leading-tight">
               {{ zone.coverageDescription }}
@@ -170,12 +185,27 @@
 
         <div class="bg-slate-50 rounded-xl p-3 border border-slate-150 space-y-2">
           <div class="flex justify-between items-center text-slate-700">
-            <span class="font-medium">Abono Transporte 30 Días:</span>
-            <span class="font-bold text-indigo-600 text-sm">€{{ zone.monthlyPassPriceEur.toFixed(2) }}</span>
+            <span class="font-medium">Abono Transporte (30d):</span>
+            <div class="flex items-center gap-1.5">
+              @if (zone.nominalMonthlyPriceEur) {
+                <span class="text-xs text-slate-400 line-through">€{{ zone.nominalMonthlyPriceEur.toFixed(2) }}</span>
+              }
+              <span class="font-bold text-emerald-700 text-sm">€{{ zone.monthlyPassPriceEur.toFixed(2) }}</span>
+              <span class="text-[9px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-full">Activa</span>
+            </div>
           </div>
           <div class="flex justify-between items-center text-slate-600 text-[11px]">
             <span>Billete 10 Viajes:</span>
-            <span class="font-medium text-slate-800">€{{ zone.tenTripPriceEur.toFixed(2) }}</span>
+            <div class="flex items-center gap-1.5">
+              @if (zone.nominalTenTripPriceEur) {
+                <span class="text-[10px] text-slate-400 line-through">€{{ zone.nominalTenTripPriceEur.toFixed(2) }}</span>
+              }
+              <span class="font-medium text-slate-800">€{{ zone.tenTripPriceEur.toFixed(2) }}</span>
+            </div>
+          </div>
+          <div class="flex justify-between items-center text-slate-600 text-[10px] pt-1 border-t border-slate-200/50">
+            <span>Abono Joven (&le; 26 años): <strong class="text-indigo-600">10,00 €</strong></span>
+            <span>Mayores de 65: <strong class="text-emerald-600">Gratuito</strong></span>
           </div>
         </div>
 

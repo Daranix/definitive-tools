@@ -214,9 +214,29 @@ export class MadridTransportMapService {
     if (found) {
       this.selectedLine.set(found);
     } else {
+      const cercaniasColors: Record<string, string> = {
+        'C-1': '#00A9E0',
+        'C-2': '#15803D',
+        'C-3': '#8A1D7C',
+        'C-4': '#003399',
+        'C-4a': '#003399',
+        'C-4b': '#1E1B7D',
+        'C-5': '#F59E0B',
+        'C-7': '#DC2626',
+        'C-8': '#6B7280',
+        'C-8a': '#6B7280',
+        'C-8b': '#4B5563',
+        'C-9': '#F97316',
+        'C-10': '#A3B820'
+      };
+      const metroColors: Record<string, string> = {
+        '1': '#00A9E0', '2': '#ED1B2F', '3': '#FFD100', '4': '#A0522D',
+        '5': '#80BA27', '6': '#7E8082', '7': '#F37021', '8': '#F18EBD',
+        '9': '#A11A88', '10': '#003399', '11': '#007A33', '12': '#A4A000', 'R': '#003399'
+      };
       const defaultColors: Record<NetworkId, string> = {
-        metro: '#00A9E0',
-        cercanias: '#E4002B',
+        metro: metroColors[lineId] || '#00A9E0',
+        cercanias: cercaniasColors[lineId] || '#DC2626',
         emt: '#0284C7',
         interurban: '#16A34A'
       };

@@ -27,6 +27,8 @@ import {
   TransitStopProperties
 } from './madrid-transport-map.models';
 import type * as MapLibreGL from 'maplibre-gl';
+import type { FilterSpecification } from 'maplibre-gl';
+import type { Feature, FeatureCollection, Point } from 'geojson';
 
 const METRO_ICON_SVG = `
 <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36">
@@ -113,7 +115,7 @@ export class MadridTransportMapComponent implements OnDestroy {
   private emtLoaded = false;
   private interurbanLoaded = false;
   private activeStationMarker: MapLibreGL.Marker | null = null;
-  private loadedGeojsonData: Record<string, any> = {};
+  private loadedGeojsonData: Partial<Record<NetworkId, FeatureCollection>> = {};
   readonly isMapReady = signal<boolean>(false);
 
   constructor() {
@@ -191,7 +193,9 @@ export class MadridTransportMapComponent implements OnDestroy {
         this.clearStationMarker();
       }
 
-      const safeFilter: any = zoneCode ? ['==', ['get', 'code'], zoneCode] : ['==', ['get', 'code'], '__none__'];
+      const safeFilter: FilterSpecification = zoneCode
+        ? ['all', ['==', ['get', 'type'], 'zone'], ['==', ['get', 'code'], zoneCode]]
+        : ['==', ['get', 'code'], '__none__'];
       if (this.map.getLayer('zones-selected-fill')) {
         this.map.setFilter('zones-selected-fill', safeFilter);
       }
@@ -201,6 +205,14 @@ export class MadridTransportMapComponent implements OnDestroy {
       if (this.map.getLayer('zones-selected-outline')) {
         this.map.setFilter('zones-selected-outline', safeFilter);
       }
+    });
+
+    // Reactive effect for selected transit line route highlight & bounds framing
+    effect(() => {
+      const selectedLine = this.service.selectedLine();
+      if (!this.map || !this.isMapReady()) return;
+
+      void this.updateSelectedLineHighlight(selectedLine);
     });
   }
 
@@ -417,6 +429,7 @@ export class MadridTransportMapComponent implements OnDestroy {
       id: 'zones-fill',
       type: 'fill',
       source: 'zones-source',
+      filter: ['==', ['get', 'type'], 'zone'],
       paint: {
         'fill-color': ['get', 'color'],
         'fill-opacity': this.service.zoneOpacity()
@@ -427,10 +440,11 @@ export class MadridTransportMapComponent implements OnDestroy {
       id: 'zones-line',
       type: 'line',
       source: 'zones-source',
+      filter: ['==', ['get', 'type'], 'boundary'],
       paint: {
         'line-color': ['get', 'color'],
-        'line-width': 1.8,
-        'line-opacity': 0.85
+        'line-width': 2.2,
+        'line-opacity': 0.95
       }
     });
 
@@ -439,7 +453,7 @@ export class MadridTransportMapComponent implements OnDestroy {
       id: 'zones-selected-fill',
       type: 'fill',
       source: 'zones-source',
-      filter: ['==', ['get', 'code'], '__none__'],
+      filter: ['all', ['==', ['get', 'type'], 'zone'], ['==', ['get', 'code'], '__none__']],
       paint: {
         'fill-color': ['get', 'color'],
         'fill-opacity': 0.55
@@ -476,6 +490,7 @@ export class MadridTransportMapComponent implements OnDestroy {
       layout: {
         'icon-image': 'icon-metro',
         'icon-size': 0.65,
+        'icon-offset': ['case', ['get', 'isInterchange'], ['literal', [-8, 0]], ['literal', [0, 0]]],
         'icon-allow-overlap': true,
         'icon-ignore-placement': true
       }
@@ -499,7 +514,7 @@ export class MadridTransportMapComponent implements OnDestroy {
       paint: {
         'line-color': ['get', 'color'],
         'line-width': 3.5,
-        'line-dasharray': [4, 1.5],
+        'line-offset': ['coalesce', ['get', 'offset'], 0],
         'line-opacity': 0.95
       }
     });
@@ -512,6 +527,7 @@ export class MadridTransportMapComponent implements OnDestroy {
       layout: {
         'icon-image': 'icon-cercanias',
         'icon-size': 0.65,
+        'icon-offset': ['case', ['get', 'isInterchange'], ['literal', [8, 0]], ['literal', [0, 0]]],
         'icon-allow-overlap': true,
         'icon-ignore-placement': true
       }
@@ -574,7 +590,7 @@ export class MadridTransportMapComponent implements OnDestroy {
         'line-cap': 'round'
       },
       paint: {
-        'line-color': '#FACC15',
+        'line-color': ['coalesce', ['get', 'color'], '#FACC15'],
         'line-width': 5.5,
         'line-opacity': 1
       }
@@ -586,7 +602,7 @@ export class MadridTransportMapComponent implements OnDestroy {
       source: 'selected-line-source',
       filter: ['!=', ['get', 'type'], 'line'],
       paint: {
-        'circle-color': '#FACC15',
+        'circle-color': ['coalesce', ['get', 'color'], '#FACC15'],
         'circle-radius': 7,
         'circle-stroke-color': '#0F172A',
         'circle-stroke-width': 2.5
@@ -1061,16 +1077,19 @@ export class MadridTransportMapComponent implements OnDestroy {
       }
     }
 
+    if (!geojson) return;
+
     // Extract the line feature and all stops serving this line
-    const lineFeatures = (geojson.features || []).filter((f: any) => {
+    const matchedFeatures = (geojson.features || []).filter((f: Feature) => {
       const isLine = f.geometry?.type === 'LineString' || f.geometry?.type === 'MultiLineString';
-      if (isLine && f.properties?.line === selected.line) {
+      if (isLine && f.properties?.['line'] === selected.line) {
         return true;
       }
       if (f.geometry?.type === 'Point') {
         let lines: string[] = [];
         try {
-          lines = typeof f.properties?.lines === 'string' ? JSON.parse(f.properties.lines) : (f.properties?.lines || []);
+          const rawLines = f.properties?.['lines'];
+          lines = typeof rawLines === 'string' ? JSON.parse(rawLines) : (rawLines || []);
         } catch {
           lines = [];
         }
@@ -1078,6 +1097,44 @@ export class MadridTransportMapComponent implements OnDestroy {
       }
       return false;
     });
+
+    const hasLineGeom = matchedFeatures.some(
+      (f: Feature) => f.geometry?.type === 'LineString' || f.geometry?.type === 'MultiLineString'
+    );
+
+    // If no explicit line segment exists, generate a connected route path from the stops
+    if (!hasLineGeom) {
+      const stopCoords = matchedFeatures
+        .filter((f: Feature) => f.geometry?.type === 'Point')
+        .map((f: Feature) => (f.geometry as Point).coordinates as [number, number]);
+
+      if (stopCoords.length >= 2) {
+        matchedFeatures.unshift({
+          type: 'Feature',
+          id: `fallback-line-${selected.line}`,
+          geometry: {
+            type: 'LineString',
+            coordinates: stopCoords
+          },
+          properties: {
+            id: `fallback-line-${selected.line}`,
+            type: 'line',
+            network: selected.network,
+            line: selected.line,
+            name: selected.name,
+            color: selected.color || '#FACC15'
+          }
+        });
+      }
+    }
+
+    const lineFeatures: Feature[] = matchedFeatures.map((f: Feature) => ({
+      ...f,
+      properties: {
+        ...f.properties,
+        color: selected.color || f.properties?.['color'] || '#FACC15'
+      }
+    }));
 
     source.setData({
       type: 'FeatureCollection',

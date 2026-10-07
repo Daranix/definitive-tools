@@ -6,7 +6,9 @@ export interface TariffZoneInfo {
   name: string;
   color: string;
   monthlyPassPriceEur: number;
+  nominalMonthlyPriceEur?: number;
   tenTripPriceEur: number;
+  nominalTenTripPriceEur?: number;
   coverageDescription: string;
 }
 
@@ -106,64 +108,80 @@ export const TARIFF_ZONES: Record<TariffZoneCode, TariffZoneInfo> = {
     code: 'A',
     name: 'Zona A',
     color: '#2563EB',
-    monthlyPassPriceEur: 54.60,
-    tenTripPriceEur: 12.20,
+    monthlyPassPriceEur: 32.70,
+    nominalMonthlyPriceEur: 54.60,
+    tenTripPriceEur: 7.30,
+    nominalTenTripPriceEur: 12.20,
     coverageDescription: 'Madrid capital central municipality (Sol, Atocha, Chamartín, Barajas, Vallecas, Carabanchel)'
   },
   B1: {
     code: 'B1',
     name: 'Zona B1',
     color: '#059669',
-    monthlyPassPriceEur: 63.70,
-    tenTripPriceEur: 14.50,
+    monthlyPassPriceEur: 38.20,
+    nominalMonthlyPriceEur: 63.70,
+    tenTripPriceEur: 8.70,
+    nominalTenTripPriceEur: 14.50,
     coverageDescription: 'First metropolitan crown (Alcobendas, San Sebastián de los Reyes, Pozuelo, Majadahonda, Coslada, San Fernando, Getafe, Leganés, Alcorcón)'
   },
   B2: {
     code: 'B2',
     name: 'Zona B2',
     color: '#10B981',
-    monthlyPassPriceEur: 72.00,
-    tenTripPriceEur: 17.00,
+    monthlyPassPriceEur: 43.20,
+    nominalMonthlyPriceEur: 72.00,
+    tenTripPriceEur: 10.20,
+    nominalTenTripPriceEur: 17.00,
     coverageDescription: 'Second metropolitan crown (Las Rozas, Móstoles, Fuenlabrada, Parla, Pinto, Rivas-Vaciamadrid, Torrejón de Ardoz, Tres Cantos)'
   },
   B3: {
     code: 'B3',
     name: 'Zona B3',
     color: '#D97706',
-    monthlyPassPriceEur: 82.00,
-    tenTripPriceEur: 20.00,
+    monthlyPassPriceEur: 49.20,
+    nominalMonthlyPriceEur: 82.00,
+    tenTripPriceEur: 12.00,
+    nominalTenTripPriceEur: 20.00,
     coverageDescription: 'Third metropolitan ring (Alcalá de Henares, Colmenar Viejo, Collado Villalba, Valdemoro, Navalcarnero, Arganda del Rey, Arroyomolinos)'
   },
   C1: {
     code: 'C1',
     name: 'Zona C1',
     color: '#EA580C',
-    monthlyPassPriceEur: 89.50,
-    tenTripPriceEur: 23.50,
+    monthlyPassPriceEur: 49.20,
+    nominalMonthlyPriceEur: 89.50,
+    tenTripPriceEur: 14.10,
+    nominalTenTripPriceEur: 23.50,
     coverageDescription: 'Outer metropolitan region (Aranjuez, El Escorial, Guadarrama, Chinchón, San Martín de Valdeiglesias, Buitrago del Lozoya)'
   },
   C2: {
     code: 'C2',
     name: 'Zona C2',
     color: '#DC2626',
-    monthlyPassPriceEur: 99.30,
-    tenTripPriceEur: 26.50,
+    monthlyPassPriceEur: 49.20,
+    nominalMonthlyPriceEur: 99.30,
+    tenTripPriceEur: 15.90,
+    nominalTenTripPriceEur: 26.50,
     coverageDescription: 'Border municipalities of Community of Madrid (Cercedilla, Santa María de la Alameda, Puebla de la Sierra)'
   },
   E1: {
     code: 'E1',
     name: 'Zona E1',
     color: '#7C3AED',
-    monthlyPassPriceEur: 110.60,
-    tenTripPriceEur: 31.00,
+    monthlyPassPriceEur: 66.35,
+    nominalMonthlyPriceEur: 110.60,
+    tenTripPriceEur: 18.60,
+    nominalTenTripPriceEur: 31.00,
     coverageDescription: 'Castilla-La Mancha adjacent corridor (Guadalajara, Azuqueca de Henares, Illescas)'
   },
   E2: {
     code: 'E2',
     name: 'Zona E2',
     color: '#9333EA',
-    monthlyPassPriceEur: 131.80,
-    tenTripPriceEur: 38.00,
+    monthlyPassPriceEur: 79.05,
+    nominalMonthlyPriceEur: 131.80,
+    tenTripPriceEur: 22.80,
+    nominalTenTripPriceEur: 38.00,
     coverageDescription: 'Castilla-La Mancha extended corridor (Talavera de la Reina, Toledo capital, Tarancón)'
   }
 };
