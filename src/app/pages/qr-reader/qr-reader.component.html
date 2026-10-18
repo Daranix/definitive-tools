@@ -1,0 +1,630 @@
+<div class="min-h-screen flex flex-col bg-slate-50">
+  <app-top-navbar></app-top-navbar>
+
+  <main class="flex-grow container mx-auto px-4 py-8 max-w-6xl">
+    <!-- Header Section -->
+    <div class="text-center mb-6">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-semibold mb-3">
+        <lucide-icon name="scan-qr-code" class="w-3.5 h-3.5"></lucide-icon>
+        <span>100% Client-Side & Secure</span>
+      </div>
+      <h1 data-testid="tool-title" class="text-3xl font-extrabold text-slate-900 tracking-tight sm:text-4xl">
+        QR Code Reader & Scanner
+      </h1>
+      <p class="mt-2 max-w-2xl mx-auto text-base text-slate-600 sm:text-lg">
+        Scan QR codes using your camera in real time or upload and paste an image to decode its content instantly.
+      </p>
+    </div>
+
+    <!-- Mode Selector Tabs (Visible when no scan result is displayed) -->
+    @if (!imageSrc()) {
+      <div class="flex justify-center mb-6">
+        <div class="bg-slate-200/80 p-1.5 rounded-xl inline-flex gap-1.5 shadow-inner">
+          <button
+            type="button"
+            (click)="setScanMode('file')"
+            [class.bg-white]="scanMode() === 'file'"
+            [class.text-indigo-700]="scanMode() === 'file'"
+            [class.shadow-xs]="scanMode() === 'file'"
+            [class.text-slate-600]="scanMode() !== 'file'"
+            class="flex items-center gap-2 px-5 py-2 text-xs font-semibold rounded-lg transition duration-200 cursor-pointer"
+          >
+            <lucide-icon name="upload" class="w-4 h-4"></lucide-icon>
+            <span>Upload / Paste Image</span>
+          </button>
+          <button
+            type="button"
+            (click)="setScanMode('camera')"
+            [class.bg-white]="scanMode() === 'camera'"
+            [class.text-indigo-700]="scanMode() === 'camera'"
+            [class.shadow-xs]="scanMode() === 'camera'"
+            [class.text-slate-600]="scanMode() !== 'camera'"
+            class="flex items-center gap-2 px-5 py-2 text-xs font-semibold rounded-lg transition duration-200 cursor-pointer"
+          >
+            <lucide-icon name="camera" class="w-4 h-4"></lucide-icon>
+            <span>Scan with Camera</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- CAMERA SCANNER VIEW -->
+      @if (scanMode() === 'camera') {
+        <div class="max-w-xl mx-auto space-y-4">
+          <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+            <!-- Camera Container -->
+            <div class="relative bg-slate-950 rounded-xl overflow-hidden aspect-[4/3] sm:aspect-[16/11] flex items-center justify-center">
+              <video
+                #videoElement
+                autoplay
+                playsinline
+                muted
+                class="w-full h-full object-cover"
+              ></video>
+
+              <!-- Target Viewfinder & Laser Overlay -->
+              @if (isCameraActive()) {
+                <div class="absolute inset-0 pointer-events-none flex items-center justify-center">
+                  <!-- Darkened Mask edges -->
+                  <div class="relative w-64 h-64 sm:w-72 sm:h-72 border-2 border-indigo-400/90 rounded-2xl shadow-[0_0_0_9999px_rgba(15,23,42,0.45)]">
+                    <!-- Laser scanning beam -->
+                    <div class="absolute left-2 right-2 h-0.5 bg-gradient-to-r from-indigo-500 via-rose-500 to-indigo-500 shadow-[0_0_8px_#6366f1] scanner-laser-line"></div>
+
+                    <!-- Target Corner Accents -->
+                    <div class="absolute -top-1 -left-1 w-6 h-6 border-t-3 border-l-3 border-indigo-400 rounded-tl-lg"></div>
+                    <div class="absolute -top-1 -right-1 w-6 h-6 border-t-3 border-r-3 border-indigo-400 rounded-tr-lg"></div>
+                    <div class="absolute -bottom-1 -left-1 w-6 h-6 border-b-3 border-l-3 border-indigo-400 rounded-bl-lg"></div>
+                    <div class="absolute -bottom-1 -right-1 w-6 h-6 border-b-3 border-r-3 border-indigo-400 rounded-br-lg"></div>
+                  </div>
+                </div>
+
+                <!-- Top Camera Controls Floating Bar -->
+                <div class="absolute top-3 right-3 flex items-center gap-2">
+                  @if (hasTorch()) {
+                    <button
+                      type="button"
+                      (click)="toggleTorch()"
+                      [class.bg-amber-400]="torchActive()"
+                      [class.text-slate-950]="torchActive()"
+                      [class.bg-slate-900/70]="!torchActive()"
+                      [class.text-white]="!torchActive()"
+                      title="Toggle Flashlight"
+                      class="p-2.5 rounded-full backdrop-blur-md border border-white/20 transition-colors cursor-pointer"
+                    >
+                      <lucide-icon name="bolt" class="w-4 h-4"></lucide-icon>
+                    </button>
+                  }
+                  <button
+                    type="button"
+                    (click)="flipCamera()"
+                    title="Switch Camera (Front/Rear)"
+                    class="p-2.5 rounded-full bg-slate-900/70 text-white backdrop-blur-md border border-white/20 hover:bg-slate-900 transition-colors cursor-pointer"
+                  >
+                    <lucide-icon name="rotate-cw" class="w-4 h-4"></lucide-icon>
+                  </button>
+                  <button
+                    type="button"
+                    (click)="stopCamera()"
+                    title="Stop Camera"
+                    class="p-2.5 rounded-full bg-slate-900/70 text-white backdrop-blur-md border border-white/20 hover:bg-rose-600 transition-colors cursor-pointer"
+                  >
+                    <lucide-icon name="x" class="w-4 h-4"></lucide-icon>
+                  </button>
+                </div>
+              }
+
+              <!-- Idle / Paused State Overlay -->
+              @if (!isCameraActive() && !cameraError()) {
+                <div class="absolute inset-0 bg-slate-900/80 flex flex-col items-center justify-center text-white p-6 text-center gap-3">
+                  <div class="w-12 h-12 rounded-full bg-indigo-600/30 text-indigo-400 flex items-center justify-center">
+                    <lucide-icon name="camera" class="w-6 h-6"></lucide-icon>
+                  </div>
+                  <p class="text-sm font-semibold">Camera is stopped</p>
+                  <button
+                    type="button"
+                    (click)="startCamera()"
+                    class="mt-1 px-4 py-2 rounded-xl text-xs font-semibold bg-indigo-600 text-white hover:bg-indigo-700 transition-colors cursor-pointer"
+                  >
+                    Start Camera
+                  </button>
+                </div>
+              }
+
+              <!-- Error State Overlay -->
+              @if (cameraError(); as err) {
+                <div class="absolute inset-0 bg-slate-900/95 flex flex-col items-center justify-center text-white p-6 text-center gap-3">
+                  <div class="w-12 h-12 rounded-full bg-rose-600/30 text-rose-400 flex items-center justify-center">
+                    <lucide-icon name="info" class="w-6 h-6"></lucide-icon>
+                  </div>
+                  <h4 class="text-sm font-bold text-rose-300">Camera Unavailable</h4>
+                  <p class="text-xs text-slate-300 max-w-sm leading-relaxed">{{ err }}</p>
+                  <div class="flex gap-2 mt-2">
+                    <button
+                      type="button"
+                      (click)="startCamera()"
+                      class="px-4 py-2 rounded-xl text-xs font-semibold bg-indigo-600 text-white hover:bg-indigo-700 transition-colors cursor-pointer"
+                    >
+                      Try Again
+                    </button>
+                    <button
+                      type="button"
+                      (click)="setScanMode('file')"
+                      class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-slate-200 hover:bg-slate-700 transition-colors cursor-pointer"
+                    >
+                      Switch to File Upload
+                    </button>
+                  </div>
+                </div>
+              }
+            </div>
+
+            <!-- Viewfinder Instructions -->
+            <p class="text-center text-xs text-slate-500 mt-4 flex items-center justify-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-indigo-600 animate-ping"></span>
+              Point your camera at a QR code — it will scan automatically.
+            </p>
+          </div>
+        </div>
+      }
+
+      <!-- FILE UPLOAD VIEW -->
+      @if (scanMode() === 'file') {
+        <div class="max-w-2xl mx-auto space-y-6">
+          <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200">
+            <label class="block text-base font-semibold text-slate-800 mb-3 text-center">
+              Upload an image with a QR code
+            </label>
+            <app-drag-and-drop-file
+              name="qr-file"
+              [validExtensions]="allowedExtensions"
+              [maxFileSize]="10485760"
+              [loading]="isScanning()"
+              (onFileChange)="onFileChange($event)"
+            ></app-drag-and-drop-file>
+
+            <div class="mt-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 bg-slate-50 p-3 rounded-xl border border-slate-100">
+              <span class="flex items-center gap-1.5">
+                <lucide-icon name="info" class="w-4 h-4 text-indigo-500 flex-shrink-0"></lucide-icon>
+                Formats: PNG, JPG, WEBP, GIF, SVG, BMP (Max 10MB)
+              </span>
+              <span class="inline-flex items-center gap-1 font-medium text-slate-700 bg-white px-2.5 py-1 rounded-md border border-slate-200 shadow-2xs">
+                <kbd class="font-mono text-[11px]">Ctrl</kbd> + <kbd class="font-mono text-[11px]">V</kbd> to paste screenshot
+              </span>
+            </div>
+          </div>
+
+          <!-- Try With Sample Buttons -->
+          <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 text-center">
+            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">
+              Or test right now with a sample QR code
+            </p>
+            <div class="flex flex-wrap justify-center gap-2">
+              <button
+                type="button"
+                (click)="loadSample('url')"
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition-colors border border-indigo-100 cursor-pointer"
+              >
+                <lucide-icon name="link" class="w-3.5 h-3.5"></lucide-icon>
+                <span>Website URL</span>
+              </button>
+              <button
+                type="button"
+                (click)="loadSample('wifi')"
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition-colors border border-emerald-100 cursor-pointer"
+              >
+                <lucide-icon name="wifi" class="w-3.5 h-3.5"></lucide-icon>
+                <span>Wi-Fi Network</span>
+              </button>
+              <button
+                type="button"
+                (click)="loadSample('vcard')"
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-purple-50 text-purple-700 hover:bg-purple-100 transition-colors border border-purple-100 cursor-pointer"
+              >
+                <lucide-icon name="id-card" class="w-3.5 h-3.5"></lucide-icon>
+                <span>Contact (vCard)</span>
+              </button>
+              <button
+                type="button"
+                (click)="loadSample('text')"
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors border border-slate-200 cursor-pointer"
+              >
+                <lucide-icon name="code" class="w-3.5 h-3.5"></lucide-icon>
+                <span>JSON Payload</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+    }
+
+    <!-- Result / Inspection Screen (when image or live camera frame was scanned) -->
+    @if (imageSrc()) {
+      <div class="space-y-6">
+        <!-- Top Toolbar -->
+        <div class="flex flex-wrap items-center justify-between gap-4 bg-white px-5 py-3.5 rounded-2xl border border-slate-200 shadow-sm">
+          <div class="flex items-center gap-3 min-w-0">
+            <div class="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center flex-shrink-0 font-bold">
+              <lucide-icon name="scan-qr-code" class="w-5 h-5"></lucide-icon>
+            </div>
+            <div class="min-w-0">
+              <p class="text-sm font-semibold text-slate-900 truncate max-w-xs sm:max-w-md">
+                {{ imageName() }}
+              </p>
+              <div class="flex items-center gap-2 text-xs text-slate-500">
+                <span>{{ imageSize() | fileSize }}</span>
+                @if (imageDimensions()) {
+                  <span>•</span>
+                  <span>{{ imageDimensions()?.width }} × {{ imageDimensions()?.height }} px</span>
+                }
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button
+              type="button"
+              (click)="clear()"
+              class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-colors border border-slate-200 cursor-pointer"
+            >
+              <lucide-icon name="rotate-cw" class="w-3.5 h-3.5"></lucide-icon>
+              <span>Scan Again</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          <!-- Left Column: Image Canvas with Detected Box Overlay -->
+          <div class="lg:col-span-5 space-y-4">
+            <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+              <div class="flex items-center justify-between mb-3 px-1">
+                <span class="text-xs font-bold text-slate-600 uppercase tracking-wider">
+                  Scanned Image
+                </span>
+                @if (scanResult()) {
+                  <span class="inline-flex items-center gap-1 text-xs font-medium text-indigo-700 bg-indigo-50 px-2.5 py-0.5 rounded-full border border-indigo-200">
+                    <span class="w-1.5 h-1.5 rounded-full bg-indigo-600 animate-pulse"></span>
+                    QR Code Located
+                  </span>
+                }
+              </div>
+
+              <div class="relative flex items-center justify-center bg-slate-950/5 rounded-xl border border-slate-200 overflow-hidden min-h-[260px] max-h-[480px]">
+                <canvas
+                  #previewCanvas
+                  class="max-w-full max-h-[460px] w-auto h-auto object-contain mx-auto shadow-2xs"
+                ></canvas>
+
+                @if (isScanning()) {
+                  <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-xs flex flex-col items-center justify-center text-white gap-2">
+                    <div class="w-8 h-8 border-3 border-white/30 border-t-white rounded-full animate-spin"></div>
+                    <span class="text-xs font-medium tracking-wide">Scanning QR code...</span>
+                  </div>
+                }
+              </div>
+
+              <p class="text-center text-[11px] text-slate-400 mt-2.5">
+                The detected QR code region is outlined with an indigo highlight box.
+              </p>
+            </div>
+          </div>
+
+          <!-- Right Column: Decoded Content & Structured View -->
+          <div class="lg:col-span-7 space-y-6">
+            @if (scanResult(); as res) {
+              <!-- Successful Detection Card -->
+              <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-6">
+                <!-- Header with Category Badge -->
+                <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
+                  <div class="flex items-center gap-2.5">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border {{ res.badgeColorClass }}">
+                      <lucide-icon [name]="res.icon" class="w-3.5 h-3.5"></lucide-icon>
+                      <span>{{ res.badgeLabel }}</span>
+                    </span>
+                    <span class="text-xs text-slate-400 font-mono">
+                      {{ res.raw.length }} characters
+                    </span>
+                  </div>
+
+                  <button
+                    type="button"
+                    (click)="copyContent(res.raw)"
+                    [class.text-emerald-700]="copied()"
+                    [class.bg-emerald-50]="copied()"
+                    class="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200 transition-colors cursor-pointer"
+                  >
+                    @if (copied()) {
+                      <lucide-icon name="check" class="w-3.5 h-3.5 text-emerald-600"></lucide-icon>
+                      <span>Copied!</span>
+                    } @else {
+                      <lucide-icon name="copy" class="w-3.5 h-3.5"></lucide-icon>
+                      <span>Copy All</span>
+                    }
+                  </button>
+                </div>
+
+                <!-- Structured Detail Card: URL -->
+                @if (res.type === 'url' && res.urlData; as url) {
+                  <div class="bg-blue-50/70 border border-blue-200/80 rounded-xl p-4 space-y-3">
+                    <div class="flex items-start justify-between gap-3">
+                      <div>
+                        <span class="text-[11px] uppercase tracking-wider font-bold text-blue-800">
+                          Destination Website
+                        </span>
+                        <h3 class="text-lg font-bold text-blue-950 break-all">
+                          {{ url.hostname }}
+                        </h3>
+                        <p class="text-xs text-blue-700 break-all mt-0.5 font-mono">
+                          {{ url.href }}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div class="pt-2 flex flex-wrap gap-2">
+                      <a
+                        [href]="url.href"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-blue-600 text-white hover:bg-blue-700 shadow-sm transition-colors"
+                      >
+                        <span>Open Website</span>
+                        <lucide-icon name="external-link" class="w-3.5 h-3.5"></lucide-icon>
+                      </a>
+                      <button
+                        type="button"
+                        (click)="copyContent(url.href)"
+                        class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium bg-white text-blue-900 border border-blue-200 hover:bg-blue-50 transition-colors cursor-pointer"
+                      >
+                        <lucide-icon name="copy" class="w-3.5 h-3.5"></lucide-icon>
+                        <span>Copy Link</span>
+                      </button>
+                    </div>
+                  </div>
+                }
+
+                <!-- Structured Detail Card: Wi-Fi -->
+                @if (res.type === 'wifi' && res.wifiData; as wifi) {
+                  <div class="bg-emerald-50/70 border border-emerald-200/80 rounded-xl p-5 space-y-4">
+                    <div class="flex items-center gap-2 text-emerald-900">
+                      <lucide-icon name="wifi" class="w-5 h-5 text-emerald-700"></lucide-icon>
+                      <h3 class="font-bold text-base">Wi-Fi Network Credentials</h3>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                      <div class="bg-white p-3 rounded-lg border border-emerald-100">
+                        <span class="text-slate-400 block font-semibold mb-1">Network Name (SSID)</span>
+                        <div class="flex items-center justify-between gap-2">
+                          <span class="font-mono font-bold text-slate-800 text-sm select-all">{{ wifi.ssid }}</span>
+                          <button
+                            type="button"
+                            (click)="copyContent(wifi.ssid)"
+                            title="Copy SSID"
+                            class="p-1 text-slate-400 hover:text-emerald-700 cursor-pointer"
+                          >
+                            <lucide-icon name="copy" class="w-3.5 h-3.5"></lucide-icon>
+                          </button>
+                        </div>
+                      </div>
+
+                      <div class="bg-white p-3 rounded-lg border border-emerald-100">
+                        <span class="text-slate-400 block font-semibold mb-1">Password</span>
+                        <div class="flex items-center justify-between gap-2">
+                          <span class="font-mono font-bold text-slate-800 text-sm select-all">
+                            {{ wifi.password || 'None (Open)' }}
+                          </span>
+                          @if (wifi.password) {
+                            <button
+                              type="button"
+                              (click)="copyContent(wifi.password)"
+                              title="Copy Password"
+                              class="p-1 text-slate-400 hover:text-emerald-700 cursor-pointer"
+                            >
+                              <lucide-icon name="copy" class="w-3.5 h-3.5"></lucide-icon>
+                            </button>
+                          }
+                        </div>
+                      </div>
+
+                      <div class="bg-white p-3 rounded-lg border border-emerald-100">
+                        <span class="text-slate-400 block font-semibold mb-1">Security Type</span>
+                        <span class="font-semibold text-slate-700">{{ wifi.encryption }}</span>
+                      </div>
+
+                      <div class="bg-white p-3 rounded-lg border border-emerald-100">
+                        <span class="text-slate-400 block font-semibold mb-1">Hidden Network</span>
+                        <span class="font-semibold text-slate-700">{{ wifi.hidden ? 'Yes' : 'No' }}</span>
+                      </div>
+                    </div>
+                  </div>
+                }
+
+                <!-- Structured Detail Card: vCard Contact -->
+                @if (res.type === 'vcard' && res.vcardData; as vcard) {
+                  <div class="bg-purple-50/70 border border-purple-200/80 rounded-xl p-5 space-y-4">
+                    <div class="flex items-center justify-between gap-2">
+                      <div class="flex items-center gap-2">
+                        <div class="w-10 h-10 rounded-full bg-purple-200 text-purple-800 flex items-center justify-center font-bold text-sm">
+                          {{ (vcard.fullName || 'C').charAt(0).toUpperCase() }}
+                        </div>
+                        <div>
+                          <h3 class="font-bold text-purple-950 text-base">{{ vcard.fullName || 'Contact' }}</h3>
+                          @if (vcard.title || vcard.organization) {
+                            <p class="text-xs text-purple-700">
+                              {{ vcard.title }} @if (vcard.title && vcard.organization) { • } {{ vcard.organization }}
+                            </p>
+                          }
+                        </div>
+                      </div>
+
+                      <button
+                        type="button"
+                        (click)="downloadVCard()"
+                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-purple-600 text-white hover:bg-purple-700 shadow-sm transition-colors cursor-pointer"
+                      >
+                        <lucide-icon name="download" class="w-3.5 h-3.5"></lucide-icon>
+                        <span>Save .vcf</span>
+                      </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs pt-1">
+                      @if (vcard.phone) {
+                        <div class="bg-white p-2.5 rounded-lg border border-purple-100 flex items-center justify-between gap-2">
+                          <div>
+                            <span class="text-slate-400 block text-[10px] uppercase font-bold">Phone</span>
+                            <a [href]="'tel:' + vcard.phone" class="font-medium text-purple-700 hover:underline">{{ vcard.phone }}</a>
+                          </div>
+                          <button (click)="copyContent(vcard.phone)" class="p-1 text-slate-400 hover:text-purple-700 cursor-pointer">
+                            <lucide-icon name="copy" class="w-3.5 h-3.5"></lucide-icon>
+                          </button>
+                        </div>
+                      }
+                      @if (vcard.email) {
+                        <div class="bg-white p-2.5 rounded-lg border border-purple-100 flex items-center justify-between gap-2">
+                          <div>
+                            <span class="text-slate-400 block text-[10px] uppercase font-bold">Email</span>
+                            <a [href]="'mailto:' + vcard.email" class="font-medium text-purple-700 hover:underline">{{ vcard.email }}</a>
+                          </div>
+                          <button (click)="copyContent(vcard.email)" class="p-1 text-slate-400 hover:text-purple-700 cursor-pointer">
+                            <lucide-icon name="copy" class="w-3.5 h-3.5"></lucide-icon>
+                          </button>
+                        </div>
+                      }
+                      @if (vcard.url) {
+                        <div class="bg-white p-2.5 rounded-lg border border-purple-100 flex items-center justify-between gap-2 sm:col-span-2">
+                          <div>
+                            <span class="text-slate-400 block text-[10px] uppercase font-bold">Website</span>
+                            <a [href]="vcard.url" target="_blank" rel="noopener noreferrer" class="font-medium text-purple-700 hover:underline truncate block">
+                              {{ vcard.url }}
+                            </a>
+                          </div>
+                          <lucide-icon name="external-link" class="w-3.5 h-3.5 text-slate-400"></lucide-icon>
+                        </div>
+                      }
+                      @if (vcard.address) {
+                        <div class="bg-white p-2.5 rounded-lg border border-purple-100 sm:col-span-2">
+                          <span class="text-slate-400 block text-[10px] uppercase font-bold">Address</span>
+                          <span class="text-slate-700">{{ vcard.address }}</span>
+                        </div>
+                      }
+                    </div>
+                  </div>
+                }
+
+                <!-- Structured Detail Card: Email -->
+                @if (res.type === 'email' && res.emailData; as email) {
+                  <div class="bg-sky-50/70 border border-sky-200/80 rounded-xl p-4 space-y-3">
+                    <div class="flex items-center justify-between gap-2">
+                      <div class="flex items-center gap-2">
+                        <lucide-icon name="at-sign" class="w-5 h-5 text-sky-700"></lucide-icon>
+                        <span class="font-bold text-sky-950 text-sm">Send Email</span>
+                      </div>
+                      <a
+                        [href]="res.raw"
+                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-sky-600 text-white hover:bg-sky-700 shadow-sm transition-colors"
+                      >
+                        <span>Open Mail App</span>
+                        <lucide-icon name="external-link" class="w-3.5 h-3.5"></lucide-icon>
+                      </a>
+                    </div>
+                    <div class="bg-white p-3 rounded-lg border border-sky-100 text-xs space-y-1">
+                      <div><span class="text-slate-400 font-bold">To: </span><span class="text-slate-800 font-medium">{{ email.to }}</span></div>
+                      @if (email.subject) {
+                        <div><span class="text-slate-400 font-bold">Subject: </span><span class="text-slate-800 font-medium">{{ email.subject }}</span></div>
+                      }
+                      @if (email.body) {
+                        <div><span class="text-slate-400 font-bold">Body: </span><span class="text-slate-700">{{ email.body }}</span></div>
+                      }
+                    </div>
+                  </div>
+                }
+
+                <!-- Structured Detail Card: Geo Location -->
+                @if (res.type === 'geo' && res.geoData; as geo) {
+                  <div class="bg-rose-50/70 border border-rose-200/80 rounded-xl p-4 space-y-3">
+                    <div class="flex items-center justify-between gap-2">
+                      <div class="flex items-center gap-2">
+                        <lucide-icon name="map-pin" class="w-5 h-5 text-rose-700"></lucide-icon>
+                        <span class="font-bold text-rose-950 text-sm">Coordinates: {{ geo.latitude }}, {{ geo.longitude }}</span>
+                      </div>
+                      <div class="flex gap-2">
+                        <a
+                          [href]="geo.googleMapsUrl"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold bg-rose-600 text-white hover:bg-rose-700 shadow-sm transition-colors"
+                        >
+                          <span>Google Maps</span>
+                          <lucide-icon name="external-link" class="w-3.5 h-3.5"></lucide-icon>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                }
+
+                <!-- Raw Decoded Content Box -->
+                <div class="space-y-2">
+                  <div class="flex items-center justify-between">
+                    <label class="text-xs font-bold text-slate-700 uppercase tracking-wider">
+                      Decoded Content
+                    </label>
+                    <span class="text-[11px] text-slate-400">Read directly from image</span>
+                  </div>
+
+                  <div class="relative bg-slate-900 rounded-xl p-4 border border-slate-800 text-slate-100 font-mono text-xs overflow-x-auto shadow-inner">
+                    <pre class="whitespace-pre-wrap break-all leading-relaxed">{{ res.raw }}</pre>
+                  </div>
+                </div>
+              </div>
+            }
+
+            <!-- No QR Found Error Alert -->
+            @if (noQrFound()) {
+              <div class="bg-white rounded-2xl border border-amber-200 shadow-sm p-6 space-y-4">
+                <div class="flex items-start gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center flex-shrink-0">
+                    <lucide-icon name="info" class="w-5 h-5"></lucide-icon>
+                  </div>
+                  <div>
+                    <h3 class="text-base font-bold text-slate-900">
+                      No QR Code Detected
+                    </h3>
+                    <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+                      We examined this image using native barcoding detectors and comprehensive image algorithms, but could not detect a readable QR code.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="bg-amber-50/70 border border-amber-200/60 rounded-xl p-4 text-xs text-amber-950 space-y-2">
+                  <p class="font-bold">Tips for successful scanning:</p>
+                  <ul class="list-disc list-inside space-y-1 text-slate-700">
+                    <li>Ensure the 3 large corner locator squares are clear and not cut off.</li>
+                    <li>Avoid high glare, heavy shadows, or severe blurriness.</li>
+                    <li>Crop the image closer to the QR code if it is a small part of a large photo.</li>
+                    <li>Ensure sufficient contrast between the dark and light patterns.</li>
+                  </ul>
+                </div>
+
+                <div class="flex flex-wrap gap-2 pt-2">
+                  <button
+                    type="button"
+                    (click)="clear()"
+                    class="px-4 py-2 rounded-xl text-xs font-semibold bg-indigo-600 text-white hover:bg-indigo-700 transition-colors cursor-pointer"
+                  >
+                    Scan Again
+                  </button>
+                  <button
+                    type="button"
+                    (click)="loadSample('url')"
+                    class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer"
+                  >
+                    Try Sample QR Code
+                  </button>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    }
+  </main>
+
+  <app-footer></app-footer>
+</div>
