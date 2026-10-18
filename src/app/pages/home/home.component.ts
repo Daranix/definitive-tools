@@ -4,10 +4,12 @@ import {
   signal,
   computed,
   ChangeDetectionStrategy,
+  PLATFORM_ID,
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
-import { TOOLS } from '../../utils/constants';
+import { TOOLS, CATEGORIES } from '../../utils/constants';
 import { MetadataService } from '@app/services/metadata.service';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { GithubService } from '../../services/github.service';
@@ -21,9 +23,11 @@ import { toSignal } from '@angular/core/rxjs-interop';
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
+  private readonly platformId = inject(PLATFORM_ID);
   private readonly metadataService = inject(MetadataService);
   private readonly githubService = inject(GithubService);
 
+  readonly categories = CATEGORIES;
   readonly stars = toSignal(this.githubService.getRepoStars(), { initialValue: 0 });
   readonly searchQuery = signal<string>('');
   readonly selectedCategory = signal<string>('All');
@@ -36,9 +40,11 @@ export class HomeComponent {
     let list = [...TOOLS];
     if (category === 'Favorites') {
       let favs: string[] = [];
-      try {
-        favs = JSON.parse(localStorage.getItem('favorite-tools') || '[]');
-      } catch {}
+      if (isPlatformBrowser(this.platformId)) {
+        try {
+          favs = JSON.parse(localStorage.getItem('favorite-tools') || '[]');
+        } catch {}
+      }
       list = list.filter((t) => favs.includes(t.id));
     } else if (category !== 'All') {
       list = list.filter((t) => t.category === category);

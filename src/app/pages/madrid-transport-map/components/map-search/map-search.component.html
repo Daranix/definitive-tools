@@ -1,0 +1,89 @@
+<div class="relative w-full">
+  <!-- Search Input Bar -->
+  <div class="flex items-center bg-white/95 backdrop-blur-md border border-slate-200/80 rounded-2xl shadow-lg shadow-slate-900/5 px-3.5 py-2.5 transition-all focus-within:ring-2 focus-within:ring-indigo-500 focus-within:border-indigo-500 group">
+    <lucide-icon name="search" class="w-5 h-5 text-slate-400 group-focus-within:text-indigo-600 transition-colors mr-2.5 flex-shrink-0"></lucide-icon>
+    <input
+      #searchInput
+      type="text"
+      placeholder="Search stations, stops, or lines (e.g. Sol, Atocha, C-5, L1)..."
+      [value]="service.searchQuery()"
+      (input)="onInput($event)"
+      aria-label="Search Madrid transit stations and lines"
+      class="w-full bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none"
+    />
+    @if (service.searchQuery()) {
+      <button
+        (click)="clearSearch()"
+        type="button"
+        aria-label="Clear search query"
+        class="p-1 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors ml-1.5 flex-shrink-0"
+      >
+        <lucide-icon name="x" class="w-4 h-4"></lucide-icon>
+      </button>
+    }
+  </div>
+
+  <!-- Autocomplete Results Dropdown -->
+  @if (service.searchQuery().trim().length >= 2) {
+    <div
+      class="absolute left-0 right-0 mt-2 bg-white/95 backdrop-blur-md border border-slate-200 rounded-2xl shadow-xl overflow-hidden z-50 max-h-80 overflow-y-auto divide-y divide-slate-100 animate-in fade-in slide-in-from-top-2 duration-150"
+      role="listbox"
+    >
+      @for (item of service.searchResults(); track item.id) {
+        <button
+          type="button"
+          (click)="selectResult(item)"
+          role="option"
+          class="w-full px-4 py-3 flex items-start gap-3 text-left hover:bg-indigo-50/60 transition-colors group focus:outline-none focus:bg-indigo-50"
+        >
+          <!-- Network Icon Indicator -->
+          <div
+            [class]="'mt-0.5 w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 ' + (networkMetas[item.network]?.badgeClass || 'bg-slate-100 text-slate-700')"
+          >
+            <lucide-icon [name]="networkMetas[item.network]?.icon || 'map-pin'" class="w-4 h-4"></lucide-icon>
+          </div>
+
+          <!-- Station Info -->
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center justify-between gap-2">
+              <span class="text-sm font-semibold text-slate-800 group-hover:text-indigo-600 transition-colors truncate">
+                {{ item.name }}
+              </span>
+              <span
+                class="text-[11px] font-bold px-2 py-0.5 rounded-full uppercase flex-shrink-0"
+                [style.backgroundColor]="tariffZones[item.zone]?.color + '20'"
+                [style.color]="tariffZones[item.zone]?.color"
+              >
+                {{ item.zone }}
+              </span>
+            </div>
+
+            <!-- Lines and Network -->
+            <div class="flex items-center gap-1.5 mt-1 flex-wrap">
+              <span class="text-xs text-slate-500 font-medium">
+                {{ networkMetas[item.network]?.shortName }}
+              </span>
+              <span class="text-slate-300 text-xs">•</span>
+              @for (line of item.lines.slice(0, 5); track line) {
+                <span class="inline-flex items-center px-1.5 py-0.2 bg-slate-100 text-slate-700 rounded text-[10px] font-semibold">
+                  {{ line }}
+                </span>
+              }
+              @if (item.lines.length > 5) {
+                <span class="text-[10px] text-slate-400 font-medium">
+                  +{{ item.lines.length - 5 }}
+                </span>
+              }
+            </div>
+          </div>
+        </button>
+      } @empty {
+        <div class="px-4 py-6 text-center text-slate-500">
+          <lucide-icon name="circle-off" class="w-8 h-8 mx-auto text-slate-300 mb-2"></lucide-icon>
+          <p class="text-sm font-medium text-slate-700">No matching stations found</p>
+          <p class="text-xs text-slate-400 mt-0.5">Try searching for a different station, stop, or line number</p>
+        </div>
+      }
+    </div>
+  }
+</div>

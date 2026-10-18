@@ -90,7 +90,7 @@
 
     <!-- Category Filter Tabs -->
     <div class="flex flex-wrap justify-center gap-2.5 mb-12">
-      @for (cat of ['All', 'Favorites', 'Dev Tools', 'Image Tools', 'Text Tools']; track cat) {
+      @for (cat of categories; track cat) {
         <button
           (click)="selectedCategory.set(cat)"
           [attr.data-testid]="'category-filter-' + cat"

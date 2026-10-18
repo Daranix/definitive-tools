@@ -44,3 +44,6 @@ Thumbs.db
 # Playwright E2E Reports
 /test/e2e/reports
 
+# CRTM raw data cache
+/scripts/raw-crtm-data/
+

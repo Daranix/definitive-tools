@@ -13,6 +13,7 @@ export const routes: Routes = [
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'meme-generator', loadComponent: () => import('./pages/meme-generator/meme-generator.component').then(m => m.MemeGeneratorComponent), data: { id: 'meme-generator' } },
             { path: 'qr-generator', loadComponent: () => import('./pages/qr-generator/qr-generator.component').then(m => m.QrGeneratorComponent), data: { id: 'qr-generator' } },
+            { path: 'qr-reader', loadComponent: () => import('./pages/qr-reader/qr-reader.component').then(m => m.QrReaderComponent), data: { id: 'qr-reader' } },
             { path: 'background-remover', loadComponent: () => import('./pages/background-remover/background-remover.component').then(m => m.BackgroundRemoverComponent), data: { id: 'background-remover' } },
             { path: 'image-converter', loadComponent: () => import('./pages/image-converter/image-converter.component').then(m => m.ImageConverterComponent), data: { id: 'image-converter' } },
             { path: 'base64-encoder-decoder', loadComponent: () => import('./pages/base64/base64.component').then(m => m.Base64Component), data: { id: 'base64-encoder-decoder' } },
@@ -27,6 +28,7 @@ export const routes: Routes = [
             { path: 'markdown-to-pdf', loadComponent: () => import('./pages/markdown-to-pdf/markdown-to-pdf.component').then(m => m.MarkdownToPdfComponent), data: { id: 'markdown-to-pdf' } },
             { path: 'markdown-to-html', loadComponent: () => import('./pages/markdown-to-html/markdown-to-html.component').then(m => m.MarkdownToHtmlComponent), data: { id: 'markdown-to-html' } },
             { path: 'audio-editor', loadComponent: () => import('./pages/audio-editor/audio-editor.component').then(m => m.AudioEditorComponent), data: { id: 'audio-editor' } },
+            { path: 'madrid-transport-map', loadComponent: () => import('./pages/madrid-transport-map/madrid-transport-map.component').then(m => m.MadridTransportMapComponent), data: { id: 'madrid-transport-map' } },
         ],
         component: BaseComponent
     },

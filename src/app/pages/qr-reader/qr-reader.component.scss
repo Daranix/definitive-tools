@@ -1,0 +1,22 @@
+:host {
+  display: block;
+}
+
+@keyframes qrLaserScan {
+  0% {
+    top: 6%;
+    opacity: 0.7;
+  }
+  50% {
+    top: 92%;
+    opacity: 1;
+  }
+  100% {
+    top: 6%;
+    opacity: 0.7;
+  }
+}
+
+.scanner-laser-line {
+  animation: qrLaserScan 2s ease-in-out infinite;
+}

@@ -5,10 +5,13 @@ import {
   LucideBolt,
   LucideBookmark,
   LucideBookOpen,
+  LucideBus,
+  LucideCamera,
   LucideCaseUpper,
   LucideCheck,
   LucideCheckCircle,
   LucideChevronDown,
+  LucideChevronUp,
   LucideCircleEllipsis,
   LucideCircleOff,
   LucideClock,
@@ -16,9 +19,11 @@ import {
   LucideColumns2,
   LucideCopy,
   LucideDownload,
+  LucideExternalLink,
   LucideEye,
   LucideFileAudio,
   LucideFileText,
+  LucideGlobe,
   LucideGrid,
   LucideGrid2X2,
   LucideGrid3X3,
@@ -29,9 +34,11 @@ import {
   LucideImageOff,
   LucideInfo,
   LucideKey,
+  LucideLayers,
   LucideLayers2,
   LucideLink,
   LucideLockKeyholeOpen,
+  LucideMap,
   LucideMapPin,
   LucideMenu,
   LucideMic,
@@ -54,6 +61,7 @@ import {
   LucidePlus,
   LucidePrinter,
   LucideQrCode,
+  LucideScanQrCode,
   LucideRotateCw,
   LucideScissors,
   LucideSearch,
@@ -69,6 +77,7 @@ import {
   LucideStopCircle,
   LucideTabletSmartphone,
   LucideTerminal,
+  LucideTrainTrack,
   LucideTrash2,
   LucideTrendingUp,
   LucideUpload,
@@ -80,6 +89,17 @@ import {
   LucideZoomIn,
   LucideZoomOut,
 } from '@lucide/angular';
+
+export const CATEGORIES = [
+  'All',
+  'Favorites',
+  'Dev Tools',
+  'Image Tools',
+  'Text Tools',
+  'Media Tools',
+  'Maps',
+] as const;
+export type ToolCategory = (typeof CATEGORIES)[number];
 
 export interface Tool {
     id: string;
@@ -104,6 +124,14 @@ export const TOOLS: ReadonlyArray<Tool> = [
         name: 'QR Code Generator',
         description: 'Create customized QR codes for URLs, text, contact information, and more. high-quality QR codes that work anywhere.',
         icon: 'qr-code',
+        color: 'indigo',
+        category: 'Image Tools'
+    },
+    {
+        id: 'qr-reader',
+        name: 'QR Code Reader',
+        description: 'Upload or paste an image containing a QR code to decode and inspect its content, links, Wi-Fi passwords, and contact info.',
+        icon: 'scan-qr-code',
         color: 'indigo',
         category: 'Image Tools'
     },
@@ -218,6 +246,14 @@ export const TOOLS: ReadonlyArray<Tool> = [
         icon: 'speech',
         color: 'indigo',
         category: 'Media Tools'
+    },
+    {
+        id: 'madrid-transport-map',
+        name: 'Madrid Transport Map',
+        description: 'Interactive multimodal transit network and CRTM tariff zones map for Madrid (Metro, Cercanías, EMT, Interurban, Zones A-E2).',
+        icon: 'map',
+        color: 'indigo',
+        category: 'Maps'
     }
 ];
 
@@ -236,6 +272,9 @@ export const USED_ICONS = {
     Archive: LucideArchive,
     Bolt: LucideBolt,
     QrCode: LucideQrCode,
+    Camera: LucideCamera,
+    ScanQrCode: LucideScanQrCode,
+    ExternalLink: LucideExternalLink,
     Link: LucideLink,
     CaseUpper: LucideCaseUpper,
     AtSign: LucideAtSign,
@@ -279,6 +318,8 @@ export const USED_ICONS = {
     CircleOff: LucideCircleOff,
     FileText: LucideFileText,
     ChevronDown: LucideChevronDown,
+    ChevronUp: LucideChevronUp,
+    Globe: LucideGlobe,
     Server: LucideServer,
     Monitor: LucideMonitor,
     MousePointer: LucideMousePointer,
@@ -313,6 +354,10 @@ export const USED_ICONS = {
     Mic: LucideMic,
     Sparkles: LucideSparkles,
     Video: LucideVideo,
+    Bus: LucideBus,
+    Layers: LucideLayers,
+    Map: LucideMap,
+    TrainTrack: LucideTrainTrack,
 } as const;
 
 export const WHISPER_LANGUAGES = {

@@ -1,0 +1,193 @@
+<div class="flex flex-col h-full w-full overflow-hidden bg-slate-900 relative">
+  <!-- Top Navbar with compact & collapsible hero -->
+  <app-top-navbar [compact]="true" [collapsible]="true"></app-top-navbar>
+
+  <!-- Error Notification Banner -->
+  @if (service.networkError()) {
+    <div
+      class="absolute top-20 left-1/2 transform -translate-x-1/2 z-50 bg-red-600/90 text-white text-xs font-medium px-4 py-2.5 rounded-xl shadow-xl backdrop-blur-md flex items-center gap-2.5 max-w-lg animate-in fade-in slide-in-from-top-2"
+      role="alert"
+    >
+      <lucide-icon name="circle-off" class="w-4 h-4 flex-shrink-0"></lucide-icon>
+      <span class="flex-1">{{ service.networkError() }}</span>
+      <button
+        type="button"
+        (click)="dismissError()"
+        aria-label="Dismiss error"
+        class="text-white/80 hover:text-white p-0.5 rounded-full hover:bg-white/20 transition-colors"
+      >
+        <lucide-icon name="x" class="w-3.5 h-3.5"></lucide-icon>
+      </button>
+    </div>
+  }
+
+  <!-- Main Map Canvas & Overlays -->
+  <div class="relative flex-1 min-h-0 w-full overflow-hidden">
+    <!-- WebGL Map Container -->
+    <div #mapContainer class="w-full h-full absolute inset-0 z-0"></div>
+
+    <!-- ─── DESKTOP FLOATING CONTROLS (sm and above) ────────────────────── -->
+    <!-- Top-Left: Search -->
+    <div class="hidden sm:block absolute top-5 left-5 z-20 w-80 lg:w-96 pointer-events-auto">
+      <app-map-search></app-map-search>
+    </div>
+
+    <!-- Top-Right: Layer Controls -->
+    <div class="hidden sm:block absolute top-5 right-5 z-20 w-72 pointer-events-auto">
+      <app-layer-controls></app-layer-controls>
+    </div>
+
+    <!-- Bottom-Left: Zone Legend -->
+    <div class="hidden sm:block absolute bottom-8 left-5 z-20 w-80 lg:w-96 pointer-events-auto">
+      <app-zone-legend></app-zone-legend>
+    </div>
+
+    <!-- Bottom-Right: Station/Zone Detail Drawer -->
+    <div class="hidden sm:block absolute bottom-8 right-5 z-20 w-80 lg:w-96 pointer-events-auto">
+      <app-detail-drawer></app-detail-drawer>
+    </div>
+
+    <!-- ─── MOBILE CONTROLS & DOCK (< sm) ─────────────────────────────── -->
+    <div class="sm:hidden pointer-events-none absolute inset-0 z-10 p-3 flex flex-col justify-between">
+      <!-- Mobile Top Row: Search + Quick Layers Button -->
+      <div class="flex items-center gap-2 w-full pointer-events-auto">
+        <div class="flex-1 min-w-0">
+          <app-map-search></app-map-search>
+        </div>
+        <button
+          type="button"
+          (click)="openMobileLayers()"
+          class="p-2.5 bg-white shadow-lg border border-slate-200 rounded-2xl text-slate-700 hover:text-indigo-600 transition-colors flex-shrink-0"
+          aria-label="Abrir controles de capas"
+        >
+          <lucide-icon name="layers" class="w-5 h-5 text-indigo-600"></lucide-icon>
+        </button>
+      </div>
+
+      <!-- Mobile Bottom Dock (Minimal floating pill dock) -->
+      <div class="w-full flex items-center justify-center gap-2.5 pb-6 pointer-events-auto">
+        <button
+          type="button"
+          (click)="openMobileLayers()"
+          class="bg-white text-slate-800 hover:text-indigo-600 font-semibold text-xs px-4 py-2.5 rounded-full shadow-xl border border-slate-200 flex items-center gap-2 transition-transform active:scale-95"
+        >
+          <lucide-icon name="layers" class="w-4 h-4 text-indigo-600"></lucide-icon>
+          <span>Capas & Redes</span>
+        </button>
+
+        <button
+          type="button"
+          (click)="openMobileZones()"
+          class="bg-white text-slate-800 hover:text-indigo-600 font-semibold text-xs px-4 py-2.5 rounded-full shadow-xl border border-slate-200 flex items-center gap-2 transition-transform active:scale-95"
+        >
+          <div class="w-3.5 h-3.5 rounded bg-gradient-to-tr from-blue-600 to-emerald-500 flex-shrink-0"></div>
+          <span>Tarifas & Zonas</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ─── MOBILE VAUL-STYLE BOTTOM SHEET DRAWER ─────────────────────── -->
+    @if (service.mobileDrawerTab() !== 'none') {
+      <!-- Backdrop Scrim -->
+      <div
+        class="sm:hidden fixed inset-0 bg-slate-950/40 backdrop-blur-xs z-40 transition-opacity animate-in fade-in duration-200"
+        (click)="closeMobileDrawer()"
+        aria-hidden="true"
+      ></div>
+
+      <!-- Bottom Sheet Drawer -->
+      <div
+        class="sm:hidden fixed bottom-0 inset-x-0 bg-white rounded-t-3xl shadow-[0_-12px_40px_-5px_rgba(0,0,0,0.18)] z-50 px-4 pb-6 border-t border-slate-200 flex flex-col transition-[height] duration-300 ease-out"
+        [class.h-[85vh]]="isDrawerExpanded()"
+        [class.max-h-[85vh]]="isDrawerExpanded()"
+        [class.h-[46vh]]="!isDrawerExpanded()"
+        [class.max-h-[46vh]]="!isDrawerExpanded()"
+        role="dialog"
+        aria-modal="true"
+      >
+        <!-- Drag Handle Area (touch to drag or click to toggle height) -->
+        <div
+          class="w-full py-2.5 flex flex-col items-center justify-center cursor-grab active:cursor-grabbing select-none flex-shrink-0 touch-none"
+          (touchstart)="onDrawerTouchStart($event)"
+          (touchmove)="onDrawerTouchMove($event)"
+          (touchend)="onDrawerTouchEnd()"
+          (click)="toggleDrawerExpand()"
+          title="Arrastra o toca para expandir/contraer"
+        >
+          <div class="w-12 h-1.5 bg-slate-300 hover:bg-slate-400 rounded-full transition-colors"></div>
+        </div>
+
+        <!-- Drawer Header Navigation & Actions -->
+        <div class="flex items-center justify-between gap-2 pb-2.5 mb-2 border-b border-slate-100 flex-shrink-0">
+          <div class="flex items-center gap-1.5 overflow-x-auto">
+            @if (service.selectedItem() || service.selectedLine()) {
+              <button
+                type="button"
+                (click)="service.openMobileDrawer('detail')"
+                [class]="'text-xs font-bold px-3 py-1.5 rounded-xl transition-colors whitespace-nowrap ' +
+                         (service.mobileDrawerTab() === 'detail'
+                           ? 'bg-indigo-600 text-white shadow-xs'
+                           : 'bg-slate-100 text-slate-600 hover:bg-slate-200')"
+              >
+                Detalles
+              </button>
+            }
+            <button
+              type="button"
+              (click)="service.openMobileDrawer('layers')"
+              [class]="'text-xs font-bold px-3 py-1.5 rounded-xl transition-colors whitespace-nowrap ' +
+                       (service.mobileDrawerTab() === 'layers'
+                         ? 'bg-indigo-600 text-white shadow-xs'
+                         : 'bg-slate-100 text-slate-600 hover:bg-slate-200')"
+            >
+              Capas
+            </button>
+            <button
+              type="button"
+              (click)="service.openMobileDrawer('zones')"
+              [class]="'text-xs font-bold px-3 py-1.5 rounded-xl transition-colors whitespace-nowrap ' +
+                       (service.mobileDrawerTab() === 'zones'
+                         ? 'bg-indigo-600 text-white shadow-xs'
+                         : 'bg-slate-100 text-slate-600 hover:bg-slate-200')"
+            >
+              Tarifas & Zonas
+            </button>
+          </div>
+
+          <div class="flex items-center gap-1 flex-shrink-0">
+            <!-- Expand/Collapse Button -->
+            <button
+              type="button"
+              (click)="toggleDrawerExpand()"
+              [title]="isDrawerExpanded() ? 'Contraer' : 'Expandir'"
+              class="p-1.5 rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
+            >
+              <lucide-icon [name]="isDrawerExpanded() ? 'chevron-down' : 'chevron-up'" class="w-4 h-4"></lucide-icon>
+            </button>
+
+            <!-- Close Button -->
+            <button
+              type="button"
+              (click)="closeMobileDrawer()"
+              aria-label="Cerrar panel"
+              class="p-1.5 rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
+            >
+              <lucide-icon name="x" class="w-4 h-4"></lucide-icon>
+            </button>
+          </div>
+        </div>
+
+        <!-- Drawer Content Body -->
+        <div class="flex-1 overflow-y-auto pr-0.5">
+          @if (service.mobileDrawerTab() === 'detail') {
+            <app-detail-drawer [embedded]="true"></app-detail-drawer>
+          } @else if (service.mobileDrawerTab() === 'layers') {
+            <app-layer-controls [embedded]="true"></app-layer-controls>
+          } @else if (service.mobileDrawerTab() === 'zones') {
+            <app-zone-legend [embedded]="true"></app-zone-legend>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>
