@@ -92,6 +92,8 @@ export class MadridZbeMapComponent implements OnDestroy {
   readonly desktopTab = signal<'layers' | 'detail' | 'checker'>('layers');
   readonly isDesktopPanelCollapsed = signal<boolean>(false);
 
+  readonly isDisclaimerDismissed = signal<boolean>(false);
+
   // Mobile Bottom Sheet Gesture state
   readonly isDrawerExpanded = signal<boolean>(false);
   private touchStartY = 0;
@@ -663,5 +665,9 @@ export class MadridZbeMapComponent implements OnDestroy {
 
   dismissError(): void {
     this.service.dismissError();
+  }
+
+  dismissDisclaimer(): void {
+    this.isDisclaimerDismissed.set(true);
   }
 }

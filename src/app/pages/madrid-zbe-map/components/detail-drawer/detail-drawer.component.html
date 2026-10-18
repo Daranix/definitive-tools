@@ -232,6 +232,14 @@
         <span>Acercar Aparcamiento</span>
       </button>
     }
+
+    <!-- Disclaimer Footnote -->
+    <div class="pt-2 border-t border-slate-100 flex items-start gap-1.5 text-[10px] text-slate-400">
+      <lucide-icon name="alert-triangle" class="w-3.5 h-3.5 text-amber-500/80 flex-shrink-0 mt-0.5"></lucide-icon>
+      <span class="leading-tight">
+        <strong>Aviso:</strong> Las delimitaciones, cámaras y normativas son una aproximación orientativa y pueden contener fallos. Consulta siempre la normativa oficial del Ayuntamiento de Madrid y DGT.
+      </span>
+    </div>
   </div>
 } @else {
   <!-- Placeholder when nothing is selected -->
@@ -242,6 +250,10 @@
     <p class="font-bold text-slate-800 text-sm">Información de Zonas ZBE</p>
     <p class="text-slate-500 leading-relaxed max-w-xs mx-auto">
       Haz clic sobre cualquier zona en el mapa o en la leyenda para ver sus restricciones de acceso, excepciones por etiqueta DGT y sanciones.
+    </p>
+    <p class="text-[10px] text-slate-400 pt-2 border-t border-slate-100 flex items-center justify-center gap-1">
+      <lucide-icon name="alert-triangle" class="w-3 h-3 text-amber-500/70"></lucide-icon>
+      <span>Datos aproximados y orientativos. Consulta fuentes oficiales.</span>
     </p>
   </div>
 }

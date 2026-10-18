@@ -26,6 +26,35 @@
     <!-- WebGL Map Container -->
     <div #mapContainer class="w-full h-full absolute inset-0 z-0"></div>
 
+    <!-- ─── FLOATING INFORMATION DISCLAIMER BANNER ───────────────────────── -->
+    @if (!isDisclaimerDismissed()) {
+      <div
+        class="absolute bottom-20 sm:bottom-3 left-3 right-3 sm:left-1/2 sm:right-auto sm:-translate-x-1/2 z-20 pointer-events-auto max-w-xl mx-auto transition-all duration-300 animate-in fade-in slide-in-from-bottom-2"
+        role="note"
+        aria-label="Aviso legal y de precisión"
+      >
+        <div
+          class="bg-slate-900/90 hover:bg-slate-900/95 text-slate-200 border border-slate-700/80 rounded-2xl sm:rounded-full px-3.5 py-2 sm:py-1.5 shadow-xl backdrop-blur-md flex items-center justify-between gap-2.5 text-[11px]"
+        >
+          <div class="flex items-center gap-2 min-w-0">
+            <lucide-icon name="alert-triangle" class="w-4 h-4 text-amber-400 flex-shrink-0"></lucide-icon>
+            <p class="leading-tight text-slate-200">
+              <strong>Aviso:</strong> Las líneas, paradas y tarifas son una <span class="text-amber-300 font-semibold">aproximación orientativa</span> y pueden contener fallos o variaciones de servicio. Consulta siempre canales oficiales (CRTM / Metro / Renfe).
+            </p>
+          </div>
+          <button
+            type="button"
+            (click)="dismissDisclaimer()"
+            class="p-1 rounded-full text-slate-400 hover:text-white hover:bg-slate-800 transition-colors flex-shrink-0 cursor-pointer"
+            title="Cerrar aviso"
+            aria-label="Cerrar aviso"
+          >
+            <lucide-icon name="x" class="w-3.5 h-3.5"></lucide-icon>
+          </button>
+        </div>
+      </div>
+    }
+
     <!-- ─── DESKTOP FLOATING CONTROLS (sm and above) ────────────────────── -->
     <!-- Top-Left: Search -->
     <div class="hidden sm:block absolute top-5 left-5 z-20 w-80 lg:w-96 pointer-events-auto">

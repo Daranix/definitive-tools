@@ -121,6 +121,7 @@ export class MadridTransportMapComponent implements OnDestroy {
   private loadedGeojsonData: Partial<Record<NetworkId, FeatureCollection>> = {};
   private resizeObserver: ResizeObserver | null = null;
   readonly isMapReady = signal<boolean>(false);
+  readonly isDisclaimerDismissed = signal<boolean>(false);
 
   constructor() {
     this.metadataService.updateMetadata({
@@ -1219,6 +1220,10 @@ export class MadridTransportMapComponent implements OnDestroy {
 
   dismissError(): void {
     this.service.setError(null);
+  }
+
+  dismissDisclaimer(): void {
+    this.isDisclaimerDismissed.set(true);
   }
 
   ngOnDestroy(): void {
