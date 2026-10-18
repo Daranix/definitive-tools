@@ -26,32 +26,98 @@
     </div>
 
     <!-- Quick Focus Presets -->
-    <div class="pb-3 border-b border-slate-150">
-      <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-2 px-0.5">
+    <div class="pb-3 border-b border-slate-150 space-y-2">
+      <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block px-0.5">
         Enfoques Rápidos
       </span>
-      <div class="grid grid-cols-2 gap-1.5">
-        @for (zoneId of zonesList; track zoneId) {
-          @let z = zonesMeta[zoneId];
-          <button
-            type="button"
-            (click)="focusPreset(zoneId)"
-            class="px-2.5 py-1.5 bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 border border-slate-200 hover:border-emerald-200 rounded-xl text-xs font-semibold flex items-center gap-2 transition-colors truncate"
-          >
-            <span class="w-2.5 h-2.5 rounded-full flex-shrink-0" [style.backgroundColor]="z.color"></span>
-            <span class="truncate">{{ z.shortName }}</span>
-          </button>
-        }
+      <div>
+        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1 px-0.5">Madrid Capital</span>
+        <div class="grid grid-cols-2 gap-1.5 mb-2">
+          @for (zoneId of madridZones; track zoneId) {
+            @let z = zonesMeta[zoneId];
+            <button
+              type="button"
+              (click)="focusPreset(zoneId)"
+              class="px-2.5 py-1.5 bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 border border-slate-200 hover:border-emerald-200 rounded-xl text-xs font-semibold flex items-center gap-2 transition-colors truncate cursor-pointer"
+            >
+              <span class="w-2.5 h-2.5 rounded-full flex-shrink-0" [style.backgroundColor]="z.color"></span>
+              <span class="truncate">{{ z.shortName }}</span>
+            </button>
+          }
+        </div>
+        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1 px-0.5">Corona Metropolitana</span>
+        <div class="grid grid-cols-2 gap-1.5">
+          @for (zoneId of metropolitanZones; track zoneId) {
+            @let z = zonesMeta[zoneId];
+            <button
+              type="button"
+              (click)="focusPreset(zoneId)"
+              class="px-2.5 py-1.5 bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 border border-slate-200 hover:border-emerald-200 rounded-xl text-xs font-semibold flex items-center gap-2 transition-colors truncate cursor-pointer"
+            >
+              <span class="w-2.5 h-2.5 rounded-full flex-shrink-0" [style.backgroundColor]="z.color"></span>
+              <span class="truncate">{{ z.shortName }}</span>
+            </button>
+          }
+        </div>
       </div>
     </div>
 
     <!-- ZBE Zones Toggles -->
-    <div>
-      <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-2 px-0.5">
+    <div class="space-y-3">
+      <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block px-0.5">
         Zonas de Bajas Emisiones
       </span>
-      <div class="space-y-2">
-        @for (zoneId of zonesList; track zoneId) {
+      
+      <!-- Madrid Capital -->
+      <div class="space-y-1.5">
+        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block px-0.5">Madrid Capital</span>
+        @for (zoneId of madridZones; track zoneId) {
+          @let z = zonesMeta[zoneId];
+          @let active = service.zoneVisibility()[zoneId];
+          <button
+            type="button"
+            (click)="toggleZone(zoneId)"
+            [class]="'w-full px-3 py-2 rounded-2xl flex items-center justify-between transition-all border text-left group cursor-pointer ' +
+                     (active
+                       ? 'bg-emerald-50/70 border-emerald-300 shadow-xs'
+                       : 'bg-white border-slate-200 hover:bg-slate-50')"
+          >
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span
+                class="w-3.5 h-3.5 rounded-full flex-shrink-0 shadow-xs"
+                [style.backgroundColor]="z.color"
+              ></span>
+              <div class="truncate">
+                <span class="text-xs font-semibold text-slate-800 block truncate leading-tight">
+                  {{ z.name }}
+                </span>
+                <span class="text-[10px] text-slate-500 block truncate leading-tight mt-0.5">
+                  {{ z.restrictionLevel }}
+                </span>
+              </div>
+            </div>
+
+            <!-- Hardware-Accelerated Toggle Switch -->
+            <div
+              class="w-10 h-6 rounded-full transition-colors duration-200 ease-in-out p-0.5 flex items-center flex-shrink-0 border"
+              [class]="active ? 'bg-emerald-600 border-emerald-700' : 'bg-slate-300 border-slate-400'"
+              role="switch"
+              [attr.aria-checked]="active"
+            >
+              <div
+                class="w-5 h-5 rounded-full bg-white shadow-sm transition-transform duration-200 ease-in-out"
+                [class.translate-x-4]="active"
+                [class.translate-x-0]="!active"
+              ></div>
+            </div>
+          </button>
+        }
+      </div>
+
+      <!-- Corona Metropolitana -->
+      <div class="space-y-1.5 pt-1">
+        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block px-0.5">Corona Metropolitana</span>
+        @for (zoneId of metropolitanZones; track zoneId) {
           @let z = zonesMeta[zoneId];
           @let active = service.zoneVisibility()[zoneId];
           <button
@@ -234,32 +300,98 @@
         </div>
 
         <!-- Presets -->
-        <div>
-          <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5 px-0.5">
+        <div class="space-y-1.5">
+          <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block px-0.5">
             Enfoque Rápido
           </span>
-          <div class="grid grid-cols-2 gap-1.5">
-            @for (zoneId of zonesList; track zoneId) {
-              @let z = zonesMeta[zoneId];
-              <button
-                type="button"
-                (click)="focusPreset(zoneId)"
-                class="px-2 py-1 bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 border border-slate-200 hover:border-emerald-200 rounded-lg text-[11px] font-semibold flex items-center gap-1.5 transition-colors truncate"
-              >
-                <span class="w-2 h-2 rounded-full flex-shrink-0" [style.backgroundColor]="z.color"></span>
-                <span class="truncate">{{ z.shortName }}</span>
-              </button>
-            }
+          <div>
+            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1 px-0.5">Madrid Capital</span>
+            <div class="grid grid-cols-2 gap-1 mb-2">
+              @for (zoneId of madridZones; track zoneId) {
+                @let z = zonesMeta[zoneId];
+                <button
+                  type="button"
+                  (click)="focusPreset(zoneId)"
+                  class="px-2 py-1 bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 border border-slate-200 hover:border-emerald-200 rounded-lg text-[11px] font-semibold flex items-center gap-1.5 transition-colors truncate cursor-pointer"
+                >
+                  <span class="w-2 h-2 rounded-full flex-shrink-0" [style.backgroundColor]="z.color"></span>
+                  <span class="truncate">{{ z.shortName }}</span>
+                </button>
+              }
+            </div>
+            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1 px-0.5">Corona Metropolitana</span>
+            <div class="grid grid-cols-2 gap-1">
+              @for (zoneId of metropolitanZones; track zoneId) {
+                @let z = zonesMeta[zoneId];
+                <button
+                  type="button"
+                  (click)="focusPreset(zoneId)"
+                  class="px-2 py-1 bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 border border-slate-200 hover:border-emerald-200 rounded-lg text-[11px] font-semibold flex items-center gap-1.5 transition-colors truncate cursor-pointer"
+                >
+                  <span class="w-2 h-2 rounded-full flex-shrink-0" [style.backgroundColor]="z.color"></span>
+                  <span class="truncate">{{ z.shortName }}</span>
+                </button>
+              }
+            </div>
           </div>
         </div>
 
         <!-- ZBE Zones Toggles -->
-        <div>
-          <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5 px-0.5">
+        <div class="space-y-2.5">
+          <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block px-0.5">
             Zonas de Bajas Emisiones
           </span>
-          <div class="space-y-1.5">
-            @for (zoneId of zonesList; track zoneId) {
+
+          <!-- Madrid Capital -->
+          <div class="space-y-1">
+            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block px-0.5">Madrid Capital</span>
+            @for (zoneId of madridZones; track zoneId) {
+              @let z = zonesMeta[zoneId];
+              @let active = service.zoneVisibility()[zoneId];
+              <button
+                type="button"
+                (click)="toggleZone(zoneId)"
+                [class]="'w-full px-2.5 py-1.5 rounded-xl flex items-center justify-between transition-all border text-left group cursor-pointer ' +
+                         (active
+                           ? 'bg-emerald-50/60 border-emerald-200 shadow-xs'
+                           : 'bg-white border-slate-200 hover:bg-slate-50')"
+              >
+                <div class="flex items-center gap-2 min-w-0">
+                  <span
+                    class="w-3 h-3 rounded-full flex-shrink-0"
+                    [style.backgroundColor]="z.color"
+                  ></span>
+                  <div class="truncate">
+                    <span class="text-xs font-semibold text-slate-800 block truncate leading-tight">
+                      {{ z.name }}
+                    </span>
+                    <span class="text-[10px] text-slate-500 block truncate leading-tight">
+                      {{ z.restrictionLevel }}
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Hardware-Accelerated Toggle Switch -->
+                <div
+                  class="w-10 h-6 rounded-full transition-colors duration-200 ease-in-out p-0.5 flex items-center flex-shrink-0 border"
+                  [class]="active ? 'bg-emerald-600 border-emerald-700' : 'bg-slate-300 border-slate-400'"
+                  role="switch"
+                  [attr.aria-checked]="active"
+                >
+                  <div
+                    class="w-5 h-5 rounded-full bg-white shadow-sm transition-transform duration-200 ease-in-out"
+                    [class.translate-x-4]="active"
+                    [class.translate-x-0]="!active"
+                  ></div>
+                </div>
+              </button>
+            }
+          </div>
+
+          <!-- Corona Metropolitana -->
+          <div class="space-y-1 pt-1">
+            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block px-0.5">Corona Metropolitana</span>
+            @for (zoneId of metropolitanZones; track zoneId) {
               @let z = zonesMeta[zoneId];
               @let active = service.zoneVisibility()[zoneId];
               <button

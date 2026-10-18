@@ -18,6 +18,14 @@ export class ZoneLegendComponent {
 
   readonly zonesList: ZbeZoneProperties[] = Object.values(ZBE_ZONES_META);
 
+  readonly madridZones = computed<ZbeZoneProperties[]>(() =>
+    this.zonesList.filter((z) => z.category !== 'metropolitana')
+  );
+
+  readonly metropolitanZones = computed<ZbeZoneProperties[]>(() =>
+    this.zonesList.filter((z) => z.category === 'metropolitana')
+  );
+
   readonly selectedZoneId = computed<string | null>(() => {
     const sel = this.service.selectedItem();
     return sel && sel.type === 'zone' ? (sel.data as ZbeZoneProperties).id : null;

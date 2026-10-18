@@ -513,7 +513,7 @@ export class MadridZbeMapComponent implements OnDestroy {
         'text-anchor': 'top',
         'text-optional': true
       },
-      minzoom: 13,
+      minzoom: 11,
       paint: {
         'text-color': '#0C4A6E',
         'text-halo-color': '#FFFFFF',
@@ -527,8 +527,16 @@ export class MadridZbeMapComponent implements OnDestroy {
       if (!e.features || e.features.length === 0) return;
       // Prefer innermost / most specific zone clicked (Centro or Plaza Eliptica over Municipio)
       const priorityOrder: Record<string, number> = {
-        'zbe-distrito-centro': 4,
-        'zbe-plaza-eliptica': 4,
+        'zbe-distrito-centro': 5,
+        'zbe-plaza-eliptica': 5,
+        'zbe-getafe': 4,
+        'zbe-fuenlabrada': 4,
+        'zbe-alcorcon': 4,
+        'zbe-alcala': 4,
+        'zbe-alcobendas': 4,
+        'zbe-mostoles': 4,
+        'zbe-parla': 4,
+        'zbe-rivas': 4,
         'zbe-interior-m30': 3,
         'zbe-municipio': 1
       };
@@ -617,6 +625,18 @@ export class MadridZbeMapComponent implements OnDestroy {
         'visibility',
         layers.showCameras ? 'visible' : 'none'
       );
+
+      if (layers.showCameras) {
+        const cameraFilter: FilterSpecification =
+          activeZoneIds.length > 0
+            ? [
+                'all',
+                ['==', ['get', 'type'], 'camera'],
+                ['in', ['get', 'zoneId'], ['literal', activeZoneIds]]
+              ]
+            : ['==', ['get', 'id'], '__none__'];
+        this.map.setFilter('zbe-cameras-layer', cameraFilter);
+      }
     }
 
     // Parkings Layer
@@ -626,6 +646,18 @@ export class MadridZbeMapComponent implements OnDestroy {
         'visibility',
         layers.showParkings ? 'visible' : 'none'
       );
+
+      if (layers.showParkings) {
+        const parkingFilter: FilterSpecification =
+          activeZoneIds.length > 0
+            ? [
+                'all',
+                ['==', ['get', 'type'], 'parking'],
+                ['in', ['get', 'zoneId'], ['literal', activeZoneIds]]
+              ]
+            : ['==', ['get', 'id'], '__none__'];
+        this.map.setFilter('zbe-parkings-layer', parkingFilter);
+      }
     }
   }
 

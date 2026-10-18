@@ -56,11 +56,27 @@ export class LayerControlsComponent {
     }
   };
 
-  readonly zonesList: ZbeZoneId[] = [
+  readonly madridZones: ZbeZoneId[] = [
     'zbe-distrito-centro',
     'zbe-plaza-eliptica',
     'zbe-interior-m30',
     'zbe-municipio'
+  ];
+
+  readonly metropolitanZones: ZbeZoneId[] = [
+    'zbe-getafe',
+    'zbe-fuenlabrada',
+    'zbe-alcorcon',
+    'zbe-alcala',
+    'zbe-alcobendas',
+    'zbe-mostoles',
+    'zbe-parla',
+    'zbe-rivas'
+  ];
+
+  readonly zonesList: ZbeZoneId[] = [
+    ...this.madridZones,
+    ...this.metropolitanZones
   ];
 
   readonly zonesMeta = ZBE_ZONES_META;

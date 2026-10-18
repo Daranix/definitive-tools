@@ -19,12 +19,20 @@ describe('MadridZbeMapService', () => {
   });
 
   describe('Initial Default State', () => {
-    it('should initialize with all 4 ZBE zones active', () => {
+    it('should initialize with all 12 ZBE zones active', () => {
       const visibility = service.zoneVisibility();
       expect(visibility['zbe-distrito-centro']).toBeTrue();
       expect(visibility['zbe-plaza-eliptica']).toBeTrue();
       expect(visibility['zbe-interior-m30']).toBeTrue();
       expect(visibility['zbe-municipio']).toBeTrue();
+      expect(visibility['zbe-getafe']).toBeTrue();
+      expect(visibility['zbe-fuenlabrada']).toBeTrue();
+      expect(visibility['zbe-alcorcon']).toBeTrue();
+      expect(visibility['zbe-alcala']).toBeTrue();
+      expect(visibility['zbe-alcobendas']).toBeTrue();
+      expect(visibility['zbe-mostoles']).toBeTrue();
+      expect(visibility['zbe-parla']).toBeTrue();
+      expect(visibility['zbe-rivas']).toBeTrue();
     });
 
     it('should initialize with cameras and parkings visible and opacity at 0.35', () => {

@@ -44,7 +44,15 @@ export class MadridZbeMapService {
       'zbe-distrito-centro': true,
       'zbe-plaza-eliptica': true,
       'zbe-interior-m30': true,
-      'zbe-municipio': true
+      'zbe-municipio': true,
+      'zbe-getafe': true,
+      'zbe-fuenlabrada': true,
+      'zbe-alcorcon': true,
+      'zbe-alcala': true,
+      'zbe-alcobendas': true,
+      'zbe-mostoles': true,
+      'zbe-parla': true,
+      'zbe-rivas': true
     },
     showCameras: true,
     showParkings: true,
@@ -253,6 +261,54 @@ export class MadridZbeMapService {
       message: muniMsg,
       serParkingAllowed: badge !== 'a',
       fineRisk: muniFine
+    });
+
+    // 5. ZBE Centro de Getafe
+    let getafeAllowed: 'yes' | 'conditional' | 'no' = 'no';
+    let getafeTitle = '';
+    let getafeMsg = '';
+    let getafeFine = false;
+
+    if (badge === 'cero' || badge === 'eco') {
+      getafeAllowed = 'yes';
+      getafeTitle = 'Acceso Libre (CERO / ECO)';
+      getafeMsg = 'Los vehículos CERO y ECO pueden circular y estacionar sin restricciones por el centro de Getafe.';
+    } else if (badge === 'c' || badge === 'b') {
+      if (resident === 'zone-resident') {
+        getafeAllowed = 'yes';
+        getafeTitle = 'Acceso Permitido (Empadronado en Getafe)';
+        getafeMsg = 'Los vehículos censados e inscritos en el padrón de Getafe tienen libre acceso al casco urbano.';
+      } else if (purpose === 'public-parking') {
+        getafeAllowed = 'conditional';
+        getafeTitle = 'Acceso Permitido con Destino a Parking';
+        getafeMsg = 'Permitido el acceso a no residentes si se dirigen a aparcamientos públicos o reservas de estacionamiento.';
+      } else {
+        getafeAllowed = 'conditional';
+        getafeTitle = 'Tránsito Restringido';
+        getafeMsg = 'Los vehículos B y C no empadronados deben justificar estancia o destino en el perímetro de Getafe.';
+      }
+    } else {
+      // Badge A
+      if (resident === 'zone-resident') {
+        getafeAllowed = 'conditional';
+        getafeTitle = 'Acceso Restringido a Residentes';
+        getafeMsg = 'Solo los vehículos de residentes con autorización o PMR pueden acceder sin etiqueta.';
+      } else {
+        getafeAllowed = 'no';
+        getafeTitle = 'Prohibido el Acceso (Sanción 200 €)';
+        getafeMsg = 'Prohibida la circulación de vehículos Sin Distintivo (A) por el perímetro de la ZBE de Getafe.';
+        getafeFine = true;
+      }
+    }
+
+    results.push({
+      zoneId: 'zbe-getafe',
+      zoneName: 'ZBE Centro de Getafe',
+      allowed: getafeAllowed,
+      title: getafeTitle,
+      message: getafeMsg,
+      serParkingAllowed: badge !== 'a',
+      fineRisk: getafeFine
     });
 
     return results;
