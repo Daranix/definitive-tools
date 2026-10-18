@@ -10,6 +10,7 @@ Definitive Tools is a collection of free, easy-to-use online tools designed to m
 | Status | Feature | Description |
 |--------|---------|-------------|
 | ✅ | **QR Generator** | Generate QR codes quickly and easily. |
+| ✅ | **QR Code Reader & Scanner** | Scan and decode QR codes from uploaded images, clipboard paste (Ctrl+V), or live camera stream. |
 | ✅ | **Base64 Encode / Decode** | Convert text to and from Base64 encoding. |
 | ✅ | **Image to Base64 Converter** | Convert images to Base64 data URIs and back to image files. |
 | ✅ | **Background Removal Tool** | Remove backgrounds from images with ease using AI/in-browser models. |
@@ -24,7 +25,8 @@ Definitive Tools is a collection of free, easy-to-use online tools designed to m
 | ✅ | **Image Format Converter** | Convert image files between PNG, JPEG, WebP, and other formats. |
 | ✅ | **Text to Speech** | Convert written text into spoken audio in the browser. |
 | ✅ | **Audio Editor** | Trim, cut, and process audio files locally in your browser. |
-| ⏳ | **Audio Speech to Text** | Convert spoken words into text efficiently. |
+| ✅ | **Audio Speech to Text** | Transcribe spoken audio and video into text directly in the browser using local Whisper AI models. |
+| ✅ | **Madrid Transport Map** | Interactive multimodal transit network and CRTM tariff zones map for Madrid (Metro, Cercanías, EMT, Interurban, Zones A-E2). |
 | ⏳ | **Video Format Converter** | Convert videos to different formats. |
 | ⏳ | **Image to SVG Converter** | Convert images to SVG (vector graphics) format. |
 | ⏳ | **Image Upscaler** | Upscale images to higher resolutions and more details. |
