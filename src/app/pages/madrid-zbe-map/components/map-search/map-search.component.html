@@ -1,0 +1,88 @@
+<div class="relative w-full">
+  <!-- Search Input Bar -->
+  <div
+    class="flex items-center bg-white/95 backdrop-blur-md border border-slate-200/90 rounded-2xl shadow-lg shadow-slate-900/10 px-3.5 py-2.5 transition-all focus-within:ring-2 focus-within:ring-emerald-500 focus-within:border-emerald-500 group"
+  >
+    <lucide-icon
+      name="search"
+      class="w-5 h-5 text-slate-400 group-focus-within:text-emerald-600 transition-colors mr-2.5 flex-shrink-0"
+    ></lucide-icon>
+    <input
+      #searchInput
+      type="text"
+      placeholder="Buscar zona ZBE, cámara o aparcamiento P+R..."
+      [value]="service.searchQuery()"
+      (input)="onInput($event)"
+      aria-label="Buscar en Madrid 360 y Zonas de Bajas Emisiones"
+      class="w-full bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none"
+    />
+    @if (service.searchQuery()) {
+      <button
+        (click)="clearSearch()"
+        type="button"
+        aria-label="Borrar búsqueda"
+        class="p-1 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors ml-1.5 flex-shrink-0"
+      >
+        <lucide-icon name="x" class="w-4 h-4"></lucide-icon>
+      </button>
+    }
+  </div>
+
+  <!-- Autocomplete Results Dropdown -->
+  @if (service.searchQuery().trim().length >= 2) {
+    <div
+      class="absolute left-0 right-0 mt-2 bg-white/95 backdrop-blur-md border border-slate-200 rounded-2xl shadow-xl overflow-hidden z-50 max-h-80 overflow-y-auto divide-y divide-slate-100 animate-in fade-in slide-in-from-top-2 duration-150"
+      role="listbox"
+    >
+      @for (item of service.searchResults(); track item.id) {
+        <button
+          type="button"
+          (click)="selectResult(item)"
+          role="option"
+          class="w-full px-4 py-3 flex items-start gap-3 text-left hover:bg-emerald-50/70 transition-colors group focus:outline-none focus:bg-emerald-50"
+        >
+          <!-- Type Icon Indicator -->
+          <div
+            class="mt-0.5 w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 text-white shadow-xs"
+            [style.backgroundColor]="item.badgeColor || '#059669'"
+          >
+            @if (item.type === 'zone') {
+              <lucide-icon name="shield-alert" class="w-4 h-4"></lucide-icon>
+            } @else if (item.type === 'camera') {
+              <lucide-icon name="camera" class="w-4 h-4"></lucide-icon>
+            } @else {
+              <lucide-icon name="circle-parking" class="w-4 h-4"></lucide-icon>
+            }
+          </div>
+
+          <!-- Result Info -->
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center justify-between gap-2">
+              <span class="text-sm font-semibold text-slate-800 group-hover:text-emerald-700 transition-colors truncate">
+                {{ item.name }}
+              </span>
+              <span
+                class="text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0"
+                [style.backgroundColor]="(item.badgeColor || '#059669') + '20'"
+                [style.color]="item.badgeColor || '#059669'"
+              >
+                {{ item.badge }}
+              </span>
+            </div>
+
+            <!-- Subtitle details -->
+            <p class="text-xs text-slate-500 font-medium truncate mt-0.5">
+              {{ item.subtitle }}
+            </p>
+          </div>
+        </button>
+      } @empty {
+        <div class="px-4 py-6 text-center text-slate-500">
+          <lucide-icon name="circle-off" class="w-7 h-7 mx-auto text-slate-300 mb-2"></lucide-icon>
+          <p class="text-sm font-medium text-slate-700">Sin coincidencias encontradas</p>
+          <p class="text-xs text-slate-400 mt-0.5">Prueba buscando por Centro, Plaza Elíptica, M-30, Pitis o Alcalá</p>
+        </div>
+      }
+    </div>
+  }
+</div>

@@ -64,17 +64,14 @@ export class SwaggerGenerationModalComponent {
     });
 
     // Reactively start generation whenever the generator selection changes
-    effect(
-      () => {
-        const gen = this.generator();
-        if (gen) {
-          // Always maximize when a new generator is selected to show the process
-          this.isMinimized.set(false);
-          untracked(() => this.startGeneration());
-        }
-      },
-      { allowSignalWrites: true },
-    );
+    effect(() => {
+      const gen = this.generator();
+      if (gen) {
+        // Always maximize when a new generator is selected to show the process
+        this.isMinimized.set(false);
+        untracked(() => this.startGeneration());
+      }
+    });
   }
 
   cancelGeneration() {

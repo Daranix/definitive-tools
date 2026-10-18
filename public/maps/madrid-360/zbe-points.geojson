@@ -1,0 +1,497 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "cam-c01",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6922,
+          40.4196
+        ]
+      },
+      "properties": {
+        "id": "cam-c01",
+        "type": "camera",
+        "category": "camera",
+        "zoneId": "zbe-distrito-centro",
+        "zoneName": "ZBEDEP Distrito Centro",
+        "name": "Cámara OCR - Alcalá / Cibeles",
+        "location": "Calle de Alcalá c/v Plaza de Cibeles",
+        "direction": "Sentido Centro / Gran Vía",
+        "model": "Lector Óptico OCR Doble Óptica (Infrarrojo + Color)",
+        "monitoredRules": "Control de matrículas para acceso a Distrito Centro",
+        "status": "Operativa 24/7"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cam-c02",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7122,
+          40.4234
+        ]
+      },
+      "properties": {
+        "id": "cam-c02",
+        "type": "camera",
+        "category": "camera",
+        "zoneId": "zbe-distrito-centro",
+        "zoneName": "ZBEDEP Distrito Centro",
+        "name": "Cámara OCR - Gran Vía / Plaza de España",
+        "location": "Gran Vía c/v Plaza de España",
+        "direction": "Sentido Callao / Alcalá",
+        "model": "Lector Óptico OCR de Alta Resolución",
+        "monitoredRules": "Acceso regulado a Gran Vía y Centro",
+        "status": "Operativa 24/7"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cam-c03",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7058,
+          40.4298
+        ]
+      },
+      "properties": {
+        "id": "cam-c03",
+        "type": "camera",
+        "category": "camera",
+        "zoneId": "zbe-distrito-centro",
+        "zoneName": "ZBEDEP Distrito Centro",
+        "name": "Cámara OCR - San Bernardo / Ruiz Jiménez",
+        "location": "Glorieta de Ruiz Jiménez (San Bernardo)",
+        "direction": "Sentido Gran Vía / Santo Domingo",
+        "model": "Lector Óptico OCR",
+        "monitoredRules": "Entrada norte al Distrito Centro (Malasaña)",
+        "status": "Operativa 24/7"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cam-c04",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7126,
+          40.4285
+        ]
+      },
+      "properties": {
+        "id": "cam-c04",
+        "type": "camera",
+        "category": "camera",
+        "zoneId": "zbe-distrito-centro",
+        "zoneName": "ZBEDEP Distrito Centro",
+        "name": "Cámara OCR - Princesa / Serrano Jover",
+        "location": "Calle de la Princesa con Serrano Jover",
+        "direction": "Sentido Plaza de España",
+        "model": "Lector Óptico OCR",
+        "monitoredRules": "Entrada noroeste a Distrito Centro",
+        "status": "Operativa 24/7"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cam-c05",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6928,
+          40.4082
+        ]
+      },
+      "properties": {
+        "id": "cam-c05",
+        "type": "camera",
+        "category": "camera",
+        "zoneId": "zbe-distrito-centro",
+        "zoneName": "ZBEDEP Distrito Centro",
+        "name": "Cámara OCR - Atocha / Glorieta Carlos V",
+        "location": "Plaza del Emperador Carlos V c/v Calle Atocha",
+        "direction": "Sentido Plaza Mayor / Jacinto Benavente",
+        "model": "Lector Óptico OCR Tráfico",
+        "monitoredRules": "Entrada sur a Distrito Centro y Barrio de las Letras",
+        "status": "Operativa 24/7"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cam-c06",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7112,
+          40.4072
+        ]
+      },
+      "properties": {
+        "id": "cam-c06",
+        "type": "camera",
+        "category": "camera",
+        "zoneId": "zbe-distrito-centro",
+        "zoneName": "ZBEDEP Distrito Centro",
+        "name": "Cámara OCR - Puerta de Toledo",
+        "location": "Glorieta de la Puerta de Toledo c/v Calle Toledo",
+        "direction": "Sentido La Latina / Plaza Mayor",
+        "model": "Lector Óptico OCR",
+        "monitoredRules": "Entrada suroeste al Distrito Centro",
+        "status": "Operativa 24/7"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cam-c07",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6898,
+          40.4253
+        ]
+      },
+      "properties": {
+        "id": "cam-c07",
+        "type": "camera",
+        "category": "camera",
+        "zoneId": "zbe-distrito-centro",
+        "zoneName": "ZBEDEP Distrito Centro",
+        "name": "Cámara OCR - Colón / Génova",
+        "location": "Plaza de Colón c/v Calle Génova",
+        "direction": "Sentido Alonso Martínez / Justicia",
+        "model": "Lector Óptico OCR",
+        "monitoredRules": "Entrada noreste al Distrito Centro (Chueca / Justicia)",
+        "status": "Operativa 24/7"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cam-e01",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7188,
+          40.3848
+        ]
+      },
+      "properties": {
+        "id": "cam-e01",
+        "type": "camera",
+        "category": "camera",
+        "zoneId": "zbe-plaza-eliptica",
+        "zoneName": "ZBEDEP Plaza Elíptica",
+        "name": "Cámara OCR - Plaza Elíptica / Vía Lusitana",
+        "location": "Intercambiador Plaza Elíptica c/v Vía Lusitana",
+        "direction": "Sentido interior ZBEDEP",
+        "model": "Lector Óptico OCR Especial ZBEDEP",
+        "monitoredRules": "Detección automática de vehículos Sin Distintivo (A)",
+        "status": "Operativa 24/7"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cam-e02",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7168,
+          40.3828
+        ]
+      },
+      "properties": {
+        "id": "cam-e02",
+        "type": "camera",
+        "category": "camera",
+        "zoneId": "zbe-plaza-eliptica",
+        "zoneName": "ZBEDEP Plaza Elíptica",
+        "name": "Cámara OCR - Marcelo Usera / Av. Oporto",
+        "location": "Calle Marcelo Usera c/v Av. Oporto",
+        "direction": "Sentido Plaza Elíptica",
+        "model": "Lector Óptico OCR",
+        "monitoredRules": "Control perimetral este de ZBEDEP Plaza Elíptica",
+        "status": "Operativa 24/7"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cam-e03",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7175,
+          40.3858
+        ]
+      },
+      "properties": {
+        "id": "cam-e03",
+        "type": "camera",
+        "category": "camera",
+        "zoneId": "zbe-plaza-eliptica",
+        "zoneName": "ZBEDEP Plaza Elíptica",
+        "name": "Cámara OCR - Santa María de la Cabeza / A-42",
+        "location": "Paseo Santa María de la Cabeza salida túnel A-42",
+        "direction": "Sentido Madrid Centro / Puente de Praga",
+        "model": "Lector Óptico OCR Alta Velocidad",
+        "monitoredRules": "Control entrada desde A-42 a ZBEDEP",
+        "status": "Operativa 24/7"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cam-m01",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.657,
+          40.42
+        ]
+      },
+      "properties": {
+        "id": "cam-m01",
+        "type": "camera",
+        "category": "camera",
+        "zoneId": "zbe-interior-m30",
+        "zoneName": "Madrid ZBE - M-30",
+        "name": "Cámara Pórtico M-30 PK 12 - O'Donnell",
+        "location": "Calle 30 (M-30) Kilómetro 12 - Enlace O'Donnell / M-23",
+        "direction": "Sentido Norte y Sur (pórtico dual)",
+        "model": "Pórtico Automatizado de Control de Accesos Madrid ZBE",
+        "monitoredRules": "Control de vehículos A en el tronco de la M-30",
+        "status": "Operativa 24/7"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cam-m02",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.655,
+          40.438
+        ]
+      },
+      "properties": {
+        "id": "cam-m02",
+        "type": "camera",
+        "category": "camera",
+        "zoneId": "zbe-interior-m30",
+        "zoneName": "Madrid ZBE - M-30",
+        "name": "Cámara Pórtico M-30 PK 7 - Avenida de América",
+        "location": "Calle 30 (M-30) Kilómetro 7 - Cruce A-2",
+        "direction": "Sentido Sur y enlaces",
+        "model": "Pórtico Automatizado Madrid ZBE",
+        "monitoredRules": "Verificación de distintivo ambiental DGT",
+        "status": "Operativa 24/7"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cam-m03",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.678,
+          40.389
+        ]
+      },
+      "properties": {
+        "id": "cam-m03",
+        "type": "camera",
+        "category": "camera",
+        "zoneId": "zbe-interior-m30",
+        "zoneName": "Madrid ZBE - M-30",
+        "name": "Cámara Pórtico M-30 PK 19 - Méndez Álvaro",
+        "location": "Calle 30 (M-30) Kilómetro 19 - Enlace Nudo Sur",
+        "direction": "Sentido Oeste / Río Manzanares",
+        "model": "Pórtico Automatizado Madrid ZBE",
+        "monitoredRules": "Control de vehículos A en anillo M-30 sur",
+        "status": "Operativa 24/7"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cam-m04",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.732,
+          40.435
+        ]
+      },
+      "properties": {
+        "id": "cam-m04",
+        "type": "camera",
+        "category": "camera",
+        "zoneId": "zbe-interior-m30",
+        "zoneName": "Madrid ZBE - M-30",
+        "name": "Cámara Pórtico M-30 PK 26 - Marqués de Monistrol",
+        "location": "Paseo Marqués de Monistrol c/v Puente de los Franceses",
+        "direction": "Sentido Norte / Carretera de Castilla",
+        "model": "Pórtico Automatizado Madrid ZBE",
+        "monitoredRules": "Control perimetral M-30 oeste",
+        "status": "Operativa 24/7"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "park-pitis",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7275,
+          40.4905
+        ]
+      },
+      "properties": {
+        "id": "park-pitis",
+        "type": "parking",
+        "category": "park-and-ride",
+        "name": "Aparcamiento Disuasorio Pitis",
+        "shortName": "P+R Pitis",
+        "address": "Calle de Gloria Fuertes, 195 (Fuencarral - El Pardo)",
+        "capacity": 450,
+        "electricSpots": 12,
+        "pmrSpots": 10,
+        "transitConnections": "Metro L7, Cercanías Renfe C3, C7, C8, EMT 49, 82",
+        "feeDescription": "Gratuito entre 5 y 16 horas utilizando el título de transporte público colectivo.",
+        "hours": "Abierto 24 horas",
+        "managedBy": "Empresa Municipal de Transportes (EMT Madrid)"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "park-aviacion",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7842,
+          40.3831
+        ]
+      },
+      "properties": {
+        "id": "park-aviacion",
+        "type": "parking",
+        "category": "park-and-ride",
+        "name": "Aparcamiento Disuasorio Aviación Española",
+        "shortName": "P+R Aviación Española",
+        "address": "Calle Fuente de Lima / Paseo de Extremadura (Latina)",
+        "capacity": 344,
+        "electricSpots": 10,
+        "pmrSpots": 8,
+        "transitConnections": "Metro L10, EMT 17, 39, Interurbanos 511, 512, 513",
+        "feeDescription": "Gratuito con validación del abono o título de transporte público (5 a 16 horas).",
+        "hours": "Abierto 24 horas",
+        "managedBy": "EMT Madrid"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "park-fuente-mora",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6622,
+          40.4851
+        ]
+      },
+      "properties": {
+        "id": "park-fuente-mora",
+        "type": "parking",
+        "category": "park-and-ride",
+        "name": "Aparcamiento Disuasorio Fuente de la Mora",
+        "shortName": "P+R Fuente de la Mora",
+        "address": "Calle Dulce Chacón / Av. de las Fuerzas Armadas (Hortaleza)",
+        "capacity": 400,
+        "electricSpots": 10,
+        "pmrSpots": 8,
+        "transitConnections": "Cercanías C1, C10, Metro Ligero ML1, EMT 150",
+        "feeDescription": "Gratuito con uso de transporte público (5 a 16 horas).",
+        "hours": "Abierto 24 horas",
+        "managedBy": "EMT Madrid"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "park-metropolitano",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.5997,
+          40.4361
+        ]
+      },
+      "properties": {
+        "id": "park-metropolitano",
+        "type": "parking",
+        "category": "park-and-ride",
+        "name": "Aparcamiento Disuasorio Estadio Metropolitano",
+        "shortName": "P+R Estadio Metropolitano",
+        "address": "Av. Luis Aragonés, s/n (San Blas - Canillejas)",
+        "capacity": 3000,
+        "electricSpots": 30,
+        "pmrSpots": 45,
+        "transitConnections": "Metro L7 (Estadio Metropolitano), EMT 38, 140, E2",
+        "feeDescription": "Gratuito en días laborables sin evento con validación de billete de transporte.",
+        "hours": "Laborables 06:00 a 22:00 (días sin partido/evento)",
+        "managedBy": "EMT Madrid & Atlético de Madrid"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "park-recuerdo",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6835,
+          40.4682
+        ]
+      },
+      "properties": {
+        "id": "park-recuerdo",
+        "type": "parking",
+        "category": "park-and-ride",
+        "name": "Aparcamiento Disuasorio Ntra. Sra. del Recuerdo",
+        "shortName": "P+R Recuerdo (Chamartín)",
+        "address": "Calle del Recuerdo, s/n (Chamartín)",
+        "capacity": 819,
+        "electricSpots": 18,
+        "pmrSpots": 16,
+        "transitConnections": "Metro L1, L9, L10 (Chamartín / Duque de Pastrana), Cercanías Chamartín",
+        "feeDescription": "Tarifa disuasoria bonificada Madrid 360 con título de transporte.",
+        "hours": "Abierto 24 horas",
+        "managedBy": "EMT Madrid"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "park-villaverde",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7121,
+          40.3415
+        ]
+      },
+      "properties": {
+        "id": "park-villaverde",
+        "type": "parking",
+        "category": "park-and-ride",
+        "name": "Aparcamiento Disuasorio Villaverde Alto",
+        "shortName": "P+R Villaverde Alto",
+        "address": "Calle Domingo Párraga, s/n (Villaverde)",
+        "capacity": 350,
+        "electricSpots": 8,
+        "pmrSpots": 8,
+        "transitConnections": "Metro L3, Cercanías Renfe C4, C5, EMT 79, T41",
+        "feeDescription": "Gratuito de 5 a 16 h con título de transporte público colectivo.",
+        "hours": "Abierto 24 horas",
+        "managedBy": "EMT Madrid"
+      }
+    }
+  ]
+}

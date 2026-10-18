@@ -101,7 +101,10 @@ function createSvgImage(svg: string, width = 36, height = 36): Promise<HTMLImage
   ],
   templateUrl: './madrid-transport-map.component.html',
   styleUrl: './madrid-transport-map.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    class: 'block h-full w-full'
+  }
 })
 export class MadridTransportMapComponent implements OnDestroy {
   private readonly platformId = inject(PLATFORM_ID);
@@ -116,6 +119,7 @@ export class MadridTransportMapComponent implements OnDestroy {
   private interurbanLoaded = false;
   private activeStationMarker: MapLibreGL.Marker | null = null;
   private loadedGeojsonData: Partial<Record<NetworkId, FeatureCollection>> = {};
+  private resizeObserver: ResizeObserver | null = null;
   readonly isMapReady = signal<boolean>(false);
 
   constructor() {
@@ -382,6 +386,31 @@ export class MadridTransportMapComponent implements OnDestroy {
         maxZoom: 18.5
       });
 
+      const triggerResize = () => {
+        if (this.map) {
+          this.map.resize();
+        }
+      };
+
+      this.resizeObserver = new ResizeObserver(() => {
+        triggerResize();
+      });
+      this.resizeObserver.observe(container);
+      if (container.parentElement) {
+        this.resizeObserver.observe(container.parentElement);
+      }
+
+      // Schedule aggressive resize checks across initial rendering passes
+      requestAnimationFrame(triggerResize);
+      setTimeout(triggerResize, 60);
+      setTimeout(triggerResize, 150);
+      setTimeout(triggerResize, 300);
+      setTimeout(triggerResize, 600);
+      setTimeout(() => {
+        triggerResize();
+        window.dispatchEvent(new Event('resize'));
+      }, 1000);
+
       this.map.on('error', (err) => {
         console.warn('MapLibre internal event:', err);
       });
@@ -392,6 +421,7 @@ export class MadridTransportMapComponent implements OnDestroy {
       );
 
       this.map.on('load', () => {
+        triggerResize();
         void this.onMapLoaded();
       });
     } catch (err) {
@@ -1192,6 +1222,10 @@ export class MadridTransportMapComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+      this.resizeObserver = null;
+    }
     this.clearStationMarker();
     if (this.map) {
       this.map.remove();

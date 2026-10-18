@@ -81,7 +81,7 @@ async function generate({
       'color: inherit;',
     );
 
-    const whisperLanguage = !language || language === 'auto' ? null : language;
+    const whisperLanguage = !language || language === 'auto' ? undefined : language;
 
     let fullStreamedText = '';
     let startTime: number | undefined;

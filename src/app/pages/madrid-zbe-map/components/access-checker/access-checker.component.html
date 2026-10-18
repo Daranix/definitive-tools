@@ -1,0 +1,203 @@
+<div class="w-full space-y-4">
+  <!-- Header / Intro -->
+  <div class="flex items-center gap-2 pb-2 border-b border-slate-100">
+    <div class="w-7 h-7 rounded-xl bg-emerald-600 text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+      <lucide-icon name="shield-alert" class="w-4 h-4"></lucide-icon>
+    </div>
+    <div>
+      <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wide">
+        Simulador de Acceso Madrid 360
+      </h3>
+      <p class="text-[11px] text-slate-500">
+        Comprueba al instante si tu vehículo puede circular y dónde aparcar
+      </p>
+    </div>
+  </div>
+
+  <!-- Step 1: Select DGT Badge -->
+  <div>
+    <label class="text-[11px] font-bold text-slate-600 uppercase tracking-wider block mb-1.5">
+      1. Distintivo Ambiental DGT
+    </label>
+    <div class="grid grid-cols-5 gap-1.5">
+      @for (b of badgeKeys; track b) {
+        @let meta = badgesMeta[b];
+        @let isSelected = service.simBadge() === b;
+        <button
+          type="button"
+          (click)="setBadge(b)"
+          [class]="'flex flex-col items-center justify-center py-2 px-1 rounded-xl transition-all border font-bold text-xs cursor-pointer ' +
+                   (isSelected
+                     ? 'ring-2 ring-emerald-500 shadow-md border-transparent ' + meta.bgClass + ' text-white scale-102'
+                     : 'bg-white border-slate-200 text-slate-700 hover:border-slate-300 hover:bg-slate-50')"
+        >
+          <span class="text-xs font-black leading-none mb-0.5">
+            {{ b === 'cero' ? '0' : b.toUpperCase() }}
+          </span>
+          <span class="text-[9px] font-semibold truncate leading-tight">
+            {{ b === 'a' ? 'Sin Etq.' : (b === 'cero' ? 'Emisiones' : meta.label.replace(' (Verde)', '').replace(' (Amarilla)', '')) }}
+          </span>
+        </button>
+      }
+    </div>
+    <p class="text-[10px] text-slate-500 mt-1 italic leading-relaxed">
+      {{ badgesMeta[service.simBadge()].description }}
+    </p>
+  </div>
+
+  <!-- Step 2: Vehicle Type (Full width 3 columns) -->
+  <div>
+    <label class="text-[11px] font-bold text-slate-600 uppercase tracking-wider block mb-1.5">
+      2. Tipo de Vehículo
+    </label>
+    <div class="grid grid-cols-3 gap-1.5">
+      @for (v of vehicleTypes; track v.id) {
+        @let isSel = service.simVehicleType() === v.id;
+        <button
+          type="button"
+          (click)="setVehicleType(v.id)"
+          [class]="'py-2 px-1 rounded-xl text-xs font-semibold flex flex-col items-center justify-center gap-1 border transition-all cursor-pointer ' +
+                   (isSel
+                     ? 'bg-emerald-50 border-emerald-500 text-emerald-800 shadow-xs'
+                     : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50')"
+        >
+          <lucide-icon [name]="v.icon" class="w-4 h-4"></lucide-icon>
+          <span class="text-[10.5px] leading-tight text-center truncate w-full px-0.5">{{ v.label }}</span>
+        </button>
+      }
+    </div>
+  </div>
+
+  <!-- Step 3: Residency Situation (Vertical list for full text clarity) -->
+  <div>
+    <label class="text-[11px] font-bold text-slate-600 uppercase tracking-wider block mb-1.5">
+      3. Situación de Residencia
+    </label>
+    <div class="space-y-1.5">
+      @for (r of residentStatuses; track r.id) {
+        @let isSel = service.simResidentStatus() === r.id;
+        <button
+          type="button"
+          (click)="setResidentStatus(r.id)"
+          [class]="'w-full py-2 px-3 rounded-xl text-xs font-medium text-left border flex items-center justify-between transition-all cursor-pointer ' +
+                   (isSel
+                     ? 'bg-emerald-50 border-emerald-500 text-emerald-900 font-semibold shadow-xs'
+                     : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50')"
+        >
+          <span class="text-xs leading-tight">{{ r.label }}</span>
+          @if (isSel) {
+            <lucide-icon name="check" class="w-3.5 h-3.5 text-emerald-600 flex-shrink-0 ml-2"></lucide-icon>
+          }
+        </button>
+      }
+    </div>
+  </div>
+
+  <!-- Step 4: Destination Purpose (Vertical list to prevent horizontal squishing) -->
+  <div>
+    <label class="text-[11px] font-bold text-slate-600 uppercase tracking-wider block mb-1.5">
+      4. Motivo / Destino del Viaje
+    </label>
+    <div class="space-y-1.5">
+      @for (p of purposes; track p.id) {
+        @let isSel = service.simPurpose() === p.id;
+        <button
+          type="button"
+          (click)="setPurpose(p.id)"
+          [class]="'w-full py-2 px-3 rounded-xl text-xs font-medium flex items-center gap-2.5 border text-left transition-all cursor-pointer ' +
+                   (isSel
+                     ? 'bg-emerald-50 border-emerald-500 text-emerald-900 font-semibold shadow-xs'
+                     : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50')"
+        >
+          <lucide-icon
+            [name]="p.icon"
+            class="w-4 h-4 flex-shrink-0"
+            [class.text-emerald-600]="isSel"
+            [class.text-slate-400]="!isSel"
+          ></lucide-icon>
+          <span class="text-xs leading-tight flex-1">{{ p.label }}</span>
+          @if (isSel) {
+            <lucide-icon name="check" class="w-3.5 h-3.5 text-emerald-600 flex-shrink-0"></lucide-icon>
+          }
+        </button>
+      }
+    </div>
+  </div>
+
+  <!-- Results Section -->
+  <div class="pt-2 border-t border-slate-150">
+    <span class="text-[11px] font-bold text-slate-600 uppercase tracking-wider block mb-2">
+      Resultado por Zona ZBE
+    </span>
+
+    <div class="space-y-2">
+      @for (res of service.simulationResults(); track res.zoneId) {
+        <div
+          class="p-3 rounded-2xl border transition-all flex flex-col gap-1.5 bg-white shadow-xs"
+          [class.border-emerald-300]="res.allowed === 'yes'"
+          [class.border-amber-300]="res.allowed === 'conditional'"
+          [class.border-red-300]="res.allowed === 'no'"
+          [class.bg-emerald-50/20]="res.allowed === 'yes'"
+          [class.bg-amber-50/20]="res.allowed === 'conditional'"
+          [class.bg-red-50/20]="res.allowed === 'no'"
+        >
+          <!-- Top Row: Zone name + Verdict badge -->
+          <div class="flex items-start justify-between gap-2">
+            <span class="text-xs font-bold text-slate-800 leading-tight">
+              {{ res.zoneName }}
+            </span>
+
+            @if (res.allowed === 'yes') {
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-emerald-100 text-emerald-800 flex-shrink-0">
+                <lucide-icon name="check-circle" class="w-3 h-3 text-emerald-600"></lucide-icon>
+                <span>PERMITIDO</span>
+              </span>
+            } @else if (res.allowed === 'conditional') {
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-amber-100 text-amber-900 flex-shrink-0">
+                <lucide-icon name="alert-triangle" class="w-3 h-3 text-amber-600"></lucide-icon>
+                <span>CONDICIONADO</span>
+              </span>
+            } @else {
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-red-100 text-red-800 flex-shrink-0">
+                <lucide-icon name="x-circle" class="w-3 h-3 text-red-600"></lucide-icon>
+                <span>PROHIBIDO</span>
+              </span>
+            }
+          </div>
+
+          <!-- Title & Message -->
+          <div class="text-[11px] font-semibold text-slate-800 leading-snug">
+            {{ res.title }}
+          </div>
+          <p class="text-[11px] text-slate-600 leading-relaxed">
+            {{ res.message }}
+          </p>
+
+          <!-- Extra details footer -->
+          <div class="flex items-center justify-between pt-1 border-t border-slate-100 text-[10px] text-slate-500">
+            <div>
+              @if (res.serMaxHours) {
+                <span>Estacionamiento SER: <strong>Máx. {{ res.serMaxHours }}h</strong></span>
+              } @else if (res.serParkingAllowed) {
+                <span>Estacionamiento SER: <strong class="text-emerald-700">Permitido</strong></span>
+              } @else {
+                <span>Estacionamiento SER: <strong class="text-red-600">No permitido</strong></span>
+              }
+            </div>
+
+            <button
+              type="button"
+              (click)="focusZone(res.zoneId)"
+              class="text-emerald-700 hover:text-emerald-800 font-semibold hover:underline flex items-center gap-1 cursor-pointer"
+            >
+              <span>Ver en mapa</span>
+              <lucide-icon name="external-link" class="w-3 h-3"></lucide-icon>
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>
+
+

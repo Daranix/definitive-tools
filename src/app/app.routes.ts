@@ -29,6 +29,9 @@ export const routes: Routes = [
             { path: 'markdown-to-html', loadComponent: () => import('./pages/markdown-to-html/markdown-to-html.component').then(m => m.MarkdownToHtmlComponent), data: { id: 'markdown-to-html' } },
             { path: 'audio-editor', loadComponent: () => import('./pages/audio-editor/audio-editor.component').then(m => m.AudioEditorComponent), data: { id: 'audio-editor' } },
             { path: 'madrid-transport-map', loadComponent: () => import('./pages/madrid-transport-map/madrid-transport-map.component').then(m => m.MadridTransportMapComponent), data: { id: 'madrid-transport-map' } },
+            { path: 'madrid-zbe-map', loadComponent: () => import('./pages/madrid-zbe-map/madrid-zbe-map.component').then(m => m.MadridZbeMapComponent), data: { id: 'madrid-zbe-map' } },
+            { path: 'madrid-360', redirectTo: 'madrid-zbe-map' },
+            { path: 'madrid-360-map', redirectTo: 'madrid-zbe-map' },
         ],
         component: BaseComponent
     },

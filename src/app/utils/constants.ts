@@ -88,6 +88,16 @@ import {
   LucideX,
   LucideZoomIn,
   LucideZoomOut,
+  LucideShieldAlert,
+  LucideShield,
+  LucideCircleParking,
+  LucideCar,
+  LucideBike,
+  LucideTruck,
+  LucideNavigation,
+  LucideCrosshair,
+  LucideAlertTriangle,
+  LucideXCircle,
 } from '@lucide/angular';
 
 export const CATEGORIES = [
@@ -254,6 +264,14 @@ export const TOOLS: ReadonlyArray<Tool> = [
         icon: 'map',
         color: 'indigo',
         category: 'Maps'
+    },
+    {
+        id: 'madrid-zbe-map',
+        name: 'Madrid 360 & ZBE Map',
+        description: 'Interactive map of Madrid 360 Low Emission Zones (Distrito Centro, Plaza Elíptica, M-30 ring, cameras & DGT sticker checker).',
+        icon: 'shield-alert',
+        color: 'emerald',
+        category: 'Maps'
     }
 ];
 
@@ -358,6 +376,16 @@ export const USED_ICONS = {
     Layers: LucideLayers,
     Map: LucideMap,
     TrainTrack: LucideTrainTrack,
+    ShieldAlert: LucideShieldAlert,
+    Shield: LucideShield,
+    CircleParking: LucideCircleParking,
+    Car: LucideCar,
+    Bike: LucideBike,
+    Truck: LucideTruck,
+    Navigation: LucideNavigation,
+    Crosshair: LucideCrosshair,
+    AlertTriangle: LucideAlertTriangle,
+    XCircle: LucideXCircle,
 } as const;
 
 export const WHISPER_LANGUAGES = {
