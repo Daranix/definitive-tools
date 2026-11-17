@@ -24,7 +24,7 @@
                     </div>
                 </div>
 
-                @if(isUrlForm(qrForm)) {
+                @if(isFormType(qrForm, 'url')) {
                 <!-- URL Content Form (default view) -->
                 <div id="url-form" class="mb-8">
                     <label for="url" class="block text-gray-700 text-sm font-bold mb-2">Website URL</label>
@@ -40,7 +40,7 @@
                 </div>
                 }
 
-                @if(isTextForm(qrForm)) {
+                @if(isFormType(qrForm, 'text')) {
                     <!-- Text Content Form -->
                     <div id="text-form" class="mb-8">
                         <label for="text-input" class="block text-gray-700 text-sm font-bold mb-2">Text Content</label>
@@ -56,7 +56,7 @@
                     </div>
                 }
 
-                @if(isEmailForm(qrForm)) {
+                @if(isFormType(qrForm, 'email')) {
                 <!-- Email Content Form -->
                 <div id="email-form" class="mb-8">
                     <div class="mb-4">
@@ -95,7 +95,7 @@
                 </div>
                 }
 
-                @if(isPhoneForm(qrForm)) {
+                @if(isFormType(qrForm, 'phone')) {
                 <!-- Phone Content Form -->
                 <div id="phone-form" class="mb-8">
                     <label for="phone-input" class="block text-gray-700 text-sm font-bold mb-2">Phone Number</label>
@@ -110,7 +110,7 @@
                 </div>
                 }
 
-                @if(isSmsForm(qrForm)) {
+                @if(isFormType(qrForm, 'sms')) {
                 <!-- SMS Content Form -->
                 <div id="sms-form" class="mb-8">
                     <div class="mb-4">
@@ -138,7 +138,7 @@
                 </div>
                 }
 
-                @if(isVcardForm(qrForm)) {
+                @if(isFormType(qrForm, 'vcard')) {
                 <!-- vCard Content Form -->
                 <div id="vcard-form" class="mb-8">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -216,7 +216,7 @@
                 </div>
                 }
 
-                @if(isWifiForm(qrForm)) {
+                @if(isFormType(qrForm, 'wifi')) {
                 <!-- WiFi Content Form -->
                 <div id="wifi-form" class="mb-8">
                     <div class="mb-4">
@@ -261,7 +261,7 @@
                 </div>
                 }
 
-                @if(isGeoForm(qrForm)) {
+                @if(isFormType(qrForm, 'geo')) {
                 <!-- Location Content Form -->
                 <div id="geo-form" class="mb-8">
                     <div class="mb-4">

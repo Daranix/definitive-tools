@@ -31,6 +31,11 @@ import {
 } from '@angular/forms/signals';
 import { ToastService } from '@app/services/toast.service';
 
+type QrForm = FieldTree<QrFormModel>;
+type QrField<T extends QrContentType> = FieldTree<
+  Extract<QrFormModel, { contentType: T }>
+>;
+
 const EXTENSIONS = [
   'svg',
   'png',
@@ -244,44 +249,16 @@ export class QrGeneratorComponent {
     await qr.download({ name: 'qr-code', extension: fileExtension });
   }
 
-  // Type guards for discriminated union form elements
-  isUrlForm(f: any): f is FieldTree<Extract<QrFormModel, { contentType: 'url' }>> {
-    return f?.contentType()?.value() === 'url';
-  }
-
-  isTextForm(f: any): f is FieldTree<Extract<QrFormModel, { contentType: 'text' }>> {
-    return f?.contentType()?.value() === 'text';
-  }
-
-  isEmailForm(f: any): f is FieldTree<Extract<QrFormModel, { contentType: 'email' }>> {
-    return f?.contentType()?.value() === 'email';
-  }
-
-  isPhoneForm(f: any): f is FieldTree<Extract<QrFormModel, { contentType: 'phone' }>> {
-    return f?.contentType()?.value() === 'phone';
-  }
-
-  isSmsForm(f: any): f is FieldTree<Extract<QrFormModel, { contentType: 'sms' }>> {
-    return f?.contentType()?.value() === 'sms';
-  }
-
-  isVcardForm(f: any): f is FieldTree<Extract<QrFormModel, { contentType: 'vcard' }>> {
-    return f?.contentType()?.value() === 'vcard';
-  }
-
-  isWifiForm(f: any): f is FieldTree<Extract<QrFormModel, { contentType: 'wifi' }>> {
-    return f?.contentType()?.value() === 'wifi';
-  }
-
-  isGeoForm(f: any): f is FieldTree<Extract<QrFormModel, { contentType: 'geo' }>> {
-    return f?.contentType()?.value() === 'geo';
+  // Type guard for discriminated union form elements
+  isFormType<T extends QrContentType>(f: QrForm, type: T): f is QrForm & QrField<T> {
+    return f.contentType().value() === type;
   }
 
   async getCurrentLocation() {
     try {
       const position = await this.getCurrentLocationPromise();
       const formRef = this.qrForm;
-      if (this.isGeoForm(formRef)) {
+      if (this.isFormType(formRef, 'geo')) {
         formRef.geoLatitude().value.set(position.coords.latitude.toString());
         formRef.geoLongitude().value.set(position.coords.longitude.toString());
       }
