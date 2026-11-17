@@ -1,7 +1,7 @@
 <div class="min-h-screen flex flex-col bg-slate-50">
   <app-top-navbar></app-top-navbar>
 
-  <main class="flex-grow container mx-auto px-4 py-8 max-w-6xl">
+  <main class="grow container mx-auto px-4 py-8 max-w-6xl">
     <!-- Header Section -->
     <div class="text-center mb-6">
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-semibold mb-3">
@@ -25,7 +25,7 @@
             (click)="setScanMode('file')"
             [class.bg-white]="scanMode() === 'file'"
             [class.text-indigo-700]="scanMode() === 'file'"
-            [class.shadow-xs]="scanMode() === 'file'"
+            [class.shadow-2xs]="scanMode() === 'file'"
             [class.text-slate-600]="scanMode() !== 'file'"
             class="flex items-center gap-2 px-5 py-2 text-xs font-semibold rounded-lg transition duration-200 cursor-pointer"
           >
@@ -37,7 +37,7 @@
             (click)="setScanMode('camera')"
             [class.bg-white]="scanMode() === 'camera'"
             [class.text-indigo-700]="scanMode() === 'camera'"
-            [class.shadow-xs]="scanMode() === 'camera'"
+            [class.shadow-2xs]="scanMode() === 'camera'"
             [class.text-slate-600]="scanMode() !== 'camera'"
             class="flex items-center gap-2 px-5 py-2 text-xs font-semibold rounded-lg transition duration-200 cursor-pointer"
           >
@@ -50,9 +50,9 @@
       <!-- CAMERA SCANNER VIEW -->
       @if (scanMode() === 'camera') {
         <div class="max-w-xl mx-auto space-y-4">
-          <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+          <div class="bg-white p-5 rounded-2xl shadow-xs border border-slate-200">
             <!-- Camera Container -->
-            <div class="relative bg-slate-950 rounded-xl overflow-hidden aspect-[4/3] sm:aspect-[16/11] flex items-center justify-center">
+            <div class="relative bg-slate-950 rounded-xl overflow-hidden aspect-4/3 sm:aspect-16/11 flex items-center justify-center">
               <video
                 #videoElement
                 autoplay
@@ -67,7 +67,7 @@
                   <!-- Darkened Mask edges -->
                   <div class="relative w-64 h-64 sm:w-72 sm:h-72 border-2 border-indigo-400/90 rounded-2xl shadow-[0_0_0_9999px_rgba(15,23,42,0.45)]">
                     <!-- Laser scanning beam -->
-                    <div class="absolute left-2 right-2 h-0.5 bg-gradient-to-r from-indigo-500 via-rose-500 to-indigo-500 shadow-[0_0_8px_#6366f1] scanner-laser-line"></div>
+                    <div class="absolute left-2 right-2 h-0.5 bg-linear-to-r from-indigo-500 via-rose-500 to-indigo-500 shadow-[0_0_8px_#6366f1] scanner-laser-line"></div>
 
                     <!-- Target Corner Accents -->
                     <div class="absolute -top-1 -left-1 w-6 h-6 border-t-3 border-l-3 border-indigo-400 rounded-tl-lg"></div>
@@ -169,7 +169,7 @@
       <!-- FILE UPLOAD VIEW -->
       @if (scanMode() === 'file') {
         <div class="max-w-2xl mx-auto space-y-6">
-          <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200">
+          <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-xs border border-slate-200">
             <label class="block text-base font-semibold text-slate-800 mb-3 text-center">
               Upload an image with a QR code
             </label>
@@ -183,7 +183,7 @@
 
             <div class="mt-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 bg-slate-50 p-3 rounded-xl border border-slate-100">
               <span class="flex items-center gap-1.5">
-                <lucide-icon name="info" class="w-4 h-4 text-indigo-500 flex-shrink-0"></lucide-icon>
+                <lucide-icon name="info" class="w-4 h-4 text-indigo-500 shrink-0"></lucide-icon>
                 Formats: PNG, JPG, WEBP, GIF, SVG, BMP (Max 10MB)
               </span>
               <span class="inline-flex items-center gap-1 font-medium text-slate-700 bg-white px-2.5 py-1 rounded-md border border-slate-200 shadow-2xs">
@@ -193,7 +193,7 @@
           </div>
 
           <!-- Try With Sample Buttons -->
-          <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 text-center">
+          <div class="bg-white p-5 rounded-2xl shadow-xs border border-slate-200 text-center">
             <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">
               Or test right now with a sample QR code
             </p>
@@ -240,9 +240,9 @@
     @if (imageSrc()) {
       <div class="space-y-6">
         <!-- Top Toolbar -->
-        <div class="flex flex-wrap items-center justify-between gap-4 bg-white px-5 py-3.5 rounded-2xl border border-slate-200 shadow-sm">
+        <div class="flex flex-wrap items-center justify-between gap-4 bg-white px-5 py-3.5 rounded-2xl border border-slate-200 shadow-xs">
           <div class="flex items-center gap-3 min-w-0">
-            <div class="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center flex-shrink-0 font-bold">
+            <div class="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center shrink-0 font-bold">
               <lucide-icon name="scan-qr-code" class="w-5 h-5"></lucide-icon>
             </div>
             <div class="min-w-0">
@@ -274,7 +274,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           <!-- Left Column: Image Canvas with Detected Box Overlay -->
           <div class="lg:col-span-5 space-y-4">
-            <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
               <div class="flex items-center justify-between mb-3 px-1">
                 <span class="text-xs font-bold text-slate-600 uppercase tracking-wider">
                   Scanned Image
@@ -311,7 +311,7 @@
           <div class="lg:col-span-7 space-y-6">
             @if (scanResult(); as res) {
               <!-- Successful Detection Card -->
-              <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-6">
+              <div class="bg-white rounded-2xl border border-slate-200 shadow-xs p-6 space-y-6">
                 <!-- Header with Category Badge -->
                 <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
                   <div class="flex items-center gap-2.5">
@@ -363,7 +363,7 @@
                         [href]="url.href"
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-blue-600 text-white hover:bg-blue-700 shadow-sm transition-colors"
+                        class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-blue-600 text-white hover:bg-blue-700 shadow-xs transition-colors"
                       >
                         <span>Open Website</span>
                         <lucide-icon name="external-link" class="w-3.5 h-3.5"></lucide-icon>
@@ -457,7 +457,7 @@
                       <button
                         type="button"
                         (click)="downloadVCard()"
-                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-purple-600 text-white hover:bg-purple-700 shadow-sm transition-colors cursor-pointer"
+                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-purple-600 text-white hover:bg-purple-700 shadow-xs transition-colors cursor-pointer"
                       >
                         <lucide-icon name="download" class="w-3.5 h-3.5"></lucide-icon>
                         <span>Save .vcf</span>
@@ -518,7 +518,7 @@
                       </div>
                       <a
                         [href]="res.raw"
-                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-sky-600 text-white hover:bg-sky-700 shadow-sm transition-colors"
+                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-sky-600 text-white hover:bg-sky-700 shadow-xs transition-colors"
                       >
                         <span>Open Mail App</span>
                         <lucide-icon name="external-link" class="w-3.5 h-3.5"></lucide-icon>
@@ -549,7 +549,7 @@
                           [href]="geo.googleMapsUrl"
                           target="_blank"
                           rel="noopener noreferrer"
-                          class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold bg-rose-600 text-white hover:bg-rose-700 shadow-sm transition-colors"
+                          class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold bg-rose-600 text-white hover:bg-rose-700 shadow-xs transition-colors"
                         >
                           <span>Google Maps</span>
                           <lucide-icon name="external-link" class="w-3.5 h-3.5"></lucide-icon>
@@ -577,9 +577,9 @@
 
             <!-- No QR Found Error Alert -->
             @if (noQrFound()) {
-              <div class="bg-white rounded-2xl border border-amber-200 shadow-sm p-6 space-y-4">
+              <div class="bg-white rounded-2xl border border-amber-200 shadow-xs p-6 space-y-4">
                 <div class="flex items-start gap-3">
-                  <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center flex-shrink-0">
+                  <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center shrink-0">
                     <lucide-icon name="info" class="w-5 h-5"></lucide-icon>
                   </div>
                   <div>

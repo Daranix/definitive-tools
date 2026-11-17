@@ -8,7 +8,7 @@
       class="absolute top-20 left-1/2 transform -translate-x-1/2 z-50 bg-red-600/90 text-white text-xs font-medium px-4 py-2.5 rounded-xl shadow-xl backdrop-blur-md flex items-center gap-2.5 max-w-lg animate-in fade-in slide-in-from-top-2"
       role="alert"
     >
-      <lucide-icon name="circle-off" class="w-4 h-4 flex-shrink-0"></lucide-icon>
+      <lucide-icon name="circle-off" class="w-4 h-4 shrink-0"></lucide-icon>
       <span class="flex-1">{{ service.networkError() }}</span>
       <button
         type="button"
@@ -37,7 +37,7 @@
           class="bg-slate-900/90 hover:bg-slate-900/95 text-slate-200 border border-slate-700/80 rounded-2xl sm:rounded-full px-3.5 py-2 sm:py-1.5 shadow-xl backdrop-blur-md flex items-center justify-between gap-2.5 text-[11px]"
         >
           <div class="flex items-center gap-2 min-w-0">
-            <lucide-icon name="alert-triangle" class="w-4 h-4 text-amber-400 flex-shrink-0"></lucide-icon>
+            <lucide-icon name="alert-triangle" class="w-4 h-4 text-amber-400 shrink-0"></lucide-icon>
             <p class="leading-tight text-slate-200">
               <strong>Aviso:</strong> Las delimitaciones, cámaras y normativas son una <span class="text-amber-300 font-semibold">aproximación orientativa</span> y pueden contener fallos. Consulta siempre las ordenanzas oficiales del Ayuntamiento de Madrid y DGT.
             </p>
@@ -45,7 +45,7 @@
           <button
             type="button"
             (click)="dismissDisclaimer()"
-            class="p-1 rounded-full text-slate-400 hover:text-white hover:bg-slate-800 transition-colors flex-shrink-0 cursor-pointer"
+            class="p-1 rounded-full text-slate-400 hover:text-white hover:bg-slate-800 transition-colors shrink-0 cursor-pointer"
             title="Cerrar aviso"
             aria-label="Cerrar aviso"
           >
@@ -71,17 +71,17 @@
       class="hidden sm:flex absolute top-5 right-5 z-20 w-84 lg:w-96 max-h-[calc(100%-2.5rem)] bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl shadow-slate-900/15 border border-slate-200/90 flex-col overflow-hidden pointer-events-auto transition-all duration-300"
     >
       <!-- Panel Header with Segmented Tabs -->
-      <div class="p-2.5 pb-2 border-b border-slate-150 flex items-center justify-between gap-2 flex-shrink-0 bg-slate-50/70">
+      <div class="p-2.5 pb-2 border-b border-slate-150 flex items-center justify-between gap-2 shrink-0 bg-slate-50/70">
         <div class="flex items-center gap-1 p-1 bg-slate-200/70 rounded-2xl flex-1 min-w-0">
           <button
             type="button"
             (click)="selectDesktopTab('layers')"
             [class]="'flex-1 py-1.5 px-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all truncate cursor-pointer ' +
                      (desktopTab() === 'layers' && !isDesktopPanelCollapsed()
-                       ? 'bg-white text-slate-800 shadow-xs'
+                       ? 'bg-white text-slate-800 shadow-2xs'
                        : 'text-slate-600 hover:text-slate-900')"
           >
-            <lucide-icon name="layers" class="w-3.5 h-3.5 flex-shrink-0 text-emerald-600"></lucide-icon>
+            <lucide-icon name="layers" class="w-3.5 h-3.5 shrink-0 text-emerald-600"></lucide-icon>
             <span class="truncate">Capas</span>
           </button>
 
@@ -90,13 +90,13 @@
             (click)="selectDesktopTab('detail')"
             [class]="'flex-1 py-1.5 px-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all truncate cursor-pointer ' +
                      (desktopTab() === 'detail' && !isDesktopPanelCollapsed()
-                       ? 'bg-white text-slate-800 shadow-xs'
+                       ? 'bg-white text-slate-800 shadow-2xs'
                        : 'text-slate-600 hover:text-slate-900')"
           >
-            <lucide-icon name="info" class="w-3.5 h-3.5 flex-shrink-0 text-indigo-600"></lucide-icon>
+            <lucide-icon name="info" class="w-3.5 h-3.5 shrink-0 text-indigo-600"></lucide-icon>
             <span class="truncate">Info Zona</span>
             @if (service.selectedItem()) {
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></span>
             }
           </button>
 
@@ -105,10 +105,10 @@
             (click)="selectDesktopTab('checker')"
             [class]="'flex-1 py-1.5 px-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all truncate cursor-pointer ' +
                      (desktopTab() === 'checker' && !isDesktopPanelCollapsed()
-                       ? 'bg-white text-slate-800 shadow-xs'
+                       ? 'bg-white text-slate-800 shadow-2xs'
                        : 'text-slate-600 hover:text-slate-900')"
           >
-            <lucide-icon name="shield-alert" class="w-3.5 h-3.5 flex-shrink-0 text-amber-600"></lucide-icon>
+            <lucide-icon name="shield-alert" class="w-3.5 h-3.5 shrink-0 text-amber-600"></lucide-icon>
             <span class="truncate">Simulador</span>
           </button>
         </div>
@@ -117,7 +117,7 @@
         <button
           type="button"
           (click)="toggleDesktopPanelCollapse()"
-          class="p-1.5 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors flex-shrink-0 cursor-pointer"
+          class="p-1.5 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors shrink-0 cursor-pointer"
           [title]="isDesktopPanelCollapsed() ? 'Expandir panel' : 'Contraer panel'"
         >
           <lucide-icon
@@ -151,7 +151,7 @@
         <button
           type="button"
           (click)="openMobileLayers()"
-          class="p-2.5 bg-white shadow-lg border border-slate-200 rounded-2xl text-slate-700 hover:text-emerald-600 transition-colors flex-shrink-0"
+          class="p-2.5 bg-white shadow-lg border border-slate-200 rounded-2xl text-slate-700 hover:text-emerald-600 transition-colors shrink-0"
           aria-label="Abrir controles de capas"
         >
           <lucide-icon name="layers" class="w-5 h-5 text-emerald-600"></lucide-icon>
@@ -174,7 +174,7 @@
           (click)="openMobileZones()"
           class="bg-white text-slate-800 hover:text-emerald-600 font-semibold text-xs px-3.5 py-2.5 rounded-full shadow-xl border border-slate-200 flex items-center gap-1.5 transition-transform active:scale-95"
         >
-          <div class="w-3 h-3 rounded-full bg-gradient-to-tr from-red-500 via-amber-500 to-blue-500 flex-shrink-0"></div>
+          <div class="w-3 h-3 rounded-full bg-linear-to-tr from-red-500 via-amber-500 to-blue-500 shrink-0"></div>
           <span>Zonas ZBE</span>
         </button>
 
@@ -210,7 +210,7 @@
       >
         <!-- Drag Handle Area -->
         <div
-          class="w-full py-2.5 flex flex-col items-center justify-center cursor-grab active:cursor-grabbing select-none flex-shrink-0 touch-none"
+          class="w-full py-2.5 flex flex-col items-center justify-center cursor-grab active:cursor-grabbing select-none shrink-0 touch-none"
           (touchstart)="onDrawerTouchStart($event)"
           (touchmove)="onDrawerTouchMove($event)"
           (touchend)="onDrawerTouchEnd()"
@@ -221,7 +221,7 @@
         </div>
 
         <!-- Drawer Header Navigation Tabs -->
-        <div class="flex items-center justify-between gap-2 pb-2.5 mb-2 border-b border-slate-100 flex-shrink-0">
+        <div class="flex items-center justify-between gap-2 pb-2.5 mb-2 border-b border-slate-100 shrink-0">
           <div class="flex items-center gap-1.5 overflow-x-auto">
             @if (service.selectedItem()) {
               <button
@@ -229,7 +229,7 @@
                 (click)="service.openMobileDrawer('detail')"
                 [class]="'text-xs font-bold px-3 py-1.5 rounded-xl transition-colors whitespace-nowrap ' +
                          (service.mobileDrawerTab() === 'detail'
-                           ? 'bg-emerald-600 text-white shadow-xs'
+                           ? 'bg-emerald-600 text-white shadow-2xs'
                            : 'bg-slate-100 text-slate-600 hover:bg-slate-200')"
               >
                 Detalles
@@ -240,7 +240,7 @@
               (click)="service.openMobileDrawer('checker')"
               [class]="'text-xs font-bold px-3 py-1.5 rounded-xl transition-colors whitespace-nowrap ' +
                        (service.mobileDrawerTab() === 'checker'
-                         ? 'bg-emerald-600 text-white shadow-xs'
+                         ? 'bg-emerald-600 text-white shadow-2xs'
                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200')"
             >
               Simulador DGT
@@ -250,7 +250,7 @@
               (click)="service.openMobileDrawer('layers')"
               [class]="'text-xs font-bold px-3 py-1.5 rounded-xl transition-colors whitespace-nowrap ' +
                        (service.mobileDrawerTab() === 'layers'
-                         ? 'bg-emerald-600 text-white shadow-xs'
+                         ? 'bg-emerald-600 text-white shadow-2xs'
                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200')"
             >
               Capas
@@ -260,7 +260,7 @@
               (click)="service.openMobileDrawer('zones')"
               [class]="'text-xs font-bold px-3 py-1.5 rounded-xl transition-colors whitespace-nowrap ' +
                        (service.mobileDrawerTab() === 'zones'
-                         ? 'bg-emerald-600 text-white shadow-xs'
+                         ? 'bg-emerald-600 text-white shadow-2xs'
                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200')"
             >
               Zonas
@@ -270,7 +270,7 @@
           <button
             type="button"
             (click)="closeMobileDrawer()"
-            class="text-slate-400 hover:text-slate-600 p-1 rounded-full hover:bg-slate-100 transition-colors flex-shrink-0"
+            class="text-slate-400 hover:text-slate-600 p-1 rounded-full hover:bg-slate-100 transition-colors shrink-0"
             aria-label="Cerrar panel"
           >
             <lucide-icon name="x" class="w-4 h-4"></lucide-icon>

@@ -8,7 +8,7 @@
       class="absolute top-20 left-1/2 transform -translate-x-1/2 z-50 bg-red-600/90 text-white text-xs font-medium px-4 py-2.5 rounded-xl shadow-xl backdrop-blur-md flex items-center gap-2.5 max-w-lg animate-in fade-in slide-in-from-top-2"
       role="alert"
     >
-      <lucide-icon name="circle-off" class="w-4 h-4 flex-shrink-0"></lucide-icon>
+      <lucide-icon name="circle-off" class="w-4 h-4 shrink-0"></lucide-icon>
       <span class="flex-1">{{ service.networkError() }}</span>
       <button
         type="button"
@@ -37,7 +37,7 @@
           class="bg-slate-900/90 hover:bg-slate-900/95 text-slate-200 border border-slate-700/80 rounded-2xl sm:rounded-full px-3.5 py-2 sm:py-1.5 shadow-xl backdrop-blur-md flex items-center justify-between gap-2.5 text-[11px]"
         >
           <div class="flex items-center gap-2 min-w-0">
-            <lucide-icon name="alert-triangle" class="w-4 h-4 text-amber-400 flex-shrink-0"></lucide-icon>
+            <lucide-icon name="alert-triangle" class="w-4 h-4 text-amber-400 shrink-0"></lucide-icon>
             <p class="leading-tight text-slate-200">
               <strong>Aviso:</strong> Las líneas, paradas y tarifas son una <span class="text-amber-300 font-semibold">aproximación orientativa</span> y pueden contener fallos o variaciones de servicio. Consulta siempre canales oficiales (CRTM / Metro / Renfe).
             </p>
@@ -45,7 +45,7 @@
           <button
             type="button"
             (click)="dismissDisclaimer()"
-            class="p-1 rounded-full text-slate-400 hover:text-white hover:bg-slate-800 transition-colors flex-shrink-0 cursor-pointer"
+            class="p-1 rounded-full text-slate-400 hover:text-white hover:bg-slate-800 transition-colors shrink-0 cursor-pointer"
             title="Cerrar aviso"
             aria-label="Cerrar aviso"
           >
@@ -86,7 +86,7 @@
         <button
           type="button"
           (click)="openMobileLayers()"
-          class="p-2.5 bg-white shadow-lg border border-slate-200 rounded-2xl text-slate-700 hover:text-indigo-600 transition-colors flex-shrink-0"
+          class="p-2.5 bg-white shadow-lg border border-slate-200 rounded-2xl text-slate-700 hover:text-indigo-600 transition-colors shrink-0"
           aria-label="Abrir controles de capas"
         >
           <lucide-icon name="layers" class="w-5 h-5 text-indigo-600"></lucide-icon>
@@ -109,7 +109,7 @@
           (click)="openMobileZones()"
           class="bg-white text-slate-800 hover:text-indigo-600 font-semibold text-xs px-4 py-2.5 rounded-full shadow-xl border border-slate-200 flex items-center gap-2 transition-transform active:scale-95"
         >
-          <div class="w-3.5 h-3.5 rounded bg-gradient-to-tr from-blue-600 to-emerald-500 flex-shrink-0"></div>
+          <div class="w-3.5 h-3.5 rounded-sm bg-linear-to-tr from-blue-600 to-emerald-500 shrink-0"></div>
           <span>Tarifas & Zonas</span>
         </button>
       </div>
@@ -136,7 +136,7 @@
       >
         <!-- Drag Handle Area (touch to drag or click to toggle height) -->
         <div
-          class="w-full py-2.5 flex flex-col items-center justify-center cursor-grab active:cursor-grabbing select-none flex-shrink-0 touch-none"
+          class="w-full py-2.5 flex flex-col items-center justify-center cursor-grab active:cursor-grabbing select-none shrink-0 touch-none"
           (touchstart)="onDrawerTouchStart($event)"
           (touchmove)="onDrawerTouchMove($event)"
           (touchend)="onDrawerTouchEnd()"
@@ -147,7 +147,7 @@
         </div>
 
         <!-- Drawer Header Navigation & Actions -->
-        <div class="flex items-center justify-between gap-2 pb-2.5 mb-2 border-b border-slate-100 flex-shrink-0">
+        <div class="flex items-center justify-between gap-2 pb-2.5 mb-2 border-b border-slate-100 shrink-0">
           <div class="flex items-center gap-1.5 overflow-x-auto">
             @if (service.selectedItem() || service.selectedLine()) {
               <button
@@ -155,7 +155,7 @@
                 (click)="service.openMobileDrawer('detail')"
                 [class]="'text-xs font-bold px-3 py-1.5 rounded-xl transition-colors whitespace-nowrap ' +
                          (service.mobileDrawerTab() === 'detail'
-                           ? 'bg-indigo-600 text-white shadow-xs'
+                           ? 'bg-indigo-600 text-white shadow-2xs'
                            : 'bg-slate-100 text-slate-600 hover:bg-slate-200')"
               >
                 Detalles
@@ -166,7 +166,7 @@
               (click)="service.openMobileDrawer('layers')"
               [class]="'text-xs font-bold px-3 py-1.5 rounded-xl transition-colors whitespace-nowrap ' +
                        (service.mobileDrawerTab() === 'layers'
-                         ? 'bg-indigo-600 text-white shadow-xs'
+                         ? 'bg-indigo-600 text-white shadow-2xs'
                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200')"
             >
               Capas
@@ -176,14 +176,14 @@
               (click)="service.openMobileDrawer('zones')"
               [class]="'text-xs font-bold px-3 py-1.5 rounded-xl transition-colors whitespace-nowrap ' +
                        (service.mobileDrawerTab() === 'zones'
-                         ? 'bg-indigo-600 text-white shadow-xs'
+                         ? 'bg-indigo-600 text-white shadow-2xs'
                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200')"
             >
               Tarifas & Zonas
             </button>
           </div>
 
-          <div class="flex items-center gap-1 flex-shrink-0">
+          <div class="flex items-center gap-1 shrink-0">
             <!-- Expand/Collapse Button -->
             <button
               type="button"

@@ -1,6 +1,6 @@
 <app-top-navbar></app-top-navbar>
 <!-- Main Content -->
-<main class="flex-grow container mx-auto px-4 py-8">
+<main class="grow container mx-auto px-4 py-8">
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <!-- Options Panel -->
         <div class="lg:col-span-2 bg-white rounded-lg shadow-md p-6">
@@ -46,7 +46,7 @@
                         <label for="text-input" class="block text-gray-700 text-sm font-bold mb-2">Text Content</label>
                         <textarea id="text-input" rows="4"
                             [formField]="qrForm.textInput"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500"
                             placeholder="Enter any text you want encoded in the QR code"></textarea>
                         @if (qrForm.textInput().invalid() && qrForm.textInput().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
@@ -62,7 +62,7 @@
                     <div class="mb-4">
                         <label for="email-address" class="block text-gray-700 text-sm font-bold mb-2">Email Address</label>
                         <input type="email" id="email-address" [formField]="qrForm.emailAddress"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500"
                             placeholder="recipient@example.com">
                         @if (qrForm.emailAddress().invalid() && qrForm.emailAddress().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
@@ -73,7 +73,7 @@
                     <div class="mb-4">
                         <label for="email-subject" class="block text-gray-700 text-sm font-bold mb-2">Subject (optional)</label>
                         <input type="text" id="email-subject" [formField]="qrForm.emailSubject!"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500"
                             placeholder="Email subject">
                         @if (qrForm.emailSubject!().invalid() && qrForm.emailSubject!().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
@@ -84,7 +84,7 @@
                     <div>
                         <label for="email-body" class="block text-gray-700 text-sm font-bold mb-2">Body (optional)</label>
                         <textarea id="email-body" rows="4" [formField]="qrForm.emailBody!"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500"
                             placeholder="Email content"></textarea>
                         @if (qrForm.emailBody!().invalid() && qrForm.emailBody!().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
@@ -100,7 +100,7 @@
                 <div id="phone-form" class="mb-8">
                     <label for="phone-input" class="block text-gray-700 text-sm font-bold mb-2">Phone Number</label>
                     <input type="tel" id="phone-input" [formField]="qrForm.phoneNumber"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500"
                         placeholder="+1 555 123 4567">
                     @if (qrForm.phoneNumber().invalid() && qrForm.phoneNumber().touched()) {
                         <span class="text-xs text-red-500 font-medium mt-1 block">
@@ -116,7 +116,7 @@
                     <div class="mb-4">
                         <label for="sms-phone" class="block text-gray-700 text-sm font-bold mb-2">Phone Number</label>
                         <input type="tel" id="sms-phone" [formField]="qrForm.smsPhoneNumber"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500"
                             placeholder="+1 555 123 4567">
                         @if (qrForm.smsPhoneNumber().invalid() && qrForm.smsPhoneNumber().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
@@ -127,7 +127,7 @@
                     <div>
                         <label for="sms-message" class="block text-gray-700 text-sm font-bold mb-2">Message</label>
                         <textarea id="sms-message" rows="4" [formField]="qrForm.smsMessage"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500"
                             placeholder="SMS content"></textarea>
                         @if (qrForm.smsMessage().invalid() && qrForm.smsMessage().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
@@ -145,7 +145,7 @@
                         <div>
                             <label for="vcard-firstname" class="block text-gray-700 text-sm font-bold mb-2">First Name</label>
                             <input type="text" id="vcard-firstname" [formField]="qrForm.vcardFirstName"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500">
                             @if (qrForm.vcardFirstName().invalid() && qrForm.vcardFirstName().touched()) {
                                 <span class="text-xs text-red-500 font-medium mt-1 block">
                                     {{ qrForm.vcardFirstName().errors()[0]?.message || 'First name is required' }}
@@ -155,7 +155,7 @@
                         <div>
                             <label for="vcard-lastname" class="block text-gray-700 text-sm font-bold mb-2">Last Name</label>
                             <input type="text" id="vcard-lastname" [formField]="qrForm.vcardLastName"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500">
                             @if (qrForm.vcardLastName().invalid() && qrForm.vcardLastName().touched()) {
                                 <span class="text-xs text-red-500 font-medium mt-1 block">
                                     {{ qrForm.vcardLastName().errors()[0]?.message || 'Last name is required' }}
@@ -166,7 +166,7 @@
                     <div class="mb-4">
                         <label for="vcard-company" class="block text-gray-700 text-sm font-bold mb-2">Company (optional)</label>
                         <input type="text" id="vcard-company" [formField]="qrForm.vcardCompany!"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500">
                         @if (qrForm.vcardCompany!().invalid() && qrForm.vcardCompany!().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
                                 {{ qrForm.vcardCompany!().errors()[0]?.message }}
@@ -176,7 +176,7 @@
                     <div class="mb-4">
                         <label for="vcard-phone" class="block text-gray-700 text-sm font-bold mb-2">Phone Number</label>
                         <input type="tel" id="vcard-phone" [formField]="qrForm.vcardPhoneNumber"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500">
                         @if (qrForm.vcardPhoneNumber().invalid() && qrForm.vcardPhoneNumber().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
                                 {{ qrForm.vcardPhoneNumber().errors()[0]?.message || 'Phone number is required' }}
@@ -186,7 +186,7 @@
                     <div class="mb-4">
                         <label for="vcard-email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
                         <input type="email" id="vcard-email" [formField]="qrForm.vcardEmail"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500">
                         @if (qrForm.vcardEmail().invalid() && qrForm.vcardEmail().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
                                 {{ qrForm.vcardEmail().errors()[0]?.message || 'Invalid email' }}
@@ -196,7 +196,7 @@
                     <div class="mb-4">
                         <label for="vcard-website" class="block text-gray-700 text-sm font-bold mb-2">Website (optional)</label>
                         <input type="url" id="vcard-website" [formField]="qrForm.vcardWebsite!"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500">
                         @if (qrForm.vcardWebsite!().invalid() && qrForm.vcardWebsite!().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
                                 {{ qrForm.vcardWebsite!().errors()[0]?.message }}
@@ -206,7 +206,7 @@
                     <div>
                         <label for="vcard-address" class="block text-gray-700 text-sm font-bold mb-2">Address (optional)</label>
                         <textarea id="vcard-address" rows="2" [formField]="qrForm.vcardAddress!"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500"></textarea>
                         @if (qrForm.vcardAddress!().invalid() && qrForm.vcardAddress!().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
                                 {{ qrForm.vcardAddress!().errors()[0]?.message }}
@@ -222,7 +222,7 @@
                     <div class="mb-4">
                         <label for="wifi-ssid" class="block text-gray-700 text-sm font-bold mb-2">Network Name (SSID)</label>
                         <input type="text" id="wifi-ssid" [formField]="qrForm.wifiSsid"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500">
                         @if (qrForm.wifiSsid().invalid() && qrForm.wifiSsid().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
                                 {{ qrForm.wifiSsid().errors()[0]?.message || 'Network SSID is required' }}
@@ -250,7 +250,7 @@
                         <div>
                             <label for="wifi-password" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
                             <input type="password" id="wifi-password" [formField]="qrForm.wifiPassword!"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500">
                             @if (qrForm.wifiPassword!().invalid() && qrForm.wifiPassword!().touched()) {
                                 <span class="text-xs text-red-500 font-medium mt-1 block">
                                     {{ qrForm.wifiPassword!().errors()[0]?.message }}
@@ -267,7 +267,7 @@
                     <div class="mb-4">
                         <label for="geo-latitude" class="block text-gray-700 text-sm font-bold mb-2">Latitude</label>
                         <input type="text" id="geo-latitude" [formField]="qrForm.geoLatitude"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500"
                             placeholder="e.g. 37.7749">
                         @if (qrForm.geoLatitude().invalid() && qrForm.geoLatitude().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
@@ -278,7 +278,7 @@
                     <div>
                         <label for="geo-longitude" class="block text-gray-700 text-sm font-bold mb-2">Longitude</label>
                         <input type="text" id="geo-longitude" [formField]="qrForm.geoLongitude"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500"
                             placeholder="e.g. -122.4194">
                         @if (qrForm.geoLongitude().invalid() && qrForm.geoLongitude().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
@@ -408,9 +408,9 @@
                             <label for="fg-color" class="block text-gray-700 text-sm font-bold mb-2">Foreground Color</label>
                             <div class="flex">
                                 <input type="color" id="fg-color" [formField]="qrForm.foregroundColor"
-                                    class="h-10 w-10 rounded border border-gray-300">
+                                    class="h-10 w-10 rounded-sm border border-gray-300">
                                 <input type="text" id="fg-color-hex" [formField]="qrForm.foregroundColor"
-                                    class="flex-1 ml-2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                                    class="flex-1 ml-2 px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500">
                             </div>
                             @if (qrForm.foregroundColor().invalid() && qrForm.foregroundColor().touched()) {
                                 <span class="text-xs text-red-500 font-medium mt-1 block">
@@ -422,9 +422,9 @@
                             <label for="bg-color" class="block text-gray-700 text-sm font-bold mb-2">Background Color</label>
                             <div class="flex">
                                 <input type="color" id="bg-color" [formField]="qrForm.backgroundColor"
-                                    class="h-10 w-10 rounded border border-gray-300">
+                                    class="h-10 w-10 rounded-sm border border-gray-300">
                                 <input type="text" id="bg-color-hex" [formField]="qrForm.backgroundColor"
-                                    class="flex-1 ml-2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                                    class="flex-1 ml-2 px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500">
                             </div>
                             @if (qrForm.backgroundColor().invalid() && qrForm.backgroundColor().touched()) {
                                 <span class="text-xs text-red-500 font-medium mt-1 block">
@@ -437,7 +437,7 @@
 
                 <div class="flex justify-center">
                     <button id="generate-qr" type="submit"
-                        class="bg-indigo-600 text-white font-medium py-3 px-8 rounded-md hover:bg-indigo-700 transition focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        class="bg-indigo-600 text-white font-medium py-3 px-8 rounded-md hover:bg-indigo-700 transition focus:outline-hidden focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                         Generate QR Code
                     </button>
                 </div>
@@ -470,7 +470,7 @@
                             <button
                                 type="button"
                                 (click)="download(extension)"
-                                class="w-full gap-2 bg-indigo-600 text-white font-medium py-2 px-4 rounded hover:bg-indigo-700 transition flex items-center justify-center">
+                                class="w-full gap-2 bg-indigo-600 text-white font-medium py-2 px-4 rounded-sm hover:bg-indigo-700 transition flex items-center justify-center">
                                 <lucide-icon name="download"></lucide-icon> Download as {{ extension | uppercase }}
                             </button>
                         }

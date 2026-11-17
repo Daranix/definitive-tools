@@ -1,7 +1,7 @@
 <div class="min-h-screen flex flex-col bg-gray-50">
   <app-top-navbar></app-top-navbar>
 
-  <main class="flex-grow container mx-auto px-4 py-8 max-w-7xl">
+  <main class="grow container mx-auto px-4 py-8 max-w-7xl">
     <!-- Header -->
     <div class="mb-8 text-center md:text-left">
       <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Client-Side Audio Editor & Multi-Track Studio</h1>
@@ -11,11 +11,11 @@
     </div>
 
     <!-- Mode Switcher Tabs -->
-    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-2 mb-6 flex flex-wrap gap-2">
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-xs p-2 mb-6 flex flex-wrap gap-2">
       <button
         (click)="setEditMode('trim')"
         [ngClass]="{
-          'bg-indigo-600 text-white shadow-sm font-bold': editMode() === 'trim',
+          'bg-indigo-600 text-white shadow-xs font-bold': editMode() === 'trim',
           'bg-gray-50 text-gray-700 hover:bg-gray-100 font-medium': editMode() !== 'trim'
         }"
         class="flex-1 min-w-[140px] py-2.5 px-4 rounded-xl text-xs md:text-sm flex items-center justify-center gap-2 transition">
@@ -26,7 +26,7 @@
       <button
         (click)="setEditMode('remove')"
         [ngClass]="{
-          'bg-rose-600 text-white shadow-sm font-bold': editMode() === 'remove',
+          'bg-rose-600 text-white shadow-xs font-bold': editMode() === 'remove',
           'bg-gray-50 text-gray-700 hover:bg-gray-100 font-medium': editMode() !== 'remove'
         }"
         class="flex-1 min-w-[140px] py-2.5 px-4 rounded-xl text-xs md:text-sm flex items-center justify-center gap-2 transition">
@@ -37,7 +37,7 @@
       <button
         (click)="setEditMode('split')"
         [ngClass]="{
-          'bg-emerald-600 text-white shadow-sm font-bold': editMode() === 'split',
+          'bg-emerald-600 text-white shadow-xs font-bold': editMode() === 'split',
           'bg-gray-50 text-gray-700 hover:bg-gray-100 font-medium': editMode() !== 'split'
         }"
         class="flex-1 min-w-[140px] py-2.5 px-4 rounded-xl text-xs md:text-sm flex items-center justify-center gap-2 transition">
@@ -48,7 +48,7 @@
       <button
         (click)="setEditMode('multitrack')"
         [ngClass]="{
-          'bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-sm font-bold': editMode() === 'multitrack',
+          'bg-linear-to-r from-violet-600 to-indigo-600 text-white shadow-xs font-bold': editMode() === 'multitrack',
           'bg-gray-50 text-gray-700 hover:bg-gray-100 font-medium': editMode() !== 'multitrack'
         }"
         class="flex-1 min-w-[170px] py-2.5 px-4 rounded-xl text-xs md:text-sm flex items-center justify-center gap-2 transition">
@@ -88,7 +88,7 @@
     }
 
     <!-- Execution Console Logger -->
-    <div class="mt-8 bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+    <div class="mt-8 bg-white rounded-2xl border border-gray-100 shadow-xs overflow-hidden">
       <button
         (click)="showLogs.set(!showLogs())"
         class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-50 transition border-b border-gray-50">

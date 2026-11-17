@@ -57,7 +57,7 @@ export const NoticeRenderFn: RenderFunction = (data: Partial<OpenGraphData>) => 
                       type: "h1",
                       props: {
                         children: templateProperties.description.value,
-                        tw: "text-center grow mt-[-0.5rem]",
+                        tw: "text-center grow -mt-2",
                         style: {
                           ...getStylesFromFontOptions(templateProperties.description.fontOptions)
                         }

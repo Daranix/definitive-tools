@@ -1,4 +1,4 @@
-<div class="inline-flex rounded-md shadow-sm">
+<div class="inline-flex rounded-md shadow-xs">
     @for (option of options(); track $index) {
         <button (click)="selectOption(option.value)"
             [attr.data-testid]="'select-btn-' + option.value"

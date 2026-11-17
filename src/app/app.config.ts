@@ -14,7 +14,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { USED_ICONS } from './utils/constants';
 import { provideLucideIcons } from '@lucide/angular';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -23,6 +23,6 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideClientHydration(withEventReplay(), withNoIncrementalHydration()),
-    provideHttpClient(withFetch()),
+    provideHttpClient(),
   ],
 };

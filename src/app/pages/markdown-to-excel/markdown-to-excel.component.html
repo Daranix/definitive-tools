@@ -1,7 +1,7 @@
 <div class="min-h-screen flex flex-col bg-gray-50">
     <app-top-navbar title="Markdown to Excel" icon="file-text" />
 
-    <div class="flex-grow container mx-auto px-4 py-8">
+    <div class="grow container mx-auto px-4 py-8">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         
         <!-- Input Section -->
@@ -21,7 +21,7 @@
             data-testid="md-excel-textarea"
             [(ngModel)]="inputText"
             placeholder="| Column 1 | Column 2 |\n| --- | --- |\n| Row 1 | Row 2 |"
-            class="w-full h-[400px] p-4 bg-white border border-gray-200 rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none font-mono text-sm resize-none transition-all"
+            class="w-full h-[400px] p-4 bg-white border border-gray-200 rounded-xl shadow-xs focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-hidden font-mono text-sm resize-none transition-all"
           ></textarea>
         </div>
 

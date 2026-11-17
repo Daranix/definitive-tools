@@ -1,4 +1,4 @@
-<div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex flex-col gap-4">
+<div class="bg-white rounded-2xl border border-gray-100 shadow-xs p-6 flex flex-col gap-4">
   <div class="flex items-center justify-between border-b border-gray-50 pb-3">
     <div class="flex items-center gap-2">
       <lucide-angular name="sliders" class="h-5 w-5 text-indigo-600"></lucide-angular>
@@ -23,7 +23,7 @@
           type="text"
           [ngModel]="selectedClip()!.name"
           (ngModelChange)="onNameChange($event)"
-          class="text-xs font-bold text-gray-800 py-2 px-3 border border-gray-200 rounded-xl outline-none focus:ring-1 focus:ring-indigo-400" />
+          class="text-xs font-bold text-gray-800 py-2 px-3 border border-gray-200 rounded-xl outline-hidden focus:ring-1 focus:ring-indigo-400" />
       </div>
 
       <!-- Track Assignment -->
@@ -32,7 +32,7 @@
         <select
           [ngModel]="selectedClip()!.trackId"
           (ngModelChange)="onTrackChange($event)"
-          class="text-xs py-2 px-3 border border-gray-200 rounded-xl bg-white outline-none focus:ring-1 focus:ring-indigo-400">
+          class="text-xs py-2 px-3 border border-gray-200 rounded-xl bg-white outline-hidden focus:ring-1 focus:ring-indigo-400">
           @for (t of tracks(); track t.id) {
             <option [value]="t.id">{{ t.name }}</option>
           }
@@ -49,7 +49,7 @@
             min="0"
             [ngModel]="selectedClip()!.timelineOffset"
             (ngModelChange)="onOffsetChange($event)"
-            class="text-xs font-mono py-2 px-3 border border-gray-200 rounded-xl outline-none focus:ring-1 focus:ring-indigo-400" />
+            class="text-xs font-mono py-2 px-3 border border-gray-200 rounded-xl outline-hidden focus:ring-1 focus:ring-indigo-400" />
         </div>
 
         <div class="flex flex-col gap-1.5">
@@ -61,7 +61,7 @@
             step="0.05"
             [ngModel]="selectedClip()!.volume"
             (ngModelChange)="onVolumeChange($event)"
-            class="mt-2.5 h-1.5 bg-gray-200 rounded appearance-none cursor-pointer accent-indigo-600" />
+            class="mt-2.5 h-1.5 bg-gray-200 rounded-sm appearance-none cursor-pointer accent-indigo-600" />
         </div>
       </div>
 
@@ -82,7 +82,7 @@
               [max]="(selectedClip()!.trimEnd - selectedClip()!.trimStart) / 2"
               [ngModel]="selectedClip()!.fadeIn"
               (ngModelChange)="onFadeChange('fadeIn', $event)"
-              class="text-xs font-mono py-1.5 px-2 bg-white border border-gray-200 rounded-lg outline-none focus:ring-1 focus:ring-indigo-400" />
+              class="text-xs font-mono py-1.5 px-2 bg-white border border-gray-200 rounded-lg outline-hidden focus:ring-1 focus:ring-indigo-400" />
           </div>
 
           <div class="flex flex-col gap-1">
@@ -94,7 +94,7 @@
               [max]="(selectedClip()!.trimEnd - selectedClip()!.trimStart) / 2"
               [ngModel]="selectedClip()!.fadeOut"
               (ngModelChange)="onFadeChange('fadeOut', $event)"
-              class="text-xs font-mono py-1.5 px-2 bg-white border border-gray-200 rounded-lg outline-none focus:ring-1 focus:ring-indigo-400" />
+              class="text-xs font-mono py-1.5 px-2 bg-white border border-gray-200 rounded-lg outline-hidden focus:ring-1 focus:ring-indigo-400" />
           </div>
         </div>
 

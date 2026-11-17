@@ -16,7 +16,7 @@
                 <button (click)="backgroundTypeSelected.set(backgroundType.key)" [ngClass]="{ 
                         'bg-indigo-100 text-indigo-700 font-medium': backgroundTypeSelected() === backgroundType.key,
                         'bg-white text-gray-700 border border-gray-300 hover:border-indigo-500 hover:text-indigo-600': backgroundTypeSelected() !== backgroundType.key 
-                    }" class="px-4 py-2 text-sm rounded-md flex-grow">
+                    }" class="px-4 py-2 text-sm rounded-md grow">
                     {{ backgroundType.value }}
                 </button>
             }
@@ -87,7 +87,7 @@
                 {{ BACKGROUND_OVERLAY_PATTERNS_VIEW[gridOverlayPatternData.pattern].label }}
             }
             <ng-template #contextMenuContent>
-                <div class="lg:bg-white z-50 lg:rounded-md lg:border outline-none lg:shadow-md p-4">
+                <div class="lg:bg-white z-50 lg:rounded-md lg:border outline-hidden lg:shadow-md p-4">
                     <app-opengraph-background-overlay-options [(overlayOptions)]="gridOverlayPattern"></app-opengraph-background-overlay-options>
                 </div>
             </ng-template>

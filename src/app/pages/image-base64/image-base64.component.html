@@ -1,7 +1,7 @@
 <div class="min-h-screen flex flex-col bg-gray-50">
   <app-top-navbar></app-top-navbar>
 
-  <main class="flex-grow container mx-auto px-4 py-8 max-w-6xl">
+  <main class="grow container mx-auto px-4 py-8 max-w-6xl">
     <!-- Header Section -->
     <div class="text-center mb-8">
       <h1 data-testid="tool-title" class="text-3xl font-extrabold text-gray-900 tracking-tight sm:text-4xl">
@@ -20,7 +20,7 @@
           data-testid="toggle-encode-btn"
           class="flex items-center space-x-2 px-5 py-2.5 text-sm font-semibold rounded-lg transition duration-200"
           [ngClass]="{
-            'bg-white text-indigo-700 shadow-sm': mode() === 'encode',
+            'bg-white text-indigo-700 shadow-xs': mode() === 'encode',
             'text-gray-600 hover:text-gray-900 hover:bg-gray-200/50': mode() !== 'encode'
           }"
         >
@@ -32,7 +32,7 @@
           data-testid="toggle-decode-btn"
           class="flex items-center space-x-2 px-5 py-2.5 text-sm font-semibold rounded-lg transition duration-200"
           [ngClass]="{
-            'bg-white text-indigo-700 shadow-sm': mode() === 'decode',
+            'bg-white text-indigo-700 shadow-xs': mode() === 'decode',
             'text-gray-600 hover:text-gray-900 hover:bg-gray-200/50': mode() !== 'decode'
           }"
         >
@@ -76,7 +76,7 @@
                   <img
                     [src]="encodedBase64()"
                     alt="Source Preview"
-                    class="max-w-full max-h-[300px] object-contain rounded-lg shadow-sm"
+                    class="max-w-full max-h-[300px] object-contain rounded-lg shadow-xs"
                   />
                   <button
                     (click)="clearEncoder()"
@@ -120,12 +120,12 @@
                   </h3>
                   
                   <!-- Output Format Selector -->
-                  <div class="inline-flex rounded-lg shadow-sm bg-gray-100 p-0.5 border border-gray-200">
+                  <div class="inline-flex rounded-lg shadow-xs bg-gray-100 p-0.5 border border-gray-200">
                     <button
                       (click)="outputFormat.set('dataUri')"
                       class="px-3 py-1.5 text-xs font-semibold rounded-md transition"
                       [ngClass]="{
-                        'bg-white text-indigo-700 shadow-sm': outputFormat() === 'dataUri',
+                        'bg-white text-indigo-700 shadow-xs': outputFormat() === 'dataUri',
                         'text-gray-600 hover:text-gray-900': outputFormat() !== 'dataUri'
                       }"
                     >
@@ -135,7 +135,7 @@
                       (click)="outputFormat.set('raw')"
                       class="px-3 py-1.5 text-xs font-semibold rounded-md transition"
                       [ngClass]="{
-                        'bg-white text-indigo-700 shadow-sm': outputFormat() === 'raw',
+                        'bg-white text-indigo-700 shadow-xs': outputFormat() === 'raw',
                         'text-gray-600 hover:text-gray-900': outputFormat() !== 'raw'
                       }"
                     >
@@ -145,7 +145,7 @@
                       (click)="outputFormat.set('html')"
                       class="px-3 py-1.5 text-xs font-semibold rounded-md transition"
                       [ngClass]="{
-                        'bg-white text-indigo-700 shadow-sm': outputFormat() === 'html',
+                        'bg-white text-indigo-700 shadow-xs': outputFormat() === 'html',
                         'text-gray-600 hover:text-gray-900': outputFormat() !== 'html'
                       }"
                     >
@@ -155,7 +155,7 @@
                       (click)="outputFormat.set('css')"
                       class="px-3 py-1.5 text-xs font-semibold rounded-md transition"
                       [ngClass]="{
-                        'bg-white text-indigo-700 shadow-sm': outputFormat() === 'css',
+                        'bg-white text-indigo-700 shadow-xs': outputFormat() === 'css',
                         'text-gray-600 hover:text-gray-900': outputFormat() !== 'css'
                       }"
                     >
@@ -164,11 +164,11 @@
                   </div>
                 </div>
 
-                <div class="relative flex-grow flex flex-col min-h-[220px]">
+                <div class="relative grow flex flex-col min-h-[220px]">
                   <textarea
                     readonly
                     [value]="formattedOutput()"
-                    class="w-full flex-grow p-4 bg-gray-50 border border-gray-200 rounded-xl font-mono text-xs text-gray-800 focus:outline-none focus:ring-1 focus:ring-indigo-500 overflow-y-auto resize-none h-[220px]"
+                    class="w-full grow p-4 bg-gray-50 border border-gray-200 rounded-xl font-mono text-xs text-gray-800 focus:outline-hidden focus:ring-1 focus:ring-indigo-500 overflow-y-auto resize-none h-[220px]"
                     placeholder="Base64 encoded output will appear here..."
                   ></textarea>
                 </div>
@@ -200,7 +200,7 @@
             <textarea
               [(ngModel)]="base64Input"
               data-testid="base64-textarea"
-              class="w-full h-40 p-4 border border-gray-200 rounded-xl font-mono text-xs focus:ring-indigo-500 focus:border-indigo-500 shadow-sm"
+              class="w-full h-40 p-4 border border-gray-200 rounded-xl font-mono text-xs focus:ring-indigo-500 focus:border-indigo-500 shadow-xs"
               placeholder="Paste Base64 string here (e.g. data:image/png;base64,... or raw Base64)..."
             ></textarea>
           </div>
@@ -254,7 +254,7 @@
                       [src]="decodedImageSrc()"
                       data-testid="decoded-image-preview"
                       alt="Decoded Preview"
-                      class="max-w-full max-h-[300px] object-contain rounded-lg shadow-sm"
+                      class="max-w-full max-h-[300px] object-contain rounded-lg shadow-xs"
                     />
                   </div>
                 </div>
@@ -310,7 +310,7 @@
     </div>
 
     <!-- About Section -->
-    <div class="mt-12 bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm space-y-6">
+    <div class="mt-12 bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-xs space-y-6">
       <div>
         <h2 class="text-xl font-bold text-gray-900 mb-3">About Image Base64 Conversion</h2>
         <p class="text-gray-600 text-sm leading-relaxed">

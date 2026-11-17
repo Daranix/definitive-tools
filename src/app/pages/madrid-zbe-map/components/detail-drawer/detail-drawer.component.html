@@ -10,7 +10,7 @@
       <div class="flex items-start justify-between gap-2 border-b border-slate-100 pb-2.5">
         <div class="flex items-start gap-2.5 min-w-0">
           <div
-            class="w-8 h-8 rounded-xl flex items-center justify-center text-white flex-shrink-0 mt-0.5 shadow-xs"
+            class="w-8 h-8 rounded-xl flex items-center justify-center text-white shrink-0 mt-0.5 shadow-2xs"
             [style.backgroundColor]="zone.color"
           >
             <lucide-icon name="shield-alert" class="w-4 h-4"></lucide-icon>
@@ -37,7 +37,7 @@
           type="button"
           (click)="dismiss()"
           aria-label="Cerrar detalles"
-          class="p-1 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors flex-shrink-0"
+          class="p-1 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors shrink-0"
         >
           <lucide-icon name="x" class="w-4 h-4"></lucide-icon>
         </button>
@@ -59,7 +59,7 @@
           @let rule = zone.dgtRules[b];
           <div class="p-2 rounded-xl border border-slate-150 bg-slate-50/60 flex items-start gap-2 text-left">
             <span
-              [class]="'text-[9px] font-extrabold px-1.5 py-0.5 rounded-md flex-shrink-0 mt-0.5 ' + meta.badgeClass"
+              [class]="'text-[9px] font-extrabold px-1.5 py-0.5 rounded-md shrink-0 mt-0.5 ' + meta.badgeClass"
             >
               {{ meta.label }}
             </span>
@@ -73,7 +73,7 @@
       <!-- Legal & Sanction Notice -->
       <div class="p-2.5 rounded-xl bg-red-50/70 border border-red-200/80 text-[11px] text-red-900 space-y-0.5">
         <div class="font-bold flex items-center gap-1.5 text-red-700">
-          <lucide-icon name="alert-triangle" class="w-3.5 h-3.5 flex-shrink-0"></lucide-icon>
+          <lucide-icon name="alert-triangle" class="w-3.5 h-3.5 shrink-0"></lucide-icon>
           <span>Sanción por acceso no autorizado: 200 €</span>
         </div>
         <p class="text-[10px] text-red-800/90 leading-tight">
@@ -86,7 +86,7 @@
         <button
           type="button"
           (click)="flyToCoordinates(zone.center, zone.zoom ?? 14)"
-          class="w-full py-2 px-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs rounded-xl shadow-xs flex items-center justify-center gap-2 transition-colors"
+          class="w-full py-2 px-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs rounded-xl shadow-2xs flex items-center justify-center gap-2 transition-colors"
         >
           <lucide-icon name="crosshair" class="w-3.5 h-3.5"></lucide-icon>
           <span>Centrar Zona en el Mapa</span>
@@ -98,7 +98,7 @@
     @else if (isCamera() && cameraData(); as camera) {
       <div class="flex items-start justify-between gap-2 border-b border-slate-100 pb-2.5">
         <div class="flex items-start gap-2.5 min-w-0">
-          <div class="w-8 h-8 rounded-xl bg-sky-500 text-white flex items-center justify-center flex-shrink-0 mt-0.5 shadow-xs">
+          <div class="w-8 h-8 rounded-xl bg-sky-500 text-white flex items-center justify-center shrink-0 mt-0.5 shadow-2xs">
             <lucide-icon name="camera" class="w-4 h-4"></lucide-icon>
           </div>
           <div class="min-w-0">
@@ -116,7 +116,7 @@
           type="button"
           (click)="dismiss()"
           aria-label="Cerrar detalles"
-          class="p-1 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors flex-shrink-0"
+          class="p-1 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors shrink-0"
         >
           <lucide-icon name="x" class="w-4 h-4"></lucide-icon>
         </button>
@@ -160,7 +160,7 @@
       <button
         type="button"
         (click)="flyToCoordinates(camera.coordinates, 16.5)"
-        class="w-full py-2 px-3 bg-sky-600 hover:bg-sky-700 text-white font-semibold text-xs rounded-xl shadow-xs flex items-center justify-center gap-2 transition-colors"
+        class="w-full py-2 px-3 bg-sky-600 hover:bg-sky-700 text-white font-semibold text-xs rounded-xl shadow-2xs flex items-center justify-center gap-2 transition-colors"
       >
         <lucide-icon name="crosshair" class="w-3.5 h-3.5"></lucide-icon>
         <span>Acercar Cámara</span>
@@ -171,7 +171,7 @@
     @else if (isParking() && parkingData(); as parking) {
       <div class="flex items-start justify-between gap-2 border-b border-slate-100 pb-2.5">
         <div class="flex items-start gap-2.5 min-w-0">
-          <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center flex-shrink-0 mt-0.5 shadow-xs">
+          <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 mt-0.5 shadow-2xs">
             <lucide-icon name="circle-parking" class="w-4 h-4"></lucide-icon>
           </div>
           <div class="min-w-0">
@@ -188,7 +188,7 @@
           type="button"
           (click)="dismiss()"
           aria-label="Cerrar detalles"
-          class="p-1 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors flex-shrink-0"
+          class="p-1 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors shrink-0"
         >
           <lucide-icon name="x" class="w-4 h-4"></lucide-icon>
         </button>
@@ -226,7 +226,7 @@
       <button
         type="button"
         (click)="flyToCoordinates(parking.coordinates, 16)"
-        class="w-full py-2 px-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs rounded-xl shadow-xs flex items-center justify-center gap-2 transition-colors"
+        class="w-full py-2 px-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs rounded-xl shadow-2xs flex items-center justify-center gap-2 transition-colors"
       >
         <lucide-icon name="crosshair" class="w-3.5 h-3.5"></lucide-icon>
         <span>Acercar Aparcamiento</span>
@@ -235,7 +235,7 @@
 
     <!-- Disclaimer Footnote -->
     <div class="pt-2 border-t border-slate-100 flex items-start gap-1.5 text-[10px] text-slate-400">
-      <lucide-icon name="alert-triangle" class="w-3.5 h-3.5 text-amber-500/80 flex-shrink-0 mt-0.5"></lucide-icon>
+      <lucide-icon name="alert-triangle" class="w-3.5 h-3.5 text-amber-500/80 shrink-0 mt-0.5"></lucide-icon>
       <span class="leading-tight">
         <strong>Aviso:</strong> Las delimitaciones, cámaras y normativas son una aproximación orientativa y pueden contener fallos. Consulta siempre la normativa oficial del Ayuntamiento de Madrid y DGT.
       </span>
@@ -244,7 +244,7 @@
 } @else {
   <!-- Placeholder when nothing is selected -->
   <div class="p-6 text-center text-xs text-slate-500 space-y-2">
-    <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto shadow-xs">
+    <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto shadow-2xs">
       <lucide-icon name="info" class="w-5 h-5"></lucide-icon>
     </div>
     <p class="font-bold text-slate-800 text-sm">Información de Zonas ZBE</p>

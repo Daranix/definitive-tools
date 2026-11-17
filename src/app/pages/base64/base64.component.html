@@ -1,12 +1,12 @@
 <div class="min-h-screen flex flex-col bg-gray-100">
     <app-top-navbar></app-top-navbar>
-    <main class="flex-grow container mx-auto px-4 py-8">
+    <main class="grow container mx-auto px-4 py-8">
         <!-- Content of Base64 page -->
         <div class="bg-white rounded-lg shadow-md p-6">
             <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Base64 Encoder/Decoder</h2>
 
             <div class="flex justify-center mb-6">
-                <div class="inline-flex rounded-md shadow-sm">
+                <div class="inline-flex rounded-md shadow-xs">
                     <button (click)="mode.set('encode')"
                         data-testid="mode-encode-btn"
                         class="px-4 py-2 text-sm font-medium rounded-l-md border border-gray-300"
@@ -30,18 +30,18 @@
                 [ngModel]="inputText()" 
                 (ngModelChange)="inputText.set($event)"
                 [placeholder]="mode() === 'encode' ? 'Enter text to encode as Base64...' : 'Enter Base64 to decode...'"
-                class="w-full h-48 p-4 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                class="w-full h-48 p-4 border border-gray-300 rounded-md shadow-xs focus:ring-indigo-500 focus:border-indigo-500"
             ></textarea>
             </div>
 
             <div class="flex justify-center space-x-4 mb-6">
                 <button (click)="handleProcess()"
-                    class="bg-indigo-700 text-white font-medium py-2 px-6 rounded hover:bg-indigo-800 transition flex items-center gap-2">
+                    class="bg-indigo-700 text-white font-medium py-2 px-6 rounded-sm hover:bg-indigo-800 transition flex items-center gap-2">
                     {{ mode() === 'encode' ? 'Encode to Base64' : 'Decode from Base64' }}
                 </button>
                 <button (click)="handleSwap()"
                     data-testid="swap-btn"
-                    class="bg-white border border-indigo-700 text-indigo-700 font-medium py-2 px-4 rounded hover:bg-indigo-50 transition flex items-center gap-2"
+                    class="bg-white border border-indigo-700 text-indigo-700 font-medium py-2 px-4 rounded-sm hover:bg-indigo-50 transition flex items-center gap-2"
                     [disabled]="!outputText()">
                     <lucide-angular name="arrow-right-left" class="h-5 w-5"></lucide-angular>
                     Swap
@@ -53,13 +53,13 @@
                     {{ mode() === 'encode' ? 'Base64 Output' : 'Decoded Text' }}
                 </label>
                 <textarea id="output" [(ngModel)]="outputText" readonly
-                    class="w-full h-48 p-4 bg-gray-50 border border-gray-300 rounded-md shadow-sm"
+                    class="w-full h-48 p-4 bg-gray-50 border border-gray-300 rounded-md shadow-xs"
                     [placeholder]="mode() === 'encode' ? 'Base64 output will appear here...' : 'Decoded text will appear here...'"></textarea>
             </div>
 
             <div class="mt-4 flex justify-end">
                 <button (click)="handleCopy()" [disabled]="!outputText()"
-                    class="bg-indigo-600 text-white font-medium py-2 px-4 rounded hover:bg-indigo-700 transition disabled:bg-indigo-300">
+                    class="bg-indigo-600 text-white font-medium py-2 px-4 rounded-sm hover:bg-indigo-700 transition disabled:bg-indigo-300">
                     Copy to Clipboard
                 </button>
             </div>

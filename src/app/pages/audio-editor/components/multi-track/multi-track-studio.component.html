@@ -2,37 +2,37 @@
   <!-- Studio Master Transport Bar Wrapper with Right Fade Mask on Mobile -->
   <div class="relative group/transport">
     <!-- Right Gradient Fade Indicator (Mobile only) -->
-    <div class="pointer-events-none absolute top-0 right-0 bottom-0 w-8 bg-gradient-to-l from-slate-900 via-slate-900/80 to-transparent z-10 sm:hidden rounded-r-2xl"></div>
+    <div class="pointer-events-none absolute top-0 right-0 bottom-0 w-8 bg-linear-to-l from-slate-900 via-slate-900/80 to-transparent z-10 sm:hidden rounded-r-2xl"></div>
 
     <!-- Studio Master Transport Bar -->
     <div class="bg-slate-900 text-white rounded-2xl border border-slate-800 shadow-md p-3.5 flex items-center justify-between gap-3 overflow-x-auto select-none timeline-scroll-container">
     <!-- 1. Playback Controls -->
-    <div class="flex items-center gap-2 flex-shrink-0">
+    <div class="flex items-center gap-2 shrink-0">
       <button
         (click)="togglePlay()"
         [disabled]="exporting() || timelineClips().length === 0"
-        class="flex items-center justify-center gap-2 px-3 py-2 w-[130px] flex-shrink-0 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-bold shadow transition disabled:opacity-40">
+        class="flex items-center justify-center gap-2 px-3 py-2 w-[130px] shrink-0 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-bold shadow-sm transition disabled:opacity-40">
         @if (timelinePlaying()) {
-          <lucide-angular name="pause" class="h-4 w-4 flex-shrink-0"></lucide-angular>
+          <lucide-angular name="pause" class="h-4 w-4 shrink-0"></lucide-angular>
           <span class="w-11 text-left">Pause</span>
         } @else {
-          <lucide-angular name="play" class="h-4 w-4 flex-shrink-0"></lucide-angular>
+          <lucide-angular name="play" class="h-4 w-4 shrink-0"></lucide-angular>
           <span class="w-11 text-left">Play</span>
         }
-        <span class="text-[10px] opacity-70 font-mono flex-shrink-0">[Space]</span>
+        <span class="text-[10px] opacity-70 font-mono shrink-0">[Space]</span>
       </button>
 
       <button
         (click)="stop()"
         [disabled]="exporting()"
-        class="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl transition flex-shrink-0"
+        class="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl transition shrink-0"
         title="Stop & Rewind to Start">
         <lucide-angular name="square" class="h-4 w-4"></lucide-angular>
       </button>
 
       <!-- Exact Tabular Width Time Display (Zero pixel fluctuation) -->
-      <div class="flex items-center gap-1.5 font-mono text-xs bg-slate-950 px-3 py-2 rounded-xl border border-slate-800 flex-shrink-0 min-w-[150px] justify-center tabular-nums">
-        <lucide-angular name="clock" class="h-3.5 w-3.5 text-yellow-400 flex-shrink-0"></lucide-angular>
+      <div class="flex items-center gap-1.5 font-mono text-xs bg-slate-950 px-3 py-2 rounded-xl border border-slate-800 shrink-0 min-w-[150px] justify-center tabular-nums">
+        <lucide-angular name="clock" class="h-3.5 w-3.5 text-yellow-400 shrink-0"></lucide-angular>
         <span class="text-white font-bold w-[48px] text-right tabular-nums">{{ formatTime(timelineCurrentTime()) }}</span>
         <span class="text-slate-500">/</span>
         <span class="text-slate-400 w-[48px] text-left tabular-nums">{{ formatTime(timelineTotalDuration()) }}</span>
@@ -40,14 +40,14 @@
     </div>
 
     <!-- 2. Studio Editing Tools (Pointer vs Razor Tool) -->
-    <div class="flex items-center gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800 flex-shrink-0">
+    <div class="flex items-center gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800 shrink-0">
       <button
         (click)="activeTool.set('pointer')"
         [ngClass]="{
-          'bg-indigo-600 text-white shadow-sm font-bold': activeTool() === 'pointer',
+          'bg-indigo-600 text-white shadow-xs font-bold': activeTool() === 'pointer',
           'text-slate-400 hover:text-white hover:bg-slate-800': activeTool() !== 'pointer'
         }"
-        class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition font-medium flex-shrink-0"
+        class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition font-medium shrink-0"
         title="Pointer Tool (Select & Move)">
         <lucide-angular name="mouse-pointer" class="h-3.5 w-3.5"></lucide-angular>
         Select
@@ -56,10 +56,10 @@
       <button
         (click)="activeTool.set('razor')"
         [ngClass]="{
-          'bg-rose-600 text-white shadow-sm font-bold ring-1 ring-rose-400': activeTool() === 'razor',
+          'bg-rose-600 text-white shadow-xs font-bold ring-1 ring-rose-400': activeTool() === 'razor',
           'text-slate-400 hover:text-white hover:bg-slate-800': activeTool() !== 'razor'
         }"
-        class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition font-medium flex-shrink-0"
+        class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition font-medium shrink-0"
         title="Razor Tool (Click on any clip to slice it)">
         <lucide-angular name="scissors" class="h-3.5 w-3.5"></lucide-angular>
         Cut on Click
@@ -68,7 +68,7 @@
       <button
         (click)="splitSelectedClipAtPlayhead()"
         [disabled]="!selectedClip()"
-        class="flex items-center gap-1 px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg text-xs transition disabled:opacity-40 flex-shrink-0"
+        class="flex items-center gap-1 px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg text-xs transition disabled:opacity-40 shrink-0"
         title="Split selected clip at playhead position (Shortcut: S)">
         <lucide-angular name="split" class="h-3.5 w-3.5"></lucide-angular>
         Cut Playhead <span class="font-mono text-[10px] text-slate-400">[S]</span>
@@ -76,17 +76,17 @@
     </div>
 
     <!-- 3. Add Track, Volume & Zoom Actions -->
-    <div class="flex items-center gap-2.5 flex-shrink-0">
+    <div class="flex items-center gap-2.5 shrink-0">
       <button
         (click)="addTrack()"
         [disabled]="exporting()"
-        class="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-semibold border border-slate-700 transition flex-shrink-0">
+        class="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-semibold border border-slate-700 transition shrink-0">
         <lucide-angular name="plus" class="h-3.5 w-3.5"></lucide-angular>
         Add Track
       </button>
 
       <!-- Master Volume -->
-      <div class="flex items-center gap-1.5 bg-slate-800/80 px-2.5 py-1.5 rounded-xl border border-slate-700/60 flex-shrink-0">
+      <div class="flex items-center gap-1.5 bg-slate-800/80 px-2.5 py-1.5 rounded-xl border border-slate-700/60 shrink-0">
         <lucide-angular name="volume-2" class="h-3.5 w-3.5 text-slate-400"></lucide-angular>
         <input
           type="range"
@@ -102,11 +102,11 @@
       </div>
 
       <!-- Zoom Controls (1x to 32x) -->
-      <div class="flex items-center gap-1 bg-slate-800/80 rounded-xl p-1 border border-slate-700/60 flex-shrink-0">
+      <div class="flex items-center gap-1 bg-slate-800/80 rounded-xl p-1 border border-slate-700/60 shrink-0">
         <button
           (click)="zoomOut()"
           [disabled]="zoom() <= 1"
-          class="p-1 text-slate-400 hover:text-white disabled:opacity-30 rounded hover:bg-slate-700 transition"
+          class="p-1 text-slate-400 hover:text-white disabled:opacity-30 rounded-sm hover:bg-slate-700 transition"
           title="Zoom Out">
           <lucide-angular name="zoom-out" class="h-3.5 w-3.5"></lucide-angular>
         </button>
@@ -127,7 +127,7 @@
         <button
           (click)="zoomIn()"
           [disabled]="zoom() >= 32"
-          class="p-1 text-slate-400 hover:text-white disabled:opacity-30 rounded hover:bg-slate-700 transition"
+          class="p-1 text-slate-400 hover:text-white disabled:opacity-30 rounded-sm hover:bg-slate-700 transition"
           title="Zoom In">
           <lucide-angular name="zoom-in" class="h-3.5 w-3.5"></lucide-angular>
         </button>
@@ -135,7 +135,7 @@
         @if (zoom() > 1) {
           <button
             (click)="resetZoom()"
-            class="text-[10px] px-1.5 py-0.5 bg-slate-700 hover:bg-slate-600 text-slate-300 rounded font-medium transition">
+            class="text-[10px] px-1.5 py-0.5 bg-slate-700 hover:bg-slate-600 text-slate-300 rounded-sm font-medium transition">
             1x
           </button>
         }
@@ -153,7 +153,7 @@
         <!-- Timeline Ruler Header (Aligned with track lanes) -->
         <div class="flex border-b border-slate-800 bg-slate-900/90 select-none">
           <!-- Track Control Spacer -->
-          <div class="w-48 sm:w-56 p-2.5 flex items-center justify-between border-r border-slate-800 flex-shrink-0 text-slate-400 text-xs font-bold uppercase tracking-wider">
+          <div class="w-48 sm:w-56 p-2.5 flex items-center justify-between border-r border-slate-800 shrink-0 text-slate-400 text-xs font-bold uppercase tracking-wider">
             <span>Tracks ({{ tracks().length }})</span>
             <span class="text-[10px] font-normal text-slate-500">Vol / Solo</span>
           </div>
@@ -162,7 +162,7 @@
           <div
             #timelineContainer
             (wheel)="onTimelineWheel($event)"
-            class="flex-grow overflow-x-auto overflow-y-hidden timeline-scroll-container relative h-10 cursor-pointer"
+            class="grow overflow-x-auto overflow-y-hidden timeline-scroll-container relative h-10 cursor-pointer"
             (click)="seek($event.offsetX / ($any($event.target).scrollWidth || 1) * timelineTotalDuration())">
             
             <div
@@ -184,7 +184,7 @@
               <div
                 class="absolute top-0 bottom-0 w-0.5 bg-yellow-400 z-30 pointer-events-none shadow-[0_0_8px_rgba(250,204,21,0.8)]"
                 [style.left.%]="(timelineCurrentTime() / timelineTotalDuration()) * 100">
-                <div class="w-3 h-3 bg-yellow-400 rotate-45 -ml-[5px] -mt-1 rounded-xs"></div>
+                <div class="w-3 h-3 bg-yellow-400 rotate-45 ml-[-5px] -mt-1 rounded-xs"></div>
               </div>
             </div>
           </div>
@@ -195,15 +195,15 @@
           @for (track of tracks(); track track.id; let tIdx = $index) {
             <div class="flex bg-slate-900/40 hover:bg-slate-900/70 transition-colors group">
               <!-- Left: Track Controls Panel -->
-              <div class="w-48 sm:w-56 p-3 border-r border-slate-800 flex-shrink-0 flex flex-col justify-between gap-2 bg-slate-900/90 select-none">
+              <div class="w-48 sm:w-56 p-3 border-r border-slate-800 shrink-0 flex flex-col justify-between gap-2 bg-slate-900/90 select-none">
                 <div class="flex items-center justify-between gap-1.5">
                   <div class="flex items-center gap-1.5 truncate">
-                    <span class="w-2.5 h-2.5 rounded-full flex-shrink-0" [style.backgroundColor]="track.color"></span>
+                    <span class="w-2.5 h-2.5 rounded-full shrink-0" [style.backgroundColor]="track.color"></span>
                     <input
                       type="text"
                       [ngModel]="track.name"
                       (ngModelChange)="setTrackName(track.id, $event)"
-                      class="text-xs font-bold text-slate-200 bg-transparent hover:bg-slate-800/80 px-1 py-0.5 rounded outline-none focus:ring-1 focus:ring-indigo-400 w-24 sm:w-28 truncate" />
+                      class="text-xs font-bold text-slate-200 bg-transparent hover:bg-slate-800/80 px-1 py-0.5 rounded-sm outline-hidden focus:ring-1 focus:ring-indigo-400 w-24 sm:w-28 truncate" />
                   </div>
 
                   <div class="flex items-center gap-1">
@@ -214,7 +214,7 @@
                         'bg-rose-600 text-white font-bold': track.muted,
                         'bg-slate-800 text-slate-400 hover:text-white': !track.muted
                       }"
-                      class="w-5 h-5 rounded text-[10px] flex items-center justify-center transition"
+                      class="w-5 h-5 rounded-sm text-[10px] flex items-center justify-center transition"
                       title="Mute Track">
                       M
                     </button>
@@ -226,7 +226,7 @@
                         'bg-amber-500 text-black font-bold': track.solo,
                         'bg-slate-800 text-slate-400 hover:text-white': !track.solo
                       }"
-                      class="w-5 h-5 rounded text-[10px] flex items-center justify-center transition"
+                      class="w-5 h-5 rounded-sm text-[10px] flex items-center justify-center transition"
                       title="Solo Track">
                       S
                     </button>
@@ -235,7 +235,7 @@
                     @if (tracks().length > 1) {
                       <button
                         (click)="removeTrack(track.id)"
-                        class="p-1 text-slate-500 hover:text-rose-400 rounded transition"
+                        class="p-1 text-slate-500 hover:text-rose-400 rounded-sm transition"
                         title="Delete Track">
                         <lucide-angular name="trash-2" class="h-3 w-3"></lucide-angular>
                       </button>
@@ -245,7 +245,7 @@
 
                 <div class="flex items-center justify-between gap-2">
                   <!-- Track Volume -->
-                  <div class="flex items-center gap-1.5 flex-grow">
+                  <div class="flex items-center gap-1.5 grow">
                     <lucide-angular name="volume-1" class="h-3 w-3 text-slate-500"></lucide-angular>
                     <input
                       type="range"
@@ -254,7 +254,7 @@
                       step="0.05"
                       [ngModel]="track.volume"
                       (ngModelChange)="setTrackVolume(track.id, $event)"
-                      class="w-full h-1 bg-slate-800 rounded appearance-none cursor-pointer accent-indigo-500" />
+                      class="w-full h-1 bg-slate-800 rounded-sm appearance-none cursor-pointer accent-indigo-500" />
                   </div>
 
                   <!-- Add File Input Button -->
@@ -280,7 +280,7 @@
                 [ngClass]="{
                   'ring-2 ring-indigo-400 ring-inset bg-indigo-950/60': draggingOverTrackId() === track.id
                 }"
-                class="flex-grow overflow-x-auto overflow-y-hidden timeline-scroll-container relative timeline-track-lane transition-all"
+                class="grow overflow-x-auto overflow-y-hidden timeline-scroll-container relative timeline-track-lane transition-all"
                 (click)="selectedClipId.set(null)">
                 <div
                   class="h-full relative min-h-[84px]"
@@ -320,25 +320,25 @@
           <div class="flex items-center gap-3">
             <span>Total Active Clips: <strong class="text-slate-200">{{ timelineClips().length }}</strong></span>
             @if (activeTool() === 'razor') {
-              <span class="text-rose-400 font-semibold bg-rose-950/60 px-2 py-0.5 rounded border border-rose-800">
+              <span class="text-rose-400 font-semibold bg-rose-950/60 px-2 py-0.5 rounded-sm border border-rose-800">
                 ✂ Razor Mode: Click on any clip where you want to cut
               </span>
             }
           </div>
           <div class="flex items-center gap-2 font-mono text-[11px] text-slate-400">
-            <span class="bg-slate-800 px-1.5 py-0.5 rounded text-slate-300">Space</span> Play/Pause
-            <span class="bg-slate-800 px-1.5 py-0.5 rounded text-slate-300 ml-1.5">S</span> Split Playhead
-            <span class="bg-slate-800 px-1.5 py-0.5 rounded text-slate-300 ml-1.5">Del</span> Delete
-            <span class="bg-slate-800 px-1.5 py-0.5 rounded text-slate-300 ml-1.5">Wheel</span> Zoom (1x - 32x)
+            <span class="bg-slate-800 px-1.5 py-0.5 rounded-sm text-slate-300">Space</span> Play/Pause
+            <span class="bg-slate-800 px-1.5 py-0.5 rounded-sm text-slate-300 ml-1.5">S</span> Split Playhead
+            <span class="bg-slate-800 px-1.5 py-0.5 rounded-sm text-slate-300 ml-1.5">Del</span> Delete
+            <span class="bg-slate-800 px-1.5 py-0.5 rounded-sm text-slate-300 ml-1.5">Wheel</span> Zoom (1x - 32x)
           </div>
         </div>
       </div>
 
       <!-- Master Mix Result Card -->
       @if (outputBlob() && !exporting()) {
-        <div class="bg-emerald-50/80 rounded-2xl border border-emerald-100 shadow-sm p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="bg-emerald-50/80 rounded-2xl border border-emerald-100 shadow-xs p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div class="flex items-center gap-4">
-            <div class="p-2.5 bg-emerald-500/10 text-emerald-600 rounded-xl flex-shrink-0">
+            <div class="p-2.5 bg-emerald-500/10 text-emerald-600 rounded-xl shrink-0">
               <lucide-angular name="check-circle" class="h-6 w-6"></lucide-angular>
             </div>
             <div>
@@ -350,7 +350,7 @@
           </div>
           <button
             (click)="handleDownload()"
-            class="w-full sm:w-auto px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl shadow transition flex items-center justify-center gap-2 text-sm font-bold">
+            class="w-full sm:w-auto px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl shadow-sm transition flex items-center justify-center gap-2 text-sm font-bold">
             <lucide-angular name="download" class="h-4 w-4"></lucide-angular>
             Download Master Audio
           </button>
@@ -359,9 +359,9 @@
 
       <!-- Export Progress Bar -->
       @if (exporting()) {
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-xs p-5">
           <div class="flex items-center gap-3 mb-3">
-            <div class="w-5 h-5 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin flex-shrink-0"></div>
+            <div class="w-5 h-5 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin shrink-0"></div>
             <div class="flex flex-col">
               <span class="text-sm font-semibold text-gray-700">Rendering Master Mixdown...</span>
               @if (currentExportStep()) {
@@ -369,12 +369,12 @@
               }
             </div>
             @if (progress() > 0) {
-              <span class="ml-auto text-xs font-mono font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">{{ progress() }}%</span>
+              <span class="ml-auto text-xs font-mono font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-sm">{{ progress() }}%</span>
             }
           </div>
           <div class="h-1.5 bg-gray-100 rounded-full overflow-hidden">
             <div
-              class="h-full bg-gradient-to-r from-indigo-500 to-violet-500 rounded-full transition-all duration-300"
+              class="h-full bg-linear-to-r from-indigo-500 to-violet-500 rounded-full transition-all duration-300"
               [style.width.%]="progress() || 50">
             </div>
           </div>
@@ -398,7 +398,7 @@
       </app-clip-inspector>
 
       <!-- Master Export Settings Card -->
-      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex flex-col gap-4">
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-xs p-6 flex flex-col gap-4">
         <h3 class="text-lg font-bold text-gray-900 border-b border-gray-50 pb-3">Master Mixdown Export</h3>
 
         <!-- Format picker -->
@@ -410,7 +410,7 @@
                 (click)="targetFormat.set(fmt)"
                 [disabled]="exporting()"
                 [ngClass]="{
-                  'bg-indigo-600 text-white shadow-sm border-indigo-600': targetFormat() === fmt,
+                  'bg-indigo-600 text-white shadow-xs border-indigo-600': targetFormat() === fmt,
                   'bg-white text-gray-700 border-gray-200 hover:bg-gray-50': targetFormat() !== fmt
                 }"
                 class="py-2 px-2 text-xs font-semibold rounded-xl border text-center transition uppercase disabled:opacity-50">
@@ -424,7 +424,7 @@
         <button
           (click)="handleExportMaster()"
           [disabled]="exporting() || timelineClips().length === 0"
-          class="w-full py-3.5 px-6 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white rounded-2xl shadow-md hover:shadow-lg transition flex items-center justify-center gap-3 text-sm font-bold disabled:opacity-50 disabled:cursor-not-allowed">
+          class="w-full py-3.5 px-6 bg-linear-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white rounded-2xl shadow-md hover:shadow-lg transition flex items-center justify-center gap-3 text-sm font-bold disabled:opacity-50 disabled:cursor-not-allowed">
           @if (exporting()) {
             <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
             Rendering Mix...
