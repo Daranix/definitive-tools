@@ -1,7 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { z } from 'zod';
-import { customErrorMap } from './utils/custom-zod-error-mapper';
 import { ToastComponent } from './components/toast/toast.component';
 
 @Component({
@@ -15,7 +13,12 @@ export class AppComponent {
   title = 'definitive-tools';
 
   constructor() {
-    // Set the custom error map as the default
-    z.setErrorMap(customErrorMap);
+    // Lazily register the custom error map so Zod stays out of the initial bundle
+    void Promise.all([
+      import('zod'),
+      import('./utils/custom-zod-error-mapper'),
+    ]).then(([{ config }, { customErrorMap }]) => {
+      config({ customError: customErrorMap });
+    });
   }
 }

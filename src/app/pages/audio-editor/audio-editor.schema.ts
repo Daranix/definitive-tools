@@ -1,4 +1,4 @@
-import z from "zod";
+import { z } from "zod";
 
 export const AUDIO_FORMATS = ['mp3', 'wav', 'ogg', 'aac', 'flac'] as const;
 export type AudioFormat = typeof AUDIO_FORMATS[number];
