@@ -32,6 +32,11 @@ export const routes: Routes = [
             { path: 'madrid-zbe-map', loadComponent: () => import('./pages/madrid-zbe-map/madrid-zbe-map.component').then(m => m.MadridZbeMapComponent), data: { id: 'madrid-zbe-map' } },
             { path: 'madrid-360', redirectTo: 'madrid-zbe-map' },
             { path: 'madrid-360-map', redirectTo: 'madrid-zbe-map' },
+            { path: 'regla-de-tres', loadComponent: () => import('./pages/calculator/rule-of-three/rule-of-three.component').then(m => m.RuleOfThreeComponent), data: { id: 'regla-de-tres' } },
+            { path: 'salario-neto-espana', loadComponent: () => import('./pages/calculator/spain-net-salary/spain-net-salary.component').then(m => m.SpainNetSalaryComponent), data: { id: 'salario-neto-espana' } },
+            { path: 'indemnizacion-despido-espana', loadComponent: () => import('./pages/calculator/spain-severance/spain-severance.component').then(m => m.SpainSeveranceComponent), data: { id: 'indemnizacion-despido-espana' } },
+            { path: 'calculadora-hipoteca', loadComponent: () => import('./pages/calculator/mortgage/mortgage.component').then(m => m.MortgageComponent), data: { id: 'calculadora-hipoteca' } },
+            { path: 'calculadora-cientifica', loadComponent: () => import('./pages/calculator/scientific/scientific.component').then(m => m.ScientificComponent), data: { id: 'calculadora-cientifica' } },
         ],
         component: BaseComponent
     },

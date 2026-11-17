@@ -2,10 +2,13 @@ import {
   LucideArchive,
   LucideArrowRightLeft,
   LucideAtSign,
+  LucideBadgeEuro,
   LucideBolt,
   LucideBookmark,
   LucideBookOpen,
+  LucideBriefcase,
   LucideBus,
+  LucideCalculator,
   LucideCamera,
   LucideCaseUpper,
   LucideCheck,
@@ -18,6 +21,7 @@ import {
   LucideCode,
   LucideColumns2,
   LucideCopy,
+  LucideDivide,
   LucideDownload,
   LucideExternalLink,
   LucideEye,
@@ -108,6 +112,7 @@ export const CATEGORIES = [
   'Text Tools',
   'Media Tools',
   'Maps',
+  'Calculadora',
 ] as const;
 export type ToolCategory = (typeof CATEGORIES)[number];
 
@@ -272,6 +277,46 @@ export const TOOLS: ReadonlyArray<Tool> = [
         icon: 'shield-alert',
         color: 'emerald',
         category: 'Maps'
+    },
+    {
+        id: 'regla-de-tres',
+        name: 'Regla de 3',
+        description: 'Calcula reglas de tres simples directas, inversas y compuestas con desglose paso a paso.',
+        icon: 'divide',
+        color: 'indigo',
+        category: 'Calculadora'
+    },
+    {
+        id: 'salario-neto-espana',
+        name: 'Salario Neto España',
+        description: 'Estima tu sueldo neto anual y mensual en España con cotizaciones a la Seguridad Social e IRPF.',
+        icon: 'badge-euro',
+        color: 'indigo',
+        category: 'Calculadora'
+    },
+    {
+        id: 'indemnizacion-despido-espana',
+        name: 'Indemnización por Despido',
+        description: 'Calcula la indemnización laboral en España según tipo de despido, antigüedad y reforma de 2012.',
+        icon: 'briefcase',
+        color: 'indigo',
+        category: 'Calculadora'
+    },
+    {
+        id: 'calculadora-hipoteca',
+        name: 'Calculadora de Hipotecas',
+        description: 'Simula la cuota mensual, TAE efectiva, intereses totales y cuadro de amortización francés.',
+        icon: 'house',
+        color: 'indigo',
+        category: 'Calculadora'
+    },
+    {
+        id: 'calculadora-cientifica',
+        name: 'Calculadora Científica',
+        description: 'Realiza cálculos científicos de alta precisión con trigonometría, logaritmos, potencias y memoria.',
+        icon: 'calculator',
+        color: 'indigo',
+        category: 'Calculadora'
     }
 ];
 
@@ -386,6 +431,10 @@ export const USED_ICONS = {
     Crosshair: LucideCrosshair,
     AlertTriangle: LucideAlertTriangle,
     XCircle: LucideXCircle,
+    BadgeEuro: LucideBadgeEuro,
+    Briefcase: LucideBriefcase,
+    Calculator: LucideCalculator,
+    Divide: LucideDivide,
 } as const;
 
 export const WHISPER_LANGUAGES = {

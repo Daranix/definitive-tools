@@ -1,0 +1,405 @@
+<div class="min-h-screen flex flex-col bg-gray-50">
+  <app-top-navbar></app-top-navbar>
+
+  <main class="grow container mx-auto px-4 py-8 max-w-6xl">
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-semibold mb-3">
+        <lucide-icon name="badge-euro" class="w-3.5 h-3.5"></lucide-icon>
+        <span>Nómina España 2026 (IRPF + Seguridad Social)</span>
+      </div>
+      <h1 data-testid="tool-title" class="text-3xl font-extrabold text-slate-900 tracking-tight sm:text-4xl">
+        Calculadora de Salario Neto España 2026
+      </h1>
+      <p class="mt-2 max-w-2xl mx-auto text-base text-slate-600">
+        Estima tu sueldo neto mensual y anual con cotizaciones a la Seguridad Social 2026, cuota de solidaridad, MEI y retención de IRPF.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <!-- Left: Inputs -->
+      <section class="lg:col-span-5 bg-white rounded-2xl border border-slate-200 shadow-xs p-6 space-y-5">
+        <h2 class="text-base font-bold text-slate-900">Datos salariales y personales</h2>
+
+        <!-- Gross Annual -->
+        <div>
+          <div class="flex justify-between items-center mb-1.5">
+            <label for="salary-gross-annual" class="text-xs font-semibold text-slate-700">
+              Salario bruto anual (€)
+            </label>
+            <span class="text-xs font-bold text-indigo-600">{{ formatEur(salaryModel().grossAnnual ?? 0) }}</span>
+          </div>
+          <input
+            id="salary-gross-annual"
+            data-testid="salary-gross-input"
+            type="number"
+            step="500"
+            [formField]="salaryForm.grossAnnual"
+            class="w-full px-3.5 py-2.5 text-sm font-semibold rounded-xl border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+          />
+          @if (salaryForm.grossAnnual().invalid() && (salaryForm.grossAnnual().touched() || salaryForm.grossAnnual().dirty())) {
+            <span class="text-xs text-rose-600 font-medium mt-1 block">
+              {{ salaryForm.grossAnnual().errors()[0]?.message }}
+            </span>
+          }
+          <input
+            aria-label="Selector deslizante salario bruto anual"
+            type="range"
+            min="12000"
+            max="150000"
+            step="1000"
+            [value]="clampedSliderGross()"
+            (input)="onGrossSliderInput($any($event.target).value)"
+            class="w-full mt-2 accent-indigo-600 cursor-pointer"
+          />
+        </div>
+
+        <!-- Extra Payments & Contract -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="salary-extra-payments" class="block text-xs font-semibold text-slate-700 mb-1.5">
+              Número de pagas extra
+            </label>
+            <input
+              id="salary-extra-payments"
+              data-testid="salary-extra-payments-input"
+              type="number"
+              step="1"
+              [formField]="salaryForm.extraPayments"
+              class="w-full px-3 py-2 text-sm font-semibold rounded-xl border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+            />
+            <span class="text-[11px] text-slate-500 mt-1 block">
+              0 = 12 pagas, 2 = 14 pagas · Total: {{ totalPayments() }} pagas/año
+            </span>
+            @if (salaryForm.extraPayments().invalid() && (salaryForm.extraPayments().touched() || salaryForm.extraPayments().dirty())) {
+              <span class="text-xs text-rose-600 font-medium mt-1 block">
+                {{ salaryForm.extraPayments().errors()[0]?.message }}
+              </span>
+            }
+          </div>
+
+          <div>
+            <label for="salary-contract-type" class="block text-xs font-semibold text-slate-700 mb-1.5">
+              Tipo de contrato
+            </label>
+            <select
+              id="salary-contract-type"
+              data-testid="salary-contract-select"
+              [formField]="salaryForm.contractType"
+              class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+            >
+              <option value="indefinite">Indefinido (1,55 % desempleo)</option>
+              <option value="temporary">Temporal (1,60 % desempleo)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Region & Age -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="salary-region" class="block text-xs font-semibold text-slate-700 mb-1.5">
+              Comunidad Autónoma
+            </label>
+            <select
+              id="salary-region"
+              data-testid="salary-region-select"
+              [formField]="salaryForm.region"
+              class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+            >
+              <option value="general">Referencia general</option>
+              <option value="madrid">Comunidad de Madrid</option>
+              <option value="cataluna">Cataluña</option>
+              <option value="andalucia">Andalucía</option>
+              <option value="valencia">Comunidad Valenciana</option>
+              <option value="galicia">Galicia</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="salary-age" class="block text-xs font-semibold text-slate-700 mb-1.5">
+              Tramo de edad
+            </label>
+            <select
+              id="salary-age"
+              data-testid="salary-age-select"
+              [formField]="salaryForm.ageBracket"
+              class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+            >
+              <option value="under65">Menor de 65 años</option>
+              <option value="65to74">De 65 a 74 años</option>
+              <option value="75plus">75 años o más</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Family Situation & Disability -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="salary-family" class="block text-xs font-semibold text-slate-700 mb-1.5">
+              Situación familiar
+            </label>
+            <select
+              id="salary-family"
+              data-testid="salary-family-select"
+              [formField]="salaryForm.familySituation"
+              class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+            >
+              <option value="single">Soltero/a, viudo/a o divorciado/a</option>
+              <option value="married_low_income">Casado/a (cónyuge &lt; 1.500 €/año)</option>
+              <option value="other">Casado/a (otras situaciones)</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="salary-disability" class="block text-xs font-semibold text-slate-700 mb-1.5">
+              Discapacidad
+            </label>
+            <select
+              id="salary-disability"
+              data-testid="salary-disability-select"
+              [formField]="salaryForm.disability"
+              class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+            >
+              <option value="none">Sin discapacidad</option>
+              <option value="33to64">Grado del 33 % al 64 %</option>
+              <option value="65plus">Grado del 65 % o superior</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Children -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="salary-children-total" class="block text-xs font-semibold text-slate-700 mb-1.5">
+              Hijos a cargo (0–10)
+            </label>
+            <input
+              id="salary-children-total"
+              data-testid="salary-children-input"
+              type="number"
+              step="1"
+              [formField]="salaryForm.childrenTotal"
+              (input)="onChildrenTotalInput()"
+              class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+            />
+            @if (salaryForm.childrenTotal().invalid() && (salaryForm.childrenTotal().touched() || salaryForm.childrenTotal().dirty())) {
+              <span class="text-xs text-rose-600 font-medium mt-1 block">
+                {{ salaryForm.childrenTotal().errors()[0]?.message }}
+              </span>
+            }
+          </div>
+
+          <div>
+            <label for="salary-children-under3" class="block text-xs font-semibold text-slate-700 mb-1.5">
+              Menores de 3 años
+            </label>
+            <input
+              id="salary-children-under3"
+              data-testid="salary-children-under3-input"
+              type="number"
+              step="1"
+              [formField]="salaryForm.childrenUnder3"
+              class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 bg-white disabled:bg-slate-100 disabled:text-slate-400 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+            />
+            @if (salaryForm.childrenUnder3().invalid() && (salaryForm.childrenUnder3().touched() || salaryForm.childrenUnder3().dirty())) {
+              <span class="text-xs text-rose-600 font-medium mt-1 block">
+                {{ salaryForm.childrenUnder3().errors()[0]?.message }}
+              </span>
+            }
+          </div>
+        </div>
+
+        <!-- Checkboxes -->
+        <div class="flex flex-col gap-2.5 pt-1">
+          @if ((salaryModel().childrenTotal ?? 0) > 0) {
+            <label class="inline-flex items-center gap-2.5 text-xs sm:text-sm text-slate-700 cursor-pointer">
+              <input
+                type="checkbox"
+                data-testid="salary-shared-custody"
+                [formField]="salaryForm.sharedCustody"
+                class="w-4 h-4 rounded-sm border-slate-300 text-indigo-600 focus:ring-indigo-500"
+              />
+              <span>Descendientes prorrateados al 50 % (custodia compartida o dos declarantes)</span>
+            </label>
+          }
+
+          <label class="inline-flex items-center gap-2.5 text-xs sm:text-sm text-slate-700 cursor-pointer">
+            <input
+              type="checkbox"
+              data-testid="salary-mobility"
+              [formField]="salaryForm.geographicMobility"
+              class="w-4 h-4 rounded-sm border-slate-300 text-indigo-600 focus:ring-indigo-500"
+            />
+            <span>Movilidad geográfica (+2.000 € de gasto deducible)</span>
+          </label>
+        </div>
+      </section>
+
+      <!-- Right: KPIs & Breakdown -->
+      <section class="lg:col-span-7 space-y-5">
+        @if (result(); as res) {
+          @if (res.ok) {
+            <!-- KPI Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="rounded-2xl bg-linear-to-br from-indigo-600 to-indigo-800 text-white p-5 shadow-md">
+                <p class="text-xs font-semibold uppercase tracking-wider text-indigo-200">
+                  Salario neto mensual ({{ res.data.totalPayments }} pagas)
+                </p>
+                <div data-testid="salary-net-monthly" class="text-3xl sm:text-4xl font-extrabold mt-1">
+                  {{ formatEur(res.data.netMonthly) }}
+                </div>
+                @if ((salaryModel().extraPayments ?? 0) > 0) {
+                  <p class="text-xs text-indigo-100 mt-2">
+                    + {{ salaryModel().extraPayments }} {{ salaryModel().extraPayments === 1 ? 'paga extra' : 'pagas extra' }} de {{ formatEur(res.data.extraPayment) }}
+                  </p>
+                }
+              </div>
+
+              <div class="bg-white rounded-2xl border border-slate-200 shadow-xs p-5 flex flex-col justify-between">
+                <div>
+                  <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                    Salario neto anual
+                  </p>
+                  <div data-testid="salary-net-annual" class="text-3xl font-extrabold text-slate-900 mt-1">
+                    {{ formatEur(res.data.netAnnual) }}
+                  </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3 mt-4 pt-3 border-t border-slate-100 text-xs">
+                  <div>
+                    <span class="text-slate-500 block">Retención IRPF</span>
+                    <span data-testid="salary-irpf-percent" class="font-bold text-amber-700 text-sm">
+                      {{ formatPct(res.data.effectiveIrpfPercent) }}
+                    </span>
+                  </div>
+                  <div>
+                    <span class="text-slate-500 block">Seguridad Social</span>
+                    <span data-testid="salary-ss-annual" class="font-bold text-indigo-700 text-sm">
+                      {{ formatEur(res.data.ssAnnual) }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Visual Stacked Distribution Bar -->
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-xs p-5">
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="text-sm font-bold text-slate-900">Distribución del salario bruto</h3>
+                <span class="text-xs font-semibold text-slate-500">Bruto: {{ formatEur(res.data.grossAnnual) }}</span>
+              </div>
+
+              <div class="h-4 w-full rounded-full bg-slate-100 overflow-hidden flex">
+                <div
+                  class="bg-emerald-500 h-full transition-all duration-300"
+                  [style.width.%]="res.data.netPercent"
+                ></div>
+                <div
+                  class="bg-amber-400 h-full transition-all duration-300"
+                  [style.width.%]="res.data.irpfPercentOfGross"
+                ></div>
+                <div
+                  class="bg-indigo-600 h-full transition-all duration-300"
+                  [style.width.%]="res.data.ssPercentOfGross"
+                ></div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-3 text-xs">
+                <div class="flex items-center justify-between sm:justify-start gap-2">
+                  <span class="inline-flex items-center gap-1.5 text-slate-700 font-medium">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                    Neto
+                  </span>
+                  <span class="font-bold text-slate-900">{{ formatPct(res.data.netPercent) }}</span>
+                </div>
+                <div class="flex items-center justify-between sm:justify-start gap-2">
+                  <span class="inline-flex items-center gap-1.5 text-slate-700 font-medium">
+                    <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+                    IRPF
+                  </span>
+                  <span class="font-bold text-slate-900">{{ formatPct(res.data.irpfPercentOfGross) }}</span>
+                </div>
+                <div class="flex items-center justify-between sm:justify-start gap-2">
+                  <span class="inline-flex items-center gap-1.5 text-slate-700 font-medium">
+                    <span class="w-2.5 h-2.5 rounded-full bg-indigo-600"></span>
+                    Seg. Social
+                  </span>
+                  <span class="font-bold text-slate-900">{{ formatPct(res.data.ssPercentOfGross) }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Detailed Breakdown Table -->
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+              <div class="px-5 py-4 border-b border-slate-200">
+                <h3 class="text-sm font-bold text-slate-900">Desglose anual y mensual</h3>
+              </div>
+              <table class="w-full text-xs sm:text-sm text-left">
+                <thead class="bg-slate-50 text-slate-600 font-semibold border-b border-slate-200">
+                  <tr>
+                    <th class="px-4 py-3">Concepto</th>
+                    <th class="px-4 py-3 text-right">Anual</th>
+                    <th class="px-4 py-3 text-right">Por paga ({{ res.data.totalPayments }})</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                  <tr>
+                    <td class="px-4 py-2.5 font-semibold text-slate-800">Salario bruto</td>
+                    <td class="px-4 py-2.5 text-right font-semibold text-slate-900">{{ formatEur(res.data.grossAnnual) }}</td>
+                    <td class="px-4 py-2.5 text-right text-slate-700">{{ formatEur(res.data.grossAnnual / res.data.totalPayments) }}</td>
+                  </tr>
+                  <tr>
+                    <td class="px-4 py-2.5 text-slate-700">
+                      Seguridad Social (base {{ formatEur(res.data.ssBreakdown.contributionBase) }})
+                      @if (res.data.solidarityAnnual > 0) {
+                        <span class="block text-[11px] text-indigo-600">
+                          Incluye {{ formatEur(res.data.solidarityAnnual) }} de cuota de solidaridad 2026
+                        </span>
+                      }
+                    </td>
+                    <td class="px-4 py-2.5 text-right text-indigo-700 font-medium">−{{ formatEur(res.data.ssAnnual) }}</td>
+                    <td class="px-4 py-2.5 text-right text-indigo-700">−{{ formatEur(res.data.ssMonthly) }}</td>
+                  </tr>
+                  <tr>
+                    <td class="px-4 py-2.5 text-slate-700">
+                      IRPF estimado ({{ formatPct(res.data.effectiveIrpfPercent) }})
+                      <span class="block text-[11px] text-slate-500">
+                        Base liquidable: {{ formatEur(res.data.taxableBase) }} · Mínimo personal/familiar: {{ formatEur(res.data.personalMinimum) }}
+                      </span>
+                      @if (res.data.art20Reduction > 0) {
+                        <span class="block text-[11px] text-emerald-700">
+                          Reducción rendimientos trabajo (Art. 20): {{ formatEur(res.data.art20Reduction) }}
+                        </span>
+                      }
+                    </td>
+                    <td class="px-4 py-2.5 text-right text-amber-700 font-medium">−{{ formatEur(res.data.irpfAnnual) }}</td>
+                    <td class="px-4 py-2.5 text-right text-amber-700">−{{ formatEur(res.data.irpfMonthly) }}</td>
+                  </tr>
+                  <tr class="bg-emerald-50/60">
+                    <td class="px-4 py-3 font-bold text-slate-900">Salario neto percibido</td>
+                    <td class="px-4 py-3 text-right font-extrabold text-emerald-700">{{ formatEur(res.data.netAnnual) }}</td>
+                    <td class="px-4 py-3 text-right font-extrabold text-emerald-700">{{ formatEur(res.data.netMonthly) }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Disclaimer -->
+            <div class="rounded-2xl bg-slate-100 border border-slate-200 p-4 text-xs text-slate-600 flex items-start gap-2.5">
+              <lucide-icon name="info" class="w-4 h-4 text-slate-500 shrink-0 mt-0.5"></lucide-icon>
+              <p>
+                Cálculo orientativo basado en las tablas de referencia del IRPF y las bases y cuota de solidaridad de la Seguridad Social para 2026 (base máxima 5.101,20 €/mes y MEI del 0,15 %). No sustituye al algoritmo oficial de retenciones de la AEAT ni contempla deducciones específicas adicionales.
+              </p>
+            </div>
+          } @else {
+            <div data-testid="salary-error-message" class="bg-rose-50 border border-rose-200 text-rose-800 rounded-2xl p-5 flex items-start gap-3">
+              <lucide-icon name="alert-triangle" class="w-5 h-5 shrink-0 text-rose-600 mt-0.5"></lucide-icon>
+              <span>{{ res.error }}</span>
+            </div>
+          }
+        }
+      </section>
+    </div>
+  </main>
+
+  <app-footer></app-footer>
+</div>

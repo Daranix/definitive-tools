@@ -34,6 +34,8 @@
     "@ffmpeg/util": "^0.12.2",
     "@huggingface/transformers": "^4.2.0",
     "@lucide/angular": "^1.23.0",
+    "date-fns": "^4.4.0",
+    "decimal.js": "^10.6.0",
     "express": "^4.21.2",
     "front-matter": "^4.0.2",
     "highlight.js": "^11.11.1",

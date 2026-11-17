@@ -1,0 +1,300 @@
+<div class="min-h-screen flex flex-col bg-gray-50">
+  <app-top-navbar></app-top-navbar>
+
+  <main class="grow container mx-auto px-4 py-8 max-w-6xl">
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-semibold mb-3">
+        <lucide-icon name="briefcase" class="w-3.5 h-3.5"></lucide-icon>
+        <span>Estatuto de los Trabajadores · Reforma 2012</span>
+      </div>
+      <h1 data-testid="tool-title" class="text-3xl font-extrabold text-slate-900 tracking-tight sm:text-4xl">
+        Calculadora de Indemnización por Despido
+      </h1>
+      <p class="mt-2 max-w-2xl mx-auto text-base text-slate-600">
+        Calcula la indemnización laboral en España con prorrateo mensual del Tribunal Supremo, tramo mixto 45/33 días, topes legales y límite exento de IRPF.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <!-- Left: Inputs -->
+      <section class="lg:col-span-5 bg-white rounded-2xl border border-slate-200 shadow-xs p-6 space-y-5">
+        <h2 class="text-base font-bold text-slate-900">Datos de la relación laboral</h2>
+
+        <!-- Dates -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="sev-start-date" class="block text-xs font-semibold text-slate-700 mb-1.5">
+              Fecha de inicio de contrato
+            </label>
+            <input
+              id="sev-start-date"
+              data-testid="sev-start-date"
+              type="date"
+              [formField]="severanceForm.startDate"
+              class="w-full px-3 py-2.5 text-sm rounded-xl border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+            />
+            @if (severanceForm.startDate().invalid() && (severanceForm.startDate().touched() || severanceForm.startDate().dirty())) {
+              <span class="text-xs text-rose-600 font-medium mt-1 block">
+                {{ severanceForm.startDate().errors()[0]?.message }}
+              </span>
+            }
+          </div>
+
+          <div>
+            <label for="sev-end-date" class="block text-xs font-semibold text-slate-700 mb-1.5">
+              Fecha de despido / fin
+            </label>
+            <input
+              id="sev-end-date"
+              data-testid="sev-end-date"
+              type="date"
+              [formField]="severanceForm.endDate"
+              class="w-full px-3 py-2.5 text-sm rounded-xl border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+            />
+            @if (severanceForm.endDate().invalid() && (severanceForm.endDate().touched() || severanceForm.endDate().dirty())) {
+              <span class="text-xs text-rose-600 font-medium mt-1 block">
+                {{ severanceForm.endDate().errors()[0]?.message }}
+              </span>
+            }
+          </div>
+        </div>
+
+        <!-- Salary Mode Toggle -->
+        <div>
+          <span class="block text-xs font-semibold text-slate-700 mb-1.5">Modo de salario bruto</span>
+          <div class="grid grid-cols-2 gap-1.5 bg-slate-100 p-1 rounded-xl">
+            <button
+              type="button"
+              data-testid="sev-salary-mode-annual"
+              (click)="onSalaryModeChange('annual')"
+              [class]="severanceModel().salaryMode === 'annual'
+                ? 'py-2 text-xs font-bold rounded-lg bg-white text-indigo-700 shadow-xs cursor-pointer'
+                : 'py-2 text-xs font-semibold rounded-lg text-slate-600 cursor-pointer'"
+            >
+              Bruto anual
+            </button>
+            <button
+              type="button"
+              data-testid="sev-salary-mode-monthly"
+              (click)="onSalaryModeChange('monthly')"
+              [class]="severanceModel().salaryMode === 'monthly'
+                ? 'py-2 text-xs font-bold rounded-lg bg-white text-indigo-700 shadow-xs cursor-pointer'
+                : 'py-2 text-xs font-semibold rounded-lg text-slate-600 cursor-pointer'"
+            >
+              Bruto mensual
+            </button>
+          </div>
+        </div>
+
+        <!-- Salary Amount & Extra Payments -->
+        <div class="grid grid-cols-1 sm:grid-cols-12 gap-4">
+          <div [class]="severanceModel().salaryMode === 'monthly' ? 'sm:col-span-7' : 'sm:col-span-12'">
+            <label for="sev-salary-amount" class="block text-xs font-semibold text-slate-700 mb-1.5">
+              {{ severanceModel().salaryMode === 'annual' ? 'Salario bruto anual (€)' : 'Salario bruto mensual (€)' }}
+            </label>
+            <input
+              id="sev-salary-amount"
+              data-testid="sev-salary-amount"
+              type="number"
+              step="100"
+              [formField]="severanceForm.salaryAmount"
+              class="w-full px-3.5 py-2.5 text-sm font-semibold rounded-xl border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+            />
+            @if (severanceForm.salaryAmount().invalid() && (severanceForm.salaryAmount().touched() || severanceForm.salaryAmount().dirty())) {
+              <span class="text-xs text-rose-600 font-medium mt-1 block">
+                {{ severanceForm.salaryAmount().errors()[0]?.message }}
+              </span>
+            }
+          </div>
+
+          @if (severanceModel().salaryMode === 'monthly') {
+            <div class="sm:col-span-5">
+              <label for="sev-extra-payments" class="block text-xs font-semibold text-slate-700 mb-1.5">
+                Número de pagas extra
+              </label>
+              <input
+                id="sev-extra-payments"
+                data-testid="sev-extra-payments-input"
+                type="number"
+                step="1"
+                [formField]="severanceForm.extraPayments"
+                class="w-full px-3 py-2.5 text-sm font-semibold rounded-xl border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+              />
+              <span class="text-[11px] text-slate-500 mt-1 block">
+                0 = 12 pagas, 2 = 14 pagas · Total: {{ totalPayments() }} pagas/año
+              </span>
+              @if (severanceForm.extraPayments().invalid() && (severanceForm.extraPayments().touched() || severanceForm.extraPayments().dirty())) {
+                <span class="text-xs text-rose-600 font-medium mt-1 block">
+                  {{ severanceForm.extraPayments().errors()[0]?.message }}
+                </span>
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Dismissal Type -->
+        <div>
+          <label for="sev-dismissal-type" class="block text-xs font-semibold text-slate-700 mb-1.5">
+            Tipo de extinción o despido
+          </label>
+          <select
+            id="sev-dismissal-type"
+            data-testid="sev-dismissal-select"
+            [formField]="severanceForm.dismissalType"
+            class="w-full px-3 py-2.5 text-sm rounded-xl border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+          >
+            <option value="unfair">Despido improcedente (45 / 33 días)</option>
+            <option value="objective">Despido objetivo o ERE procedente (20 días)</option>
+            <option value="modification">Modificación sustancial o traslado (20 días)</option>
+            <option value="temporary_end">Fin de contrato temporal (12 días)</option>
+            <option value="disciplinary">Despido disciplinario procedente (0 días)</option>
+          </select>
+          <p class="text-[11px] text-slate-500 mt-1.5">{{ dismissalLabel(severanceModel().dismissalType) }}</p>
+        </div>
+      </section>
+
+      <!-- Right: KPIs & Details -->
+      <section class="lg:col-span-7 space-y-5">
+        @if (result(); as res) {
+          @if (res.ok) {
+            <!-- Primary KPI -->
+            <div class="rounded-2xl bg-linear-to-br from-indigo-600 to-indigo-800 text-white p-6 shadow-md">
+              <p class="text-xs font-semibold uppercase tracking-wider text-indigo-200">
+                Indemnización total estimada
+              </p>
+              <div data-testid="sev-total-amount" class="text-4xl font-extrabold tracking-tight mt-1">
+                {{ formatEur(res.data.severanceAmount) }}
+              </div>
+
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-5 border-t border-white/15">
+                <div>
+                  <p class="text-[11px] uppercase tracking-wider text-indigo-200">Días indemnizados</p>
+                  <p data-testid="sev-total-days" class="text-sm font-bold mt-0.5">
+                    {{ formatNum(res.data.totalDaysFinal, 2) }} días
+                  </p>
+                </div>
+                <div>
+                  <p class="text-[11px] uppercase tracking-wider text-indigo-200">Salario diario</p>
+                  <p data-testid="sev-daily-salary" class="text-sm font-bold mt-0.5">
+                    {{ formatEur(res.data.dailySalary) }}
+                  </p>
+                </div>
+                <div>
+                  <p class="text-[11px] uppercase tracking-wider text-indigo-200">Antigüedad</p>
+                  <p data-testid="sev-tenure" class="text-sm font-bold mt-0.5">
+                    {{ res.data.tenureYears }}a {{ res.data.tenureMonths }}m {{ res.data.tenureDays }}d
+                  </p>
+                </div>
+                <div>
+                  <p class="text-[11px] uppercase tracking-wider text-indigo-200">Meses computables</p>
+                  <p class="text-sm font-bold mt-0.5">
+                    {{ res.data.computableMonthsTotal }} meses
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pre / Post 2012 Breakdown when applicable -->
+            @if (severanceModel().dismissalType === 'unfair' && res.data.computableMonthsPre > 0) {
+              <div
+                data-testid="sev-reform-breakdown"
+                class="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden"
+              >
+                <div class="px-5 py-4 border-b border-slate-200">
+                  <h3 class="text-sm font-bold text-slate-900">Desglose por reforma laboral (12/02/2012)</h3>
+                </div>
+                <table class="w-full text-xs sm:text-sm text-left">
+                  <thead class="bg-slate-50 text-slate-600 font-semibold border-b border-slate-200">
+                    <tr>
+                      <th class="px-4 py-3">Tramo</th>
+                      <th class="px-4 py-3 text-right">Meses computables</th>
+                      <th class="px-4 py-3 text-right">Módulo</th>
+                      <th class="px-4 py-3 text-right">Días</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-100">
+                    <tr>
+                      <td class="px-4 py-2.5 font-medium text-slate-800">Previo al 12/02/2012</td>
+                      <td class="px-4 py-2.5 text-right text-slate-700">{{ res.data.computableMonthsPre }}</td>
+                      <td class="px-4 py-2.5 text-right text-slate-700">45 días/año</td>
+                      <td class="px-4 py-2.5 text-right font-semibold text-indigo-700">{{ formatNum(res.data.daysPre, 2) }}</td>
+                    </tr>
+                    <tr>
+                      <td class="px-4 py-2.5 font-medium text-slate-800">Desde el 12/02/2012</td>
+                      <td class="px-4 py-2.5 text-right text-slate-700">{{ res.data.computableMonthsPost }}</td>
+                      <td class="px-4 py-2.5 text-right text-slate-700">33 días/año</td>
+                      <td class="px-4 py-2.5 text-right font-semibold text-indigo-700">{{ formatNum(res.data.daysPost, 2) }}</td>
+                    </tr>
+                    <tr class="bg-slate-50">
+                      <td class="px-4 py-2.5 font-bold text-slate-900" colspan="3">Total días tras aplicar topes</td>
+                      <td class="px-4 py-2.5 text-right font-extrabold text-slate-900">{{ formatNum(res.data.totalDaysFinal, 2) }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                @if (res.data.computableMonthsPre + res.data.computableMonthsPost > res.data.computableMonthsTotal) {
+                  <p class="px-4 py-2.5 text-[11px] text-slate-500 bg-slate-50/60 border-t border-slate-100">
+                    Nota: Cada tramo (previo y posterior al 12/02/2012) redondea independientemente cualquier fracción de mes al mes completo según la doctrina del Tribunal Supremo.
+                  </p>
+                }
+              </div>
+            }
+
+            <!-- Caps & IRPF Exemption Notices -->
+            <div class="space-y-3">
+              @if (res.data.capApplied) {
+                <div
+                  data-testid="sev-cap-notice"
+                  class="rounded-2xl bg-amber-50 border border-amber-200 p-4 text-xs sm:text-sm text-amber-900 flex items-start gap-2.5"
+                >
+                  <lucide-icon name="alert-triangle" class="w-4 h-4 text-amber-600 shrink-0 mt-0.5"></lucide-icon>
+                  <div>
+                    <p class="font-bold">Tope legal aplicado</p>
+                    <p class="mt-0.5">{{ res.data.capApplied }}</p>
+                  </div>
+                </div>
+              }
+
+              <div class="rounded-2xl bg-white border border-slate-200 shadow-xs p-5 text-xs sm:text-sm space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="font-semibold text-slate-700">Salario bruto anual de cálculo</span>
+                  <span class="font-bold text-slate-900">{{ formatEur(res.data.grossAnnual) }}</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="font-semibold text-slate-700">Límite exento de IRPF</span>
+                  <span class="font-bold text-slate-900">{{ formatEur(res.data.irpfExemptLimit) }}</span>
+                </div>
+                @if (res.data.irpfTaxableExcess > 0) {
+                  <div
+                    data-testid="sev-irpf-excess"
+                    class="mt-2 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs"
+                  >
+                    @if (res.data.irpfExemptLimit === 0) {
+                      Esta indemnización no está exenta de IRPF: los
+                      <span class="font-bold">{{ formatEur(res.data.irpfTaxableExcess) }}</span>
+                      tributan como rendimiento del trabajo.
+                    } @else {
+                      La indemnización supera el límite exento de 180.000 €. El exceso de
+                      <span class="font-bold">{{ formatEur(res.data.irpfTaxableExcess) }}</span>
+                      tributa como rendimiento del trabajo en el IRPF.
+                    }
+                  </div>
+                }
+                <p class="text-[11px] text-slate-500 pt-1">
+                  El cálculo sigue el criterio del Tribunal Supremo de computar cada fracción de mes como mes completo (salario bruto anual / 365 días). Recuerda que la finalización de contrato temporal no goza de exención en IRPF.
+                </p>
+              </div>
+            </div>
+          } @else {
+            <div data-testid="sev-error-message" class="bg-rose-50 border border-rose-200 text-rose-800 rounded-2xl p-5 flex items-start gap-3">
+              <lucide-icon name="alert-triangle" class="w-5 h-5 shrink-0 text-rose-600 mt-0.5"></lucide-icon>
+              <span>{{ res.error }}</span>
+            </div>
+          }
+        }
+      </section>
+    </div>
+  </main>
+
+  <app-footer></app-footer>
+</div>

@@ -1,0 +1,352 @@
+<div class="min-h-screen flex flex-col bg-gray-50">
+  <app-top-navbar></app-top-navbar>
+
+  <main class="grow container mx-auto px-4 py-8 max-w-6xl">
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-semibold mb-3">
+        <lucide-icon name="calculator" class="w-3.5 h-3.5"></lucide-icon>
+        <span>Aritmética decimal de precisión arbitraria</span>
+      </div>
+      <h1 data-testid="tool-title" class="text-3xl font-extrabold text-slate-900 tracking-tight sm:text-4xl">
+        Calculadora Científica
+      </h1>
+      <p class="mt-2 max-w-2xl mx-auto text-base text-slate-600">
+        Calcula con hasta 50 dígitos significativos, funciones trigonométricas, hiperbólicas, logaritmos, potencias, memoria e historial.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <!-- Calculator Panel -->
+      <section class="lg:col-span-8 bg-white rounded-2xl border border-slate-200 shadow-xs p-4 sm:p-6 space-y-4">
+        <!-- Top Controls: Angle Mode, Precision, Memory -->
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div class="inline-flex bg-slate-100 p-1 rounded-xl gap-1" role="group" aria-label="Unidad angular">
+            @for (mode of ['DEG', 'RAD', 'GRAD']; track mode) {
+              <button
+                type="button"
+                [attr.data-testid]="'sci-angle-' + mode"
+                (click)="setAngleMode($any(mode))"
+                [class]="angleMode() === mode
+                  ? 'px-3 py-1.5 text-xs font-bold rounded-lg bg-indigo-600 text-white shadow-xs cursor-pointer'
+                  : 'px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-600 hover:text-slate-900 cursor-pointer'"
+              >
+                {{ mode }}
+              </button>
+            }
+          </div>
+
+          <div class="flex items-center gap-2">
+            <label for="sci-precision" class="text-xs font-semibold text-slate-600">Precisión:</label>
+            <select
+              id="sci-precision"
+              data-testid="sci-precision-select"
+              [ngModel]="precision()"
+              (ngModelChange)="setPrecision($event)"
+              class="text-xs font-semibold bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-slate-700 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+            >
+              <option [ngValue]="15">15 dígitos</option>
+              <option [ngValue]="30">30 dígitos</option>
+              <option [ngValue]="50">50 dígitos</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Display -->
+        <div class="rounded-2xl bg-slate-900 text-white p-4 sm:p-5 space-y-2 border border-slate-800">
+          <div class="flex items-center justify-between gap-2 text-xs text-slate-400 min-h-5">
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 rounded-sm bg-slate-800 text-indigo-300 font-semibold">{{ angleMode() }}</span>
+              <span class="px-2 py-0.5 rounded-sm bg-slate-800 text-slate-300">{{ precision() }} díg.</span>
+              @if (hasMemory()) {
+                <span data-testid="sci-memory-badge" class="px-2 py-0.5 rounded-sm bg-amber-500/20 text-amber-300 font-semibold">
+                  M: {{ memory() }}
+                </span>
+              }
+            </div>
+            @if (lastExpression()) {
+              <span class="font-mono truncate max-w-65">{{ lastExpression() }} =</span>
+            }
+          </div>
+
+          <!-- Expression Input -->
+          <div>
+            <label for="sci-expression-input" class="sr-only">Expresión matemática</label>
+            <input
+              id="sci-expression-input"
+              data-testid="sci-expression-input"
+              type="text"
+              [ngModel]="expression()"
+              (ngModelChange)="expression.set($event); errorMessage.set(null)"
+              placeholder="Ej. sin(30) + sqrt(2) * 10"
+              class="w-full bg-transparent text-right font-mono text-lg sm:text-xl text-slate-100 placeholder-slate-500 focus:outline-hidden"
+            />
+          </div>
+
+          <!-- Output / Live Preview -->
+          <div class="flex items-end justify-between gap-3 pt-2 border-t border-slate-800">
+            <button
+              type="button"
+              data-testid="sci-copy-btn"
+              (click)="copyResult()"
+              class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-medium text-slate-300 transition shrink-0 cursor-pointer"
+            >
+              <lucide-icon [name]="copied() ? 'check' : 'copy'" class="w-3.5 h-3.5"></lucide-icon>
+              <span>{{ copied() ? 'Copiado' : 'Copiar' }}</span>
+            </button>
+
+            <div class="text-right min-w-0 flex-1">
+              @if (errorMessage(); as err) {
+                <p data-testid="sci-error" class="text-sm font-medium text-rose-400 wrap-break-word">
+                  {{ err }}
+                </p>
+              } @else {
+                <div
+                  data-testid="sci-display-result"
+                  class="font-mono text-2xl sm:text-3xl font-bold text-white break-all"
+                >
+                  {{ displayResult() }}
+                </div>
+                @if (livePreview(); as preview) {
+                  @if (preview !== displayResult()) {
+                    <p data-testid="sci-live-preview" class="font-mono text-xs text-indigo-300 mt-0.5 break-all">
+                      = {{ preview }}
+                    </p>
+                  }
+                }
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- Memory & Utility Row -->
+        <div class="grid grid-cols-6 gap-2">
+          <button
+            type="button"
+            data-testid="sci-2nd-btn"
+            (click)="toggleSecondMode()"
+            [class]="secondMode()
+              ? 'py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white cursor-pointer'
+              : 'py-2 rounded-xl text-xs font-bold bg-indigo-50 text-indigo-700 hover:bg-indigo-100 cursor-pointer'"
+          >
+            2nd
+          </button>
+          <button type="button" (click)="memoryClear()" class="py-2 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer">MC</button>
+          <button type="button" (click)="memoryRecall()" class="py-2 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer">MR</button>
+          <button type="button" (click)="memoryAdd()" class="py-2 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer">M+</button>
+          <button type="button" (click)="memorySubtract()" class="py-2 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer">M-</button>
+          <button type="button" (click)="appendToken('ans')" class="py-2 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer">ANS</button>
+        </div>
+
+        <!-- Scientific & Numeric Keypad -->
+        <div class="grid grid-cols-5 sm:grid-cols-6 gap-2">
+          <!-- Row 1 -->
+          <button
+            type="button"
+            (click)="appendFunction(secondMode() ? 'asin' : 'sin')"
+            class="py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-800 cursor-pointer"
+          >
+            {{ secondMode() ? 'asin' : 'sin' }}
+          </button>
+          <button
+            type="button"
+            (click)="appendFunction(secondMode() ? 'acos' : 'cos')"
+            class="py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-800 cursor-pointer"
+          >
+            {{ secondMode() ? 'acos' : 'cos' }}
+          </button>
+          <button
+            type="button"
+            (click)="appendFunction(secondMode() ? 'atan' : 'tan')"
+            class="py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-800 cursor-pointer"
+          >
+            {{ secondMode() ? 'atan' : 'tan' }}
+          </button>
+          <button
+            type="button"
+            (click)="appendFunction(secondMode() ? 'exp' : 'ln')"
+            class="py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-800 cursor-pointer"
+          >
+            {{ secondMode() ? 'eˣ' : 'ln' }}
+          </button>
+          <button
+            type="button"
+            (click)="appendFunction(secondMode() ? 'log2' : 'log')"
+            class="py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-800 cursor-pointer"
+          >
+            {{ secondMode() ? 'log₂' : 'log' }}
+          </button>
+          <button
+            type="button"
+            (click)="clearAll()"
+            class="hidden sm:block py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-rose-50 hover:bg-rose-100 text-rose-700 cursor-pointer"
+          >
+            AC
+          </button>
+
+          <!-- Row 2 -->
+          <button
+            type="button"
+            (click)="appendFunction(secondMode() ? 'sq' : 'sqrt')"
+            class="py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-800 cursor-pointer"
+          >
+            {{ secondMode() ? 'x²' : '√x' }}
+          </button>
+          <button
+            type="button"
+            (click)="appendFunction(secondMode() ? 'cube' : 'cbrt')"
+            class="py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-800 cursor-pointer"
+          >
+            {{ secondMode() ? 'x³' : '∛x' }}
+          </button>
+          <button
+            type="button"
+            (click)="appendToken('^')"
+            class="py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-800 cursor-pointer"
+          >
+            xʸ
+          </button>
+          <button
+            type="button"
+            (click)="appendFunction(secondMode() ? 'sinh' : 'abs')"
+            class="py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-800 cursor-pointer"
+          >
+            {{ secondMode() ? 'sinh' : '|x|' }}
+          </button>
+          <button
+            type="button"
+            (click)="appendToken('!')"
+            class="py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-800 cursor-pointer"
+          >
+            n!
+          </button>
+          <button
+            type="button"
+            (click)="backspace()"
+            class="hidden sm:block py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-amber-50 hover:bg-amber-100 text-amber-800 cursor-pointer"
+          >
+            ⌫
+          </button>
+
+          <!-- Row 3 -->
+          <button
+            type="button"
+            (click)="appendToken(secondMode() ? 'cosh(' : 'pi')"
+            class="py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-800 cursor-pointer"
+          >
+            {{ secondMode() ? 'cosh' : 'π' }}
+          </button>
+          <button type="button" (click)="appendToken('7')" class="py-2.5 rounded-xl text-base font-bold bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-900 cursor-pointer">7</button>
+          <button type="button" (click)="appendToken('8')" class="py-2.5 rounded-xl text-base font-bold bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-900 cursor-pointer">8</button>
+          <button type="button" (click)="appendToken('9')" class="py-2.5 rounded-xl text-base font-bold bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-900 cursor-pointer">9</button>
+          <button type="button" (click)="appendToken('/')" class="py-2.5 rounded-xl text-base font-bold bg-indigo-50 hover:bg-indigo-100 text-indigo-700 cursor-pointer">÷</button>
+          <button type="button" (click)="appendToken('(')" class="hidden sm:block py-2.5 rounded-xl text-sm font-semibold bg-slate-100 hover:bg-slate-200 text-slate-800 cursor-pointer">(</button>
+
+          <!-- Row 4 -->
+          <button
+            type="button"
+            (click)="appendToken(secondMode() ? 'tanh(' : 'e')"
+            class="py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-800 cursor-pointer"
+          >
+            {{ secondMode() ? 'tanh' : 'e' }}
+          </button>
+          <button type="button" (click)="appendToken('4')" class="py-2.5 rounded-xl text-base font-bold bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-900 cursor-pointer">4</button>
+          <button type="button" (click)="appendToken('5')" class="py-2.5 rounded-xl text-base font-bold bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-900 cursor-pointer">5</button>
+          <button type="button" (click)="appendToken('6')" class="py-2.5 rounded-xl text-base font-bold bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-900 cursor-pointer">6</button>
+          <button type="button" (click)="appendToken('*')" class="py-2.5 rounded-xl text-base font-bold bg-indigo-50 hover:bg-indigo-100 text-indigo-700 cursor-pointer">×</button>
+          <button type="button" (click)="appendToken(')')" class="hidden sm:block py-2.5 rounded-xl text-sm font-semibold bg-slate-100 hover:bg-slate-200 text-slate-800 cursor-pointer">)</button>
+
+          <!-- Row 5 -->
+          <button
+            type="button"
+            (click)="wrapCurrentOrAppend('inv')"
+            class="py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-800 cursor-pointer"
+          >
+            1/x
+          </button>
+          <button type="button" (click)="appendToken('1')" class="py-2.5 rounded-xl text-base font-bold bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-900 cursor-pointer">1</button>
+          <button type="button" (click)="appendToken('2')" class="py-2.5 rounded-xl text-base font-bold bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-900 cursor-pointer">2</button>
+          <button type="button" (click)="appendToken('3')" class="py-2.5 rounded-xl text-base font-bold bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-900 cursor-pointer">3</button>
+          <button type="button" (click)="appendToken('-')" class="py-2.5 rounded-xl text-base font-bold bg-indigo-50 hover:bg-indigo-100 text-indigo-700 cursor-pointer">−</button>
+          <button type="button" (click)="appendToken('%')" class="hidden sm:block py-2.5 rounded-xl text-sm font-semibold bg-slate-100 hover:bg-slate-200 text-slate-800 cursor-pointer">mod</button>
+
+          <!-- Row 6 -->
+          <button type="button" (click)="toggleSign()" class="py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 hover:bg-slate-200 text-slate-800 cursor-pointer">+/−</button>
+          <button type="button" (click)="appendToken('0')" class="py-2.5 rounded-xl text-base font-bold bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-900 cursor-pointer">0</button>
+          <button type="button" (click)="appendToken('.')" class="py-2.5 rounded-xl text-base font-bold bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-900 cursor-pointer">.</button>
+          <button
+            type="button"
+            data-testid="sci-equals-btn"
+            (click)="evaluate()"
+            class="py-2.5 rounded-xl text-base font-extrabold bg-indigo-600 hover:bg-indigo-700 text-white shadow-xs cursor-pointer"
+          >
+            =
+          </button>
+          <button type="button" (click)="appendToken('+')" class="py-2.5 rounded-xl text-base font-bold bg-indigo-50 hover:bg-indigo-100 text-indigo-700 cursor-pointer">+</button>
+          <button type="button" (click)="clearEntry()" class="hidden sm:block py-2.5 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer">CE</button>
+        </div>
+
+        <!-- Mobile-only extra utility row for AC / Backspace / () -->
+        <div class="grid grid-cols-5 gap-2 sm:hidden">
+          <button type="button" (click)="appendToken('(')" class="py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-800 cursor-pointer">(</button>
+          <button type="button" (click)="appendToken(')')" class="py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-800 cursor-pointer">)</button>
+          <button type="button" (click)="appendToken('%')" class="py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-800 cursor-pointer">mod</button>
+          <button type="button" (click)="backspace()" class="py-2 rounded-xl text-xs font-bold bg-amber-50 text-amber-800 cursor-pointer">⌫</button>
+          <button type="button" (click)="clearAll()" class="py-2 rounded-xl text-xs font-bold bg-rose-50 text-rose-700 cursor-pointer">AC</button>
+        </div>
+      </section>
+
+      <!-- History Panel -->
+      <aside class="lg:col-span-4 bg-white rounded-2xl border border-slate-200 shadow-xs p-5 space-y-4">
+        <div class="flex items-center justify-between">
+          <h2 class="text-base font-bold text-slate-900">Historial de cálculos</h2>
+          @if (history().length > 0) {
+            <button
+              type="button"
+              data-testid="sci-clear-history"
+              (click)="clearHistory()"
+              class="text-xs font-semibold text-slate-500 hover:text-rose-600 cursor-pointer"
+            >
+              Limpiar
+            </button>
+          }
+        </div>
+
+        @if (history().length === 0) {
+          <div class="text-center py-8 text-xs text-slate-500 border border-dashed border-slate-200 rounded-xl">
+            Todavía no hay operaciones registradas. Pulsa «=» o Intro para calcular.
+          </div>
+        } @else {
+          <ul class="space-y-2 max-h-115 overflow-y-auto pr-1" data-testid="sci-history-list">
+            @for (entry of history(); track entry.id) {
+              <li>
+                <button
+                  type="button"
+                  (click)="loadFromHistory(entry)"
+                  class="w-full text-left p-3 rounded-xl border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50/40 transition cursor-pointer"
+                >
+                  <div class="flex items-center justify-between text-[11px] text-slate-400 mb-1">
+                    <span class="font-mono truncate">{{ entry.expression }}</span>
+                    <span class="ml-2 shrink-0 px-1.5 py-0.5 rounded-sm bg-slate-100 text-slate-600 font-semibold">
+                      {{ entry.angleMode }}
+                    </span>
+                  </div>
+                  <div class="font-mono text-sm font-bold text-slate-900 break-all">
+                    = {{ entry.result }}
+                  </div>
+                </button>
+              </li>
+            }
+          </ul>
+        }
+
+        <div class="pt-3 border-t border-slate-100 text-xs text-slate-500 space-y-1">
+          <p class="font-semibold text-slate-700">Atajos de teclado:</p>
+          <p>Introduce expresiones con el teclado y pulsa <span class="font-mono font-semibold">Intro</span> para evaluar o <span class="font-mono font-semibold">Esc</span> para limpiar.</p>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <app-footer></app-footer>
+</div>
