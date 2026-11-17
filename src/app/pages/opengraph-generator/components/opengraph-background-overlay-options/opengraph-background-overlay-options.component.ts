@@ -1,4 +1,11 @@
-import { Component, model, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  model,
+  ChangeDetectionStrategy,
+} from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import {
   BACKGROUND_OVERLAY_COLORS,
   BACKGROUND_OVERLAY_PATTERNS,
@@ -17,18 +24,30 @@ import {
   Observable,
 } from 'rxjs';
 import { FormsModule } from '@angular/forms';
+import { I18nService } from '@/app/i18n/i18n.service';
 
 @Component({
   selector: 'app-opengraph-background-overlay-options',
-  imports: [NgStyle, NgClass, LucideIconComponent, FormsModule],
+  imports: [NgStyle, NgClass, LucideIconComponent, FormsModule, TranslatePipe],
   templateUrl: './opengraph-background-overlay-options.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './opengraph-background-overlay-options.component.scss',
 })
 export class OpengraphBackgroundOverlayOptionsComponent {
+  private readonly i18n = inject(I18nService);
+
   readonly BACKGROUND_OVERLAY_PATTERNS = BACKGROUND_OVERLAY_PATTERNS;
   readonly BACKGROUND_OVERLAY_COLORS = BACKGROUND_OVERLAY_COLORS;
   readonly BACKGROUND_OVERLAY_PATTERNS_VIEW = BACKGROUND_OVERLAY_PATTERNS_VIEW;
+
+  readonly BACKGROUND_OVERLAY_PATTERN_LABELS = computed<
+    Record<BackgroundOverlayPattern, string>
+  >(() => ({
+    none: this.i18n.t('opengraph-generator.background.overlay.patterns.none'),
+    grid: this.i18n.t('opengraph-generator.background.overlay.patterns.grid'),
+    graph: this.i18n.t('opengraph-generator.background.overlay.patterns.graph'),
+    dots: this.i18n.t('opengraph-generator.background.overlay.patterns.dots'),
+  }));
 
   readonly overlayPattern = model<BackgroundOverlayPattern>();
   readonly overlayColor = model<string>();

@@ -1,0 +1,25 @@
+{
+  "editor": {
+    "title": "Editor",
+    "clear": "Clear Editor",
+    "copyMarkdown": "Copy Markdown",
+    "loading": "Loading editor..."
+  },
+  "preview": {
+    "title": "Preview",
+    "emptyTitle": "Nothing to preview yet",
+    "emptyDescription": "Start typing in the editor to see the magic happen"
+  },
+  "actions": {
+    "generate": "Generate PDF",
+    "generating": "Generating..."
+  },
+  "files": {
+    "pdfName": "document.pdf"
+  },
+  "seo": {
+    "title": "Markdown to PDF Converter",
+    "description": "Convert your Markdown text to professional PDF documents instantly. Live preview, premium styling, and easy download.",
+    "keywords": "markdown, pdf, converter, documentation, markdown editor, professional pdf, online tools"
+  }
+}

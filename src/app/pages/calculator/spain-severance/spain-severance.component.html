@@ -6,26 +6,26 @@
     <div class="text-center mb-8">
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-semibold mb-3">
         <lucide-icon name="briefcase" class="w-3.5 h-3.5"></lucide-icon>
-        <span>Estatuto de los Trabajadores · Reforma 2012</span>
+        <span>{{ 'calculators.severance.badge' | translate }}</span>
       </div>
       <h1 data-testid="tool-title" class="text-3xl font-extrabold text-slate-900 tracking-tight sm:text-4xl">
-        Calculadora de Indemnización por Despido
+        {{ 'calculators.severance.title' | translate }}
       </h1>
       <p class="mt-2 max-w-2xl mx-auto text-base text-slate-600">
-        Calcula la indemnización laboral en España con prorrateo mensual del Tribunal Supremo, tramo mixto 45/33 días, topes legales y límite exento de IRPF.
+        {{ 'calculators.severance.subtitle' | translate }}
       </p>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
       <!-- Left: Inputs -->
       <section class="lg:col-span-5 bg-white rounded-2xl border border-slate-200 shadow-xs p-6 space-y-5">
-        <h2 class="text-base font-bold text-slate-900">Datos de la relación laboral</h2>
+        <h2 class="text-base font-bold text-slate-900">{{ 'calculators.severance.sectionTitle' | translate }}</h2>
 
         <!-- Dates -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label for="sev-start-date" class="block text-xs font-semibold text-slate-700 mb-1.5">
-              Fecha de inicio de contrato
+              {{ 'calculators.severance.fields.startDate' | translate }}
             </label>
             <input
               id="sev-start-date"
@@ -43,7 +43,7 @@
 
           <div>
             <label for="sev-end-date" class="block text-xs font-semibold text-slate-700 mb-1.5">
-              Fecha de despido / fin
+              {{ 'calculators.severance.fields.endDate' | translate }}
             </label>
             <input
               id="sev-end-date"
@@ -62,7 +62,7 @@
 
         <!-- Salary Mode Toggle -->
         <div>
-          <span class="block text-xs font-semibold text-slate-700 mb-1.5">Modo de salario bruto</span>
+          <span class="block text-xs font-semibold text-slate-700 mb-1.5">{{ 'calculators.severance.fields.salaryMode' | translate }}</span>
           <div class="grid grid-cols-2 gap-1.5 bg-slate-100 p-1 rounded-xl">
             <button
               type="button"
@@ -72,7 +72,7 @@
                 ? 'py-2 text-xs font-bold rounded-lg bg-white text-indigo-700 shadow-xs cursor-pointer'
                 : 'py-2 text-xs font-semibold rounded-lg text-slate-600 cursor-pointer'"
             >
-              Bruto anual
+              {{ 'calculators.severance.fields.salaryModeAnnual' | translate }}
             </button>
             <button
               type="button"
@@ -82,7 +82,7 @@
                 ? 'py-2 text-xs font-bold rounded-lg bg-white text-indigo-700 shadow-xs cursor-pointer'
                 : 'py-2 text-xs font-semibold rounded-lg text-slate-600 cursor-pointer'"
             >
-              Bruto mensual
+              {{ 'calculators.severance.fields.salaryModeMonthly' | translate }}
             </button>
           </div>
         </div>
@@ -91,7 +91,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-12 gap-4">
           <div [class]="severanceModel().salaryMode === 'monthly' ? 'sm:col-span-7' : 'sm:col-span-12'">
             <label for="sev-salary-amount" class="block text-xs font-semibold text-slate-700 mb-1.5">
-              {{ severanceModel().salaryMode === 'annual' ? 'Salario bruto anual (€)' : 'Salario bruto mensual (€)' }}
+              {{ (severanceModel().salaryMode === 'annual' ? 'calculators.severance.fields.salaryAnnual' : 'calculators.severance.fields.salaryMonthly') | translate }}
             </label>
             <input
               id="sev-salary-amount"
@@ -111,7 +111,7 @@
           @if (severanceModel().salaryMode === 'monthly') {
             <div class="sm:col-span-5">
               <label for="sev-extra-payments" class="block text-xs font-semibold text-slate-700 mb-1.5">
-                Número de pagas extra
+                {{ 'calculators.severance.fields.extraPayments' | translate }}
               </label>
               <input
                 id="sev-extra-payments"
@@ -122,7 +122,7 @@
                 class="w-full px-3 py-2.5 text-sm font-semibold rounded-xl border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
               />
               <span class="text-[11px] text-slate-500 mt-1 block">
-                0 = 12 pagas, 2 = 14 pagas · Total: {{ totalPayments() }} pagas/año
+                {{ 'calculators.severance.fields.extraPaymentsHint' | translate: { total: formatNum(totalPayments()) } }}
               </span>
               @if (severanceForm.extraPayments().invalid() && (severanceForm.extraPayments().touched() || severanceForm.extraPayments().dirty())) {
                 <span class="text-xs text-rose-600 font-medium mt-1 block">
@@ -136,7 +136,7 @@
         <!-- Dismissal Type -->
         <div>
           <label for="sev-dismissal-type" class="block text-xs font-semibold text-slate-700 mb-1.5">
-            Tipo de extinción o despido
+            {{ 'calculators.severance.fields.dismissalType' | translate }}
           </label>
           <select
             id="sev-dismissal-type"
@@ -144,11 +144,11 @@
             [formField]="severanceForm.dismissalType"
             class="w-full px-3 py-2.5 text-sm rounded-xl border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
           >
-            <option value="unfair">Despido improcedente (45 / 33 días)</option>
-            <option value="objective">Despido objetivo o ERE procedente (20 días)</option>
-            <option value="modification">Modificación sustancial o traslado (20 días)</option>
-            <option value="temporary_end">Fin de contrato temporal (12 días)</option>
-            <option value="disciplinary">Despido disciplinario procedente (0 días)</option>
+            <option value="unfair">{{ 'calculators.severance.fields.dismissalUnfair' | translate }}</option>
+            <option value="objective">{{ 'calculators.severance.fields.dismissalObjective' | translate }}</option>
+            <option value="modification">{{ 'calculators.severance.fields.dismissalModification' | translate }}</option>
+            <option value="temporary_end">{{ 'calculators.severance.fields.dismissalTemporaryEnd' | translate }}</option>
+            <option value="disciplinary">{{ 'calculators.severance.fields.dismissalDisciplinary' | translate }}</option>
           </select>
           <p class="text-[11px] text-slate-500 mt-1.5">{{ dismissalLabel(severanceModel().dismissalType) }}</p>
         </div>
@@ -161,7 +161,7 @@
             <!-- Primary KPI -->
             <div class="rounded-2xl bg-linear-to-br from-indigo-600 to-indigo-800 text-white p-6 shadow-md">
               <p class="text-xs font-semibold uppercase tracking-wider text-indigo-200">
-                Indemnización total estimada
+                {{ 'calculators.severance.kpi.total' | translate }}
               </p>
               <div data-testid="sev-total-amount" class="text-4xl font-extrabold tracking-tight mt-1">
                 {{ formatEur(res.data.severanceAmount) }}
@@ -169,27 +169,35 @@
 
               <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-5 border-t border-white/15">
                 <div>
-                  <p class="text-[11px] uppercase tracking-wider text-indigo-200">Días indemnizados</p>
+                  <p class="text-[11px] uppercase tracking-wider text-indigo-200">{{ 'calculators.severance.kpi.days' | translate }}</p>
                   <p data-testid="sev-total-days" class="text-sm font-bold mt-0.5">
-                    {{ formatNum(res.data.totalDaysFinal, 2) }} días
+                    @if (res.data.totalDaysFinal === 1) {
+                      {{ 'calculators.severance.kpi.dayValueOne' | translate: { days: formatNum(res.data.totalDaysFinal, 2) } }}
+                    } @else {
+                      {{ 'calculators.severance.kpi.daysValue' | translate: { days: formatNum(res.data.totalDaysFinal, 2) } }}
+                    }
                   </p>
                 </div>
                 <div>
-                  <p class="text-[11px] uppercase tracking-wider text-indigo-200">Salario diario</p>
+                  <p class="text-[11px] uppercase tracking-wider text-indigo-200">{{ 'calculators.severance.kpi.dailySalary' | translate }}</p>
                   <p data-testid="sev-daily-salary" class="text-sm font-bold mt-0.5">
                     {{ formatEur(res.data.dailySalary) }}
                   </p>
                 </div>
                 <div>
-                  <p class="text-[11px] uppercase tracking-wider text-indigo-200">Antigüedad</p>
+                  <p class="text-[11px] uppercase tracking-wider text-indigo-200">{{ 'calculators.severance.kpi.seniority' | translate }}</p>
                   <p data-testid="sev-tenure" class="text-sm font-bold mt-0.5">
-                    {{ res.data.tenureYears }}a {{ res.data.tenureMonths }}m {{ res.data.tenureDays }}d
+                    {{ 'calculators.severance.kpi.tenure' | translate: { years: res.data.tenureYears, months: res.data.tenureMonths, days: res.data.tenureDays } }}
                   </p>
                 </div>
                 <div>
-                  <p class="text-[11px] uppercase tracking-wider text-indigo-200">Meses computables</p>
+                  <p class="text-[11px] uppercase tracking-wider text-indigo-200">{{ 'calculators.severance.kpi.computableMonths' | translate }}</p>
                   <p class="text-sm font-bold mt-0.5">
-                    {{ res.data.computableMonthsTotal }} meses
+                    @if (res.data.computableMonthsTotal === 1) {
+                      {{ 'calculators.severance.kpi.monthValueOne' | translate: { months: res.data.computableMonthsTotal } }}
+                    } @else {
+                      {{ 'calculators.severance.kpi.monthsValue' | translate: { months: res.data.computableMonthsTotal } }}
+                    }
                   </p>
                 </div>
               </div>
@@ -202,39 +210,39 @@
                 class="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden"
               >
                 <div class="px-5 py-4 border-b border-slate-200">
-                  <h3 class="text-sm font-bold text-slate-900">Desglose por reforma laboral (12/02/2012)</h3>
+                  <h3 class="text-sm font-bold text-slate-900">{{ 'calculators.severance.reform.title' | translate }}</h3>
                 </div>
                 <table class="w-full text-xs sm:text-sm text-left">
                   <thead class="bg-slate-50 text-slate-600 font-semibold border-b border-slate-200">
                     <tr>
-                      <th class="px-4 py-3">Tramo</th>
-                      <th class="px-4 py-3 text-right">Meses computables</th>
-                      <th class="px-4 py-3 text-right">Módulo</th>
-                      <th class="px-4 py-3 text-right">Días</th>
+                      <th class="px-4 py-3">{{ 'calculators.severance.reform.period' | translate }}</th>
+                      <th class="px-4 py-3 text-right">{{ 'calculators.severance.reform.computableMonths' | translate }}</th>
+                      <th class="px-4 py-3 text-right">{{ 'calculators.severance.reform.module' | translate }}</th>
+                      <th class="px-4 py-3 text-right">{{ 'calculators.severance.reform.days' | translate }}</th>
                     </tr>
                   </thead>
                   <tbody class="divide-y divide-slate-100">
                     <tr>
-                      <td class="px-4 py-2.5 font-medium text-slate-800">Previo al 12/02/2012</td>
+                      <td class="px-4 py-2.5 font-medium text-slate-800">{{ 'calculators.severance.reform.pre' | translate }}</td>
                       <td class="px-4 py-2.5 text-right text-slate-700">{{ res.data.computableMonthsPre }}</td>
-                      <td class="px-4 py-2.5 text-right text-slate-700">45 días/año</td>
+                      <td class="px-4 py-2.5 text-right text-slate-700">{{ 'calculators.severance.reform.module45' | translate }}</td>
                       <td class="px-4 py-2.5 text-right font-semibold text-indigo-700">{{ formatNum(res.data.daysPre, 2) }}</td>
                     </tr>
                     <tr>
-                      <td class="px-4 py-2.5 font-medium text-slate-800">Desde el 12/02/2012</td>
+                      <td class="px-4 py-2.5 font-medium text-slate-800">{{ 'calculators.severance.reform.post' | translate }}</td>
                       <td class="px-4 py-2.5 text-right text-slate-700">{{ res.data.computableMonthsPost }}</td>
-                      <td class="px-4 py-2.5 text-right text-slate-700">33 días/año</td>
+                      <td class="px-4 py-2.5 text-right text-slate-700">{{ 'calculators.severance.reform.module33' | translate }}</td>
                       <td class="px-4 py-2.5 text-right font-semibold text-indigo-700">{{ formatNum(res.data.daysPost, 2) }}</td>
                     </tr>
                     <tr class="bg-slate-50">
-                      <td class="px-4 py-2.5 font-bold text-slate-900" colspan="3">Total días tras aplicar topes</td>
+                      <td class="px-4 py-2.5 font-bold text-slate-900" colspan="3">{{ 'calculators.severance.reform.total' | translate }}</td>
                       <td class="px-4 py-2.5 text-right font-extrabold text-slate-900">{{ formatNum(res.data.totalDaysFinal, 2) }}</td>
                     </tr>
                   </tbody>
                 </table>
                 @if (res.data.computableMonthsPre + res.data.computableMonthsPost > res.data.computableMonthsTotal) {
                   <p class="px-4 py-2.5 text-[11px] text-slate-500 bg-slate-50/60 border-t border-slate-100">
-                    Nota: Cada tramo (previo y posterior al 12/02/2012) redondea independientemente cualquier fracción de mes al mes completo según la doctrina del Tribunal Supremo.
+                    {{ 'calculators.severance.reform.note' | translate }}
                   </p>
                 }
               </div>
@@ -249,7 +257,7 @@
                 >
                   <lucide-icon name="alert-triangle" class="w-4 h-4 text-amber-600 shrink-0 mt-0.5"></lucide-icon>
                   <div>
-                    <p class="font-bold">Tope legal aplicado</p>
+                    <p class="font-bold">{{ 'calculators.severance.cap.title' | translate }}</p>
                     <p class="mt-0.5">{{ res.data.capApplied }}</p>
                   </div>
                 </div>
@@ -257,11 +265,11 @@
 
               <div class="rounded-2xl bg-white border border-slate-200 shadow-xs p-5 text-xs sm:text-sm space-y-2">
                 <div class="flex items-center justify-between">
-                  <span class="font-semibold text-slate-700">Salario bruto anual de cálculo</span>
+                  <span class="font-semibold text-slate-700">{{ 'calculators.severance.irpf.grossAnnual' | translate }}</span>
                   <span class="font-bold text-slate-900">{{ formatEur(res.data.grossAnnual) }}</span>
                 </div>
                 <div class="flex items-center justify-between">
-                  <span class="font-semibold text-slate-700">Límite exento de IRPF</span>
+                  <span class="font-semibold text-slate-700">{{ 'calculators.severance.irpf.exemptLimit' | translate }}</span>
                   <span class="font-bold text-slate-900">{{ formatEur(res.data.irpfExemptLimit) }}</span>
                 </div>
                 @if (res.data.irpfTaxableExcess > 0) {
@@ -270,18 +278,18 @@
                     class="mt-2 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs"
                   >
                     @if (res.data.irpfExemptLimit === 0) {
-                      Esta indemnización no está exenta de IRPF: los
+                      {{ 'calculators.severance.irpf.notExemptPrefix' | translate }}
                       <span class="font-bold">{{ formatEur(res.data.irpfTaxableExcess) }}</span>
-                      tributan como rendimiento del trabajo.
+                      {{ 'calculators.severance.irpf.notExemptSuffix' | translate }}
                     } @else {
-                      La indemnización supera el límite exento de 180.000 €. El exceso de
+                      {{ 'calculators.severance.irpf.exemptExceededPrefix' | translate }}
                       <span class="font-bold">{{ formatEur(res.data.irpfTaxableExcess) }}</span>
-                      tributa como rendimiento del trabajo en el IRPF.
+                      {{ 'calculators.severance.irpf.exemptExceededSuffix' | translate }}
                     }
                   </div>
                 }
                 <p class="text-[11px] text-slate-500 pt-1">
-                  El cálculo sigue el criterio del Tribunal Supremo de computar cada fracción de mes como mes completo (salario bruto anual / 365 días). Recuerda que la finalización de contrato temporal no goza de exención en IRPF.
+                  {{ 'calculators.severance.irpf.note' | translate }}
                 </p>
               </div>
             </div>

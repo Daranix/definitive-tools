@@ -7,10 +7,12 @@ import {
 import {
   Component,
   effect,
+  inject,
   model,
   output,
   ChangeDetectionStrategy,
 } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import {
   FONT_TYPES,
@@ -18,6 +20,7 @@ import {
 } from '../../../opengraph-font-options/opengraph-font-options.component';
 import { FormsModule } from '@angular/forms';
 import { ContextMenuDirective } from '@/app/directives/context-menu.directive';
+import { I18nService } from '@/app/i18n/i18n.service';
 
 const TAG_DEFAULT_FONT_OPTIONS: OpenGraphTemplateFormInputFontOptions = {
   fontFamily: FONT_TYPES[0],
@@ -41,12 +44,15 @@ const TITLE_DEFAULT_FONT_OPTIONS: OpenGraphTemplateFormInputFontOptions = {
     OpengraphFontOptionsComponent,
     FormsModule,
     ContextMenuDirective,
+    TranslatePipe,
   ],
   templateUrl: './opengraph-template-form-hero.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './opengraph-template-form-hero.component.scss',
 })
 export class OpengraphTemplateFormHeroComponent {
+  private readonly i18n = inject(I18nService);
+
   readonly onFormUpdated = output<OpenGraphTemplateHero>();
   readonly TAG_DEFAULT_FONT_OPTIONS = TAG_DEFAULT_FONT_OPTIONS;
   readonly TITLE_DEFAULT_FONT_OPTIONS = TITLE_DEFAULT_FONT_OPTIONS;
@@ -56,8 +62,12 @@ export class OpengraphTemplateFormHeroComponent {
   readonly titleFontOptions = model<OpenGraphTemplateFormInputFontOptions>(
     TITLE_DEFAULT_FONT_OPTIONS,
   );
-  readonly tag = model<string>('Easy Storage');
-  readonly title = model<string>('Managed Databases for Everyone');
+  readonly tag = model<string>(
+    this.i18n.t('opengraph-generator.defaults.easyStorage'),
+  );
+  readonly title = model<string>(
+    this.i18n.t('opengraph-generator.defaults.managedDatabases'),
+  );
   readonly image = model<OpenGraphImage | undefined>({
     name: 'image.png',
     url: '/img/opengraph-examples/hero-example.png',

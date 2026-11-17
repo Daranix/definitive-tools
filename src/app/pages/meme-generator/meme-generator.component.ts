@@ -9,14 +9,17 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   NgZone,
+  untracked,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import { TopNavbarComponent } from '@/app/components/top-navbar/top-navbar.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { MetadataService } from '@app/services/metadata.service';
 import { ToastService } from '@app/services/toast.service';
+import { I18nService } from '@/app/i18n/i18n.service';
 
 export interface MemeTemplate {
   id: string;
@@ -115,7 +118,7 @@ const FONTS = ['Impact', 'Arial', 'Montserrat', 'Comic Sans MS', 'Courier New', 
 @Component({
   selector: 'app-meme-generator',
   standalone: true,
-  imports: [CommonModule, FormsModule, LucideIconComponent, TopNavbarComponent, FooterComponent],
+  imports: [CommonModule, FormsModule, LucideIconComponent, TopNavbarComponent, FooterComponent, TranslatePipe],
   templateUrl: './meme-generator.component.html',
   styleUrl: './meme-generator.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -124,6 +127,7 @@ export class MemeGeneratorComponent implements OnInit {
   private readonly metadataService = inject(MetadataService);
   private readonly toastService = inject(ToastService);
   private readonly ngZone = inject(NgZone);
+  private readonly i18n = inject(I18nService);
 
   @ViewChild('previewImage') previewImageEl!: ElementRef<HTMLImageElement>;
   @ViewChild('previewContainer') previewContainerEl!: ElementRef<HTMLDivElement>;
@@ -157,10 +161,10 @@ export class MemeGeneratorComponent implements OnInit {
   });
 
   constructor() {
-    this.metadataService.updateMetadata({
-      title: 'Meme Generator - Definitive Tools',
-      description: 'Create funny memes with custom text overlays, drag-and-drop captions, font styling, and popular templates.',
-      keywords: 'meme generator, meme maker, create meme, drag text meme, custom meme generator, free meme creator',
+    this.updateMetadata();
+    effect(() => {
+      this.i18n.language();
+      this.updateMetadata();
     });
 
     // Automatically set default boxes when a template is selected
@@ -168,7 +172,9 @@ export class MemeGeneratorComponent implements OnInit {
       const template = this.selectedTemplate();
       // Skip custom image reset
       if (this.customImage()) return;
-      this.resetTextBoxesForTemplate(template);
+      // Default captions are localised, but a language switch must not reset
+      // captions the user has already edited.
+      untracked(() => this.resetTextBoxesForTemplate(template));
     });
   }
 
@@ -212,7 +218,14 @@ export class MemeGeneratorComponent implements OnInit {
 
       boxes.push({
         id: `box-${Date.now()}-${i}`,
-        text: i === 0 ? 'TOP TEXT' : i === 1 ? 'BOTTOM TEXT' : `TEXT BOX ${i + 1}`,
+        text:
+          i === 0
+            ? this.i18n.t('meme-generator.defaults.topText')
+            : i === 1
+              ? this.i18n.t('meme-generator.defaults.bottomText')
+              : this.i18n.t('meme-generator.defaults.textBox', {
+                  number: i + 1,
+                }),
         x: 10,
         y: y,
         width: 80,
@@ -242,7 +255,7 @@ export class MemeGeneratorComponent implements OnInit {
   addTextBox() {
     const newBox: TextBox = {
       id: `box-${Date.now()}-${Math.random().toString(36).substr(2, 4)}`,
-      text: 'NEW TEXT',
+      text: this.i18n.t('meme-generator.defaults.newText'),
       x: 20,
       y: 40,
       width: 60,
@@ -278,7 +291,7 @@ export class MemeGeneratorComponent implements OnInit {
         // Create a dummy template representation
         const customTpl: MemeTemplate = {
           id: 'custom',
-          name: file.name || 'Custom Image',
+          name: file.name || this.i18n.t('meme-generator.defaults.customImage'),
           url: url,
           width: 800,
           height: 600,
@@ -390,7 +403,9 @@ export class MemeGeneratorComponent implements OnInit {
     const boxes = this.textBoxes();
     const imgUrl = template.url;
 
-    this.toastService.info({ message: 'Generating meme...' });
+    this.toastService.info({
+      message: this.i18n.t('meme-generator.messages.generating'),
+    });
 
     try {
       const img = new Image();
@@ -486,15 +501,29 @@ export class MemeGeneratorComponent implements OnInit {
       const url = canvas.toDataURL(mimeType, 0.9);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `${template.name.toLowerCase().replace(/\s+/g, '-')}-meme.jpg`;
+      a.download = this.i18n.t('meme-generator.files.meme', {
+        slug: template.name.toLowerCase().replace(/\s+/g, '-'),
+      });
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
 
-      this.toastService.success({ message: 'Meme downloaded successfully!' });
+      this.toastService.success({
+        message: this.i18n.t('meme-generator.messages.downloaded'),
+      });
     } catch (error) {
       console.error(error);
-      this.toastService.error({ message: 'Failed to generate meme. Please try again.' });
+      this.toastService.error({
+        message: this.i18n.t('meme-generator.messages.failed'),
+      });
     }
+  }
+
+  private updateMetadata(): void {
+    this.metadataService.updateMetadata({
+      title: this.i18n.t('meme-generator.seo.title'),
+      description: this.i18n.t('meme-generator.seo.description'),
+      keywords: this.i18n.t('meme-generator.seo.keywords'),
+    });
   }
 }

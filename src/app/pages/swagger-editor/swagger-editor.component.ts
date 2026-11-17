@@ -21,10 +21,13 @@ import { lastValueFrom, Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import YAML from 'yaml';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 import { SwaggerGenerationModalComponent } from './components/swagger-generation-modal/swagger-generation-modal.component';
 import { ToastService } from '@/app/services/toast.service';
 
 import { CheerpjService } from '@/app/core/services/cheerpj.service';
+import { I18nService } from '@/app/i18n/i18n.service';
+import { MetadataService } from '@/app/services/metadata.service';
 import { SwaggerEditorToolbarComponent } from './components/swagger-editor-toolbar/swagger-editor-toolbar.component';
 
 interface GeneratorConfig {
@@ -46,6 +49,7 @@ const RENDER_DEBOUNCE_MS = 500;
     SwaggerGenerationModalComponent,
     FormsModule,
     CommonModule,
+    TranslatePipe,
   ],
   providers: [CheerpjService],
   templateUrl: './swagger-editor.component.html',
@@ -58,6 +62,8 @@ export class SwaggerEditorComponent implements AfterContentInit {
   private readonly httpClient = inject(HttpClient);
   private readonly cheerpjService = inject(CheerpjService);
   private readonly toastService = inject(ToastService);
+  private readonly i18n = inject(I18nService);
+  private readonly metadataService = inject(MetadataService);
 
   readonly isBrowser = computed(() => isPlatformBrowser(this.platformId));
   readonly editorContainer = viewChild(MonacoEditorComponent);
@@ -80,7 +86,21 @@ export class SwaggerEditorComponent implements AfterContentInit {
   readonly activeGenerator = signal<GeneratorConfig | null>(null);
   readonly activePanel = signal<'editor' | 'preview'>('editor');
 
-  constructor() {}
+  constructor() {
+    this.updateMetadata();
+    effect(() => {
+      this.i18n.language();
+      this.updateMetadata();
+    });
+  }
+
+  private updateMetadata(): void {
+    this.metadataService.updateMetadata({
+      title: this.i18n.t('swagger-editor.seo.title'),
+      description: this.i18n.t('swagger-editor.seo.description'),
+      keywords: this.i18n.t('swagger-editor.seo.keywords'),
+    });
+  }
 
   /** Debounce subject — prevents re-rendering on every keystroke */
   private readonly contentChange$ = new Subject<string>();
@@ -149,13 +169,9 @@ export class SwaggerEditorComponent implements AfterContentInit {
     } catch (ex) {
       console.error('Failed to import from URL', ex);
       if (ex instanceof HttpErrorResponse && ex.status === 0) {
-        alert(
-          'CORS Error: The external server blocked the request. This usually happens when the server doesn\'t allow cross-origin requests. Try downloading the file and using "Import file" instead.',
-        );
+        alert(this.i18n.t('swagger-editor.editor.messages.corsError'));
       } else {
-        alert(
-          'Failed to load the definition from the provided URL. Please check the URL and try again.',
-        );
+        alert(this.i18n.t('swagger-editor.editor.messages.loadFailed'));
       }
     } finally {
       this.isLoading.set(false);
@@ -179,7 +195,7 @@ export class SwaggerEditorComponent implements AfterContentInit {
   handleSaveYaml() {
     const content = this.definitionSpec() || '';
     if (!content) {
-      alert('Editor is empty. Nothing to save.');
+      alert(this.i18n.t('swagger-editor.editor.messages.emptyEditor'));
       return;
     }
     // Normalize line endings to LF for consistent file output
@@ -192,7 +208,7 @@ export class SwaggerEditorComponent implements AfterContentInit {
     try {
       const content = this.definitionSpec() || '';
       if (!content) {
-        alert('Editor is empty. Nothing to save.');
+        alert(this.i18n.t('swagger-editor.editor.messages.emptyEditor'));
         return;
       }
 
@@ -209,7 +225,7 @@ export class SwaggerEditorComponent implements AfterContentInit {
       this.downloadFile(blob, 'swagger.json');
     } catch (ex) {
       console.error('Failed to convert to JSON', ex);
-      alert('Failed to convert current content to valid JSON.');
+      alert(this.i18n.t('swagger-editor.editor.messages.invalidJson'));
     }
   }
 
@@ -249,7 +265,9 @@ export class SwaggerEditorComponent implements AfterContentInit {
       // If already generating, maximize the modal so the user sees the active process
       this.cheerpjService.isMinimized.set(false);
       this.toastService.warning({
-        message: `A generation process is already active. Please wait or cancel it.`,
+        message: this.i18n.t(
+          'swagger-editor.editor.messages.generationInProgress',
+        ),
       });
       return;
     }

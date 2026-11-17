@@ -1,5 +1,6 @@
 import {
   Component,
+  effect,
   inject,
   signal,
   viewChild,
@@ -10,8 +11,10 @@ import {
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import { MonacoEditorComponent } from '@/app/components/monaco-editor/monaco-editor.component';
+import { I18nService } from '@/app/i18n/i18n.service';
 import { MetadataService } from '@/app/services/metadata.service';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -38,6 +41,7 @@ marked.use(
     FormsModule,
     LucideIconComponent,
     MonacoEditorComponent,
+    TranslatePipe,
   ],
   templateUrl: './markdown-to-pdf.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -47,6 +51,7 @@ export class MarkdownToPdfComponent implements AfterViewInit {
   private readonly platformId = inject(PLATFORM_ID);
   readonly isBrowser = signal(isPlatformBrowser(this.platformId));
   private readonly metadataService = inject(MetadataService);
+  private readonly i18n = inject(I18nService);
 
   readonly editorContainer = viewChild(MonacoEditorComponent);
   readonly markdownText = signal<string>('');
@@ -69,16 +74,22 @@ export class MarkdownToPdfComponent implements AfterViewInit {
   private readonly contentChange$ = new Subject<string>();
 
   constructor() {
-    this.metadataService.updateMetadata({
-      title: 'Markdown to PDF Converter',
-      description:
-        'Convert your Markdown text to professional PDF documents instantly. Live preview, premium styling, and easy download.',
-      keywords:
-        'markdown, pdf, converter, documentation, markdown editor, professional pdf, online tools',
+    this.updateMetadata();
+    effect(() => {
+      this.i18n.language();
+      this.updateMetadata();
     });
 
     this.contentChange$.pipe(debounceTime(300)).subscribe((content) => {
       this.updatePreview(content);
+    });
+  }
+
+  private updateMetadata(): void {
+    this.metadataService.updateMetadata({
+      title: this.i18n.t('markdown-to-pdf.seo.title'),
+      description: this.i18n.t('markdown-to-pdf.seo.description'),
+      keywords: this.i18n.t('markdown-to-pdf.seo.keywords'),
     });
   }
 
@@ -123,7 +134,7 @@ export class MarkdownToPdfComponent implements AfterViewInit {
 
     const opt = {
       margin: 15,
-      filename: 'document.pdf',
+      filename: this.i18n.t('markdown-to-pdf.files.pdfName'),
       image: { type: 'jpeg', quality: 0.98 },
       html2canvas: { scale: 2, useCORS: true, letterRendering: true },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },

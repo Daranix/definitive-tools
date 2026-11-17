@@ -3,7 +3,7 @@
     <main class="grow container mx-auto px-4 py-8">
         <!-- Content of Base64 page -->
         <div class="bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Base64 Encoder/Decoder</h2>
+            <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">{{ 'base64.title' | translate }}</h2>
 
             <div class="flex justify-center mb-6">
                 <div class="inline-flex rounded-md shadow-xs">
@@ -11,25 +11,25 @@
                         data-testid="mode-encode-btn"
                         class="px-4 py-2 text-sm font-medium rounded-l-md border border-gray-300"
                         [ngClass]="{'bg-indigo-600 text-white': mode() === 'encode', 'bg-white text-gray-700 hover:bg-gray-100': mode() !== 'encode'}">
-                        Encode
+                        {{ 'base64.modes.encode' | translate }}
                     </button>
                     <button (click)="mode.set('decode')"
                         data-testid="mode-decode-btn"
                         [ngClass]="{'bg-indigo-600 text-white': mode() === 'decode', 'bg-white text-gray-700 hover:bg-gray-100': mode() !== 'decode'}"
                         class="px-4 py-2 text-sm font-medium rounded-r-md border border-gray-300">
-                        Decode
+                        {{ 'base64.modes.decode' | translate }}
                     </button>
                 </div>
             </div>
 
             <div class="mb-6">
                 <label htmlFor="input" class="block text-sm font-medium text-gray-700 mb-2">
-                    {{ mode() === 'encode' ? 'Text to Encode' : 'Base64 to Decode' }}
+                    {{ mode() === 'encode' ? ('base64.form.inputLabelEncode' | translate) : ('base64.form.inputLabelDecode' | translate) }}
                 </label>
                 <textarea id="input" 
                 [ngModel]="inputText()" 
                 (ngModelChange)="inputText.set($event)"
-                [placeholder]="mode() === 'encode' ? 'Enter text to encode as Base64...' : 'Enter Base64 to decode...'"
+                [placeholder]="mode() === 'encode' ? ('base64.form.inputPlaceholderEncode' | translate) : ('base64.form.inputPlaceholderDecode' | translate)"
                 class="w-full h-48 p-4 border border-gray-300 rounded-md shadow-xs focus:ring-indigo-500 focus:border-indigo-500"
             ></textarea>
             </div>
@@ -37,52 +37,50 @@
             <div class="flex justify-center space-x-4 mb-6">
                 <button (click)="handleProcess()"
                     class="bg-indigo-700 text-white font-medium py-2 px-6 rounded-sm hover:bg-indigo-800 transition flex items-center gap-2">
-                    {{ mode() === 'encode' ? 'Encode to Base64' : 'Decode from Base64' }}
+                    {{ mode() === 'encode' ? ('base64.actions.processEncode' | translate) : ('base64.actions.processDecode' | translate) }}
                 </button>
                 <button (click)="handleSwap()"
                     data-testid="swap-btn"
                     class="bg-white border border-indigo-700 text-indigo-700 font-medium py-2 px-4 rounded-sm hover:bg-indigo-50 transition flex items-center gap-2"
                     [disabled]="!outputText()">
                     <lucide-angular name="arrow-right-left" class="h-5 w-5"></lucide-angular>
-                    Swap
+                    {{ 'base64.actions.swap' | translate }}
                 </button>
             </div>
 
             <div>
                 <label htmlFor="output" class="block text-sm font-medium text-gray-700 mb-2">
-                    {{ mode() === 'encode' ? 'Base64 Output' : 'Decoded Text' }}
+                    {{ mode() === 'encode' ? ('base64.form.outputLabelEncode' | translate) : ('base64.form.outputLabelDecode' | translate) }}
                 </label>
                 <textarea id="output" [(ngModel)]="outputText" readonly
                     class="w-full h-48 p-4 bg-gray-50 border border-gray-300 rounded-md shadow-xs"
-                    [placeholder]="mode() === 'encode' ? 'Base64 output will appear here...' : 'Decoded text will appear here...'"></textarea>
+                    [placeholder]="mode() === 'encode' ? ('base64.form.outputPlaceholderEncode' | translate) : ('base64.form.outputPlaceholderDecode' | translate)"></textarea>
             </div>
 
             <div class="mt-4 flex justify-end">
                 <button (click)="handleCopy()" [disabled]="!outputText()"
                     class="bg-indigo-600 text-white font-medium py-2 px-4 rounded-sm hover:bg-indigo-700 transition disabled:bg-indigo-300">
-                    Copy to Clipboard
+                    {{ 'base64.actions.copy' | translate }}
                 </button>
             </div>
         </div>
 
         <div class="mt-8">
-            <h2 class="text-2xl font-bold mb-6 text-gray-800">About Base64 Encoding</h2>
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">{{ 'base64.about.title' | translate }}</h2>
             <div class="bg-white rounded-lg shadow-md p-6 space-y-6">
                 <div>
-                    <h3 class="text-xl font-semibold mb-3 text-gray-800">What is Base64?</h3>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">{{ 'base64.about.whatIsTitle' | translate }}</h3>
                     <p class="text-gray-600">
-                        Base64 is a binary-to-text encoding scheme that represents binary data in an ASCII string
-                        format. It's commonly used when there's a need to encode binary data that needs to be stored and
-                        transferred over media that are designed to deal with text.
+                        {{ 'base64.about.whatIsDescription' | translate }}
                     </p>
                 </div>
                 <div>
-                    <h3 class="text-xl font-semibold mb-3 text-gray-800">Common Uses</h3>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">{{ 'base64.about.usesTitle' | translate }}</h3>
                     <ul class="list-disc pl-5 text-gray-600 space-y-2">
-                        <li>Embedding images in HTML, CSS, or JSON</li>
-                        <li>Encoding binary data in XML</li>
-                        <li>Sending binary data through email systems</li>
-                        <li>Storing complex data in simple text formats</li>
+                        <li>{{ 'base64.about.uses.embedding' | translate }}</li>
+                        <li>{{ 'base64.about.uses.xml' | translate }}</li>
+                        <li>{{ 'base64.about.uses.email' | translate }}</li>
+                        <li>{{ 'base64.about.uses.storage' | translate }}</li>
                     </ul>
                 </div>
             </div>

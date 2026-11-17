@@ -2,38 +2,38 @@
     <div class="px-4 py-6 z-30 overflow-y-auto max-h-full">
         <!-- Sidebar Brand / Logo (Optional extra branding but keep it subtle) -->
         <div class="mb-6 px-2">
-            <a routerLink="/" class="flex items-center gap-2 text-slate-800 hover:text-indigo-600 transition-colors">
+            <a [routerLink]="'/' | localizeUrl" class="flex items-center gap-2 text-slate-800 hover:text-indigo-600 transition-colors">
                 <lucide-icon name="bolt" class="w-6 h-6 text-indigo-600"></lucide-icon>
-                <span class="font-bold tracking-tight text-lg">Definitive Tools</span>
+                <span class="font-bold tracking-tight text-lg">{{ 'common.app.name' | translate }}</span>
             </a>
         </div>
 
         <ul class="flex flex-col gap-5">
             <!-- Home Link -->
             <li>
-                <a routerLink="/" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="bg-indigo-50 text-indigo-700 font-semibold border-l-4 border-indigo-600" class="flex gap-2.5 justify-start items-center rounded-r-lg text-slate-600 px-4 py-2.5 text-sm font-medium hover:bg-slate-50 hover:text-slate-900 transition-all border-l-4 border-transparent">
+                <a [routerLink]="'/' | localizeUrl" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="bg-indigo-50 text-indigo-700 font-semibold border-l-4 border-indigo-600" class="flex gap-2.5 justify-start items-center rounded-r-lg text-slate-600 px-4 py-2.5 text-sm font-medium hover:bg-slate-50 hover:text-slate-900 transition-all border-l-4 border-transparent">
                     <lucide-icon name="house" class="h-4 w-4"></lucide-icon> 
-                    <span>Home</span>
+                    <span>{{ 'common.nav.home' | translate }}</span>
                 </a>
             </li>
 
             <!-- Categorized Tools List -->
-            @for (cat of categorizedTools(); track cat.name) {
+            @for (cat of categorizedTools(); track cat.category) {
                 <li>
                     <span class="px-4 text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-2">
-                        {{ cat.name }}
+                        {{ cat.label }}
                     </span>
                     <ul class="flex flex-col gap-1">
                         @for (tool of cat.tools; track tool.id) {
                             <li>
-                                <a [routerLink]="['/tool', tool.id]" 
+                                <a [routerLink]="['/tool', tool.id] | localizeUrl"
                                    [routerLinkActiveOptions]="{exact: true}" 
                                    routerLinkActive="bg-indigo-50 text-indigo-700 font-semibold border-l-4 border-indigo-600" 
                                    class="rounded-r-lg text-slate-600 px-4 py-2 text-sm font-medium hover:bg-slate-50 hover:text-slate-900 transition-all flex gap-3 justify-start items-center border-l-4 border-transparent group">
                                     <div [class]="'bg-' + tool.color + '-100 p-1 w-6 h-6 rounded-md flex items-center justify-center text-' + tool.color + '-600 group-hover:scale-105 transition-transform duration-200'">
                                         <lucide-icon [name]="tool.icon" class="w-3.5 h-3.5"></lucide-icon>
                                     </div>
-                                    <span class="truncate">{{ tool.name }}</span>
+                                    <span class="truncate">{{ 'tools.' + tool.id + '.name' | translate }}</span>
                                 </a>
                             </li>
                         }
@@ -41,5 +41,10 @@
                 </li>
             }
         </ul>
+    </div>
+
+    <!-- Language switcher -->
+    <div class="border-t border-slate-100 px-4 py-4">
+        <app-language-switcher />
     </div>
 </div>

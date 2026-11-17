@@ -9,6 +9,15 @@ export type QrDataType =
   | 'json'
   | 'text';
 
+/**
+ * Result of parsing a scanned payload.
+ *
+ * `title` and `badgeLabel` keep the historical English fallbacks because this
+ * module is a pure data function (and its spec asserts them). The Reader
+ * component never renders these fields: every on-screen label is derived from
+ * `type` through the `qr-reader.types.*` translation keys, so the UI stays fully
+ * translated and reacts to language changes.
+ */
 export interface ParsedQrResult {
   raw: string;
   type: QrDataType;

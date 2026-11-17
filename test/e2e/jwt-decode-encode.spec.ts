@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('JWT Decoder / Encoder & Validator Tool', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/tool/jwt-decode-encode');
+    await page.goto('/tool/jwt-decode-encode', { waitUntil: 'networkidle' });
     await page.waitForTimeout(1000);
   });
 

@@ -1,0 +1,130 @@
+{
+  "hero": {
+    "badge": "100% Client-Side & Secure",
+    "title": "QR Code Reader & Scanner",
+    "subtitle": "Scan QR codes using your camera in real time or upload and paste an image to decode its content instantly."
+  },
+  "modes": {
+    "file": "Upload / Paste Image",
+    "camera": "Scan with Camera"
+  },
+  "camera": {
+    "stopped": "Camera is stopped",
+    "start": "Start Camera",
+    "unavailable": "Camera Unavailable",
+    "tryAgain": "Try Again",
+    "switchToFile": "Switch to File Upload",
+    "instructions": "Point your camera at a QR code — it will scan automatically.",
+    "toggleFlashlight": "Toggle Flashlight",
+    "switchCamera": "Switch Camera (Front/Rear)",
+    "stop": "Stop Camera",
+    "scanFileName": "Camera-Scan-{{ time }}",
+    "notSupported": "Camera access is not supported by your browser or environment.",
+    "permissionDenied": "Camera permission was denied. Please allow camera access in your browser settings.",
+    "notFound": "No camera device was found on this system.",
+    "unknownError": "Unknown error",
+    "unableToAccess": "Unable to access camera: {{ error }}"
+  },
+  "upload": {
+    "label": "Upload an image with a QR code",
+    "formats": "Formats: PNG, JPG, WEBP, GIF, SVG, BMP (Max 10MB)",
+    "pasteHint": "to paste screenshot",
+    "samplesTitle": "Or test right now with a sample QR code",
+    "pastedImageName": "Pasted-Image-{{ timestamp }}",
+    "samples": {
+      "url": "Website URL",
+      "wifi": "Wi-Fi Network",
+      "vcard": "Contact (vCard)",
+      "json": "JSON Payload"
+    },
+    "sampleFileNames": {
+      "url": "sample-website-qr.png",
+      "wifi": "sample-wifi-qr.png",
+      "vcard": "sample-vcard-qr.png",
+      "json": "sample-json-qr.png"
+    }
+  },
+  "result": {
+    "scanAgain": "Scan Again",
+    "scannedImage": "Scanned Image",
+    "located": "QR Code Located",
+    "scanning": "Scanning QR code...",
+    "overlayHint": "The detected QR code region is outlined with an indigo highlight box.",
+    "characters": "{{ count }} characters",
+    "copyAll": "Copy All",
+    "copied": "Copied!",
+    "decodedContent": "Decoded Content",
+    "readDirectly": "Read directly from image",
+    "openWebsite": "Open Website",
+    "destinationWebsite": "Destination Website",
+    "copyLink": "Copy Link"
+  },
+  "wifi": {
+    "title": "Wi-Fi Network Credentials",
+    "ssid": "Network Name (SSID)",
+    "password": "Password",
+    "open": "None (Open)",
+    "security": "Security Type",
+    "hidden": "Hidden Network",
+    "yes": "Yes",
+    "no": "No",
+    "copySsid": "Copy SSID",
+    "copyPassword": "Copy Password"
+  },
+  "vcard": {
+    "contactFallback": "Contact",
+    "fileNamePrefix": "contact",
+    "save": "Save .vcf",
+    "phone": "Phone",
+    "email": "Email",
+    "website": "Website",
+    "address": "Address"
+  },
+  "email": {
+    "title": "Send Email",
+    "openApp": "Open Mail App",
+    "to": "To:",
+    "subject": "Subject:",
+    "body": "Body:"
+  },
+  "geo": {
+    "coordinates": "Coordinates: {{ latitude }}, {{ longitude }}",
+    "googleMaps": "Google Maps"
+  },
+  "noQr": {
+    "title": "No QR Code Detected",
+    "description": "We examined this image using native barcoding detectors and comprehensive image algorithms, but could not detect a readable QR code.",
+    "tipsTitle": "Tips for successful scanning:",
+    "tip1": "Ensure the 3 large corner locator squares are clear and not cut off.",
+    "tip2": "Avoid high glare, heavy shadows, or severe blurriness.",
+    "tip3": "Crop the image closer to the QR code if it is a small part of a large photo.",
+    "tip4": "Ensure sufficient contrast between the dark and light patterns.",
+    "trySample": "Try Sample QR Code"
+  },
+  "types": {
+    "url": "Website URL",
+    "wifi": "Wi-Fi",
+    "vcard": "Contact (vCard)",
+    "email": "Email",
+    "phone": "Phone",
+    "sms": "SMS",
+    "geo": "Location",
+    "json": "JSON Data",
+    "text": "Plain Text"
+  },
+  "toasts": {
+    "clipboardImage": "Image loaded from clipboard",
+    "scanned": "QR Code scanned: {{ type }}",
+    "detected": "QR Code detected: {{ type }}",
+    "imageLoadFailed": "Failed to load the image.",
+    "readFileFailed": "Error reading file.",
+    "copied": "Content copied to clipboard!",
+    "vcardDownloaded": "Contact .vcf downloaded",
+    "sampleFailed": "Could not load sample QR code."
+  },
+  "seo": {
+    "title": "QR Code Reader & Scanner - Scan from Camera or Image",
+    "description": "Upload, drag-and-drop, paste from clipboard, or use your camera in real time to scan, decode, and view QR codes on screen.",
+    "keywords": "qr reader, qr scanner, qr camera, camera qr scanner, scan qr code online, decode qr code, web qr reader"
+  }
+}

@@ -1,12 +1,14 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MadridZbeMapService } from '../../madrid-zbe-map.service';
 import { ZBE_ZONES_META, ZbeZoneProperties } from '../../madrid-zbe-map.models';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
+import { I18nService } from '@/app/i18n/i18n.service';
 
 @Component({
   selector: 'app-zbe-zone-legend',
   standalone: true,
-  imports: [LucideIconComponent],
+  imports: [LucideIconComponent, TranslatePipe],
   templateUrl: './zone-legend.component.html',
   styleUrl: './zone-legend.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -14,6 +16,7 @@ import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.co
 export class ZoneLegendComponent {
   readonly embedded = input<boolean>(false);
   readonly service = inject(MadridZbeMapService);
+  readonly i18n = inject(I18nService);
   readonly isExpanded = signal<boolean>(false);
 
   readonly zonesList: ZbeZoneProperties[] = Object.values(ZBE_ZONES_META);

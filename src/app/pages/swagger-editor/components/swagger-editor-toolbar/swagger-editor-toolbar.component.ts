@@ -1,9 +1,10 @@
 import { Component, model, output, ChangeDetectionStrategy } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 
 @Component({
   selector: 'app-swagger-editor-toolbar',
-  imports: [LucideIconComponent],
+  imports: [LucideIconComponent, TranslatePipe],
   templateUrl: './swagger-editor-toolbar.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './swagger-editor-toolbar.component.scss',

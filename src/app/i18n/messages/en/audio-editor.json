@@ -1,0 +1,223 @@
+{
+  "seo": {
+    "title": "Multi-Track Audio Editor & Studio",
+    "description": "Trim, cut out parts, split into clips, layer multiple tracks, and connect clips with smooth crossfades — 100% private, processed in your browser with WebAssembly."
+  },
+  "page": {
+    "title": "Client-Side Audio Editor & Multi-Track Studio",
+    "subtitle": "Trim, cut out parts, split into clips, layer multiple tracks, and connect clips with smooth crossfades — 100% private, processed in your browser with WebAssembly."
+  },
+  "modes": {
+    "trim": "Trim (Keep Range)",
+    "remove": "Cut Out (Remove & Join)",
+    "split": "Split into Clips (Multi-Export)",
+    "multitrack": "Multi-Track Studio (Mix & Fades)"
+  },
+  "logs": {
+    "title": "Execution Console Logger",
+    "empty": "No logs recorded yet. Export an audio file to see logs.",
+    "loadingCore": "Loading FFmpeg Core locally...",
+    "coreLoaded": "FFmpeg core loaded successfully.",
+    "executing": "Executing: ffmpeg {{ command }}",
+    "writeFile": "Writing file to virtual FS...",
+    "processingTrim": "Processing audio trim...",
+    "splicing": "Splicing & concatenating {{ count }} segments...",
+    "exportingClip": "Exporting clip {{ index }} of {{ total }}: \"{{ name }}\"...",
+    "bundlingZip": "Bundling clips into ZIP archive...",
+    "loadingFiles": "Loading audio files into virtual FS...",
+    "mixing": "Mixing {{ count }} clips into master track...",
+    "masterMixdown": "Executing master mixdown with {{ count }} layers..."
+  },
+  "actions": {
+    "play": "Play",
+    "pause": "Pause",
+    "playTrimmed": "Play Trimmed",
+    "addCut": "Add Cut",
+    "addCutAtPlayhead": "Add Cut at Playhead",
+    "splitAtPlayhead": "Split at Playhead",
+    "removeFile": "Remove file"
+  },
+  "file": {
+    "duration": "Duration: {{ time }}"
+  },
+  "waveform": {
+    "modeTrim": "Waveform · Trim Mode",
+    "modeRemove": "Waveform · Cut Out / Splice Mode",
+    "modeSplit": "Waveform · Split Clips Mode",
+    "helpTrim": "Drag cyan and pink handles to adjust start and end. [Space] to Play/Pause. Mouse wheel to zoom.",
+    "helpRemove": "Drag red handles to adjust cut intervals. Click \"Add Cut at Playhead\" for more cuts.",
+    "helpSplit": "Drag handles between clips to adjust split boundaries. Click \"Split at Playhead\" to slice.",
+    "decoding": "Decoding audio & building high-res peak pyramid...",
+    "startMarker": "Start: {{ time }}",
+    "endMarker": "End: {{ time }}",
+    "zoomActive": "Zoom active ({{ zoom }}x) · Dynamic high-resolution wave sampling"
+  },
+  "zoom": {
+    "out": "Zoom Out",
+    "in": "Zoom In"
+  },
+  "tracks": {
+    "voice": "Track 1 (Voice)",
+    "music": "Track 2 (Music / FX)",
+    "defaultName": "Track {{ number }}",
+    "add": "Add Track",
+    "header": "Tracks ({{ count }})",
+    "volSolo": "Vol / Solo",
+    "muteTitle": "Mute Track",
+    "soloTitle": "Solo Track",
+    "deleteTitle": "Delete Track",
+    "addClip": "Add Clip"
+  },
+  "cuts": {
+    "title": "Cut Regions (Parts to Remove)",
+    "description": "These intervals will be extirpated. The rest will be seamlessly spliced into one audio.",
+    "empty": "No parts marked for removal yet. Click \"Add Cut at Playhead\" or drag on the waveform.",
+    "duration": "Cut Duration: {{ duration }}s",
+    "startLabel": "Start:",
+    "endLabel": "End:",
+    "deleteTitle": "Delete cut",
+    "original": "Original",
+    "removed": "Removed",
+    "finalDuration": "Final Duration",
+    "summaryTitle": "Cut Out Summary",
+    "totalCuts": "Total Cuts:",
+    "regionsCount": "{{ count }} region(s)",
+    "keptSegments": "Kept Segments:",
+    "partsCount": "{{ count }} part(s)",
+    "estimatedOutput": "Estimated Output Length:"
+  },
+  "clips": {
+    "title": "Audio Clips ({{ count }})",
+    "description": "Each clip will be exported as a distinct file and packed into a .ZIP archive.",
+    "namePlaceholder": "Clip name",
+    "removeBoundaryTitle": "Remove clip boundary",
+    "part": "Part {{ index }}",
+    "name": "Clip {{ index }}",
+    "partSuffix": "{{ name }} (Part 2)",
+    "copySuffix": "{{ name }} (Copy)",
+    "summaryTitle": "Split Clips Summary",
+    "totalClips": "Total Clips:",
+    "filesCount": "{{ count }} file(s)",
+    "packaging": "Packaging:",
+    "packagingValue": "Individual downloads + .ZIP bundle"
+  },
+  "trim": {
+    "title": "Trim Selection",
+    "startSec": "Start (sec)",
+    "endSec": "End (sec)",
+    "start": "Start",
+    "end": "End",
+    "duration": "Duration"
+  },
+  "options": {
+    "title": "Export Options",
+    "targetFormat": "Target Format",
+    "bitrate": "Bitrate",
+    "sampleRate": "Sample Rate",
+    "format": "Format"
+  },
+  "sampleRates": {
+    "fm": "FM quality",
+    "cd": "CD quality",
+    "pro": "Pro / DVD"
+  },
+  "export": {
+    "successTrimTitle": "Trim Export Successful!",
+    "successSpliceTitle": "Splicing Export Successful!",
+    "output": "Output: {{ size }}",
+    "downloadFile": "Download {{ fileName }}",
+    "clipsSuccessTitle": "Successfully Exported {{ count }} Clips!",
+    "clipsDescription": "Download individual clips or the complete ZIP archive below.",
+    "downloadAll": "Download All (.ZIP)",
+    "exportingWithFfmpeg": "Exporting audio with FFmpeg...",
+    "exporting": "Exporting...",
+    "trim": "Export Trimmed Audio",
+    "remove": "Export Spliced Audio",
+    "split": "Export All Clips (ZIP)",
+    "renderingMix": "Rendering Mix...",
+    "masterTitle": "Master Mixdown Export",
+    "masterButton": "Export Master Mix"
+  },
+  "progress": {
+    "renderingMaster": "Rendering Master Mixdown..."
+  },
+  "transport": {
+    "stopTitle": "Stop & Rewind to Start"
+  },
+  "tools": {
+    "pointer": "Select",
+    "pointerTitle": "Pointer Tool (Select & Move)",
+    "razor": "Cut on Click",
+    "razorTitle": "Razor Tool (Click on any clip to slice it)",
+    "split": "Cut Playhead",
+    "splitTitle": "Split selected clip at playhead position (Shortcut: S)"
+  },
+  "timeline": {
+    "totalActiveClips": "Total Active Clips:",
+    "razorHint": "✂ Razor Mode: Click on any clip where you want to cut",
+    "playPause": "Play/Pause",
+    "splitPlayhead": "Split Playhead",
+    "delete": "Delete",
+    "zoom": "Zoom (1x - 32x)"
+  },
+  "master": {
+    "ready": "Master Mix Ready!",
+    "output": "Output: {{ size }} · Rendered all tracks with volume curves & fades.",
+    "download": "Download Master Audio"
+  },
+  "inspector": {
+    "title": "Clip Inspector",
+    "selected": "Selected",
+    "empty": "Click on any clip on the timeline to configure its volume, offset, and fade transitions.",
+    "clipName": "Clip Name",
+    "assignedTrack": "Assigned Track",
+    "startPosition": "Start Position (s)",
+    "volume": "Volume ({{ percent }})",
+    "fadesTitle": "Fade Curves & Transitions",
+    "fadeIn": "Fade In (sec)",
+    "fadeOut": "Fade Out (sec)",
+    "crossfade": "Crossfade with Previous Clip",
+    "duplicate": "Duplicate"
+  },
+  "clip": {
+    "fadeInTitle": "Drag horizontally to adjust Fade In",
+    "fadeOutTitle": "Drag horizontally to adjust Fade Out",
+    "trimStartTitle": "Trim Clip Start Duration",
+    "trimEndTitle": "Trim Clip End Duration"
+  },
+  "messages": {
+    "decodeFailed": "Failed to decode audio: {{ message }}",
+    "addedCut": "Added cut region at playhead.",
+    "splitClips": "Split audio into {{ count }} clips.",
+    "trimmedExported": "Trimmed audio exported successfully!",
+    "splicedExported": "Spliced audio exported successfully!",
+    "clipsExported": "Exported {{ count }} clips!",
+    "exportFailed": "Export failed: {{ message }}",
+    "unsupportedFile": "File \"{{ name }}\" is not a supported audio format.",
+    "addedToTrack": "Added \"{{ name }}\" to track.",
+    "failedToLoad": "Failed to load audio: {{ message }}",
+    "mustHaveTrack": "Must have at least one track.",
+    "clickInsideClip": "Click further inside the clip to split.",
+    "selectClipToSplit": "Select a clip to split first.",
+    "movePlayhead": "Move playhead inside the selected clip to split.",
+    "cutClipAt": "Cut \"{{ name }}\" at {{ time }}.",
+    "clipDuplicated": "Clip duplicated.",
+    "clipDeleted": "Deleted clip \"{{ name }}\".",
+    "noPreviousClip": "No previous clip found on this track to crossfade with.",
+    "crossfadeApplied": "Applied {{ duration }}s crossfade between \"{{ previous }}\" and \"{{ name }}\".",
+    "addClipFirst": "Add at least one audio clip to the timeline.",
+    "masterExported": "Master Mixdown exported successfully!"
+  },
+  "errors": {
+    "allCutOut": "All audio has been cut out! Nothing to export.",
+    "noClips": "No clips defined to export.",
+    "noActiveClips": "No active/unmuted clips on the timeline to export."
+  },
+  "files": {
+    "trimmed": "{{ baseName }}_trimmed{{ extension }}",
+    "spliced": "{{ baseName }}_spliced{{ extension }}",
+    "clipsZip": "{{ baseName }}_clips.zip",
+    "defaultClipsZip": "clips.zip",
+    "masterMix": "Master_Mix_{{ timestamp }}{{ extension }}"
+  }
+}

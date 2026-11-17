@@ -1,0 +1,89 @@
+{
+  "toolbar": {
+    "title": "Swagger Editor",
+    "menus": {
+      "file": "File",
+      "generateServer": "Generate Server",
+      "generateClient": "Generate Client"
+    },
+    "file": {
+      "importUrl": "Import URL",
+      "importFile": "Import file",
+      "saveYaml": "Save as YAML",
+      "saveJson": "Convert and save as JSON",
+      "loadExample": "Load Petstore example",
+      "clear": "Clear editor"
+    },
+    "panels": {
+      "editor": "Editor",
+      "preview": "UI"
+    }
+  },
+  "actions": {
+    "cancel": "Cancel",
+    "close": "Close",
+    "minimize": "Minimize"
+  },
+  "editor": {
+    "loading": "Rendering Swagger UI...",
+    "importModal": {
+      "title": "Import from URL",
+      "description": "Paste the link to your OpenAPI definition",
+      "submit": "Import"
+    },
+    "messages": {
+      "corsError": "CORS Error: The external server blocked the request. This usually happens when the server doesn't allow cross-origin requests. Try downloading the file and using \"Import file\" instead.",
+      "loadFailed": "Failed to load the definition from the provided URL. Please check the URL and try again.",
+      "emptyEditor": "Editor is empty. Nothing to save.",
+      "invalidJson": "Failed to convert current content to valid JSON.",
+      "generationInProgress": "A generation process is already active. Please wait or cancel it."
+    }
+  },
+  "modal": {
+    "status": {
+      "active": "Active"
+    },
+    "terminal": {
+      "empty": "Terminal initialized. Awaiting process start..."
+    },
+    "minimized": {
+      "label": "Generator CLI",
+      "showConsole": "Show Console"
+    },
+    "footer": {
+      "java": "Java:",
+      "engine": "Engine:",
+      "status": "Status:",
+      "ready": "Ready",
+      "wait": "Wait",
+      "events": "{{ count }} events"
+    },
+    "generation": {
+      "initializing": "Initializing...",
+      "cancelling": "Cancellation in progress...",
+      "preparingRuntime": "Preparing CheerpJ runtime...",
+      "cleaningFilesystem": "Cleaning virtual filesystem...",
+      "preparingSpec": "Preparing OpenAPI specification...",
+      "generating": "Generating {{ lang }}...",
+      "complete": "Generation complete!",
+      "failed": "Generation failed.",
+      "bundling": "Bundling files into ZIP..."
+    },
+    "logs": {
+      "cancellationRequested": "Cancellation requested by user. Aborting...",
+      "processFinishedAfterCancel": "Process finished after cancellation. Output discarded.",
+      "accessingFilesystem": "Accessing virtual filesystem from:",
+      "idbEntryFound": "IDB Entry found:",
+      "addingToZip": "Adding to ZIP:",
+      "generationFailed": "Generation failed"
+    },
+    "downloads": {
+      "generatedZip": "{{ generator }}-generated.zip"
+    }
+  },
+  "seo": {
+    "title": "Swagger Editor - Edit, Preview & Generate OpenAPI Clients",
+    "description": "Edit and visualize Swagger/OpenAPI specifications in your browser, preview the API documentation and generate client or server SDKs locally.",
+    "keywords": "swagger editor, openapi editor, swagger ui, openapi generator, api documentation, generate sdk"
+  }
+}

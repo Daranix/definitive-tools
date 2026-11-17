@@ -1,0 +1,80 @@
+{
+  "seo": {
+    "title": "Local Text to Speech (TTS) Generator",
+    "description": "Synthesize natural-sounding spoken audio from text locally in your browser. Runs completely client-side using WebAssembly and ONNX Runtime.",
+    "keywords": "text to speech, tts, speech synthesis, local tts, piper, vits, webassembly, onnx runtime"
+  },
+  "title": "Text to Speech (TTS)",
+  "subtitle": "Convert text into natural-sounding speech locally in your browser. Powered by VITS WebAssembly models.",
+  "input": {
+    "label": "Input Text to Synthesize",
+    "placeholder": "Enter the sentence you want the AI to read...",
+    "characters": "Characters: {{ count }}",
+    "offlineNote": "All synthesis happens offline on your machine"
+  },
+  "voice": {
+    "label": "Select Voice Model",
+    "loading": "Loading available voices list...",
+    "language": "Language:",
+    "quality": "Quality Class:",
+    "modelId": "Model ID:",
+    "unknownLanguage": "Unknown Language"
+  },
+  "actions": {
+    "generate": "Generate Spoken Audio",
+    "generating": "Generating Speech...",
+    "download": "Download Speech WAV"
+  },
+  "output": {
+    "title": "Audio Output",
+    "emptyTitle": "Synthesized speech will appear here",
+    "emptyHint": "Click 'Generate Spoken Audio' to begin",
+    "downloading": "Downloading ONNX voice model",
+    "loading": "Loading...",
+    "synthesizing": "Synthesizing audio...",
+    "computing": "Computing WAV samples using local VITS model",
+    "ready": "Ready to Play!"
+  },
+  "progress": {
+    "connecting": "Connecting and downloading model...",
+    "modelFile": "Model file"
+  },
+  "help": {
+    "title": "How it works:",
+    "worker": "ONNX Runtime compiles the speech model in a background Web Worker.",
+    "firstRun": "The first generation downloads the selected voice model (~15-40MB).",
+    "cache": "Downloaded models are stored in the browser cache (OPFS) for instant, offline generation on subsequent attempts."
+  },
+  "about": {
+    "title": "About Local Web-TTS (VITS)",
+    "description": "Traditional text-to-speech systems rely on cloud servers (like Google TTS or OpenAI Audio) to process text and return audio streams. This tool compiles and performs neural text-to-speech inference completely in your browser, maintaining full privacy and working completely offline.",
+    "advantagesTitle": "Advantages",
+    "advantagePrivateTitle": "100% Private",
+    "advantagePrivate": "Your input text never leaves your device.",
+    "advantageCostTitle": "Zero Server Costs",
+    "advantageCost": "Performs rendering utilizing your client CPU.",
+    "advantageOfflineTitle": "Offline-Capable",
+    "advantageOffline": "Caches models using the Origin Private File System (OPFS).",
+    "technicalTitle": "Technical Core",
+    "vitsTitle": "VITS Architecture",
+    "vits": "End-to-end Variational Inference with Adversarial Learning.",
+    "onnxTitle": "ONNX Runtime Web",
+    "onnx": "WebAssembly backend for fast neural network execution in the browser.",
+    "piperTitle": "Piper TTS",
+    "piper": "Rhasspy's Piper project weights optimized for clean, speech synthesis."
+  },
+  "errors": {
+    "appUpdated": "App updated in background. Please refresh the page to synthesize speech.",
+    "engine": "An error occurred in the background speech engine. Please reload.",
+    "workersUnsupported": "Web Workers are not supported in this browser. Synthesis cannot run.",
+    "synthesisFailed": "Speech synthesis failed.",
+    "enterText": "Please enter some text.",
+    "selectVoice": "Please select a voice model."
+  },
+  "messages": {
+    "generated": "Speech generated successfully!"
+  },
+  "downloads": {
+    "audioFileName": "synthesized-speech-{{ voiceId }}.wav"
+  }
+}

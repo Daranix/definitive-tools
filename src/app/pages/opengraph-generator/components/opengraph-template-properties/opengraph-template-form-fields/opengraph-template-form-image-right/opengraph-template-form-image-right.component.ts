@@ -1,11 +1,13 @@
 import {
   Component,
   effect,
+  inject,
   model,
   output,
   signal,
   ChangeDetectionStrategy,
 } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import {
   FONT_TYPES,
   OpengraphFontOptionsComponent,
@@ -19,6 +21,7 @@ import {
   OpenGraphTemplateImageRight,
 } from '@/app/pages/opengraph-generator/types';
 import { DragAndDropFileComponent } from '@/app/components/drag-and-drop-file/drag-and-drop-file.component';
+import { I18nService } from '@/app/i18n/i18n.service';
 
 const TAG_DEFAULT_FONT_OPTIONS: OpenGraphTemplateFormInputFontOptions = {
   fontFamily: FONT_TYPES[0],
@@ -42,12 +45,15 @@ const TITLE_DEFAULT_FONT_OPTIONS: OpenGraphTemplateFormInputFontOptions = {
     LucideIconComponent,
     ContextMenuDirective,
     DragAndDropFileComponent,
+    TranslatePipe,
   ],
   templateUrl: './opengraph-template-form-image-right.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './opengraph-template-form-image-right.component.scss',
 })
 export class OpengraphTemplateFormImageRightComponent {
+  private readonly i18n = inject(I18nService);
+
   readonly onFormUpdated = output<OpenGraphTemplateImageRight>();
   readonly TAG_DEFAULT_FONT_OPTIONS = TAG_DEFAULT_FONT_OPTIONS;
   readonly TITLE_DEFAULT_FONT_OPTIONS = TITLE_DEFAULT_FONT_OPTIONS;
@@ -57,8 +63,12 @@ export class OpengraphTemplateFormImageRightComponent {
   readonly titleFontOptions = model<OpenGraphTemplateFormInputFontOptions>(
     TITLE_DEFAULT_FONT_OPTIONS,
   );
-  readonly tag = model<string>('Marketing');
-  readonly title = model<string>('Generate Beautiful Open Graph Images');
+  readonly tag = model<string>(
+    this.i18n.t('opengraph-generator.defaults.marketing'),
+  );
+  readonly title = model<string>(
+    this.i18n.t('opengraph-generator.defaults.openGraphImages'),
+  );
   readonly logo = model<OpenGraphImage | undefined>({
     name: 'logo.png',
     url: '/img/opengraph-examples/logo-1.png',

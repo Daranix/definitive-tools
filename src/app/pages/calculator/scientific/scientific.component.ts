@@ -3,18 +3,24 @@ import {
   Component,
   PLATFORM_ID,
   computed,
+  effect,
   inject,
   signal,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import Decimal from 'decimal.js';
+import { TranslatePipe } from '@ngx-translate/core';
 import { TopNavbarComponent } from '@/app/components/top-navbar/top-navbar.component';
 import { FooterComponent } from '@/app/components/footer/footer.component';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
+import { I18nService } from '@/app/i18n/i18n.service';
 import { MetadataService } from '@/app/services/metadata.service';
 import { ToastService } from '@/app/services/toast.service';
-import { copyTextToClipboard } from '../shared/calculator-format';
+import {
+  copyTextToClipboard,
+  type CalculatorTranslate,
+} from '../shared/calculator-format';
 import {
   AngleMode,
   PrecisionDigits,
@@ -31,7 +37,7 @@ export interface HistoryEntry {
 @Component({
   selector: 'app-scientific',
   standalone: true,
-  imports: [FormsModule, TopNavbarComponent, FooterComponent, LucideIconComponent],
+  imports: [FormsModule, TopNavbarComponent, FooterComponent, LucideIconComponent, TranslatePipe],
   templateUrl: './scientific.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
@@ -42,6 +48,10 @@ export class ScientificComponent {
   private readonly metadataService = inject(MetadataService);
   private readonly toastService = inject(ToastService);
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly i18n = inject(I18nService);
+
+  private readonly translate: CalculatorTranslate = (key, params) =>
+    this.i18n.t(key, params);
 
   private historySeq = 0;
 
@@ -68,17 +78,16 @@ export class ScientificComponent {
       angleMode: this.angleMode(),
       precision: this.precision(),
       ans: this.ansValue(),
+      translate: this.translate,
     });
     return res.ok ? res.formatted : null;
   });
 
   constructor() {
-    this.metadataService.updateMetadata({
-      title: 'Calculadora Científica de Alta Precisión',
-      description:
-        'Calculadora científica online con precisión arbitraria de 15, 30 o 50 dígitos, trigonometría, logaritmos, factorial, memoria e historial.',
-      keywords:
-        'calculadora cientifica, calculadora alta precision, trigonometria, logaritmos, factorial, decimal.js',
+    this.updateMetadata();
+    effect(() => {
+      this.i18n.language();
+      this.updateMetadata();
     });
   }
 
@@ -218,6 +227,7 @@ export class ScientificComponent {
       angleMode: this.angleMode(),
       precision: this.precision(),
       ans: this.ansValue(),
+      translate: this.translate,
     });
 
     if (!res.ok) {
@@ -259,6 +269,7 @@ export class ScientificComponent {
         angleMode: this.angleMode(),
         precision: this.precision(),
         ans: this.ansValue(),
+        translate: this.translate,
       });
       if (res.ok) {
         return res.value;
@@ -271,7 +282,9 @@ export class ScientificComponent {
 
   memoryClear(): void {
     this.memory.set('0');
-    this.toastService.info({ message: 'Memoria borrada (MC)' });
+    this.toastService.info({
+      message: this.translate('calculators.scientific.messages.memoryCleared'),
+    });
   }
 
   memoryRecall(): void {
@@ -281,7 +294,9 @@ export class ScientificComponent {
   memoryAdd(): void {
     const active = this.getCurrentActiveDecimal();
     if (!active) {
-      this.toastService.error({ message: 'No hay un valor válido para sumar a memoria' });
+      this.toastService.error({
+        message: this.translate('calculators.scientific.messages.memoryAddInvalid'),
+      });
       return;
     }
     const HighPrecisionDecimal = this.getMemoryDecimalConstructor();
@@ -292,7 +307,11 @@ export class ScientificComponent {
   memorySubtract(): void {
     const active = this.getCurrentActiveDecimal();
     if (!active) {
-      this.toastService.error({ message: 'No hay un valor válido para restar de memoria' });
+      this.toastService.error({
+        message: this.translate(
+          'calculators.scientific.messages.memorySubtractInvalid',
+        ),
+      });
       return;
     }
     const HighPrecisionDecimal = this.getMemoryDecimalConstructor();
@@ -321,10 +340,22 @@ export class ScientificComponent {
       isPlatformBrowser(this.platformId),
       valueToCopy,
       this.toastService,
+      {
+        success: this.translate('calculators.shared.copied'),
+        error: this.translate('calculators.shared.copyFailed'),
+      },
     );
     if (ok) {
       this.copied.set(true);
       setTimeout(() => this.copied.set(false), 1800);
     }
+  }
+
+  private updateMetadata(): void {
+    this.metadataService.updateMetadata({
+      title: this.i18n.t('calculators.scientific.seo.title'),
+      description: this.i18n.t('calculators.scientific.seo.description'),
+      keywords: this.i18n.t('calculators.scientific.seo.keywords'),
+    });
   }
 }

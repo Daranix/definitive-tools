@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Markdown to Excel Tool', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/tool/markdown-to-excel');
+    await page.goto('/tool/markdown-to-excel', { waitUntil: 'networkidle' });
   });
 
   test('should load with empty state and render table on valid input', async ({ page }) => {

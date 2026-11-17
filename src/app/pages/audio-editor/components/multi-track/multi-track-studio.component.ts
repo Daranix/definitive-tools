@@ -13,6 +13,8 @@ import {
 } from '@angular/core';
 import { isPlatformBrowser, NgClass, DecimalPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
+import { I18nService } from '@/app/i18n/i18n.service';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import {
   AUDIO_FORMATS,
@@ -50,17 +52,18 @@ interface DragState {
     FormsModule,
     ClipBlockComponent,
     ClipInspectorComponent,
+    TranslatePipe,
   ],
   templateUrl: './multi-track-studio.component.html',
   styleUrl: './multi-track-studio.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MultiTrackStudioComponent implements OnDestroy {
-  protected readonly Math = Math;
   private readonly platformId = inject(PLATFORM_ID);
   private readonly audioEngine = inject(AudioEngineService);
   private readonly audioExport = inject(AudioExportService);
   private readonly toastService = inject(ToastService);
+  readonly i18n = inject(I18nService);
 
   readonly timelineContainer =
     viewChild<ElementRef<HTMLDivElement>>('timelineContainer');
@@ -242,7 +245,9 @@ export class MultiTrackStudioComponent implements OnDestroy {
     const color = colors[(num - 1) % colors.length];
     const newTrack: AudioTrack = {
       id: 'track-' + Date.now(),
-      name: name || `Track ${num}`,
+      name:
+        name ||
+        this.i18n.t('audio-editor.tracks.defaultName', { number: num }),
       volume: 1,
       muted: false,
       solo: false,
@@ -253,7 +258,9 @@ export class MultiTrackStudioComponent implements OnDestroy {
 
   removeTrack(trackId: string): void {
     if (this.tracks().length <= 1) {
-      this.toastService.warning({ message: 'Must have at least one track.' });
+      this.toastService.warning({
+        message: this.i18n.t('audio-editor.messages.mustHaveTrack'),
+      });
       return;
     }
     this.tracks.update((t) => t.filter((item) => item.id !== trackId));
@@ -322,10 +329,18 @@ export class MultiTrackStudioComponent implements OnDestroy {
       this.timelineClips.update((c) => [...c, newClip]);
       this.selectedClipId.set(newClip.id);
       this.clearExportResult();
-      this.toastService.success({ message: `Added "${file.name}" to track.` });
+      this.toastService.success({
+        message: this.i18n.t('audio-editor.messages.addedToTrack', {
+          name: file.name,
+        }),
+      });
     } catch (err: any) {
       console.error(err);
-      this.toastService.error({ message: `Failed to load audio: ${err?.message || err}` });
+      this.toastService.error({
+        message: this.i18n.t('audio-editor.messages.failedToLoad', {
+          message: err?.message || err,
+        }),
+      });
     }
   }
 
@@ -379,7 +394,9 @@ export class MultiTrackStudioComponent implements OnDestroy {
         await this.addClipToTrack(trackId, file, dropTime + i * 2);
       } else {
         this.toastService.warning({
-          message: `File "${file.name}" is not a supported audio format.`,
+          message: this.i18n.t('audio-editor.messages.unsupportedFile', {
+            name: file.name,
+          }),
         });
       }
     }
@@ -411,7 +428,9 @@ export class MultiTrackStudioComponent implements OnDestroy {
     const effectiveDur = clip.trimEnd - clip.trimStart;
 
     if (offsetIntoClip <= 0.1 || offsetIntoClip >= effectiveDur - 0.1) {
-      this.toastService.warning({ message: 'Click further inside the clip to split.' });
+      this.toastService.warning({
+        message: this.i18n.t('audio-editor.messages.clickInsideClip'),
+      });
       return;
     }
 
@@ -428,7 +447,7 @@ export class MultiTrackStudioComponent implements OnDestroy {
     const secondPart: TimelineClip = {
       ...clip,
       id: 'tclip-' + Date.now() + '-' + Math.floor(Math.random() * 1000),
-      name: `${clip.name} (Part 2)`,
+      name: this.i18n.t('audio-editor.clips.partSuffix', { name: clip.name }),
       timelineOffset: splitTime,
       trimStart: splitPointInSource,
       fadeIn: 0,
@@ -440,7 +459,10 @@ export class MultiTrackStudioComponent implements OnDestroy {
     this.selectedClipId.set(secondPart.id);
     this.clearExportResult();
     this.toastService.success({
-      message: `Cut "${clip.name}" at ${this.formatTime(splitTime)}.`,
+      message: this.i18n.t('audio-editor.messages.cutClipAt', {
+        name: clip.name,
+        time: this.formatTime(splitTime),
+      }),
     });
   }
 
@@ -448,7 +470,9 @@ export class MultiTrackStudioComponent implements OnDestroy {
     const clip = this.selectedClip();
     const playhead = this.timelineCurrentTime();
     if (!clip) {
-      this.toastService.warning({ message: 'Select a clip to split first.' });
+      this.toastService.warning({
+        message: this.i18n.t('audio-editor.messages.selectClipToSplit'),
+      });
       return;
     }
 
@@ -457,7 +481,7 @@ export class MultiTrackStudioComponent implements OnDestroy {
 
     if (playhead <= clipStart + 0.1 || playhead >= clipEnd - 0.1) {
       this.toastService.warning({
-        message: 'Move playhead inside the selected clip to split.',
+        message: this.i18n.t('audio-editor.messages.movePlayhead'),
       });
       return;
     }
@@ -632,13 +656,15 @@ export class MultiTrackStudioComponent implements OnDestroy {
     const duplicated: TimelineClip = {
       ...clip,
       id: 'tclip-' + Date.now() + '-' + Math.floor(Math.random() * 1000),
-      name: `${clip.name} (Copy)`,
+      name: this.i18n.t('audio-editor.clips.copySuffix', { name: clip.name }),
       timelineOffset: Math.round((clip.timelineOffset + dur + 0.5) * 10) / 10,
     };
     this.timelineClips.update((list) => [...list, duplicated]);
     this.selectedClipId.set(duplicated.id);
     this.clearExportResult();
-    this.toastService.success({ message: 'Clip duplicated.' });
+    this.toastService.success({
+      message: this.i18n.t('audio-editor.messages.clipDuplicated'),
+    });
   }
 
   onInspectorDelete(): void {
@@ -647,7 +673,11 @@ export class MultiTrackStudioComponent implements OnDestroy {
     this.timelineClips.update((list) => list.filter((c) => c.id !== clip.id));
     this.selectedClipId.set(null);
     this.clearExportResult();
-    this.toastService.info({ message: `Deleted clip "${clip.name}".` });
+    this.toastService.info({
+      message: this.i18n.t('audio-editor.messages.clipDeleted', {
+        name: clip.name,
+      }),
+    });
   }
 
   applyCrossfadeWithPrevious(): void {
@@ -664,7 +694,7 @@ export class MultiTrackStudioComponent implements OnDestroy {
 
     if (!prevClip) {
       this.toastService.warning({
-        message: 'No previous clip found on this track to crossfade with.',
+        message: this.i18n.t('audio-editor.messages.noPreviousClip'),
       });
       return;
     }
@@ -687,7 +717,11 @@ export class MultiTrackStudioComponent implements OnDestroy {
 
     this.clearExportResult();
     this.toastService.success({
-      message: `Applied ${fadeDuration}s crossfade between "${prevClip.name}" and "${clip.name}".`,
+      message: this.i18n.t('audio-editor.messages.crossfadeApplied', {
+        duration: this.i18n.formatNumber(fadeDuration),
+        previous: prevClip.name,
+        name: clip.name,
+      }),
     });
   }
 
@@ -695,7 +729,9 @@ export class MultiTrackStudioComponent implements OnDestroy {
 
   async handleExportMaster(): Promise<void> {
     if (this.timelineClips().length === 0) {
-      this.toastService.warning({ message: 'Add at least one audio clip to the timeline.' });
+      this.toastService.warning({
+        message: this.i18n.t('audio-editor.messages.addClipFirst'),
+      });
       return;
     }
 
@@ -719,10 +755,16 @@ export class MultiTrackStudioComponent implements OnDestroy {
       this.outputUrl.set(URL.createObjectURL(result.blob));
       this.outputFileName.set(result.fileName);
       this.exportFinished.emit(result);
-      this.toastService.success({ message: 'Master Mixdown exported successfully!' });
+      this.toastService.success({
+        message: this.i18n.t('audio-editor.messages.masterExported'),
+      });
     } catch (err: any) {
       console.error(err);
-      this.toastService.error({ message: `Export failed: ${err?.message || err}` });
+      this.toastService.error({
+        message: this.i18n.t('audio-editor.messages.exportFailed', {
+          message: err?.message || err,
+        }),
+      });
     } finally {
       this.exporting.set(false);
       this.currentExportStep.set('');
@@ -767,8 +809,16 @@ export class MultiTrackStudioComponent implements OnDestroy {
   }
 
   formatFileSize(bytes: number): string {
-    if (bytes < 1024) return `${bytes} B`;
-    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-    return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+    if (bytes < 1024) return `${this.i18n.formatNumber(bytes)} B`;
+    if (bytes < 1024 * 1024) {
+      return `${this.i18n.formatNumber(bytes / 1024, {
+        minimumFractionDigits: 1,
+        maximumFractionDigits: 1,
+      })} KB`;
+    }
+    return `${this.i18n.formatNumber(bytes / (1024 * 1024), {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })} MB`;
   }
 }

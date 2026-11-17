@@ -26,7 +26,7 @@
                 {{ file()?.name }}
               </h2>
               <p class="text-xs text-gray-500">
-                {{ formatFileSize(file()?.size || 0) }} &nbsp;·&nbsp; Duration: {{ formatTime(duration()) }}
+                {{ formatFileSize(file()?.size || 0) }} &nbsp;·&nbsp; {{ 'audio-editor.file.duration' | translate: { time: formatTime(duration()) } }}
               </p>
             </div>
           </div>
@@ -34,7 +34,7 @@
             (click)="clear()"
             [disabled]="exporting()"
             class="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition disabled:opacity-50"
-            title="Remove file">
+            [title]="'audio-editor.actions.removeFile' | translate">
             <lucide-angular name="trash-2" class="h-5 w-5"></lucide-angular>
           </button>
         </div>
@@ -47,9 +47,9 @@
               <div class="flex items-center gap-2">
                 <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">
                   @switch (editMode()) {
-                    @case ('trim') { Waveform · Trim Mode }
-                    @case ('remove') { Waveform · Cut Out / Splice Mode }
-                    @case ('split') { Waveform · Split Clips Mode }
+                    @case ('trim') { {{ 'audio-editor.waveform.modeTrim' | translate }} }
+                    @case ('remove') { {{ 'audio-editor.waveform.modeRemove' | translate }} }
+                    @case ('split') { {{ 'audio-editor.waveform.modeSplit' | translate }} }
                   }
                 </span>
               </div>
@@ -61,7 +61,7 @@
                     (click)="zoomOut()"
                     [disabled]="zoom() <= 1"
                     class="p-1 text-gray-500 hover:text-gray-900 disabled:opacity-30 rounded-lg hover:bg-white transition"
-                    title="Zoom Out">
+                    [title]="'audio-editor.zoom.out' | translate">
                     <lucide-angular name="zoom-out" class="h-3.5 w-3.5"></lucide-angular>
                   </button>
 
@@ -75,7 +75,7 @@
                       (ngModelChange)="setZoom($event)"
                       class="w-20 h-1.5 bg-gray-300 rounded-lg appearance-none cursor-pointer accent-indigo-600" />
                     <span class="text-[11px] font-mono font-bold text-gray-700 min-w-[32px] text-center">
-                      {{ zoom() }}x
+                      {{ i18n.formatNumber(zoom()) }}x
                     </span>
                   </div>
 
@@ -83,7 +83,7 @@
                     (click)="zoomIn()"
                     [disabled]="zoom() >= 32"
                     class="p-1 text-gray-500 hover:text-gray-900 disabled:opacity-30 rounded-lg hover:bg-white transition"
-                    title="Zoom In">
+                    [title]="'audio-editor.zoom.in' | translate">
                     <lucide-angular name="zoom-in" class="h-3.5 w-3.5"></lucide-angular>
                   </button>
 
@@ -117,14 +117,14 @@
             <div class="flex items-center justify-between text-[11px] text-gray-400 mt-0.5">
               <span class="italic">
                 @switch (editMode()) {
-                  @case ('trim') { Drag cyan and pink handles to adjust start and end. [Space] to Play/Pause. Mouse wheel to zoom. }
-                  @case ('remove') { Drag red handles to adjust cut intervals. Click "Add Cut at Playhead" for more cuts. }
-                  @case ('split') { Drag handles between clips to adjust split boundaries. Click "Split at Playhead" to slice. }
+                  @case ('trim') { {{ 'audio-editor.waveform.helpTrim' | translate }} }
+                  @case ('remove') { {{ 'audio-editor.waveform.helpRemove' | translate }} }
+                  @case ('split') { {{ 'audio-editor.waveform.helpSplit' | translate }} }
                 }
               </span>
               @if (zoom() > 1) {
                 <span class="font-mono text-indigo-600 font-semibold bg-indigo-50 px-2 py-0.5 rounded-md">
-                  Zoom active ({{ zoom() }}x) · Dynamic high-resolution wave sampling
+                  {{ 'audio-editor.waveform.zoomActive' | translate: { zoom: i18n.formatNumber(zoom()) } }}
                 </span>
               }
             </div>
@@ -137,10 +137,10 @@
                 class="flex items-center justify-center gap-2 px-4 py-2 min-w-[124px] shrink-0 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-sm font-semibold transition disabled:opacity-50">
                 @if (playing()) {
                   <lucide-angular name="pause" class="h-4 w-4 shrink-0"></lucide-angular>
-                  <span>Pause</span>
+                  <span>{{ 'audio-editor.actions.pause' | translate }}</span>
                 } @else {
                   <lucide-angular name="play" class="h-4 w-4 shrink-0"></lucide-angular>
-                  <span>Play</span>
+                  <span>{{ 'audio-editor.actions.play' | translate }}</span>
                 }
                 <span class="text-[10px] opacity-60 font-mono shrink-0">[Space]</span>
               </button>
@@ -152,14 +152,14 @@
                   [disabled]="exporting() || playing()"
                   class="flex items-center gap-2 px-4 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-xl text-sm font-semibold transition disabled:opacity-50">
                   <lucide-angular name="scissors" class="h-4 w-4"></lucide-angular>
-                  Play Trimmed
+                  {{ 'audio-editor.actions.playTrimmed' | translate }}
                 </button>
                 <button
                   (click)="resetTrim()"
                   [disabled]="exporting()"
                   class="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-xl text-sm font-semibold transition disabled:opacity-50">
                   <lucide-angular name="rotate-cw" class="h-4 w-4"></lucide-angular>
-                  Reset
+                  {{ 'common.actions.reset' | translate }}
                 </button>
               } @else if (editMode() === 'remove') {
                 <button
@@ -167,7 +167,7 @@
                   [disabled]="exporting()"
                   class="flex items-center gap-2 px-4 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 rounded-xl text-sm font-semibold transition disabled:opacity-50">
                   <lucide-angular name="plus" class="h-4 w-4"></lucide-angular>
-                  Add Cut at Playhead
+                  {{ 'audio-editor.actions.addCutAtPlayhead' | translate }}
                 </button>
               } @else if (editMode() === 'split') {
                 <button
@@ -175,14 +175,14 @@
                   [disabled]="exporting()"
                   class="flex items-center gap-2 px-4 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-xl text-sm font-semibold transition disabled:opacity-50">
                   <lucide-angular name="split" class="h-4 w-4"></lucide-angular>
-                  Split at Playhead
+                  {{ 'audio-editor.actions.splitAtPlayhead' | translate }}
                 </button>
                 <button
                   (click)="resetClips()"
                   [disabled]="exporting()"
                   class="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-xl text-sm font-semibold transition disabled:opacity-50">
                   <lucide-angular name="rotate-cw" class="h-4 w-4"></lucide-angular>
-                  Reset
+                  {{ 'common.actions.reset' | translate }}
                 </button>
               }
 
@@ -207,7 +207,7 @@
           <div class="h-32 bg-slate-900 rounded-xl flex items-center justify-center">
             <div class="flex items-center gap-3 text-slate-400">
               <div class="w-6 h-6 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin"></div>
-              <span class="text-sm font-medium">Decoding audio & building high-res peak pyramid...</span>
+              <span class="text-sm font-medium">{{ 'audio-editor.waveform.decoding' | translate }}</span>
             </div>
           </div>
         }
@@ -220,9 +220,9 @@
           <div class="bg-white rounded-2xl border border-gray-100 shadow-xs p-6 flex flex-col gap-4">
             <div class="flex items-center justify-between border-b border-gray-50 pb-3">
               <div>
-                <h3 class="text-lg font-bold text-gray-900">Cut Regions (Parts to Remove)</h3>
+                <h3 class="text-lg font-bold text-gray-900">{{ 'audio-editor.cuts.title' | translate }}</h3>
                 <p class="text-xs text-gray-500 mt-0.5">
-                  These intervals will be extirpated. The rest will be seamlessly spliced into one audio.
+                  {{ 'audio-editor.cuts.description' | translate }}
                 </p>
               </div>
               <button
@@ -230,13 +230,13 @@
                 [disabled]="exporting()"
                 class="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition disabled:opacity-50">
                 <lucide-angular name="plus" class="h-3.5 w-3.5"></lucide-angular>
-                Add Cut
+                {{ 'audio-editor.actions.addCut' | translate }}
               </button>
             </div>
 
             @if (cuts().length === 0) {
               <div class="p-4 bg-gray-50 rounded-xl text-center text-xs text-gray-500">
-                No parts marked for removal yet. Click "Add Cut at Playhead" or drag on the waveform.
+                {{ 'audio-editor.cuts.empty' | translate }}
               </div>
             } @else {
               <div class="flex flex-col gap-3">
@@ -252,13 +252,13 @@
                         #{{ idx + 1 }}
                       </span>
                       <span class="text-xs font-semibold text-gray-700">
-                        Cut Duration: {{ (cut.end - cut.start).toFixed(2) }}s
+                        {{ 'audio-editor.cuts.duration' | translate: { duration: i18n.formatNumber(cut.end - cut.start, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) } }}
                       </span>
                     </div>
 
                     <div class="flex items-center gap-2 w-full sm:w-auto">
                       <div class="flex items-center gap-1">
-                        <span class="text-[10px] uppercase font-bold text-gray-400">Start:</span>
+                        <span class="text-[10px] uppercase font-bold text-gray-400">{{ 'audio-editor.cuts.startLabel' | translate }}</span>
                         <input
                           type="number"
                           [ngModel]="cut.start"
@@ -271,7 +271,7 @@
                       </div>
 
                       <div class="flex items-center gap-1">
-                        <span class="text-[10px] uppercase font-bold text-gray-400">End:</span>
+                        <span class="text-[10px] uppercase font-bold text-gray-400">{{ 'audio-editor.cuts.endLabel' | translate }}</span>
                         <input
                           type="number"
                           [ngModel]="cut.end"
@@ -287,7 +287,7 @@
                         (click)="removeCut(cut.id)"
                         [disabled]="exporting()"
                         class="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition disabled:opacity-50"
-                        title="Delete cut">
+                        [title]="'audio-editor.cuts.deleteTitle' | translate">
                         <lucide-angular name="trash-2" class="h-4 w-4"></lucide-angular>
                       </button>
                     </div>
@@ -299,15 +299,15 @@
             <!-- Remove mode duration calculation -->
             <div class="bg-gray-50 rounded-xl p-3.5 grid grid-cols-3 gap-2 text-center">
               <div>
-                <span class="text-[10px] text-gray-400 uppercase font-bold">Original</span>
+                <span class="text-[10px] text-gray-400 uppercase font-bold">{{ 'audio-editor.cuts.original' | translate }}</span>
                 <p class="text-sm font-mono font-bold text-gray-700">{{ formatTime(duration()) }}</p>
               </div>
               <div>
-                <span class="text-[10px] text-rose-500 uppercase font-bold">Removed</span>
+                <span class="text-[10px] text-rose-500 uppercase font-bold">{{ 'audio-editor.cuts.removed' | translate }}</span>
                 <p class="text-sm font-mono font-bold text-rose-600">-{{ formatTime(totalCutDuration()) }}</p>
               </div>
               <div>
-                <span class="text-[10px] text-emerald-500 uppercase font-bold">Final Duration</span>
+                <span class="text-[10px] text-emerald-500 uppercase font-bold">{{ 'audio-editor.cuts.finalDuration' | translate }}</span>
                 <p class="text-sm font-mono font-bold text-emerald-600">{{ formatTime(removeKeptDuration()) }}</p>
               </div>
             </div>
@@ -319,9 +319,9 @@
           <div class="bg-white rounded-2xl border border-gray-100 shadow-xs p-6 flex flex-col gap-4">
             <div class="flex items-center justify-between border-b border-gray-50 pb-3">
               <div>
-                <h3 class="text-lg font-bold text-gray-900">Audio Clips ({{ clips().length }})</h3>
+                <h3 class="text-lg font-bold text-gray-900">{{ 'audio-editor.clips.title' | translate: { count: clips().length } }}</h3>
                 <p class="text-xs text-gray-500 mt-0.5">
-                  Each clip will be exported as a distinct file and packed into a .ZIP archive.
+                  {{ 'audio-editor.clips.description' | translate }}
                 </p>
               </div>
               <button
@@ -329,7 +329,7 @@
                 [disabled]="exporting()"
                 class="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition disabled:opacity-50">
                 <lucide-angular name="split" class="h-3.5 w-3.5"></lucide-angular>
-                Split at Playhead
+                {{ 'audio-editor.actions.splitAtPlayhead' | translate }}
               </button>
             </div>
 
@@ -350,7 +350,7 @@
                       [ngModel]="clip.name"
                       (ngModelChange)="updateClipName(clip.id, $event)"
                       [disabled]="exporting()"
-                      placeholder="Clip name"
+                      [placeholder]="'audio-editor.clips.namePlaceholder' | translate"
                       class="text-xs font-semibold py-1 px-2 bg-white border border-gray-200 rounded-lg outline-hidden focus:ring-1 focus:ring-emerald-400 w-36 md:w-48" />
                     <span class="text-xs font-mono text-gray-500">
                       ({{ formatTime(clip.end - clip.start) }})
@@ -367,7 +367,7 @@
                       [disabled]="exporting()"
                       class="px-2.5 py-1 bg-white hover:bg-gray-100 text-gray-700 border border-gray-200 rounded-lg text-xs font-semibold flex items-center gap-1 transition disabled:opacity-50">
                       <lucide-angular name="play" class="h-3.5 w-3.5 text-emerald-600"></lucide-angular>
-                      Play
+                      {{ 'audio-editor.actions.play' | translate }}
                     </button>
 
                     @if (clips().length > 1) {
@@ -375,7 +375,7 @@
                         (click)="removeClip(clip.id)"
                         [disabled]="exporting()"
                         class="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition disabled:opacity-50"
-                        title="Remove clip boundary">
+                        [title]="'audio-editor.clips.removeBoundaryTitle' | translate">
                         <lucide-angular name="trash-2" class="h-4 w-4"></lucide-angular>
                       </button>
                     }
@@ -396,10 +396,10 @@
             </div>
             <div>
               <h4 class="text-sm font-semibold text-gray-900">
-                {{ editMode() === 'trim' ? 'Trim' : 'Splicing' }} Export Successful!
+                {{ (editMode() === 'trim' ? 'audio-editor.export.successTrimTitle' : 'audio-editor.export.successSpliceTitle') | translate }}
               </h4>
               <p class="text-xs text-gray-600 mt-0.5">
-                Output: {{ formatFileSize(outputBlob()?.size || 0) }}
+                {{ 'audio-editor.export.output' | translate: { size: formatFileSize(outputBlob()?.size || 0) } }}
               </p>
             </div>
           </div>
@@ -407,7 +407,7 @@
             (click)="handleDownload()"
             class="w-full md:w-auto px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl shadow-xs hover:shadow-sm transition flex items-center justify-center gap-2 text-sm font-semibold">
             <lucide-angular name="download" class="h-4 w-4"></lucide-angular>
-            Download {{ outputFileName() }}
+            {{ 'audio-editor.export.downloadFile' | translate: { fileName: outputFileName() } }}
           </button>
         </div>
       }
@@ -422,10 +422,10 @@
               </div>
               <div>
                 <h4 class="text-sm font-bold text-gray-900">
-                  Successfully Exported {{ exportedClips().length }} Clips!
+                  {{ 'audio-editor.export.clipsSuccessTitle' | translate: { count: exportedClips().length } }}
                 </h4>
                 <p class="text-xs text-gray-600">
-                  Download individual clips or the complete ZIP archive below.
+                  {{ 'audio-editor.export.clipsDescription' | translate }}
                 </p>
               </div>
             </div>
@@ -435,7 +435,7 @@
                 (click)="handleDownloadZip()"
                 class="w-full md:w-auto px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl shadow-xs hover:shadow-sm transition flex items-center justify-center gap-2 text-sm font-semibold">
                 <lucide-angular name="archive" class="h-4 w-4"></lucide-angular>
-                Download All (.ZIP)
+                {{ 'audio-editor.export.downloadAll' | translate }}
               </button>
             }
           </div>
@@ -454,7 +454,7 @@
                   (click)="handleDownloadClip(clip)"
                   class="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition shrink-0">
                   <lucide-angular name="download" class="h-3.5 w-3.5"></lucide-angular>
-                  Save
+                  {{ 'common.actions.save' | translate }}
                 </button>
               </div>
             }
@@ -468,13 +468,13 @@
           <div class="flex items-center gap-3 mb-3">
             <div class="w-5 h-5 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin shrink-0"></div>
             <div class="flex flex-col">
-              <span class="text-sm font-semibold text-gray-700">Exporting audio with FFmpeg...</span>
+              <span class="text-sm font-semibold text-gray-700">{{ 'audio-editor.export.exportingWithFfmpeg' | translate }}</span>
               @if (currentExportStep()) {
                 <span class="text-xs text-indigo-600 font-medium">{{ currentExportStep() }}</span>
               }
             </div>
             @if (progress() > 0) {
-              <span class="ml-auto text-xs font-mono font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-sm">{{ progress() }}%</span>
+              <span class="ml-auto text-xs font-mono font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-sm">{{ i18n.formatPercent(progress() / 100) }}</span>
             }
           </div>
           <div class="h-1.5 bg-gray-100 rounded-full overflow-hidden">
@@ -492,11 +492,11 @@
   <div class="lg:col-span-4 flex flex-col gap-6">
     <!-- Export Options -->
     <div class="bg-white rounded-2xl border border-gray-100 shadow-xs p-6 flex flex-col gap-5">
-      <h3 class="text-lg font-bold text-gray-900 border-b border-gray-50 pb-3">Export Options</h3>
+      <h3 class="text-lg font-bold text-gray-900 border-b border-gray-50 pb-3">{{ 'audio-editor.options.title' | translate }}</h3>
 
       <!-- Format picker -->
       <div class="flex flex-col gap-2">
-        <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Target Format</label>
+        <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">{{ 'audio-editor.options.targetFormat' | translate }}</label>
         <div class="grid grid-cols-3 gap-2">
           @for (fmt of formats; track fmt) {
             <button
@@ -516,7 +516,7 @@
       <!-- Bitrate (lossy only) -->
       @if (isLossyFormat()) {
         <div class="flex flex-col gap-2">
-          <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Bitrate</label>
+          <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">{{ 'audio-editor.options.bitrate' | translate }}</label>
           <div class="grid grid-cols-3 gap-2">
             @for (br of bitrateOptions; track br) {
               <button
@@ -536,7 +536,7 @@
 
       <!-- Sample Rate -->
       <div class="flex flex-col gap-2">
-        <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Sample Rate</label>
+        <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">{{ 'audio-editor.options.sampleRate' | translate }}</label>
         <div class="flex flex-col gap-1.5">
           @for (sr of sampleRateOptions; track sr) {
             <button
@@ -547,12 +547,12 @@
                 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50': sampleRate() !== sr
               }"
               class="w-full py-2.5 px-4 text-xs font-semibold rounded-xl border text-left flex items-center justify-between transition disabled:opacity-50">
-              <span>{{ sr | number }} Hz</span>
+              <span>{{ i18n.formatNumber(sr) }} Hz</span>
               <span class="text-[10px] font-normal opacity-60">
                 @switch (sr) {
-                  @case (22050) { FM quality }
-                  @case (44100) { CD quality }
-                  @case (48000) { Pro / DVD }
+                  @case (22050) { {{ 'audio-editor.sampleRates.fm' | translate }} }
+                  @case (44100) { {{ 'audio-editor.sampleRates.cd' | translate }} }
+                  @case (48000) { {{ 'audio-editor.sampleRates.pro' | translate }} }
                 }
               </span>
             </button>
@@ -564,12 +564,12 @@
     <!-- Trim Info (Trim Mode only) -->
     @if (file() && waveformReady() && editMode() === 'trim') {
       <div class="bg-white rounded-2xl border border-gray-100 shadow-xs p-6 flex flex-col gap-4">
-        <h3 class="text-lg font-bold text-gray-900 border-b border-gray-50 pb-3">Trim Selection</h3>
+        <h3 class="text-lg font-bold text-gray-900 border-b border-gray-50 pb-3">{{ 'audio-editor.trim.title' | translate }}</h3>
 
         <fieldset [disabled]="exporting()" class="contents">
           <div class="grid grid-cols-2 gap-3">
             <div class="flex flex-col gap-1.5">
-              <label class="text-[10px] font-bold text-cyan-500 uppercase tracking-wider">Start (sec)</label>
+              <label class="text-[10px] font-bold text-cyan-500 uppercase tracking-wider">{{ 'audio-editor.trim.startSec' | translate }}</label>
               <input
                 type="number"
                 [ngModel]="trimStart()"
@@ -578,7 +578,7 @@
                 class="w-full text-sm py-2 px-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-cyan-400/30 focus:border-cyan-400 transition outline-hidden font-mono disabled:opacity-50" />
             </div>
             <div class="flex flex-col gap-1.5">
-              <label class="text-[10px] font-bold text-pink-500 uppercase tracking-wider">End (sec)</label>
+              <label class="text-[10px] font-bold text-pink-500 uppercase tracking-wider">{{ 'audio-editor.trim.endSec' | translate }}</label>
               <input
                 type="number"
                 [ngModel]="trimEnd()"
@@ -592,17 +592,17 @@
         <!-- Duration summary -->
         <div class="bg-gray-50 rounded-xl p-3 flex items-center justify-between">
           <div class="text-center flex-1">
-            <p class="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Start</p>
+            <p class="text-[10px] text-gray-400 uppercase font-bold tracking-wider">{{ 'audio-editor.trim.start' | translate }}</p>
             <p class="text-sm font-mono font-bold text-cyan-600">{{ formatTime(trimStart()) }}</p>
           </div>
           <div class="text-gray-200 text-xl">→</div>
           <div class="text-center flex-1">
-            <p class="text-[10px] text-gray-400 uppercase font-bold tracking-wider">End</p>
+            <p class="text-[10px] text-gray-400 uppercase font-bold tracking-wider">{{ 'audio-editor.trim.end' | translate }}</p>
             <p class="text-sm font-mono font-bold text-pink-600">{{ formatTime(trimEnd()) }}</p>
           </div>
           <div class="text-gray-200 text-xl">→</div>
           <div class="text-center flex-1">
-            <p class="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Duration</p>
+            <p class="text-[10px] text-gray-400 uppercase font-bold tracking-wider">{{ 'audio-editor.trim.duration' | translate }}</p>
             <p class="text-sm font-mono font-bold text-indigo-600">{{ formatTime(trimDuration()) }}</p>
           </div>
         </div>
@@ -613,19 +613,19 @@
     @if (file() && waveformReady() && editMode() !== 'trim') {
       <div class="bg-white rounded-2xl border border-gray-100 shadow-xs p-6 flex flex-col gap-3">
         <h3 class="text-lg font-bold text-gray-900 border-b border-gray-50 pb-2">
-          {{ editMode() === 'remove' ? 'Cut Out Summary' : 'Split Clips Summary' }}
+          {{ (editMode() === 'remove' ? 'audio-editor.cuts.summaryTitle' : 'audio-editor.clips.summaryTitle') | translate }}
         </h3>
 
         @if (editMode() === 'remove') {
           <div class="text-xs text-gray-600 space-y-1.5">
-            <p><span class="font-semibold text-gray-700">Total Cuts:</span> {{ cuts().length }} region(s)</p>
-            <p><span class="font-semibold text-gray-700">Kept Segments:</span> {{ keptIntervals().length }} part(s)</p>
-            <p><span class="font-semibold text-gray-700">Estimated Output Length:</span> {{ formatTime(removeKeptDuration()) }}</p>
+            <p><span class="font-semibold text-gray-700">{{ 'audio-editor.cuts.totalCuts' | translate }}</span> {{ 'audio-editor.cuts.regionsCount' | translate: { count: cuts().length } }}</p>
+            <p><span class="font-semibold text-gray-700">{{ 'audio-editor.cuts.keptSegments' | translate }}</span> {{ 'audio-editor.cuts.partsCount' | translate: { count: keptIntervals().length } }}</p>
+            <p><span class="font-semibold text-gray-700">{{ 'audio-editor.cuts.estimatedOutput' | translate }}</span> {{ formatTime(removeKeptDuration()) }}</p>
           </div>
         } @else if (editMode() === 'split') {
           <div class="text-xs text-gray-600 space-y-1.5">
-            <p><span class="font-semibold text-gray-700">Total Clips:</span> {{ clips().length }} file(s)</p>
-            <p><span class="font-semibold text-gray-700">Packaging:</span> Individual downloads + .ZIP bundle</p>
+            <p><span class="font-semibold text-gray-700">{{ 'audio-editor.clips.totalClips' | translate }}</span> {{ 'audio-editor.clips.filesCount' | translate: { count: clips().length } }}</p>
+            <p><span class="font-semibold text-gray-700">{{ 'audio-editor.clips.packaging' | translate }}</span> {{ 'audio-editor.clips.packagingValue' | translate }}</p>
           </div>
         }
       </div>
@@ -639,13 +639,13 @@
         class="w-full py-3.5 px-6 bg-linear-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white rounded-2xl shadow-md hover:shadow-lg transition flex items-center justify-center gap-3 text-sm font-bold disabled:opacity-50 disabled:cursor-not-allowed">
         @if (exporting()) {
           <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-          Exporting...
+          {{ 'audio-editor.export.exporting' | translate }}
         } @else {
           <lucide-angular name="download" class="h-5 w-5"></lucide-angular>
           @switch (editMode()) {
-            @case ('trim') { Export Trimmed Audio }
-            @case ('remove') { Export Spliced Audio }
-            @case ('split') { Export All Clips (ZIP) }
+            @case ('trim') { {{ 'audio-editor.export.trim' | translate }} }
+            @case ('remove') { {{ 'audio-editor.export.remove' | translate }} }
+            @case ('split') { {{ 'audio-editor.export.split' | translate }} }
           }
         }
       </button>

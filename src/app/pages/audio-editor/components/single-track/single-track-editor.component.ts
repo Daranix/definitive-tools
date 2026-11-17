@@ -12,8 +12,10 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
-import { isPlatformBrowser, NgClass, DecimalPipe } from '@angular/common';
+import { isPlatformBrowser, NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
+import { I18nService } from '@/app/i18n/i18n.service';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import { DragAndDropFileComponent } from '@/app/components/drag-and-drop-file/drag-and-drop-file.component';
 import {
@@ -46,9 +48,9 @@ interface DragState {
   imports: [
     LucideIconComponent,
     NgClass,
-    DecimalPipe,
     FormsModule,
     DragAndDropFileComponent,
+    TranslatePipe,
   ],
   templateUrl: './single-track-editor.component.html',
   styleUrl: './single-track-editor.component.scss',
@@ -59,6 +61,7 @@ export class SingleTrackEditorComponent implements OnDestroy {
   private readonly audioEngine = inject(AudioEngineService);
   private readonly audioExport = inject(AudioExportService);
   private readonly toastService = inject(ToastService);
+  readonly i18n = inject(I18nService);
 
   readonly waveformCanvas =
     viewChild<ElementRef<HTMLCanvasElement>>('waveformCanvas');
@@ -182,6 +185,8 @@ export class SingleTrackEditorComponent implements OnDestroy {
       this.activeClipId();
       this.hoverInfo();
       this.zoom();
+      // Canvas labels ("Start:" / "End:") are language dependent.
+      this.i18n.language();
 
       if (this.waveformReady()) {
         this.drawWaveform();
@@ -275,17 +280,38 @@ export class SingleTrackEditorComponent implements OnDestroy {
       const mid = Math.round((dur / 2) * 10) / 10;
       if (dur > 6) {
         this.clips.set([
-          { id: 'clip-1', name: 'Part 1', start: 0, end: mid },
-          { id: 'clip-2', name: 'Part 2', start: mid, end: dur },
+          {
+            id: 'clip-1',
+            name: this.i18n.t('audio-editor.clips.part', { index: 1 }),
+            start: 0,
+            end: mid,
+          },
+          {
+            id: 'clip-2',
+            name: this.i18n.t('audio-editor.clips.part', { index: 2 }),
+            start: mid,
+            end: dur,
+          },
         ]);
       } else {
-        this.clips.set([{ id: 'clip-1', name: 'Clip 1', start: 0, end: dur }]);
+        this.clips.set([
+          {
+            id: 'clip-1',
+            name: this.i18n.t('audio-editor.clips.name', { index: 1 }),
+            start: 0,
+            end: dur,
+          },
+        ]);
       }
 
       this.waveformReady.set(true);
     } catch (err: any) {
       console.error(err);
-      this.toastService.error({ message: `Failed to decode audio: ${err?.message || err}` });
+      this.toastService.error({
+        message: this.i18n.t('audio-editor.messages.decodeFailed', {
+          message: err?.message || err,
+        }),
+      });
     }
   }
 
@@ -435,10 +461,27 @@ export class SingleTrackEditorComponent implements OnDestroy {
       ctx.fillRect(0, 0, startX, H - 18);
       ctx.fillRect(endX, 0, W - endX, H - 18);
 
-      this.drawVerticalMarker(ctx, startX, H - 18, '#22d3ee', 'Start: ' + this.formatTime(start));
+      this.drawVerticalMarker(
+        ctx,
+        startX,
+        H - 18,
+        '#22d3ee',
+        this.i18n.t('audio-editor.waveform.startMarker', {
+          time: this.formatTime(start),
+        }),
+      );
       this.drawHandle(ctx, startX, H - 18, '#22d3ee');
 
-      this.drawVerticalMarker(ctx, endX, H - 18, '#f472b6', 'End: ' + this.formatTime(end), true);
+      this.drawVerticalMarker(
+        ctx,
+        endX,
+        H - 18,
+        '#f472b6',
+        this.i18n.t('audio-editor.waveform.endMarker', {
+          time: this.formatTime(end),
+        }),
+        true,
+      );
       this.drawHandle(ctx, endX, H - 18, '#f472b6');
     } else if (mode === 'remove') {
       for (const cut of this.cuts()) {
@@ -969,7 +1012,9 @@ export class SingleTrackEditorComponent implements OnDestroy {
       this.cuts.update((list) => [...list, newCut]);
       this.activeCutId.set(newCut.id);
       this.clearExportResults();
-      this.toastService.info({ message: 'Added cut region at playhead.' });
+      this.toastService.info({
+        message: this.i18n.t('audio-editor.messages.addedCut'),
+      });
     }
   }
 
@@ -1014,14 +1059,16 @@ export class SingleTrackEditorComponent implements OnDestroy {
 
       const firstPart: AudioClip = {
         id: targetClip.id,
-        name: targetClip.name || `Clip ${targetIdx + 1}`,
+        name:
+          targetClip.name ||
+          this.i18n.t('audio-editor.clips.name', { index: targetIdx + 1 }),
         start: targetClip.start,
         end: splitTime,
       };
 
       const secondPart: AudioClip = {
         id: 'clip-' + Date.now(),
-        name: `Clip ${targetIdx + 2}`,
+        name: this.i18n.t('audio-editor.clips.name', { index: targetIdx + 2 }),
         start: splitTime,
         end: targetClip.end,
       };
@@ -1030,7 +1077,11 @@ export class SingleTrackEditorComponent implements OnDestroy {
       this.clips.set(allClips);
       this.activeClipId.set(secondPart.id);
       this.clearExportResults();
-      this.toastService.success({ message: `Split audio into ${allClips.length} clips.` });
+      this.toastService.success({
+        message: this.i18n.t('audio-editor.messages.splitClips', {
+          count: allClips.length,
+        }),
+      });
     }
   }
 
@@ -1059,7 +1110,14 @@ export class SingleTrackEditorComponent implements OnDestroy {
 
   resetClips(): void {
     const dur = this.duration();
-    this.clips.set([{ id: 'clip-1', name: 'Clip 1', start: 0, end: dur }]);
+    this.clips.set([
+      {
+        id: 'clip-1',
+        name: this.i18n.t('audio-editor.clips.name', { index: 1 }),
+        start: 0,
+        end: dur,
+      },
+    ]);
     this.clearExportResults();
   }
 
@@ -1123,7 +1181,11 @@ export class SingleTrackEditorComponent implements OnDestroy {
       if (file.type.startsWith('audio/') || /\.(mp3|wav|ogg|aac|flac|m4a|wma|opus)$/i.test(file.name)) {
         this.onFileSelected(file);
       } else {
-        this.toastService.warning({ message: `File "${file.name}" is not a supported audio format.` });
+        this.toastService.warning({
+          message: this.i18n.t('audio-editor.messages.unsupportedFile', {
+            name: file.name,
+          }),
+        });
       }
     }
   }
@@ -1153,7 +1215,9 @@ export class SingleTrackEditorComponent implements OnDestroy {
         this.outputBlob.set(res.blob);
         this.outputUrl.set(URL.createObjectURL(res.blob));
         this.outputFileName.set(res.fileName);
-        this.toastService.success({ message: 'Trimmed audio exported successfully!' });
+        this.toastService.success({
+          message: this.i18n.t('audio-editor.messages.trimmedExported'),
+        });
       } else if (mode === 'remove') {
         const res = await this.audioExport.exportRemove(
           f,
@@ -1166,7 +1230,9 @@ export class SingleTrackEditorComponent implements OnDestroy {
         this.outputBlob.set(res.blob);
         this.outputUrl.set(URL.createObjectURL(res.blob));
         this.outputFileName.set(res.fileName);
-        this.toastService.success({ message: 'Spliced audio exported successfully!' });
+        this.toastService.success({
+          message: this.i18n.t('audio-editor.messages.splicedExported'),
+        });
       } else if (mode === 'split') {
         const res = await this.audioExport.exportSplit(
           f,
@@ -1180,13 +1246,24 @@ export class SingleTrackEditorComponent implements OnDestroy {
         if (res.zipBlob) {
           this.zipBlob.set(res.zipBlob);
           this.zipUrl.set(URL.createObjectURL(res.zipBlob));
-          this.zipFileName.set(res.zipFileName || 'clips.zip');
+          this.zipFileName.set(
+            res.zipFileName ||
+              this.i18n.t('audio-editor.files.defaultClipsZip'),
+          );
         }
-        this.toastService.success({ message: `Exported ${res.exportedClips.length} clips!` });
+        this.toastService.success({
+          message: this.i18n.t('audio-editor.messages.clipsExported', {
+            count: res.exportedClips.length,
+          }),
+        });
       }
     } catch (err: any) {
       console.error(err);
-      this.toastService.error({ message: `Export failed: ${err?.message || err}` });
+      this.toastService.error({
+        message: this.i18n.t('audio-editor.messages.exportFailed', {
+          message: err?.message || err,
+        }),
+      });
     } finally {
       this.exporting.set(false);
       this.currentExportStep.set('');
@@ -1240,8 +1317,16 @@ export class SingleTrackEditorComponent implements OnDestroy {
   }
 
   formatFileSize(bytes: number): string {
-    if (bytes < 1024) return `${bytes} B`;
-    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-    return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+    if (bytes < 1024) return `${this.i18n.formatNumber(bytes)} B`;
+    if (bytes < 1024 * 1024) {
+      return `${this.i18n.formatNumber(bytes / 1024, {
+        minimumFractionDigits: 1,
+        maximumFractionDigits: 1,
+      })} KB`;
+    }
+    return `${this.i18n.formatNumber(bytes / (1024 * 1024), {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })} MB`;
   }
 }

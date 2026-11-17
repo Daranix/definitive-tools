@@ -1,10 +1,13 @@
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { AppComponent } from './app.component';
+import { provideI18nTesting } from './i18n/i18n.testing';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AppComponent],
+      providers: [provideRouter([]), ...provideI18nTesting()],
     }).compileComponents();
   });
 
@@ -20,10 +23,10 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('definitive-tools');
   });
 
-  it('should render title', () => {
+  it('should render the router outlet', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, definitive-tools');
+    expect(compiled.querySelector('router-outlet')).toBeTruthy();
   });
 });

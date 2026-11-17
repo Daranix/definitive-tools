@@ -7,18 +7,21 @@ import {
   output,
 } from '@angular/core';
 import { NgClass } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
+import { I18nService } from '@/app/i18n/i18n.service';
 import { TimelineClip, AudioTrack } from '../../../audio-editor.schema';
 import { AudioEngineService } from '../../../services/audio-engine.service';
 
 @Component({
   selector: 'app-clip-block',
-  imports: [NgClass],
+  imports: [NgClass, TranslatePipe],
   templateUrl: './clip-block.component.html',
   styleUrl: './clip-block.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClipBlockComponent {
   private readonly audioEngine = inject(AudioEngineService);
+  readonly i18n = inject(I18nService);
 
   readonly clip = input.required<TimelineClip>();
   readonly track = input.required<AudioTrack>();

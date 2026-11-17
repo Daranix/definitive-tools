@@ -1,0 +1,103 @@
+{
+  "seo": {
+    "title": "Speech to Text & Audio/Video Transcriber",
+    "description": "Convert spoken words, audio, and video files (MP4, WebM, MOV) into accurate text and timestamped JSON captions locally in your browser using Whisper WebGPU AI or Browser Speech Recognition."
+  },
+  "title": "Speech to Text & Media Transcriber",
+  "badge": "Local WebGPU, FFmpeg WASM & Speech API",
+  "subtitle": "Convert live speech, audio, and video files into accurate transcripts and timestamped JSON captions with 100% on-device processing.",
+  "engine": {
+    "label": "Transcription Engine",
+    "whisper": "Whisper AI",
+    "browser": "Browser API",
+    "whisperFooter": "Whisper WebGPU AI",
+    "browserFooter": "Browser Speech Recognition"
+  },
+  "source": {
+    "label": "Media Source",
+    "mic": "Live Microphone",
+    "file": "Audio / Video File"
+  },
+  "language": {
+    "label": "Spoken Language",
+    "auto": "Auto-Detect Language",
+    "detected": "Detected:",
+    "autoHint": "Automatic language detection enabled via Whisper AI"
+  },
+  "recorder": {
+    "stop": "Stop Recording",
+    "listening": "Listening & Transcribing...",
+    "speakClearly": "Speak clearly into your microphone",
+    "initializing": "Initializing Audio Engine...",
+    "start": "Start Live Recording",
+    "privacy": "Microphone audio is processed entirely client-side.",
+    "listeningToMic": "Listening to microphone...",
+    "decoding": "Audio will be decoded shortly"
+  },
+  "file": {
+    "audioFormats": "Audio: MP3, WAV, OGG, FLAC, M4A, AAC, OPUS",
+    "videoFormats": "Video: MP4, WebM, MOV, MKV, AVI",
+    "videoBadge": "VIDEO",
+    "autoExtraction": "Auto audio extraction with FFmpeg",
+    "remove": "Remove file",
+    "extracting": "Extracting Audio Track with FFmpeg...",
+    "transcribing": "Transcribing Audio...",
+    "extractAndTranscribe": "Extract Audio & Transcribe",
+    "transcribeFile": "Transcribe Audio File"
+  },
+  "tabs": {
+    "text": "Plain Text",
+    "json": "JSON Captions"
+  },
+  "actions": {
+    "copyText": "Copy Text",
+    "copied": "Copied!",
+    "copyPlainTitle": "Copy plain transcript",
+    "downloadTxtTitle": "Download as .txt",
+    "copyJson": "Copy JSON",
+    "copiedJson": "Copied JSON!",
+    "copyJsonTitle": "Copy JSON captions",
+    "downloadJsonTitle": "Download as .json",
+    "clearTitle": "Clear transcript"
+  },
+  "empty": {
+    "title": "Ready to Transcribe",
+    "description": "Click 'Start Live Recording' or upload an audio/video file. Your transcribed text and timestamped JSON captions will appear here in real time.",
+    "placeholder": "Transcribed text will appear here...",
+    "jsonTitle": "JSON Captions are available with Whisper AI",
+    "jsonDescription": "Switch the engine to Whisper AI to generate structured timestamped caption segments."
+  },
+  "stats": {
+    "words": "words",
+    "characters": "characters",
+    "chunkSegments": "caption segments",
+    "language": "Language:"
+  },
+  "fileConversion": {
+    "loadingCore": "Loading FFmpeg WASM Core...",
+    "initializing": "Initializing video extraction engine...",
+    "reading": "Reading video file into memory...",
+    "extracting": "Extracting and converting audio track with FFmpeg...",
+    "finalizing": "Finalizing audio stream...",
+    "extracted": "Audio extracted successfully!"
+  },
+  "errors": {
+    "micAccess": "Could not access microphone. Please ensure microphone permissions are granted.",
+    "getUserMediaUnsupported": "getUserMedia is not supported by your browser.",
+    "browserApiUnsupported": "Speech Recognition API is not supported on this browser.",
+    "generic": "An error occurred while accessing the microphone or initializing speech recognition.",
+    "whisperFile": "Error processing media file with Whisper."
+  },
+  "about": {
+    "whisperTitle": "Whisper AI (WebGPU)",
+    "whisperDescription": "Executes transformer neural networks directly in your browser using hardware-accelerated WebGPU for robust multi-language transcription without cloud costs.",
+    "ffmpegTitle": "Video & Audio Processing (FFmpeg)",
+    "ffmpegDescription": "Supports video uploads (MP4, WebM, MOV, MKV). Audio tracks are extracted and resampled client-side using FFmpeg WebAssembly before AI inference.",
+    "privacyTitle": "100% Privacy & Zero Uploads",
+    "privacyDescription": "Your voice, video, and audio files never leave your device. All machine learning inference and video demuxing happen locally in your browser sandbox."
+  },
+  "downloads": {
+    "transcriptFileName": "transcript.txt",
+    "captionsFileName": "captions.json"
+  }
+}

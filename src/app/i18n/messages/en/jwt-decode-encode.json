@@ -1,0 +1,78 @@
+{
+  "page": {
+    "about": {
+      "title": "About JWT Tokens",
+      "whatIsTitle": "What is JWT?",
+      "whatIsDescription": "JSON Web Token (JWT) is an open standard that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed.",
+      "commonUsesTitle": "Common Uses",
+      "commonUses": {
+        "authentication": "Authentication and authorization in web applications",
+        "informationExchange": "Information exchange between parties",
+        "securingApis": "Securing API endpoints"
+      }
+    },
+    "modes": {
+      "decode": "JWT Decode",
+      "encode": "JWT Encode"
+    }
+  },
+  "seo": {
+    "title": "JWT Decode / Encode",
+    "description": "Easily decode and encode JSON Web Tokens (JWT) for secure, verifiable authentication and authorization."
+  },
+  "shared": {
+    "actions": {
+      "generateExample": "Generate example",
+      "copyToClipboard": "Copy to clipboard",
+      "clear": "Clear"
+    },
+    "labels": {
+      "encodedValue": "ENCODED VALUE",
+      "decodedHeader": "DECODED HEADER",
+      "jwtToken": "JSON WEB TOKEN (JWT)",
+      "signatureVerification": "JWT SIGNATURE VERIFICATION",
+      "signatureHint": "Enter the secret used to sign the JWT below:"
+    },
+    "placeholders": {
+      "secretKey": "Secret key"
+    },
+    "status": {
+      "invalidToken": "Invalid token for the specified secret"
+    },
+    "messages": {
+      "copied": "Copied to clipboard"
+    }
+  },
+  "decoder": {
+    "labels": {
+      "decodedPayload": "DECODED PAYLOAD",
+      "json": "JSON",
+      "signatureVerificationOptional": "JWT SIGNATURE VERIFICATION (OPTIONAL)"
+    },
+    "aria": {
+      "jwtEditorInput": "JWT editor input"
+    },
+    "status": {
+      "validJwt": "Valid JWT",
+      "invalidJwtFormat": "Invalid JWT format",
+      "validSecret": "Valid secret"
+    }
+  },
+  "encoder": {
+    "actions": {
+      "clearField": "Clear field"
+    },
+    "labels": {
+      "headerJson": "HEADER (JSON)",
+      "decodedValue": "DECODED VALUE",
+      "payloadJson": "PAYLOAD (JSON)"
+    },
+    "placeholders": {
+      "header": "Paste JSON header here.",
+      "payload": "Paste JSON payload here."
+    },
+    "messages": {
+      "missingFields": "Please provide all required fields"
+    }
+  }
+}

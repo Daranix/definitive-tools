@@ -1,0 +1,140 @@
+{
+  "title": "QR Code Configuration",
+  "contentType": {
+    "label": "Content Type",
+    "url": "URL",
+    "text": "Text",
+    "email": "Email",
+    "phone": "Phone",
+    "sms": "SMS",
+    "vcard": "vCard",
+    "wifi": "WiFi",
+    "geo": "Location"
+  },
+  "url": {
+    "label": "Website URL",
+    "placeholder": "https://www.example.com",
+    "hint": "Enter the full URL including https:// for websites."
+  },
+  "text": {
+    "label": "Text Content",
+    "placeholder": "Enter any text you want encoded in the QR code"
+  },
+  "email": {
+    "address": "Email Address",
+    "addressPlaceholder": "recipient@example.com",
+    "subject": "Subject (optional)",
+    "subjectPlaceholder": "Email subject",
+    "body": "Body (optional)",
+    "bodyPlaceholder": "Email content"
+  },
+  "phone": {
+    "label": "Phone Number",
+    "placeholder": "+1 555 123 4567"
+  },
+  "sms": {
+    "number": "Phone Number",
+    "numberPlaceholder": "+1 555 123 4567",
+    "message": "Message",
+    "messagePlaceholder": "SMS content"
+  },
+  "vcard": {
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "company": "Company (optional)",
+    "phone": "Phone Number",
+    "email": "Email",
+    "website": "Website (optional)",
+    "address": "Address (optional)"
+  },
+  "wifi": {
+    "ssid": "Network Name (SSID)",
+    "encryption": "Encryption Type",
+    "password": "Password",
+    "encryptionTypes": {
+      "wpa": "WPA/WPA2",
+      "wep": "WEP",
+      "none": "None"
+    }
+  },
+  "geo": {
+    "latitude": "Latitude",
+    "latitudePlaceholder": "e.g. 37.7749",
+    "longitude": "Longitude",
+    "longitudePlaceholder": "e.g. -122.4194",
+    "useCurrentLocation": "Use my current location"
+  },
+  "customization": {
+    "title": "Customize QR Code",
+    "dotsShape": "Dots Shape",
+    "dotsShapeHint": "The shape of the dots in the QR code.",
+    "cornersStyle": "Corners Style",
+    "cornersStyleHint": "The style of the corners in the QR code.",
+    "cornersInnerDotStyle": "Corners Inner Dot Style",
+    "cornersInnerDotStyleHint": "The style of the corners in the QR code.",
+    "size": "Size",
+    "errorCorrection": "Error Correction Level",
+    "errorCorrectionHint": "Higher correction levels make your QR code more reliable but increase complexity.",
+    "foregroundColor": "Foreground Color",
+    "backgroundColor": "Background Color",
+    "dotStyles": {
+      "dots": "Dots",
+      "rounded": "Rounded",
+      "classy": "Classy",
+      "classyRounded": "Classy Rounded",
+      "square": "Square",
+      "extraRounded": "Extra Rounded",
+      "dot": "Dot"
+    },
+    "errorCorrectionLevels": {
+      "low": "Low (L)",
+      "medium": "Medium (M)",
+      "quartile": "Quartile (Q)",
+      "high": "High (H)"
+    }
+  },
+  "actions": {
+    "generate": "Generate QR Code"
+  },
+  "preview": {
+    "title": "QR Code",
+    "empty": "Your QR code will appear here",
+    "imageAlt": "QR Code",
+    "downloadAs": "Download as {{ format }}",
+    "testTitle": "Test Your QR Code",
+    "testDescription": "Scan the QR code with your device to ensure it works correctly."
+  },
+  "about": {
+    "title": "About QR Codes",
+    "heading": "What are QR Codes?",
+    "description": "QR (Quick Response) codes are two-dimensional barcodes that can be scanned using a smartphone camera. They store various types of information such as URLs, text, contact details, and more. Originally developed in Japan for tracking automotive parts, they've become ubiquitous for quickly sharing information."
+  },
+  "download": {
+    "fileName": "qr-code"
+  },
+  "validation": {
+    "invalidUrl": "Please enter a valid URL",
+    "invalidText": "Invalid text",
+    "invalidEmailAddress": "Invalid email address",
+    "invalidEmail": "Invalid email",
+    "invalidPhoneNumber": "Invalid phone number",
+    "firstNameRequired": "First name is required",
+    "lastNameRequired": "Last name is required",
+    "phoneRequired": "Phone number is required",
+    "ssidRequired": "Network SSID is required",
+    "latitudeRequired": "Latitude is required",
+    "longitudeRequired": "Longitude is required",
+    "invalidValue": "Invalid value",
+    "sizeMin": "Size must be at least 100 px",
+    "sizeMax": "Size must be at most 2000 px",
+    "fixErrors": "Please correct all validation errors first."
+  },
+  "messages": {
+    "geolocationFailed": "Failed to access geolocation."
+  },
+  "seo": {
+    "title": "QR Code Generator - Definitive Tools",
+    "description": "Generate customized QR codes for URLs, text, contact information, and more. high-quality QR codes that work anywhere.",
+    "keywords": "qr code generator, qr code, qr codes, qr, qrcode, qrcodes, free qr code generator, free qrcode generator, free qr code, free qrcodes, online qr code generator, online qrcode generator, online qr code, online qrcodes, qr code generator online, qr code online, qr codes online, qr online, qrcode online, qrcodes online, free qr code online, free qrcode online, free qr codes online, free qrcodes online"
+  }
+}

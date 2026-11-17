@@ -30,7 +30,7 @@
               d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
             </path>
           </svg>
-          <span class="text-sm font-medium text-gray-500">Rendering Swagger UI...</span>
+          <span class="text-sm font-medium text-gray-500">{{ 'swagger-editor.editor.loading' | translate }}</span>
         </div>
 
         <div class="h-full overflow-y-auto" [class.invisible]="isLoading()">
@@ -66,8 +66,8 @@
               </svg>
             </div>
             <div>
-              <h3 class="text-lg font-bold text-gray-900">Import from URL</h3>
-              <p class="text-sm text-gray-500">Paste the link to your OpenAPI definition</p>
+              <h3 class="text-lg font-bold text-gray-900">{{ 'swagger-editor.editor.importModal.title' | translate }}</h3>
+              <p class="text-sm text-gray-500">{{ 'swagger-editor.editor.importModal.description' | translate }}</p>
             </div>
           </div>
 
@@ -88,14 +88,14 @@
                 (click)="isImportModalOpen.set(false)"
                 class="flex-1 px-4 py-2.5 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors"
               >
-                Cancel
+                {{ 'swagger-editor.actions.cancel' | translate }}
               </button>
               <button 
                 (click)="confirmImportUrl()"
                 [disabled]="!importUrlInput()"
                 class="flex-1 px-4 py-2.5 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl shadow-lg shadow-indigo-200 transition-all"
               >
-                Import
+                {{ 'swagger-editor.editor.importModal.submit' | translate }}
               </button>
             </div>
           </div>

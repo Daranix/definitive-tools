@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
 import { USED_ICONS } from './utils/constants';
 import { provideLucideIcons } from '@lucide/angular';
 import { provideHttpClient } from '@angular/common/http';
+import { provideI18n } from './i18n/i18n.providers';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,5 +25,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideClientHydration(withEventReplay(), withNoIncrementalHydration()),
     provideHttpClient(),
+    ...provideI18n(),
   ],
 };

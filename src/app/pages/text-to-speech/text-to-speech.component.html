@@ -5,10 +5,10 @@
     <!-- Header Section -->
     <div class="text-center mb-8">
       <h1 data-testid="tool-title" class="text-3xl font-extrabold text-gray-900 tracking-tight sm:text-4xl">
-        Text to Speech (TTS)
+        {{ 'text-to-speech.title' | translate }}
       </h1>
       <p class="mt-3 max-w-2xl mx-auto text-lg text-gray-500 sm:mt-4">
-        Convert text into natural-sounding speech locally in your browser. Powered by VITS WebAssembly models.
+        {{ 'text-to-speech.subtitle' | translate }}
       </p>
     </div>
 
@@ -20,25 +20,25 @@
         <div class="lg:col-span-7 space-y-6">
           <div>
             <label for="text-input" class="block text-sm font-semibold text-gray-700 mb-2">
-              Input Text to Synthesize
+              {{ 'text-to-speech.input.label' | translate }}
             </label>
             <textarea
               id="text-input"
               data-testid="text-input-textarea"
               [(ngModel)]="inputText"
               class="w-full h-52 p-4 border border-gray-200 rounded-xl font-sans text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-xs resize-none"
-              placeholder="Enter the sentence you want the AI to read..."
+              [placeholder]="'text-to-speech.input.placeholder' | translate"
             ></textarea>
             <div class="flex justify-between items-center mt-1 text-xs text-gray-400">
-              <span>Characters: {{ inputText().length }}</span>
-              <span>All synthesis happens offline on your machine</span>
+              <span>{{ 'text-to-speech.input.characters' | translate: { count: characterCount() } }}</span>
+              <span>{{ 'text-to-speech.input.offlineNote' | translate }}</span>
             </div>
           </div>
 
           <!-- Select Voice Model -->
           <div class="space-y-2">
             <label for="voice-select" class="block text-sm font-semibold text-gray-700">
-              Select Voice Model
+              {{ 'text-to-speech.voice.label' | translate }}
             </label>
             
             <div class="relative">
@@ -56,7 +56,7 @@
                 [disabled]="loadingVoices() || generating()"
               >
                 @if (loadingVoices()) {
-                  <option>Loading available voices list...</option>
+                  <option>{{ 'text-to-speech.voice.loading' | translate }}</option>
                 } @else {
                   @for (group of groupedVoices(); track group.language) {
                     <optgroup [label]="group.language">
@@ -75,15 +75,15 @@
             @if (selectedVoiceDetails()) {
               <div class="p-3 bg-gray-50 rounded-xl border border-gray-100 text-xs space-y-1">
                 <div class="flex justify-between">
-                  <span class="text-gray-500">Language:</span>
+                  <span class="text-gray-500">{{ 'text-to-speech.voice.language' | translate }}</span>
                   <span class="font-medium text-gray-800">{{ selectedVoiceDetails()!.language }}</span>
                 </div>
                 <div class="flex justify-between">
-                  <span class="text-gray-500">Quality Class:</span>
+                  <span class="text-gray-500">{{ 'text-to-speech.voice.quality' | translate }}</span>
                   <span class="font-medium text-gray-800 uppercase">{{ selectedVoiceDetails()!.quality }}</span>
                 </div>
                 <div class="flex justify-between">
-                  <span class="text-gray-500">Model ID:</span>
+                  <span class="text-gray-500">{{ 'text-to-speech.voice.modelId' | translate }}</span>
                   <span class="font-mono text-gray-600 truncate max-w-[250px]">{{ selectedVoiceDetails()!.id }}</span>
                 </div>
               </div>
@@ -100,10 +100,10 @@
             >
               @if (generating()) {
                 <div class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent mr-2"></div>
-                Generating Speech...
+                {{ 'text-to-speech.actions.generating' | translate }}
               } @else {
                 <lucide-angular name="play" class="h-4 w-4 mr-2"></lucide-angular>
-                Generate Spoken Audio
+                {{ 'text-to-speech.actions.generate' | translate }}
               }
             </button>
           </div>
@@ -113,7 +113,7 @@
         <div class="lg:col-span-5 flex flex-col justify-between space-y-6 bg-slate-50 rounded-2xl border border-slate-100 p-6">
           <div class="space-y-4">
             <h3 class="text-md font-bold text-gray-800 uppercase tracking-wider">
-              Audio Output
+              {{ 'text-to-speech.output.title' | translate }}
             </h3>
 
             <!-- Placeholder State -->
@@ -121,10 +121,10 @@
               <div class="flex flex-col items-center justify-center text-center p-8 bg-white border border-dashed border-gray-200 rounded-xl min-h-[160px]">
                 <lucide-angular name="music" class="h-10 w-10 text-gray-300 mb-2"></lucide-angular>
                 <p class="text-sm font-medium text-gray-400">
-                  Synthesized speech will appear here
+                  {{ 'text-to-speech.output.emptyTitle' | translate }}
                 </p>
                 <p class="text-xs text-gray-300 mt-1">
-                  Click 'Generate Spoken Audio' to begin
+                  {{ 'text-to-speech.output.emptyHint' | translate }}
                 </p>
               </div>
             }
@@ -137,7 +137,7 @@
                     {{ downloadProgress()!.modelName }}
                   </span>
                   <span class="text-gray-500 font-medium">
-                    {{ downloadProgress()!.percent }}%
+                    {{ downloadPercent() }}
                   </span>
                 </div>
                 
@@ -149,13 +149,13 @@
                 </div>
 
                 <div class="flex justify-between text-[10px] text-gray-400">
-                  <span>Downloading ONNX voice model</span>
+                  <span>{{ 'text-to-speech.output.downloading' | translate }}</span>
                   @if (downloadProgress()!.total > 0) {
                     <span>
                       {{ downloadProgress()!.loaded | fileSize }} / {{ downloadProgress()!.total | fileSize }}
                     </span>
                   } @else {
-                    <span>Loading...</span>
+                    <span>{{ 'text-to-speech.output.loading' | translate }}</span>
                   }
                 </div>
               </div>
@@ -163,8 +163,8 @@
               <!-- Encoding / Processing indicator -->
               <div data-testid="generating-status" class="flex flex-col items-center justify-center text-center p-8 bg-white border border-gray-100 rounded-xl shadow-xs min-h-[160px]">
                 <div class="animate-spin rounded-full h-8 w-8 border-4 border-indigo-600 border-t-transparent mb-3"></div>
-                <p class="text-sm font-semibold text-gray-700">Synthesizing audio...</p>
-                <p class="text-xs text-gray-400 mt-1">Computing WAV samples using local VITS model</p>
+                <p class="text-sm font-semibold text-gray-700">{{ 'text-to-speech.output.synthesizing' | translate }}</p>
+                <p class="text-xs text-gray-400 mt-1">{{ 'text-to-speech.output.computing' | translate }}</p>
               </div>
             }
 
@@ -173,7 +173,7 @@
               <div data-testid="audio-output-container" class="space-y-4 bg-white border border-gray-100 rounded-xl p-4 shadow-xs">
                 <div class="flex items-center space-x-3 text-xs text-green-700 font-semibold mb-2">
                   <lucide-angular name="check" class="h-4 w-4 text-green-600"></lucide-angular>
-                  <span>Ready to Play!</span>
+                  <span>{{ 'text-to-speech.output.ready' | translate }}</span>
                 </div>
 
                 <audio
@@ -190,7 +190,7 @@
                     class="flex-1 flex items-center justify-center px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl text-sm transition shadow-xs"
                   >
                     <lucide-angular name="download" class="h-4 w-4 mr-2"></lucide-angular>
-                    Download Speech WAV
+                    {{ 'text-to-speech.actions.download' | translate }}
                   </button>
                 </div>
               </div>
@@ -199,11 +199,11 @@
 
           <!-- Helpful details on caching -->
           <div class="text-xs text-slate-500 leading-relaxed space-y-2 pt-4 border-t border-slate-200">
-            <p class="font-bold text-slate-700">How it works:</p>
+            <p class="font-bold text-slate-700">{{ 'text-to-speech.help.title' | translate }}</p>
             <ul class="list-disc pl-4 space-y-1">
-              <li>ONNX Runtime compiles the speech model in a background Web Worker.</li>
-              <li>The first generation downloads the selected voice model (~15-40MB).</li>
-              <li>Downloaded models are stored in the browser cache (OPFS) for instant, offline generation on subsequent attempts.</li>
+              <li>{{ 'text-to-speech.help.worker' | translate }}</li>
+              <li>{{ 'text-to-speech.help.firstRun' | translate }}</li>
+              <li>{{ 'text-to-speech.help.cache' | translate }}</li>
             </ul>
           </div>
         </div>
@@ -214,27 +214,27 @@
     <!-- About Section -->
     <div class="mt-12 bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-xs space-y-6">
       <div>
-        <h2 class="text-xl font-bold text-gray-900 mb-3">About Local Web-TTS (VITS)</h2>
+        <h2 class="text-xl font-bold text-gray-900 mb-3">{{ 'text-to-speech.about.title' | translate }}</h2>
         <p class="text-gray-600 text-sm leading-relaxed">
-          Traditional text-to-speech systems rely on cloud servers (like Google TTS or OpenAI Audio) to process text and return audio streams. This tool compiles and performs neural text-to-speech inference completely in your browser, maintaining full privacy and working completely offline.
+          {{ 'text-to-speech.about.description' | translate }}
         </p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
         <div>
-          <h3 class="font-bold text-gray-800 mb-2">Advantages</h3>
+          <h3 class="font-bold text-gray-800 mb-2">{{ 'text-to-speech.about.advantagesTitle' | translate }}</h3>
           <ul class="list-disc pl-5 text-gray-600 space-y-1.5">
-            <li><strong>100% Private:</strong> Your input text never leaves your device.</li>
-            <li><strong>Zero Server Costs:</strong> Performs rendering utilizing your client CPU.</li>
-            <li><strong>Offline-Capable:</strong> Caches models using the Origin Private File System (OPFS).</li>
+            <li><strong>{{ 'text-to-speech.about.advantagePrivateTitle' | translate }}:</strong> {{ 'text-to-speech.about.advantagePrivate' | translate }}</li>
+            <li><strong>{{ 'text-to-speech.about.advantageCostTitle' | translate }}:</strong> {{ 'text-to-speech.about.advantageCost' | translate }}</li>
+            <li><strong>{{ 'text-to-speech.about.advantageOfflineTitle' | translate }}:</strong> {{ 'text-to-speech.about.advantageOffline' | translate }}</li>
           </ul>
         </div>
         <div>
-          <h3 class="font-bold text-gray-800 mb-2">Technical Core</h3>
+          <h3 class="font-bold text-gray-800 mb-2">{{ 'text-to-speech.about.technicalTitle' | translate }}</h3>
           <ul class="list-disc pl-5 text-gray-600 space-y-1.5">
-            <li><strong>VITS Architecture:</strong> End-to-end Variational Inference with Adversarial Learning.</li>
-            <li><strong>ONNX Runtime Web:</strong> WebAssembly backend for fast neural network execution in the browser.</li>
-            <li><strong>Piper TTS:</strong> Rhasspy's Piper project weights optimized for clean, speech synthesis.</li>
+            <li><strong>{{ 'text-to-speech.about.vitsTitle' | translate }}:</strong> {{ 'text-to-speech.about.vits' | translate }}</li>
+            <li><strong>{{ 'text-to-speech.about.onnxTitle' | translate }}:</strong> {{ 'text-to-speech.about.onnx' | translate }}</li>
+            <li><strong>{{ 'text-to-speech.about.piperTitle' | translate }}:</strong> {{ 'text-to-speech.about.piper' | translate }}</li>
           </ul>
         </div>
       </div>

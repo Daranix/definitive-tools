@@ -1,0 +1,70 @@
+{
+  "editor": {
+    "title": "Markdown Editor",
+    "clear": "Clear Editor",
+    "downloadMarkdown": "Download Markdown (.md)",
+    "copyMarkdown": "Copy Markdown",
+    "loading": "Loading editor..."
+  },
+  "panels": {
+    "toOutput": "Switch to Output View",
+    "output": "Output",
+    "toEditor": "Switch to Editor View",
+    "editor": "Editor"
+  },
+  "tabs": {
+    "preview": "Preview",
+    "code": "Code"
+  },
+  "actions": {
+    "downloadHtml": "Download HTML",
+    "downloadHtmlDocument": "Download HTML Document",
+    "copyHtml": "Copy HTML",
+    "print": "Print",
+    "printDocument": "Print Document",
+    "styles": "Styles"
+  },
+  "preview": {
+    "emptyTitle": "Nothing to preview yet",
+    "emptyDescription": "Draft standard Markdown on the left to review HTML output",
+    "loading": "Loading HTML preview..."
+  },
+  "styles": {
+    "title": "Styles Customization",
+    "reset": "Reset to default template",
+    "presets": "Theme Presets",
+    "upload": "Upload Stylesheet",
+    "uploadHint": "Drop local CSS file here, or",
+    "browse": "browse",
+    "uploadDescription": "Accepts raw styles (*.css) files",
+    "cssSource": "CSS Source Code",
+    "loading": "Loading styles..."
+  },
+  "presets": {
+    "github": "GitHub Light",
+    "indigo": "Modern Indigo",
+    "warm": "Warm Serif"
+  },
+  "mermaid": {
+    "zoomOut": "Zoom Out",
+    "resetZoom": "Reset Zoom",
+    "zoomIn": "Zoom In",
+    "downloadSvg": "Download SVG",
+    "downloadPng": "Download PNG",
+    "syntaxError": "Mermaid Diagram Syntax Error: {{ message }}"
+  },
+  "errors": {
+    "invalidCssFile": "Please upload a valid CSS file (.css)"
+  },
+  "files": {
+    "markdownName": "document.md",
+    "htmlName": "document.html",
+    "htmlTitle": "Converted Document",
+    "printTitle": "Print Document"
+  },
+  "seo": {
+    "title": "Markdown to HTML Converter | definitive-tools",
+    "description": "Convert markdown text to clean HTML code instantly with real-time responsive browser side-by-side editing, customized CSS styling presets, and simple code exports.",
+    "keywords": "markdown to html, html generator, css preview, dynamic styling, inline css, markup editor, clean code"
+  }
+}

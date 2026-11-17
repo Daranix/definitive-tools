@@ -1,0 +1,20 @@
+{
+  "hero": {
+    "badge": "100% en tu navegador y seguro",
+    "title": "Tu kit definitivo de herramientas digitales",
+    "subtitle": "Herramientas gratuitas, rápidas y fáciles de usar para todas tus necesidades digitales. Tus datos nunca salen de tu navegador.",
+    "searchPlaceholder": "Busca herramientas (p. ej. QR, Swagger, Base64, MD)..."
+  },
+  "tools": {
+    "title": "Utilidades populares",
+    "subtitle": "Selecciona cualquier herramienta para empezar a procesar directamente en tu navegador.",
+    "launch": "Abrir herramienta",
+    "noResultsTitle": "No se han encontrado herramientas",
+    "noResultsDescription": "No hemos encontrado herramientas que coincidan con tus criterios. Prueba a cambiar la búsqueda o los filtros de categoría."
+  },
+  "seo": {
+    "title": "Definitive Tools - Utilidades digitales gratuitas",
+    "description": "Accede a herramientas gratuitas y fáciles de usar para todas tus necesidades digitales, sin registro ni descargas.",
+    "keywords": "herramientas online, herramientas gratis, herramientas digitales, herramientas web, generador de QR, utilidades"
+  }
+}

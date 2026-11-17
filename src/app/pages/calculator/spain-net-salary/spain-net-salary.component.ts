@@ -1,22 +1,43 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
 import { FormField, disabled, form, validateStandardSchema } from '@angular/forms/signals';
+import { TranslatePipe } from '@ngx-translate/core';
 import { TopNavbarComponent } from '@/app/components/top-navbar/top-navbar.component';
 import { FooterComponent } from '@/app/components/footer/footer.component';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
+import { I18nService } from '@/app/i18n/i18n.service';
 import { MetadataService } from '@/app/services/metadata.service';
-import { computeTotalPayments, formatCurrencyEs, formatNumberEs } from '../shared/calculator-format';
+import {
+  computeTotalPayments,
+  formatCurrency,
+  formatNumber,
+  type CalculatorTranslate,
+} from '../shared/calculator-format';
 import { SpainNetSalaryResult, calculateSpainNetSalary } from './spain-net-salary.logic';
-import { SpainNetSalaryFormModel, SpainNetSalarySchema } from './spain-net-salary.schema';
+import {
+  SpainNetSalaryFormModel,
+  createSpainNetSalarySchema,
+} from './spain-net-salary.schema';
 
 @Component({
   selector: 'app-spain-net-salary',
   standalone: true,
-  imports: [FormField, TopNavbarComponent, FooterComponent, LucideIconComponent],
+  imports: [FormField, TopNavbarComponent, FooterComponent, LucideIconComponent, TranslatePipe],
   templateUrl: './spain-net-salary.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SpainNetSalaryComponent {
   private readonly metadataService = inject(MetadataService);
+  private readonly i18n = inject(I18nService);
+
+  private readonly translate: CalculatorTranslate = (key, params) =>
+    this.i18n.t(key, params);
 
   readonly salaryModel = signal<SpainNetSalaryFormModel>({
     grossAnnual: 30000,
@@ -32,8 +53,12 @@ export class SpainNetSalaryComponent {
     geographicMobility: false,
   });
 
+  private readonly salarySchema = computed(() =>
+    createSpainNetSalarySchema(this.translate),
+  );
+
   readonly salaryForm = form(this.salaryModel, (schemaPath) => {
-    validateStandardSchema(schemaPath, SpainNetSalarySchema);
+    validateStandardSchema(schemaPath, () => this.salarySchema());
     disabled(schemaPath.childrenUnder3, {
       when: ({ valueOf }) => (valueOf(schemaPath.childrenTotal) ?? 0) <= 0,
     });
@@ -49,38 +74,43 @@ export class SpainNetSalaryComponent {
   });
 
   readonly result = computed<SpainNetSalaryResult>(() => {
+    // Re-evaluate validation messages whenever the language changes.
+    this.i18n.language();
     const raw = this.salaryModel();
-    const parsed = SpainNetSalarySchema.safeParse(raw);
+    const parsed = this.salarySchema().safeParse(raw);
     if (!parsed.success) {
       return {
         ok: false,
-        error: parsed.error.issues[0]?.message ?? 'Revisa los datos introducidos en el formulario.',
+        error:
+          parsed.error.issues[0]?.message ??
+          this.translate('calculators.shared.formError'),
       };
     }
 
     const valid = parsed.data;
-    return calculateSpainNetSalary({
-      grossAnnual: valid.grossAnnual ?? 0,
-      extraPayments: valid.extraPayments ?? 0,
-      ageBracket: valid.ageBracket,
-      familySituation: valid.familySituation,
-      contractType: valid.contractType,
-      region: valid.region,
-      childrenTotal: valid.childrenTotal ?? 0,
-      childrenUnder3: valid.childrenUnder3 ?? 0,
-      sharedCustody: valid.sharedCustody,
-      disability: valid.disability,
-      geographicMobility: valid.geographicMobility,
-    });
+    return calculateSpainNetSalary(
+      {
+        grossAnnual: valid.grossAnnual ?? 0,
+        extraPayments: valid.extraPayments ?? 0,
+        ageBracket: valid.ageBracket,
+        familySituation: valid.familySituation,
+        contractType: valid.contractType,
+        region: valid.region,
+        childrenTotal: valid.childrenTotal ?? 0,
+        childrenUnder3: valid.childrenUnder3 ?? 0,
+        sharedCustody: valid.sharedCustody,
+        disability: valid.disability,
+        geographicMobility: valid.geographicMobility,
+      },
+      { translate: this.translate },
+    );
   });
 
   constructor() {
-    this.metadataService.updateMetadata({
-      title: 'Calculadora de Salario Neto España 2026 - IRPF y Seguridad Social',
-      description:
-        'Calcula tu sueldo neto mensual y anual en España para 2026 incluyendo Seguridad Social, cuota de solidaridad, MEI y retención de IRPF.',
-      keywords:
-        'calculadora salario neto espana, sueldo neto 2026, calcular irpf, seguridad social, cuota solidaridad',
+    this.updateMetadata();
+    effect(() => {
+      this.i18n.language();
+      this.updateMetadata();
     });
   }
 
@@ -106,10 +136,22 @@ export class SpainNetSalaryComponent {
   }
 
   formatEur(value: number): string {
-    return formatCurrencyEs(value);
+    return formatCurrency(value, 2, this.i18n.locale());
   }
 
   formatPct(value: number): string {
-    return `${formatNumberEs(value, 2)} %`;
+    return this.i18n.formatPercent(value / 100, { maximumFractionDigits: 2 });
+  }
+
+  formatNum(value: number, maxDecimals = 2): string {
+    return formatNumber(value, maxDecimals, this.i18n.locale());
+  }
+
+  private updateMetadata(): void {
+    this.metadataService.updateMetadata({
+      title: this.i18n.t('calculators.netSalary.seo.title'),
+      description: this.i18n.t('calculators.netSalary.seo.description'),
+      keywords: this.i18n.t('calculators.netSalary.seo.keywords'),
+    });
   }
 }

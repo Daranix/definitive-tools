@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MadridZbeMapService } from '../../madrid-zbe-map.service';
 import {
   DGT_BADGES_META,
@@ -8,11 +9,15 @@ import {
   ZbeZoneProperties
 } from '../../madrid-zbe-map.models';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
+import { I18nService } from '@/app/i18n/i18n.service';
+
+/** Reduced fine (50 %) for early payment, as stated by the Madrid ordinance. */
+const EARLY_PAYMENT_EUR = 100;
 
 @Component({
   selector: 'app-zbe-detail-drawer',
   standalone: true,
-  imports: [LucideIconComponent],
+  imports: [LucideIconComponent, TranslatePipe],
   templateUrl: './detail-drawer.component.html',
   styleUrl: './detail-drawer.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -20,6 +25,7 @@ import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.co
 export class DetailDrawerComponent {
   readonly embedded = input<boolean>(false);
   readonly service = inject(MadridZbeMapService);
+  readonly i18n = inject(I18nService);
 
   readonly selection = computed(() => this.service.selectedItem());
   readonly isZone = computed(() => this.selection()?.type === 'zone');
@@ -39,6 +45,27 @@ export class DetailDrawerComponent {
   readonly parkingData = computed<ZbeParkingProperties | null>(() => {
     const s = this.selection();
     return s && s.type === 'parking' ? (s.data as ZbeParkingProperties) : null;
+  });
+
+  /** Zone copy and formatted amounts for the active language. */
+  readonly zoneView = computed(() => {
+    const zone = this.zoneData();
+    if (!zone) return null;
+
+    const key = `madrid-zbe-map.zones.${zone.id}`;
+    return {
+      name: this.i18n.t(`${key}.name`),
+      restrictionLevel: this.i18n.t(`${key}.restrictionLevel`),
+      description: this.i18n.t(`${key}.description`),
+      area: this.i18n.formatNumber(zone.areaKm2),
+      sanction: this.i18n.t('madrid-zbe-map.detail.sanction', {
+        amount: this.i18n.formatCurrency(zone.sanctionEur)
+      }),
+      legalNotice: this.i18n.t('madrid-zbe-map.detail.legalNotice', {
+        amount: this.i18n.formatCurrency(EARLY_PAYMENT_EUR),
+        law: this.i18n.t(`${key}.lawReference`)
+      })
+    };
   });
 
   readonly badgesList: DgtBadge[] = ['cero', 'eco', 'c', 'b', 'a'];

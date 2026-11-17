@@ -1,5 +1,7 @@
 import {
   Component,
+  computed,
+  effect,
   inject,
   model,
   ChangeDetectionStrategy,
@@ -10,6 +12,8 @@ import { FormsModule } from '@angular/forms';
 import { JwtEncoderComponent } from './components/jwt-encoder/jwt-encoder.component';
 import { MetadataService } from '@/app/services/metadata.service';
 import { TopNavbarComponent } from '@/app/components/top-navbar/top-navbar.component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { I18nService } from '@/app/i18n/i18n.service';
 
 type Mode = 'decode' | 'encode';
 
@@ -24,6 +28,7 @@ import { FooterComponent } from '../../components/footer/footer.component';
     FormsModule,
     TopNavbarComponent,
     FooterComponent,
+    TranslatePipe,
   ],
   templateUrl: './jwt-decode-encode.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -31,19 +36,33 @@ import { FooterComponent } from '../../components/footer/footer.component';
 })
 export class JwtDecodeEncodeComponent {
   private readonly metadataService = inject(MetadataService);
+  private readonly i18n = inject(I18nService);
 
-  readonly modes: Array<{ label: string; value: Mode }> = [
-    { label: 'JWT Decode', value: 'decode' },
-    { label: 'JWT Encode', value: 'encode' },
-  ];
+  readonly modes = computed<Array<{ label: string; value: Mode }>>(() => [
+    {
+      label: this.i18n.t('jwt-decode-encode.page.modes.decode'),
+      value: 'decode',
+    },
+    {
+      label: this.i18n.t('jwt-decode-encode.page.modes.encode'),
+      value: 'encode',
+    },
+  ]);
 
   readonly selectedMode = model<Mode>('decode');
 
   constructor() {
+    this.updateMetadata();
+    effect(() => {
+      this.i18n.language();
+      this.updateMetadata();
+    });
+  }
+
+  private updateMetadata(): void {
     this.metadataService.updateMetadata({
-      title: 'JWT Decode / Encode',
-      description:
-        'Easily decode and encode JSON Web Tokens (JWT) for secure, verifiable authentication and authorization.',
+      title: this.i18n.t('jwt-decode-encode.seo.title'),
+      description: this.i18n.t('jwt-decode-encode.seo.description'),
       updateCanonical: true,
     });
   }

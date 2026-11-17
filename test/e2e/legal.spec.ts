@@ -15,6 +15,14 @@ test.describe('Legal Pages', () => {
 
     // Loader should be hidden and error visible
     await expect(page.getByTestId('legal-error')).toBeVisible();
-    await expect(page.getByTestId('legal-error')).toContainText('Document Not Found');
+    await expect(page.getByTestId('legal-error')).toContainText(/document not found/i);
+  });
+
+  test('should serve the Spanish translation under /es', async ({ page }) => {
+    await page.goto('/es/legal/privacy');
+
+    await expect(page.getByTestId('legal-content')).toBeVisible();
+    await expect(page.getByTestId('legal-content')).toContainText(/política de privacidad/i);
+    await expect(page.locator('html')).toHaveAttribute('lang', 'es');
   });
 });

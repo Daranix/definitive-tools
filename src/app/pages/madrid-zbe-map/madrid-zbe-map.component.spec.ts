@@ -6,6 +6,7 @@ import { provideRouter } from '@angular/router';
 import { MadridZbeMapComponent } from './madrid-zbe-map.component';
 import { MadridZbeMapService } from './madrid-zbe-map.service';
 import { MetadataService } from '@/app/services/metadata.service';
+import { provideI18nTesting } from '@/app/i18n/i18n.testing';
 
 describe('MadridZbeMapComponent', () => {
   describe('Server-Side Rendering (SSR) Isolation', () => {
@@ -16,6 +17,7 @@ describe('MadridZbeMapComponent', () => {
       await TestBed.configureTestingModule({
         imports: [MadridZbeMapComponent],
         providers: [
+          ...provideI18nTesting(),
           provideRouter([]),
           provideHttpClient(),
           provideHttpClientTesting(),
@@ -74,6 +76,7 @@ describe('MadridZbeMapComponent', () => {
       await TestBed.configureTestingModule({
         imports: [MadridZbeMapComponent],
         providers: [
+          ...provideI18nTesting(),
           provideRouter([]),
           provideHttpClient(),
           provideHttpClientTesting(),

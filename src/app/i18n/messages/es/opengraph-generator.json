@@ -1,0 +1,86 @@
+{
+  "platforms": {
+    "openGraph": "Open Graph",
+    "twitter": "Twitter / X"
+  },
+  "dimensions": "Dimensiones: {{ width }}x{{ height }}",
+  "sections": {
+    "chooseTemplate": "Elige una plantilla",
+    "templateProperties": "Propiedades de la plantilla",
+    "imagePreview": "Vista previa de la imagen"
+  },
+  "actions": {
+    "downloadImage": "Descargar imagen"
+  },
+  "about": {
+    "title": "Sobre la generación de imágenes",
+    "heading": "¿Qué es Open Graph?",
+    "description": "Open Graph es una tecnología que permite que las páginas web se conviertan en objetos enriquecidos en las redes sociales. Cuando compartes un enlace en las redes sociales, las metaetiquetas de Open Graph determinan qué imagen, título y descripción aparecen en la publicación."
+  },
+  "fields": {
+    "title": "Título",
+    "description": "Descripción",
+    "tag": "Etiqueta",
+    "image": "Imagen",
+    "logo": "Logotipo",
+    "file": "Archivo:"
+  },
+  "background": {
+    "label": "Fondo",
+    "hint": "Define un fondo personalizado para tu imagen.",
+    "types": {
+      "gradient": "Degradado",
+      "solid": "Color sólido",
+      "image": "Imagen"
+    },
+    "gradientDirection": "Dirección del degradado",
+    "overlay": {
+      "label": "Superposición de fondo",
+      "title": "Superposición de cuadrícula de fondo",
+      "hint": "Personaliza la superposición de cuadrícula del fondo.",
+      "pattern": "Patrón",
+      "patterns": {
+        "none": "Ninguno",
+        "grid": "Cuadrícula",
+        "graph": "Trama",
+        "dots": "Puntos"
+      },
+      "color": "Color",
+      "opacity": "Opacidad",
+      "blurRadius": "Radio de desenfoque"
+    }
+  },
+  "fontOptions": {
+    "title": "Ajustes de fuente",
+    "hint": "Personaliza la fuente de la etiqueta.",
+    "family": "Familia tipográfica",
+    "weight": "Grosor de la fuente",
+    "size": "Tamaño de la fuente",
+    "color": "Color del texto",
+    "weights": {
+      "thin": "Ultrafina",
+      "extraLight": "Extrafina",
+      "light": "Fina",
+      "regular": "Normal",
+      "medium": "Media",
+      "semiBold": "Seminegrita",
+      "bold": "Negrita",
+      "extraBold": "Extranegrita",
+      "black": "Negra"
+    }
+  },
+  "defaults": {
+    "easyStorage": "Almacenamiento sencillo",
+    "managedDatabases": "Bases de datos gestionadas para todos",
+    "marketing": "Marketing",
+    "openGraphImages": "Crea imágenes Open Graph atractivas"
+  },
+  "download": {
+    "fileName": "imagen-opengraph"
+  },
+  "seo": {
+    "title": "Generador de Open Graph",
+    "description": "Crea imágenes Open Graph y Twitter Cards profesionales que aumentan la visibilidad de tu sitio web en las redes sociales. Una herramienta fácil de usar para generar vistas previas sociales personalizadas.",
+    "keywords": "generador de opengraph, twitter cards, vista previa en redes sociales, metaetiquetas, imágenes para compartir, protocolo open graph, optimización para redes sociales, metadatos del sitio web, imágenes sociales personalizadas"
+  }
+}

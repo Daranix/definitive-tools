@@ -1,4 +1,5 @@
 import Decimal from 'decimal.js';
+import type { CalculatorTranslate } from '../shared/calculator-format';
 
 export type AngleMode = 'DEG' | 'RAD' | 'GRAD';
 export type PrecisionDigits = 15 | 30 | 50;
@@ -8,6 +9,8 @@ export interface EvaluateOptions {
   precision: PrecisionDigits;
   ans?: string | Decimal;
   maxFactorial?: number;
+  /** Locale-aware translator for the produced error messages. */
+  translate?: CalculatorTranslate;
 }
 
 export type ScientificResult =
@@ -105,7 +108,7 @@ function needsImplicitMultiply(prev: Token | undefined, next: Token): boolean {
   );
 }
 
-function tokenize(expression: string): Token[] {
+function tokenize(expression: string, t: CalculatorTranslate): Token[] {
   const input = normalizeExpression(expression);
   const rawTokens: Token[] = [];
   let i = 0;
@@ -159,7 +162,7 @@ function tokenize(expression: string): Token[] {
       }
       const ident = input.slice(start, i).toLowerCase();
       if (!CONSTANTS.has(ident) && !FUNCTIONS.has(ident)) {
-        throw new Error(`Símbolo o función desconocida: "${ident}".`);
+        throw new Error(t('calculators.scientific.errors.unknownSymbol', { symbol: ident }));
       }
       rawTokens.push({ type: 'ident', value: ident });
       continue;
@@ -189,7 +192,7 @@ function tokenize(expression: string): Token[] {
       continue;
     }
 
-    throw new Error(`Carácter no válido en la expresión: "${ch}".`);
+    throw new Error(t('calculators.scientific.errors.invalidCharacter', { char: ch }));
   }
 
   // Insert implicit multiplication and distinguish unary +/-
@@ -212,7 +215,7 @@ function tokenize(expression: string): Token[] {
   return tokens;
 }
 
-function toRpn(tokens: Token[]): Token[] {
+function toRpn(tokens: Token[], t: CalculatorTranslate): Token[] {
   const output: Token[] = [];
   const stack: Token[] = [];
 
@@ -235,7 +238,7 @@ function toRpn(tokens: Token[]): Token[] {
 
     if (token.type === 'postfix') {
       if (!canEndOperand(tokens[i - 1])) {
-        throw new Error('Uso no válido del operador factorial (!).');
+        throw new Error(t('calculators.scientific.errors.factorialUsage'));
       }
       output.push(token);
       continue;
@@ -262,7 +265,7 @@ function toRpn(tokens: Token[]): Token[] {
         output.push(top);
       }
       if (!foundLeftParen) {
-        throw new Error('Paréntesis desbalanceados.');
+        throw new Error(t('calculators.scientific.errors.unbalancedParens'));
       }
       if (stack.length > 0 && stack[stack.length - 1].type === 'ident') {
         output.push(stack.pop()!);
@@ -300,7 +303,7 @@ function toRpn(tokens: Token[]): Token[] {
   while (stack.length > 0) {
     const top = stack.pop()!;
     if (top.type === 'lparen' || top.type === 'rparen') {
-      throw new Error('Paréntesis desbalanceados.');
+      throw new Error(t('calculators.scientific.errors.unbalancedParens'));
     }
     output.push(top);
   }
@@ -340,13 +343,16 @@ function computeFactorial(
   n: Decimal,
   WorkingDecimal: Decimal.Constructor,
   maxFactorial: number,
+  t: CalculatorTranslate,
 ): Decimal {
   if (!n.isInteger() || n.isNegative()) {
-    throw new Error('El factorial solo está definido para enteros no negativos.');
+    throw new Error(t('calculators.scientific.errors.factorialInteger'));
   }
   const intN = n.toNumber();
   if (intN > maxFactorial) {
-    throw new Error(`El factorial máximo permitido es ${maxFactorial}!.`);
+    throw new Error(
+      t('calculators.scientific.errors.factorialMax', { max: maxFactorial }),
+    );
   }
   let acc = new WorkingDecimal(1);
   for (let k = 2; k <= intN; k += 1) {
@@ -362,6 +368,7 @@ function applyFunction(
   angleMode: AngleMode,
   pi: Decimal,
   trigZeroThreshold: Decimal,
+  t: CalculatorTranslate,
 ): Decimal {
   switch (name) {
     case 'sin': {
@@ -384,7 +391,7 @@ function applyFunction(
       const rad = toRadians(arg, angleMode, pi);
       const cosVal = WorkingDecimal.cos(rad);
       if (cosVal.abs().lt(trigZeroThreshold)) {
-        throw new Error('Tangente indefinida para este ángulo.');
+        throw new Error(t('calculators.scientific.errors.tanUndefined'));
       }
       const res = WorkingDecimal.sin(rad).div(cosVal);
       const k = rad.div(pi).round();
@@ -392,13 +399,13 @@ function applyFunction(
     }
     case 'asin': {
       if (arg.lt(-1) || arg.gt(1)) {
-        throw new Error('El argumento de asin debe estar entre -1 y 1.');
+        throw new Error(t('calculators.scientific.errors.asinRange'));
       }
       return fromRadians(WorkingDecimal.asin(arg), angleMode, pi);
     }
     case 'acos': {
       if (arg.lt(-1) || arg.gt(1)) {
-        throw new Error('El argumento de acos debe estar entre -1 y 1.');
+        throw new Error(t('calculators.scientific.errors.acosRange'));
       }
       return fromRadians(WorkingDecimal.acos(arg), angleMode, pi);
     }
@@ -412,22 +419,22 @@ function applyFunction(
       return WorkingDecimal.tanh(arg);
     case 'ln':
       if (arg.lte(0)) {
-        throw new Error('El logaritmo neperiano requiere un valor positivo.');
+        throw new Error(t('calculators.scientific.errors.lnPositive'));
       }
       return WorkingDecimal.ln(arg);
     case 'log':
       if (arg.lte(0)) {
-        throw new Error('El logaritmo base 10 requiere un valor positivo.');
+        throw new Error(t('calculators.scientific.errors.logPositive'));
       }
       return WorkingDecimal.log10(arg);
     case 'log2':
       if (arg.lte(0)) {
-        throw new Error('El logaritmo base 2 requiere un valor positivo.');
+        throw new Error(t('calculators.scientific.errors.log2Positive'));
       }
       return WorkingDecimal.log2(arg);
     case 'sqrt':
       if (arg.isNegative()) {
-        throw new Error('No se puede calcular la raíz cuadrada de un número negativo.');
+        throw new Error(t('calculators.scientific.errors.sqrtNegative'));
       }
       return WorkingDecimal.sqrt(arg);
     case 'cbrt':
@@ -438,7 +445,7 @@ function applyFunction(
       return WorkingDecimal.exp(arg);
     case 'inv':
       if (arg.isZero()) {
-        throw new Error('División por cero en 1/x.');
+        throw new Error(t('calculators.scientific.errors.invZero'));
       }
       return new WorkingDecimal(1).div(arg);
     case 'sq':
@@ -446,7 +453,7 @@ function applyFunction(
     case 'cube':
       return arg.mul(arg).mul(arg);
     default:
-      throw new Error(`Función no soportada: "${name}".`);
+      throw new Error(t('calculators.scientific.errors.unsupportedFunction', { name }));
   }
 }
 
@@ -465,9 +472,13 @@ export function evaluateScientificExpression(
   expression: string,
   options: EvaluateOptions,
 ): ScientificResult {
+  const t: CalculatorTranslate = options.translate ?? ((key) => key);
   const trimmed = expression.trim();
   if (!trimmed) {
-    return { ok: false, error: 'Introduce una expresión matemática.' };
+    return {
+      ok: false,
+      error: t('calculators.scientific.errors.emptyExpression'),
+    };
   }
 
   const { angleMode, precision, ans = '0', maxFactorial = 170 } = options;
@@ -485,8 +496,8 @@ export function evaluateScientificExpression(
     const ansDec = new WorkingDecimal(ans instanceof Decimal ? ans.toString() : ans || '0');
     const trigZeroThreshold = new WorkingDecimal(10).pow(-(precision + 2));
 
-    const tokens = tokenize(trimmed);
-    const rpn = toRpn(tokens);
+    const tokens = tokenize(trimmed, t);
+    const rpn = toRpn(tokens, t);
     const evalStack: Decimal[] = [];
 
     for (const token of rpn) {
@@ -511,10 +522,22 @@ export function evaluateScientificExpression(
 
         const arg = evalStack.pop();
         if (!arg) {
-          throw new Error(`Falta argumento para la función "${token.value}".`);
+          throw new Error(
+            t('calculators.scientific.errors.missingArgument', {
+              name: token.value,
+            }),
+          );
         }
         evalStack.push(
-          applyFunction(token.value, arg, WorkingDecimal, angleMode, pi, trigZeroThreshold),
+          applyFunction(
+            token.value,
+            arg,
+            WorkingDecimal,
+            angleMode,
+            pi,
+            trigZeroThreshold,
+            t,
+          ),
         );
         continue;
       }
@@ -522,7 +545,7 @@ export function evaluateScientificExpression(
       if (token.type === 'unary') {
         const arg = evalStack.pop();
         if (!arg) {
-          throw new Error('Expresión incompleta.');
+          throw new Error(t('calculators.scientific.errors.incompleteExpression'));
         }
         evalStack.push(token.value === 'u-' ? arg.neg() : arg);
         continue;
@@ -531,9 +554,9 @@ export function evaluateScientificExpression(
       if (token.type === 'postfix') {
         const arg = evalStack.pop();
         if (!arg) {
-          throw new Error('Falta operando para el factorial.');
+          throw new Error(t('calculators.scientific.errors.missingFactorialOperand'));
         }
-        evalStack.push(computeFactorial(arg, WorkingDecimal, maxFactorial));
+        evalStack.push(computeFactorial(arg, WorkingDecimal, maxFactorial, t));
         continue;
       }
 
@@ -541,7 +564,7 @@ export function evaluateScientificExpression(
         const right = evalStack.pop();
         const left = evalStack.pop();
         if (!left || !right) {
-          throw new Error('Operación incompleta: faltan operandos.');
+          throw new Error(t('calculators.scientific.errors.incompleteOperation'));
         }
 
         switch (token.value) {
@@ -556,22 +579,24 @@ export function evaluateScientificExpression(
             break;
           case '/':
             if (right.isZero()) {
-              throw new Error('División por cero.');
+              throw new Error(t('calculators.scientific.errors.divisionByZero'));
             }
             evalStack.push(left.div(right));
             break;
           case '%':
             if (right.isZero()) {
-              throw new Error('Módulo por cero.');
+              throw new Error(t('calculators.scientific.errors.moduloByZero'));
             }
             evalStack.push(left.mod(right));
             break;
           case '^':
             if (left.isZero() && right.isNegative()) {
-              throw new Error('Potencia indefinida (0 elevado a exponente negativo).');
+              throw new Error(t('calculators.scientific.errors.powerUndefined'));
             }
             if (left.isNegative() && !right.isInteger()) {
-              throw new Error('No se admite base negativa con exponente no entero en reales.');
+              throw new Error(
+                t('calculators.scientific.errors.negativeBaseExponent'),
+              );
             }
             evalStack.push(left.pow(right));
             break;
@@ -580,12 +605,12 @@ export function evaluateScientificExpression(
     }
 
     if (evalStack.length !== 1) {
-      throw new Error('Expresión matemática no válida.');
+      throw new Error(t('calculators.scientific.errors.invalidExpression'));
     }
 
     const rawResult = evalStack[0];
     if (!rawResult.isFinite()) {
-      throw new Error('El resultado excede el rango finito permitido.');
+      throw new Error(t('calculators.scientific.errors.outOfRange'));
     }
 
     const finalDecimal = rawResult.toSignificantDigits(precision);
@@ -597,7 +622,7 @@ export function evaluateScientificExpression(
   } catch (err) {
     return {
       ok: false,
-      error: err instanceof Error ? err.message : 'Error al evaluar la expresión.',
+      error: err instanceof Error ? err.message : t('calculators.scientific.errors.evaluation'),
     };
   }
 }

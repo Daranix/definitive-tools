@@ -1,0 +1,70 @@
+{
+  "editor": {
+    "title": "Editor de Markdown",
+    "clear": "Vaciar el editor",
+    "downloadMarkdown": "Descargar Markdown (.md)",
+    "copyMarkdown": "Copiar Markdown",
+    "loading": "Cargando el editor..."
+  },
+  "panels": {
+    "toOutput": "Cambiar a la vista de salida",
+    "output": "Salida",
+    "toEditor": "Cambiar a la vista del editor",
+    "editor": "Editor"
+  },
+  "tabs": {
+    "preview": "Vista previa",
+    "code": "Código"
+  },
+  "actions": {
+    "downloadHtml": "Descargar HTML",
+    "downloadHtmlDocument": "Descargar el documento HTML",
+    "copyHtml": "Copiar HTML",
+    "print": "Imprimir",
+    "printDocument": "Imprimir documento",
+    "styles": "Estilos"
+  },
+  "preview": {
+    "emptyTitle": "Aún no hay nada que previsualizar",
+    "emptyDescription": "Escribe Markdown estándar a la izquierda para revisar el HTML generado",
+    "loading": "Cargando la vista previa del HTML..."
+  },
+  "styles": {
+    "title": "Personalización de estilos",
+    "reset": "Restablecer la plantilla predeterminada",
+    "presets": "Preajustes de tema",
+    "upload": "Subir una hoja de estilos",
+    "uploadHint": "Arrastra aquí tu archivo CSS local o",
+    "browse": "búscalo",
+    "uploadDescription": "Admite archivos de estilos (*.css)",
+    "cssSource": "Código fuente CSS",
+    "loading": "Cargando los estilos..."
+  },
+  "presets": {
+    "github": "GitHub claro",
+    "indigo": "Índigo moderno",
+    "warm": "Serif cálido"
+  },
+  "mermaid": {
+    "zoomOut": "Alejar",
+    "resetZoom": "Restablecer el zoom",
+    "zoomIn": "Acercar",
+    "downloadSvg": "Descargar SVG",
+    "downloadPng": "Descargar PNG",
+    "syntaxError": "Error de sintaxis en el diagrama de Mermaid: {{ message }}"
+  },
+  "errors": {
+    "invalidCssFile": "Sube un archivo CSS válido (.css)"
+  },
+  "files": {
+    "markdownName": "documento.md",
+    "htmlName": "documento.html",
+    "htmlTitle": "Documento convertido",
+    "printTitle": "Documento para imprimir"
+  },
+  "seo": {
+    "title": "Conversor de Markdown a HTML | definitive-tools",
+    "description": "Convierte texto Markdown en código HTML limpio al instante con edición en paralelo en el navegador, preajustes de estilo CSS personalizados y exportaciones de código sencillas.",
+    "keywords": "markdown a html, generador de html, vista previa css, estilos dinámicos, css en línea, editor de marcado, código limpio"
+  }
+}

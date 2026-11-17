@@ -4,6 +4,7 @@ import {
   ToastService,
 } from '@app/services/toast.service';
 import { NgClass } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 import {
   Component,
   inject,
@@ -15,7 +16,7 @@ import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-toast',
-  imports: [NgClass],
+  imports: [NgClass, TranslatePipe],
   templateUrl: './toast.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './toast.component.scss',

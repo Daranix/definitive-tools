@@ -14,10 +14,10 @@
         class="flex items-center justify-center gap-2 px-3 py-2 w-[130px] shrink-0 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-bold shadow-sm transition disabled:opacity-40">
         @if (timelinePlaying()) {
           <lucide-angular name="pause" class="h-4 w-4 shrink-0"></lucide-angular>
-          <span class="w-11 text-left">Pause</span>
+          <span class="w-11 text-left">{{ 'audio-editor.actions.pause' | translate }}</span>
         } @else {
           <lucide-angular name="play" class="h-4 w-4 shrink-0"></lucide-angular>
-          <span class="w-11 text-left">Play</span>
+          <span class="w-11 text-left">{{ 'audio-editor.actions.play' | translate }}</span>
         }
         <span class="text-[10px] opacity-70 font-mono shrink-0">[Space]</span>
       </button>
@@ -26,7 +26,7 @@
         (click)="stop()"
         [disabled]="exporting()"
         class="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl transition shrink-0"
-        title="Stop & Rewind to Start">
+        [title]="'audio-editor.transport.stopTitle' | translate">
         <lucide-angular name="square" class="h-4 w-4"></lucide-angular>
       </button>
 
@@ -48,9 +48,9 @@
           'text-slate-400 hover:text-white hover:bg-slate-800': activeTool() !== 'pointer'
         }"
         class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition font-medium shrink-0"
-        title="Pointer Tool (Select & Move)">
+        [title]="'audio-editor.tools.pointerTitle' | translate">
         <lucide-angular name="mouse-pointer" class="h-3.5 w-3.5"></lucide-angular>
-        Select
+        {{ 'audio-editor.tools.pointer' | translate }}
       </button>
 
       <button
@@ -60,18 +60,18 @@
           'text-slate-400 hover:text-white hover:bg-slate-800': activeTool() !== 'razor'
         }"
         class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition font-medium shrink-0"
-        title="Razor Tool (Click on any clip to slice it)">
+        [title]="'audio-editor.tools.razorTitle' | translate">
         <lucide-angular name="scissors" class="h-3.5 w-3.5"></lucide-angular>
-        Cut on Click
+        {{ 'audio-editor.tools.razor' | translate }}
       </button>
 
       <button
         (click)="splitSelectedClipAtPlayhead()"
         [disabled]="!selectedClip()"
         class="flex items-center gap-1 px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg text-xs transition disabled:opacity-40 shrink-0"
-        title="Split selected clip at playhead position (Shortcut: S)">
+        [title]="'audio-editor.tools.splitTitle' | translate">
         <lucide-angular name="split" class="h-3.5 w-3.5"></lucide-angular>
-        Cut Playhead <span class="font-mono text-[10px] text-slate-400">[S]</span>
+        {{ 'audio-editor.tools.split' | translate }} <span class="font-mono text-[10px] text-slate-400">[S]</span>
       </button>
     </div>
 
@@ -82,7 +82,7 @@
         [disabled]="exporting()"
         class="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-semibold border border-slate-700 transition shrink-0">
         <lucide-angular name="plus" class="h-3.5 w-3.5"></lucide-angular>
-        Add Track
+        {{ 'audio-editor.tracks.add' | translate }}
       </button>
 
       <!-- Master Volume -->
@@ -97,7 +97,7 @@
           (ngModelChange)="masterVolume.set($event)"
           class="w-14 h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-indigo-500" />
         <span class="text-[11px] font-mono text-slate-300 min-w-[30px] text-right">
-          {{ Math.round(masterVolume() * 100) }}%
+          {{ i18n.formatPercent(masterVolume()) }}
         </span>
       </div>
 
@@ -107,7 +107,7 @@
           (click)="zoomOut()"
           [disabled]="zoom() <= 1"
           class="p-1 text-slate-400 hover:text-white disabled:opacity-30 rounded-sm hover:bg-slate-700 transition"
-          title="Zoom Out">
+          [title]="'audio-editor.zoom.out' | translate">
           <lucide-angular name="zoom-out" class="h-3.5 w-3.5"></lucide-angular>
         </button>
 
@@ -121,14 +121,14 @@
           class="w-16 h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-indigo-500" />
 
         <span class="text-[11px] font-mono font-bold text-slate-300 min-w-[28px] text-center">
-          {{ zoom() }}x
+          {{ i18n.formatNumber(zoom()) }}x
         </span>
 
         <button
           (click)="zoomIn()"
           [disabled]="zoom() >= 32"
           class="p-1 text-slate-400 hover:text-white disabled:opacity-30 rounded-sm hover:bg-slate-700 transition"
-          title="Zoom In">
+          [title]="'audio-editor.zoom.in' | translate">
           <lucide-angular name="zoom-in" class="h-3.5 w-3.5"></lucide-angular>
         </button>
 
@@ -154,8 +154,8 @@
         <div class="flex border-b border-slate-800 bg-slate-900/90 select-none">
           <!-- Track Control Spacer -->
           <div class="w-48 sm:w-56 p-2.5 flex items-center justify-between border-r border-slate-800 shrink-0 text-slate-400 text-xs font-bold uppercase tracking-wider">
-            <span>Tracks ({{ tracks().length }})</span>
-            <span class="text-[10px] font-normal text-slate-500">Vol / Solo</span>
+            <span>{{ 'audio-editor.tracks.header' | translate: { count: tracks().length } }}</span>
+            <span class="text-[10px] font-normal text-slate-500">{{ 'audio-editor.tracks.volSolo' | translate }}</span>
           </div>
 
           <!-- Horizontal Ruler Grid -->
@@ -215,7 +215,7 @@
                         'bg-slate-800 text-slate-400 hover:text-white': !track.muted
                       }"
                       class="w-5 h-5 rounded-sm text-[10px] flex items-center justify-center transition"
-                      title="Mute Track">
+                      [title]="'audio-editor.tracks.muteTitle' | translate">
                       M
                     </button>
 
@@ -227,7 +227,7 @@
                         'bg-slate-800 text-slate-400 hover:text-white': !track.solo
                       }"
                       class="w-5 h-5 rounded-sm text-[10px] flex items-center justify-center transition"
-                      title="Solo Track">
+                      [title]="'audio-editor.tracks.soloTitle' | translate">
                       S
                     </button>
 
@@ -236,7 +236,7 @@
                       <button
                         (click)="removeTrack(track.id)"
                         class="p-1 text-slate-500 hover:text-rose-400 rounded-sm transition"
-                        title="Delete Track">
+                        [title]="'audio-editor.tracks.deleteTitle' | translate">
                         <lucide-angular name="trash-2" class="h-3 w-3"></lucide-angular>
                       </button>
                     }
@@ -260,7 +260,7 @@
                   <!-- Add File Input Button -->
                   <label class="cursor-pointer px-2 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-[10px] font-semibold rounded-md border border-slate-700 transition flex items-center gap-1">
                     <lucide-angular name="plus" class="h-2.5 w-2.5"></lucide-angular>
-                    Add Clip
+                    {{ 'audio-editor.tracks.addClip' | translate }}
                     <input
                       type="file"
                       accept="audio/*"
@@ -318,18 +318,18 @@
         <!-- Bottom Timeline Status & Shortcuts -->
         <div class="p-3 bg-slate-900 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400 flex-wrap gap-2">
           <div class="flex items-center gap-3">
-            <span>Total Active Clips: <strong class="text-slate-200">{{ timelineClips().length }}</strong></span>
+            <span>{{ 'audio-editor.timeline.totalActiveClips' | translate }} <strong class="text-slate-200">{{ timelineClips().length }}</strong></span>
             @if (activeTool() === 'razor') {
               <span class="text-rose-400 font-semibold bg-rose-950/60 px-2 py-0.5 rounded-sm border border-rose-800">
-                ✂ Razor Mode: Click on any clip where you want to cut
+                {{ 'audio-editor.timeline.razorHint' | translate }}
               </span>
             }
           </div>
           <div class="flex items-center gap-2 font-mono text-[11px] text-slate-400">
-            <span class="bg-slate-800 px-1.5 py-0.5 rounded-sm text-slate-300">Space</span> Play/Pause
-            <span class="bg-slate-800 px-1.5 py-0.5 rounded-sm text-slate-300 ml-1.5">S</span> Split Playhead
-            <span class="bg-slate-800 px-1.5 py-0.5 rounded-sm text-slate-300 ml-1.5">Del</span> Delete
-            <span class="bg-slate-800 px-1.5 py-0.5 rounded-sm text-slate-300 ml-1.5">Wheel</span> Zoom (1x - 32x)
+            <span class="bg-slate-800 px-1.5 py-0.5 rounded-sm text-slate-300">Space</span> {{ 'audio-editor.timeline.playPause' | translate }}
+            <span class="bg-slate-800 px-1.5 py-0.5 rounded-sm text-slate-300 ml-1.5">S</span> {{ 'audio-editor.timeline.splitPlayhead' | translate }}
+            <span class="bg-slate-800 px-1.5 py-0.5 rounded-sm text-slate-300 ml-1.5">Del</span> {{ 'audio-editor.timeline.delete' | translate }}
+            <span class="bg-slate-800 px-1.5 py-0.5 rounded-sm text-slate-300 ml-1.5">Wheel</span> {{ 'audio-editor.timeline.zoom' | translate }}
           </div>
         </div>
       </div>
@@ -342,9 +342,9 @@
               <lucide-angular name="check-circle" class="h-6 w-6"></lucide-angular>
             </div>
             <div>
-              <h4 class="text-sm font-bold text-gray-900">Master Mix Ready!</h4>
+              <h4 class="text-sm font-bold text-gray-900">{{ 'audio-editor.master.ready' | translate }}</h4>
               <p class="text-xs text-gray-600 mt-0.5">
-                Output: {{ formatFileSize(outputBlob()?.size || 0) }} · Rendered all tracks with volume curves & fades.
+                {{ 'audio-editor.master.output' | translate: { size: formatFileSize(outputBlob()?.size || 0) } }}
               </p>
             </div>
           </div>
@@ -352,7 +352,7 @@
             (click)="handleDownload()"
             class="w-full sm:w-auto px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl shadow-sm transition flex items-center justify-center gap-2 text-sm font-bold">
             <lucide-angular name="download" class="h-4 w-4"></lucide-angular>
-            Download Master Audio
+            {{ 'audio-editor.master.download' | translate }}
           </button>
         </div>
       }
@@ -363,13 +363,13 @@
           <div class="flex items-center gap-3 mb-3">
             <div class="w-5 h-5 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin shrink-0"></div>
             <div class="flex flex-col">
-              <span class="text-sm font-semibold text-gray-700">Rendering Master Mixdown...</span>
+              <span class="text-sm font-semibold text-gray-700">{{ 'audio-editor.progress.renderingMaster' | translate }}</span>
               @if (currentExportStep()) {
                 <span class="text-xs text-indigo-600 font-medium">{{ currentExportStep() }}</span>
               }
             </div>
             @if (progress() > 0) {
-              <span class="ml-auto text-xs font-mono font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-sm">{{ progress() }}%</span>
+              <span class="ml-auto text-xs font-mono font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-sm">{{ i18n.formatPercent(progress() / 100) }}</span>
             }
           </div>
           <div class="h-1.5 bg-gray-100 rounded-full overflow-hidden">
@@ -399,11 +399,11 @@
 
       <!-- Master Export Settings Card -->
       <div class="bg-white rounded-2xl border border-gray-100 shadow-xs p-6 flex flex-col gap-4">
-        <h3 class="text-lg font-bold text-gray-900 border-b border-gray-50 pb-3">Master Mixdown Export</h3>
+        <h3 class="text-lg font-bold text-gray-900 border-b border-gray-50 pb-3">{{ 'audio-editor.export.masterTitle' | translate }}</h3>
 
         <!-- Format picker -->
         <div class="flex flex-col gap-2">
-          <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Format</label>
+          <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">{{ 'audio-editor.options.format' | translate }}</label>
           <div class="grid grid-cols-3 gap-2">
             @for (fmt of formats; track fmt) {
               <button
@@ -427,10 +427,10 @@
           class="w-full py-3.5 px-6 bg-linear-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white rounded-2xl shadow-md hover:shadow-lg transition flex items-center justify-center gap-3 text-sm font-bold disabled:opacity-50 disabled:cursor-not-allowed">
           @if (exporting()) {
             <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-            Rendering Mix...
+            {{ 'audio-editor.export.renderingMix' | translate }}
           } @else {
             <lucide-angular name="download" class="h-5 w-5"></lucide-angular>
-            Export Master Mix
+            {{ 'audio-editor.export.masterButton' | translate }}
           }
         </button>
       </div>

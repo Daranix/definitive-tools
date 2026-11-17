@@ -1,21 +1,24 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  inject,
   input,
   output,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
+import { I18nService } from '@/app/i18n/i18n.service';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import { AudioTrack, TimelineClip } from '../../../audio-editor.schema';
 
 @Component({
   selector: 'app-clip-inspector',
-  imports: [LucideIconComponent, FormsModule],
+  imports: [LucideIconComponent, FormsModule, TranslatePipe],
   templateUrl: './clip-inspector.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClipInspectorComponent {
-  protected readonly Math = Math;
+  readonly i18n = inject(I18nService);
 
   readonly selectedClip = input<TimelineClip | null>(null);
   readonly tracks = input.required<AudioTrack[]>();

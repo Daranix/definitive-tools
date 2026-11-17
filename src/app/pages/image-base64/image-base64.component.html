@@ -5,10 +5,10 @@
     <!-- Header Section -->
     <div class="text-center mb-8">
       <h1 data-testid="tool-title" class="text-3xl font-extrabold text-gray-900 tracking-tight sm:text-4xl">
-        Image Base64 Converter
+        {{ 'image-base64-converter.title' | translate }}
       </h1>
       <p class="mt-3 max-w-2xl mx-auto text-lg text-gray-500 sm:mt-4">
-        Convert images to Base64 strings, or decode Base64 strings back to preview and download images.
+        {{ 'image-base64-converter.subtitle' | translate }}
       </p>
     </div>
 
@@ -25,7 +25,7 @@
           }"
         >
           <lucide-angular name="image" class="h-4 w-4"></lucide-angular>
-          <span>Image to Base64</span>
+          <span>{{ 'image-base64-converter.modes.encode' | translate }}</span>
         </button>
         <button
           (click)="mode.set('decode')"
@@ -37,7 +37,7 @@
           }"
         >
           <lucide-angular name="code" class="h-4 w-4"></lucide-angular>
-          <span>Base64 to Image</span>
+          <span>{{ 'image-base64-converter.modes.decode' | translate }}</span>
         </button>
       </div>
     </div>
@@ -51,7 +51,7 @@
           @if (!encodedBase64()) {
             <div class="max-w-xl mx-auto">
               <label class="block text-sm font-semibold text-gray-700 mb-2 text-center">
-                Select or Drag & Drop an Image
+                {{ 'image-base64-converter.encoder.dropzone' | translate }}
               </label>
               <app-drag-and-drop-file
                 name="image-file"
@@ -60,7 +60,7 @@
                 (onFileChange)="onFileChange($event)"
               ></app-drag-and-drop-file>
               <p class="text-xs text-gray-400 text-center mt-2">
-                Supported formats: PNG, JPG, JPEG, WEBP, GIF, SVG, BMP. Max file size: 5MB.
+                {{ 'image-base64-converter.encoder.formatsHint' | translate }}
               </p>
             </div>
           } @else {
@@ -69,19 +69,19 @@
               <!-- Left: Image Preview & File Meta -->
               <div class="lg:col-span-5 space-y-4">
                 <h3 class="text-md font-bold text-gray-800 uppercase tracking-wider">
-                  Source Image
+                  {{ 'image-base64-converter.encoder.sourceTitle' | translate }}
                 </h3>
                 
                 <div class="relative bg-gray-100 border border-gray-200 rounded-xl overflow-hidden flex items-center justify-center min-h-[250px] max-h-[350px] p-4 group">
                   <img
                     [src]="encodedBase64()"
-                    alt="Source Preview"
+                    [alt]="'image-base64-converter.encoder.sourceAlt' | translate"
                     class="max-w-full max-h-[300px] object-contain rounded-lg shadow-xs"
                   />
                   <button
                     (click)="clearEncoder()"
                     class="absolute top-3 right-3 bg-red-600 hover:bg-red-700 text-white p-2 rounded-full shadow-lg transition duration-150 hover:scale-105"
-                    title="Remove Image"
+                    [title]="'image-base64-converter.encoder.remove' | translate"
                   >
                     <lucide-angular name="trash-2" class="h-4 w-4"></lucide-angular>
                   </button>
@@ -90,23 +90,23 @@
                 <!-- Image Metadata Panel -->
                 <div class="bg-gray-50 border border-gray-100 rounded-xl p-4 space-y-2.5 text-sm">
                   <div class="flex justify-between">
-                    <span class="text-gray-500 font-medium">Name:</span>
+                    <span class="text-gray-500 font-medium">{{ 'image-base64-converter.encoder.name' | translate }}</span>
                     <span class="text-gray-900 font-semibold truncate max-w-[200px]" [title]="imageName()">
                       {{ imageName() }}
                     </span>
                   </div>
                   <div class="flex justify-between">
-                    <span class="text-gray-500 font-medium">Type:</span>
-                    <span class="text-gray-900 font-semibold uppercase">{{ imageType() || 'unknown' }}</span>
+                    <span class="text-gray-500 font-medium">{{ 'image-base64-converter.encoder.type' | translate }}</span>
+                    <span class="text-gray-900 font-semibold uppercase">{{ imageType() || ('image-base64-converter.labels.unknown' | translate) }}</span>
                   </div>
                   <div class="flex justify-between">
-                    <span class="text-gray-500 font-medium">File Size:</span>
+                    <span class="text-gray-500 font-medium">{{ 'image-base64-converter.encoder.fileSize' | translate }}</span>
                     <span class="text-gray-900 font-semibold">{{ imageSize() | fileSize }}</span>
                   </div>
                   <div class="flex justify-between">
-                    <span class="text-gray-500 font-medium">Dimensions:</span>
+                    <span class="text-gray-500 font-medium">{{ 'image-base64-converter.encoder.dimensions' | translate }}</span>
                     <span class="text-gray-900 font-semibold">
-                      {{ imageDimensions() ? imageDimensions()!.width + ' × ' + imageDimensions()!.height + ' px' : 'Loading...' }}
+                      {{ imageDimensions() ? imageDimensions()!.width + ' × ' + imageDimensions()!.height + ' px' : ('image-base64-converter.labels.loading' | translate) }}
                     </span>
                   </div>
                 </div>
@@ -116,7 +116,7 @@
               <div class="lg:col-span-7 flex flex-col space-y-4">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
                   <h3 class="text-md font-bold text-gray-800 uppercase tracking-wider">
-                    Base64 Representation
+                    {{ 'image-base64-converter.encoder.representationTitle' | translate }}
                   </h3>
                   
                   <!-- Output Format Selector -->
@@ -129,7 +129,7 @@
                         'text-gray-600 hover:text-gray-900': outputFormat() !== 'dataUri'
                       }"
                     >
-                      Data URI
+                      {{ 'image-base64-converter.formats.dataUri' | translate }}
                     </button>
                     <button
                       (click)="outputFormat.set('raw')"
@@ -139,7 +139,7 @@
                         'text-gray-600 hover:text-gray-900': outputFormat() !== 'raw'
                       }"
                     >
-                      Raw
+                      {{ 'image-base64-converter.formats.raw' | translate }}
                     </button>
                     <button
                       (click)="outputFormat.set('html')"
@@ -149,7 +149,7 @@
                         'text-gray-600 hover:text-gray-900': outputFormat() !== 'html'
                       }"
                     >
-                      HTML
+                      {{ 'image-base64-converter.formats.html' | translate }}
                     </button>
                     <button
                       (click)="outputFormat.set('css')"
@@ -159,7 +159,7 @@
                         'text-gray-600 hover:text-gray-900': outputFormat() !== 'css'
                       }"
                     >
-                      CSS
+                      {{ 'image-base64-converter.formats.css' | translate }}
                     </button>
                   </div>
                 </div>
@@ -169,7 +169,7 @@
                     readonly
                     [value]="formattedOutput()"
                     class="w-full grow p-4 bg-gray-50 border border-gray-200 rounded-xl font-mono text-xs text-gray-800 focus:outline-hidden focus:ring-1 focus:ring-indigo-500 overflow-y-auto resize-none h-[220px]"
-                    placeholder="Base64 encoded output will appear here..."
+                    [placeholder]="'image-base64-converter.encoder.outputPlaceholder' | translate"
                   ></textarea>
                 </div>
 
@@ -180,7 +180,7 @@
                     class="flex items-center justify-center px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl text-sm transition shadow-md hover:shadow-lg"
                   >
                     <lucide-angular name="copy" class="h-4 w-4 mr-2"></lucide-angular>
-                    Copy Base64
+                    {{ 'image-base64-converter.encoder.copy' | translate }}
                   </button>
                 </div>
               </div>
@@ -195,13 +195,13 @@
         <div class="space-y-6">
           <div class="space-y-2">
             <label class="block text-sm font-semibold text-gray-700">
-              Paste Base64 Encoded Image Data
+              {{ 'image-base64-converter.decoder.inputLabel' | translate }}
             </label>
             <textarea
               [(ngModel)]="base64Input"
               data-testid="base64-textarea"
               class="w-full h-40 p-4 border border-gray-200 rounded-xl font-mono text-xs focus:ring-indigo-500 focus:border-indigo-500 shadow-xs"
-              placeholder="Paste Base64 string here (e.g. data:image/png;base64,... or raw Base64)..."
+              [placeholder]="'image-base64-converter.decoder.inputPlaceholder' | translate"
             ></textarea>
           </div>
 
@@ -213,7 +213,7 @@
               [disabled]="!base64Input()"
             >
               <lucide-angular name="trash-2" class="h-4 w-4 mr-2"></lucide-angular>
-              Clear
+              {{ 'image-base64-converter.decoder.clear' | translate }}
             </button>
 
             <button
@@ -223,7 +223,7 @@
               [disabled]="!base64Input()"
             >
               <lucide-angular name="code" class="h-4 w-4 mr-2"></lucide-angular>
-              Decode Base64
+              {{ 'image-base64-converter.decoder.decode' | translate }}
             </button>
           </div>
 
@@ -232,7 +232,7 @@
             <div data-testid="decode-error" class="p-4 bg-red-50 border border-red-200 rounded-xl flex items-start space-x-3 text-red-800">
               <lucide-angular name="info" class="h-5 w-5 text-red-500 mt-0.5"></lucide-angular>
               <div>
-                <p class="font-semibold text-sm">Decoding Failed</p>
+                <p class="font-semibold text-sm">{{ 'image-base64-converter.decoder.errorTitle' | translate }}</p>
                 <p class="text-xs text-red-700 mt-1">{{ decodeError() }}</p>
               </div>
             </div>
@@ -246,14 +246,14 @@
                 <!-- Left: Decoded image preview -->
                 <div class="lg:col-span-6 space-y-4">
                   <h3 class="text-md font-bold text-gray-800 uppercase tracking-wider">
-                    Decoded Preview
+                    {{ 'image-base64-converter.decoder.previewTitle' | translate }}
                   </h3>
                   
                   <div class="bg-gray-100 border border-gray-200 rounded-xl p-4 flex items-center justify-center min-h-[250px] max-h-[350px]">
                     <img
                       [src]="decodedImageSrc()"
                       data-testid="decoded-image-preview"
-                      alt="Decoded Preview"
+                      [alt]="'image-base64-converter.decoder.previewAlt' | translate"
                       class="max-w-full max-h-[300px] object-contain rounded-lg shadow-xs"
                     />
                   </div>
@@ -263,26 +263,26 @@
                 <div class="lg:col-span-6 flex flex-col justify-between space-y-6">
                   <div class="space-y-4">
                     <h3 class="text-md font-bold text-gray-800 uppercase tracking-wider">
-                      Decoded File Metadata
+                      {{ 'image-base64-converter.decoder.metadataTitle' | translate }}
                     </h3>
 
                     <div data-testid="metadata-panel" class="bg-gray-50 border border-gray-100 rounded-xl p-4 space-y-2.5 text-sm">
                       <div class="flex justify-between">
-                        <span class="text-gray-500 font-medium">Inferred Format:</span>
+                        <span class="text-gray-500 font-medium">{{ 'image-base64-converter.decoder.inferredFormat' | translate }}</span>
                         <span data-testid="inferred-format" class="text-gray-900 font-semibold uppercase">
-                          {{ decodedMetadata()!.mimeType.split('/')[1] || 'unknown' }}
+                          {{ decodedMetadata()!.mimeType.split('/')[1] || ('image-base64-converter.labels.unknown' | translate) }}
                         </span>
                       </div>
                       <div class="flex justify-between">
-                        <span class="text-gray-500 font-medium">MIME Type:</span>
+                        <span class="text-gray-500 font-medium">{{ 'image-base64-converter.decoder.mimeType' | translate }}</span>
                         <span data-testid="mime-type" class="text-gray-900 font-semibold">{{ decodedMetadata()!.mimeType }}</span>
                       </div>
                       <div class="flex justify-between">
-                        <span class="text-gray-500 font-medium">Estimated Binary Size:</span>
+                        <span class="text-gray-500 font-medium">{{ 'image-base64-converter.decoder.estimatedSize' | translate }}</span>
                         <span data-testid="binary-size" class="text-gray-900 font-semibold">{{ decodedMetadata()!.size | fileSize }}</span>
                       </div>
                       <div class="flex justify-between">
-                        <span class="text-gray-500 font-medium">Image Size:</span>
+                        <span class="text-gray-500 font-medium">{{ 'image-base64-converter.decoder.imageSize' | translate }}</span>
                         <span data-testid="image-dimensions" class="text-gray-900 font-semibold">
                           {{ decodedMetadata()!.width }} × {{ decodedMetadata()!.height }} px
                         </span>
@@ -296,7 +296,7 @@
                       class="flex-1 flex items-center justify-center px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl text-sm transition shadow-md hover:shadow-lg"
                     >
                       <lucide-angular name="download" class="h-4 w-4 mr-2"></lucide-angular>
-                      Download Image File
+                      {{ 'image-base64-converter.decoder.download' | translate }}
                     </button>
                   </div>
                 </div>
@@ -312,27 +312,27 @@
     <!-- About Section -->
     <div class="mt-12 bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-xs space-y-6">
       <div>
-        <h2 class="text-xl font-bold text-gray-900 mb-3">About Image Base64 Conversion</h2>
+        <h2 class="text-xl font-bold text-gray-900 mb-3">{{ 'image-base64-converter.about.title' | translate }}</h2>
         <p class="text-gray-600 text-sm leading-relaxed">
-          Base64 encoding converts image binary data into an ASCII string format. This string can be embedded directly in HTML, CSS, or JSON payloads.
+          {{ 'image-base64-converter.about.description' | translate }}
         </p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
         <div>
-          <h3 class="font-bold text-gray-800 mb-2">When to use Base64</h3>
+          <h3 class="font-bold text-gray-800 mb-2">{{ 'image-base64-converter.about.whenToUseTitle' | translate }}</h3>
           <ul class="list-disc pl-5 text-gray-600 space-y-1.5">
-            <li>Small icons, SVGs, or graphics to minimize HTTP requests.</li>
-            <li>Email templates where external images might be blocked.</li>
-            <li>Storing dynamic image payloads in JSON/XML datasets.</li>
-            <li>Working offline or within standalone web environments.</li>
+            <li>{{ 'image-base64-converter.about.whenToUse.icons' | translate }}</li>
+            <li>{{ 'image-base64-converter.about.whenToUse.email' | translate }}</li>
+            <li>{{ 'image-base64-converter.about.whenToUse.storage' | translate }}</li>
+            <li>{{ 'image-base64-converter.about.whenToUse.offline' | translate }}</li>
           </ul>
         </div>
         <div>
-          <h3 class="font-bold text-gray-800 mb-2">Best Practices</h3>
+          <h3 class="font-bold text-gray-800 mb-2">{{ 'image-base64-converter.about.bestPracticesTitle' | translate }}</h3>
           <ul class="list-disc pl-5 text-gray-600 space-y-1.5">
-            <li>Avoid encoding large images (e.g. >1MB) as Base64 because it increases the payload size by approximately 33%.</li>
-            <li>For performance, rely on browser caching for static files instead of loading heavy Data URIs in stylesheets.</li>
+            <li>{{ 'image-base64-converter.about.bestPractices.largeImages' | translate }}</li>
+            <li>{{ 'image-base64-converter.about.bestPractices.caching' | translate }}</li>
           </ul>
         </div>
       </div>

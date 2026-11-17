@@ -1,0 +1,61 @@
+{
+  "title": "Generador de memes",
+  "subtitle": "Elige una plantilla o sube la tuya, personaliza los textos, arrástralos para colocarlos donde quieras y crea el meme perfecto al instante.",
+  "tips": {
+    "drag": "Haz clic y arrastra, o desliza los cuadros de texto para colocarlos en cualquier parte de la imagen."
+  },
+  "sections": {
+    "selectTemplate": "1. Elige una plantilla",
+    "customize": "2. Personaliza el meme"
+  },
+  "templatePicker": {
+    "uploadLabel": "Sube tu propia plantilla de imagen",
+    "supports": "Admite PNG, JPG y WEBP",
+    "searchPlaceholder": "Busca plantillas..."
+  },
+  "captions": {
+    "number": "Texto n.º {{ number }}",
+    "removeBox": "Quitar cuadro de texto",
+    "deleteCaption": "Eliminar texto",
+    "textPlaceholder": "Escribe el texto...",
+    "add": "Añadir texto"
+  },
+  "actions": {
+    "download": "Descargar meme"
+  },
+  "fields": {
+    "fontSize": "Tamaño de fuente",
+    "fontFamily": "Familia tipográfica",
+    "textColor": "Color del texto",
+    "outlineColor": "Color del contorno",
+    "alignment": "Alineación",
+    "outlineWidth": "Grosor del contorno",
+    "caps": "Mayúsculas",
+    "capsExample": "Aa"
+  },
+  "alignment": {
+    "left": "I",
+    "center": "C",
+    "right": "D"
+  },
+  "defaults": {
+    "topText": "TEXTO SUPERIOR",
+    "bottomText": "TEXTO INFERIOR",
+    "textBox": "CUADRO DE TEXTO {{ number }}",
+    "newText": "TEXTO NUEVO",
+    "customImage": "Imagen personalizada"
+  },
+  "messages": {
+    "generating": "Generando el meme...",
+    "downloaded": "¡Meme descargado correctamente!",
+    "failed": "No se ha podido generar el meme. Inténtalo de nuevo."
+  },
+  "files": {
+    "meme": "{{ slug }}-meme.jpg"
+  },
+  "seo": {
+    "title": "Generador de memes - Definitive Tools",
+    "description": "Crea memes divertidos con textos personalizados, arrastra los textos para colocarlos, personaliza las fuentes y usa plantillas populares.",
+    "keywords": "generador de memes, creador de memes, crear meme, arrastrar texto meme, generador de memes personalizado, creador de memes gratis"
+  }
+}

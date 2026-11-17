@@ -1,0 +1,78 @@
+{
+  "page": {
+    "about": {
+      "title": "Acerca de los tokens JWT",
+      "whatIsTitle": "¿Qué es un JWT?",
+      "whatIsDescription": "JSON Web Token (JWT) es un estándar abierto que define una forma compacta y autocontenida de transmitir información entre partes de forma segura como un objeto JSON. Esta información se puede verificar y es fiable porque está firmada digitalmente.",
+      "commonUsesTitle": "Usos habituales",
+      "commonUses": {
+        "authentication": "Autenticación y autorización en aplicaciones web",
+        "informationExchange": "Intercambio de información entre las partes",
+        "securingApis": "Protección de los endpoints de la API"
+      }
+    },
+    "modes": {
+      "decode": "Decodificar JWT",
+      "encode": "Codificar JWT"
+    }
+  },
+  "seo": {
+    "title": "Decodificar / codificar JWT",
+    "description": "Decodifica y codifica fácilmente JSON Web Tokens (JWT) para una autenticación y autorización seguras y verificables."
+  },
+  "shared": {
+    "actions": {
+      "generateExample": "Generar ejemplo",
+      "copyToClipboard": "Copiar al portapapeles",
+      "clear": "Limpiar"
+    },
+    "labels": {
+      "encodedValue": "Valor codificado",
+      "decodedHeader": "Cabecera decodificada",
+      "jwtToken": "Token web JSON (JWT)",
+      "signatureVerification": "Verificación de la firma JWT",
+      "signatureHint": "Introduce abajo el secreto usado para firmar el JWT:"
+    },
+    "placeholders": {
+      "secretKey": "Clave secreta"
+    },
+    "status": {
+      "invalidToken": "Token no válido para el secreto indicado"
+    },
+    "messages": {
+      "copied": "Copiado al portapapeles"
+    }
+  },
+  "decoder": {
+    "labels": {
+      "decodedPayload": "Carga útil decodificada",
+      "json": "JSON",
+      "signatureVerificationOptional": "Verificación de la firma JWT (opcional)"
+    },
+    "aria": {
+      "jwtEditorInput": "Entrada del editor JWT"
+    },
+    "status": {
+      "validJwt": "JWT válido",
+      "invalidJwtFormat": "Formato de JWT no válido",
+      "validSecret": "Secreto válido"
+    }
+  },
+  "encoder": {
+    "actions": {
+      "clearField": "Limpiar campo"
+    },
+    "labels": {
+      "headerJson": "Cabecera (JSON)",
+      "decodedValue": "Valor decodificado",
+      "payloadJson": "Carga útil (JSON)"
+    },
+    "placeholders": {
+      "header": "Pega aquí la cabecera JSON.",
+      "payload": "Pega aquí la carga útil JSON."
+    },
+    "messages": {
+      "missingFields": "Introduce todos los campos obligatorios"
+    }
+  }
+}

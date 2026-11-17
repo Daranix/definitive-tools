@@ -1,7 +1,8 @@
-import { isPlatformBrowser, KeyValuePipe, TitleCasePipe, DecimalPipe } from '@angular/common';
+import { isPlatformBrowser, TitleCasePipe } from '@angular/common';
 import {
   Component,
   computed,
+  effect,
   inject,
   model,
   NgZone,
@@ -11,6 +12,7 @@ import {
   signal,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import { SelectButtonComponent } from '@/app/components/select-button/select-button.component';
 import {
@@ -20,6 +22,7 @@ import {
 import { LoadingSpinnerSmallComponent } from '@/app/components/loading-spinner-small/loading-spinner-small.component';
 import { DragAndDropFileComponent } from '@/app/components/drag-and-drop-file/drag-and-drop-file.component';
 import { WHISPER_LANGUAGES } from '@/app/utils/constants';
+import { I18nService } from '@/app/i18n/i18n.service';
 import { MetadataService } from '@/app/services/metadata.service';
 import { TopNavbarComponent } from '@/app/components/top-navbar/top-navbar.component';
 import { FooterComponent } from '@/app/components/footer/footer.component';
@@ -87,11 +90,10 @@ type WhisperDoneEvent = {
     LoadingSpinnerSmallComponent,
     ModelDownloadProgressComponent,
     DragAndDropFileComponent,
-    KeyValuePipe,
     TitleCasePipe,
-    DecimalPipe,
     TopNavbarComponent,
     FooterComponent,
+    TranslatePipe,
   ],
   templateUrl: './audio-speech-to-text.component.html',
   styleUrl: './audio-speech-to-text.component.scss',
@@ -100,6 +102,7 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
   private readonly ngZone = inject(NgZone);
   private readonly platform = inject(PLATFORM_ID);
   private readonly metadataService = inject(MetadataService);
+  private readonly i18n = inject(I18nService);
 
   private readonly WHISPER_SAMPLING_RATE = 16_000;
   private readonly MAX_AUDIO_LENGTH = 30; // seconds
@@ -124,7 +127,6 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
     '.3gp',
     '.ts',
   ];
-  readonly WHISPER_LANGUAGES = WHISPER_LANGUAGES;
 
   // System & API detection
   readonly isWhisperAvailable = computed(
@@ -137,7 +139,39 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
       isPlatformBrowser(this.platform),
   );
 
-  readonly recognitionApiList = signal<Array<{ label: string; value: string }>>([]);
+  // ISO codes of the engines this browser can run, resolved in ngOnInit.
+  private readonly availableRecognitionApis = signal<string[]>([]);
+
+  readonly recognitionApiList = computed(() =>
+    this.availableRecognitionApis().map((value) => ({
+      label: this.i18n.t(`audio-speech-to-text.engine.${value}`),
+      value,
+    })),
+  );
+
+  // Language selector options: labels come from Intl.DisplayNames, the value
+  // stays the ISO code Whisper expects.
+  readonly languageOptions = computed(() => {
+    let displayNames: Intl.DisplayNames | undefined;
+    try {
+      displayNames = new Intl.DisplayNames([this.i18n.locale()], {
+        type: 'language',
+      });
+    } catch {
+      displayNames = undefined;
+    }
+
+    return Object.keys(WHISPER_LANGUAGES)
+      .sort()
+      .map((code) => ({
+        value: code,
+        label:
+          code === 'auto'
+            ? this.i18n.t('audio-speech-to-text.language.auto')
+            : this.languageLabel(code, displayNames),
+      }));
+  });
+
   readonly recognitionApi = model<string>('whisper');
   readonly audioInputMode = signal<AudioInputMode>('mic');
   readonly language = model<string>('auto');
@@ -154,7 +188,12 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
   // Video Conversion with FFmpeg
   readonly isConvertingVideo = signal(false);
   readonly conversionProgress = signal(0);
-  readonly conversionStatus = signal<string>('');
+  // Key of the current conversion status, translated for the active language.
+  private readonly conversionStatusKey = signal<string>('');
+  readonly conversionStatus = computed(() => {
+    const key = this.conversionStatusKey();
+    return key ? this.i18n.t(key) : '';
+  });
   private ffmpeg: any = null;
   private ffmpegLoaded = signal(false);
   private preparedAudioBlob?: Blob;
@@ -199,28 +238,70 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
     return { words, characters: text.length, chunks };
   });
 
+  // Stats and sizes formatted for the active language.
+  readonly wordCount = computed(() => this.i18n.formatNumber(this.stats().words));
+
+  readonly characterCount = computed(() =>
+    this.i18n.formatNumber(this.stats().characters),
+  );
+
+  readonly chunkCount = computed(() => this.i18n.formatNumber(this.stats().chunks));
+
+  readonly fileSizeMb = computed(() =>
+    this.i18n.formatNumber((this.uploadedFile()?.size || 0) / (1024 * 1024), {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }),
+  );
+
+  readonly conversionPercent = computed(() =>
+    this.i18n.formatPercent(this.conversionProgress() / 100),
+  );
+
   constructor() {
+    this.updateMetadata();
+    effect(() => {
+      this.i18n.language();
+      this.updateMetadata();
+    });
+  }
+
+  private updateMetadata(): void {
     this.metadataService.updateMetadata({
-      title: 'Speech to Text & Audio/Video Transcriber',
-      description:
-        'Convert spoken words, audio, and video files (MP4, WebM, MOV) into accurate text and timestamped JSON captions locally in your browser using Whisper WebGPU AI or Browser Speech Recognition.',
+      title: this.i18n.t('audio-speech-to-text.seo.title'),
+      description: this.i18n.t('audio-speech-to-text.seo.description'),
       updateCanonical: true,
     });
   }
 
+  private languageLabel(
+    code: string,
+    displayNames: Intl.DisplayNames | undefined,
+  ): string {
+    if (displayNames) {
+      try {
+        const label = displayNames.of(code);
+        if (label && label !== code) return label;
+      } catch {
+        // Intl cannot resolve this code: fall back to the ISO code below.
+      }
+    }
+    return code.toUpperCase();
+  }
+
   ngOnInit(): void {
     if (isPlatformBrowser(this.platform)) {
-      const list: Array<{ label: string; value: string }> = [];
+      const list: string[] = [];
 
       if (this.isWhisperAvailable()) {
-        list.push({ label: 'Whisper AI', value: 'whisper' });
+        list.push('whisper');
       }
 
       if (this.speechApiAvailable()) {
-        list.push({ label: 'Browser API', value: 'browser' });
+        list.push('browser');
       }
 
-      this.recognitionApiList.set(list);
+      this.availableRecognitionApis.set(list);
 
       // Default to Whisper if available, otherwise Browser API
       if (this.isWhisperAvailable()) {
@@ -261,7 +342,7 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
     this.preparedAudioBlob = undefined;
     this.isConvertingVideo.set(false);
     this.conversionProgress.set(0);
-    this.conversionStatus.set('');
+    this.conversionStatusKey.set('');
     this.clearTranscript();
   }
 
@@ -292,11 +373,19 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
     if (format === 'txt') {
       const text = this.transcript();
       if (!text) return;
-      this.triggerDownload(text, 'transcript.txt', 'text/plain');
+      this.triggerDownload(
+        text,
+        this.i18n.t('audio-speech-to-text.downloads.transcriptFileName'),
+        'text/plain',
+      );
     } else {
       const jsonStr = this.formattedJson();
       if (!jsonStr) return;
-      this.triggerDownload(jsonStr, 'captions.json', 'application/json');
+      this.triggerDownload(
+        jsonStr,
+        this.i18n.t('audio-speech-to-text.downloads.captionsFileName'),
+        'application/json',
+      );
     }
   }
 
@@ -331,7 +420,8 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
     } catch (ex: any) {
       console.error(ex);
       this.errorMessage.set(
-        ex?.message || 'An error occurred while accessing the microphone or initializing speech recognition.',
+        ex?.message ||
+          this.i18n.t('audio-speech-to-text.errors.generic'),
       );
       this.isloading.set(false);
       this.isRecording.set(false);
@@ -343,7 +433,9 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
       window.SpeechRecognition || window.webkitSpeechRecognition;
 
     if (!SpeechRecognitionConstructor) {
-      throw new Error('Speech Recognition API is not supported on this browser.');
+      throw new Error(
+        this.i18n.t('audio-speech-to-text.errors.browserApiUnsupported'),
+      );
     }
 
     if (!this.speechRecognitionBrowserInstance) {
@@ -415,7 +507,7 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
     if (!isPlatformBrowser(this.platform)) return;
     if (this.ffmpegLoaded()) return;
 
-    this.conversionStatus.set('Loading FFmpeg WASM Core...');
+    this.conversionStatusKey.set('audio-speech-to-text.fileConversion.loadingCore');
     const { FFmpeg } = await import('@ffmpeg/ffmpeg');
     const { toBlobURL } = await import('@ffmpeg/util');
 
@@ -438,12 +530,12 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
   private async extractAudioFromVideo(file: File): Promise<Blob> {
     this.isConvertingVideo.set(true);
     this.conversionProgress.set(0);
-    this.conversionStatus.set('Initializing video extraction engine...');
+    this.conversionStatusKey.set('audio-speech-to-text.fileConversion.initializing');
 
     try {
       await this.initFFmpeg();
 
-      this.conversionStatus.set('Reading video file into memory...');
+      this.conversionStatusKey.set('audio-speech-to-text.fileConversion.reading');
       const ext = file.name.substring(file.name.lastIndexOf('.'));
       const inputName = `input_${Date.now()}${ext || '.mp4'}`;
       const outputName = `output_${Date.now()}.wav`;
@@ -451,19 +543,19 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
       const { fetchFile } = await import('@ffmpeg/util');
       await this.ffmpeg.writeFile(inputName, await fetchFile(file));
 
-      this.conversionStatus.set('Extracting and converting audio track with FFmpeg...');
+      this.conversionStatusKey.set('audio-speech-to-text.fileConversion.extracting');
       // Extract audio without video, resample to 16kHz mono 16-bit WAV for optimal Whisper ingestion
       const args = ['-i', inputName, '-vn', '-acodec', 'pcm_s16le', '-ar', '16000', '-ac', '1', outputName];
       await this.ffmpeg.exec(args);
 
-      this.conversionStatus.set('Finalizing audio stream...');
+      this.conversionStatusKey.set('audio-speech-to-text.fileConversion.finalizing');
       const data = await this.ffmpeg.readFile(outputName);
       const audioBlob = new Blob([data.buffer as ArrayBuffer], { type: 'audio/wav' });
 
       await this.ffmpeg.deleteFile(inputName);
       await this.ffmpeg.deleteFile(outputName);
 
-      this.conversionStatus.set('Audio extracted successfully!');
+      this.conversionStatusKey.set('audio-speech-to-text.fileConversion.extracted');
       return audioBlob;
     } finally {
       this.isConvertingVideo.set(false);
@@ -499,7 +591,9 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
       this.isloading.set(false);
       this.isloadingWhisper.set(false);
       this.isConvertingVideo.set(false);
-      this.errorMessage.set(err?.message || 'Error processing media file with Whisper.');
+      this.errorMessage.set(
+        err?.message || this.i18n.t('audio-speech-to-text.errors.whisperFile'),
+      );
     }
   }
 
@@ -668,13 +762,15 @@ export class AudioSpeechToTextComponent implements OnInit, OnDestroy {
       } catch (err: any) {
         console.error('Microphone error:', err);
         this.errorMessage.set(
-          'Could not access microphone. Please ensure microphone permissions are granted.',
+          this.i18n.t('audio-speech-to-text.errors.micAccess'),
         );
         this.isloading.set(false);
         this.isRecording.set(false);
       }
     } else {
-      this.errorMessage.set('getUserMedia is not supported by your browser.');
+      this.errorMessage.set(
+        this.i18n.t('audio-speech-to-text.errors.getUserMediaUnsupported'),
+      );
       this.isloading.set(false);
       this.isRecording.set(false);
     }

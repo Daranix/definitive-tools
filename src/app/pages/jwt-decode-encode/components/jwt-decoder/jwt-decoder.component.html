@@ -3,28 +3,28 @@
         <button (click)="generateExample()"
             data-testid="generate-example-btn"
             class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium hover:bg-gray-50">
-            Generate example
+            {{ 'jwt-decode-encode.shared.actions.generateExample' | translate }}
         </button>
     </div>
 
     <div class="grid gap-6 md:grid-cols-2">
         <div class="space-y-4">
 
-            <label class="block text-sm font-medium text-gray-700">ENCODED VALUE</label>
+            <label class="block text-sm font-medium text-gray-700">{{ 'jwt-decode-encode.shared.labels.encodedValue' | translate }}</label>
             <div class="border rounded-md overflow-hidden">
                 <div class="bg-gray-100 border-b px-4 py-2 flex justify-between items-center">
                     <div class="flex space-x-2">
-                        <span class="py-1 text-xs">JSON WEB TOKEN (JWT)</span>
+                        <span class="py-1 text-xs">{{ 'jwt-decode-encode.shared.labels.jwtToken' | translate }}</span>
                     </div>
                     <div class="flex space-x-1">
-                        <button class="p-1 hover:bg-gray-200 rounded-md" title="Copy to clipboard"
+                        <button class="p-1 hover:bg-gray-200 rounded-md" [title]="'jwt-decode-encode.shared.actions.copyToClipboard' | translate"
                             (click)="copyToClipboard(jwtEncoded())">
                             <lucide-angular name="copy" class="h-3 w-3 text-gray-500" />
                         </button>
                     </div>
                 </div>
 
-                <div aria-label="JWT editor input"
+                <div [attr.aria-label]="'jwt-decode-encode.decoder.aria.jwtEditorInput' | translate"
                     class="editor-container relative font-mono text-sm leading-relaxed border-none outline-hidden min-h-[200px]">
                     <!-- Has to be in a single line for the highlighting to work and no add extra lines by the pre tag -->
                     <app-jwt-highlight [jwt]="jwtEncoded()"></app-jwt-highlight>
@@ -42,7 +42,7 @@
             <div class="p-3 rounded-md"
                 data-testid="jwt-status-box"
                 [ngClass]="{ 'bg-green-50 text-green-800 border border-green-200': !jwtDecoded().error, 'bg-red-50 text-red-800 border border-red-200': jwtDecoded().error }">
-                {{ !jwtDecoded().error ? "Valid JWT" : "Invalid JWT format" }}
+                {{ (jwtDecoded().error ? 'jwt-decode-encode.decoder.status.invalidJwtFormat' : 'jwt-decode-encode.decoder.status.validJwt') | translate }}
             </div>
             }
 
@@ -51,18 +51,18 @@
 
             <div class="space-y-2">
                 <label htmlFor="secret" class="block text-sm font-medium text-gray-700">
-                    JWT SIGNATURE VERIFICATION (OPTIONAL)
+                    {{ 'jwt-decode-encode.decoder.labels.signatureVerificationOptional' | translate }}
                 </label>
-                <p class="text-sm text-gray-500">Enter the secret used to sign the JWT below:</p>
+                <p class="text-sm text-gray-500">{{ 'jwt-decode-encode.shared.labels.signatureHint' | translate }}</p>
                 <div class="relative">
                     <input id="secret" [(ngModel)]="secret" type="text"
-                        class="w-full p-2 border rounded-md font-mono text-sm" placeholder="Secret key" />
+                        class="w-full p-2 border rounded-md font-mono text-sm" [placeholder]="'jwt-decode-encode.shared.placeholders.secretKey' | translate" />
                     <div class="absolute top-2 right-2 flex space-x-1">
-                        <button class="p-1 hover:bg-gray-100 rounded-md" title="Copy to clipboard"
+                        <button class="p-1 hover:bg-gray-100 rounded-md" [title]="'jwt-decode-encode.shared.actions.copyToClipboard' | translate"
                             (click)="copyToClipboard(secret())">
                             <lucide-angular name="copy" class="h-4 w-4 text-gray-500" />
                         </button>
-                        <button class="p-1 hover:bg-gray-100 rounded-md" title="Clear" (click)="secret.set(undefined)">
+                        <button class="p-1 hover:bg-gray-100 rounded-md" [title]="'jwt-decode-encode.shared.actions.clear' | translate" (click)="secret.set(undefined)">
                             <lucide-angular name="x" class="h-4 w-4 text-gray-500" />
                         </button>
                     </div>
@@ -71,16 +71,16 @@
                 @if(secret()) {
                     @if(isSecretValid.isLoading()) {
                         <div class="p-3 rounded-md bg-green-50 text-green-800 border border-green-200">
-                            Valid secret
+                            {{ 'jwt-decode-encode.decoder.status.validSecret' | translate }}
                         </div>
                     } @else {
                         @if(isSecretValid.value()) {
                         <div class="p-3 rounded-md bg-green-50 text-green-800 border border-green-200">
-                            Valid secret
+                            {{ 'jwt-decode-encode.decoder.status.validSecret' | translate }}
                         </div>
                         } @else {
                         <div class="p-3 rounded-md bg-red-50 text-red-800 border border-red-200">
-                            Invalid token for the specified secret
+                            {{ 'jwt-decode-encode.shared.status.invalidToken' | translate }}
                         </div>
                         }
                     }
@@ -91,14 +91,14 @@
 
         <div class="space-y-6">
             <div class="space-y-2">
-                <label class="block text-sm font-medium text-gray-700">DECODED HEADER</label>
+                <label class="block text-sm font-medium text-gray-700">{{ 'jwt-decode-encode.shared.labels.decodedHeader' | translate }}</label>
                 <div class="border rounded-md overflow-hidden">
                     <div class="bg-gray-100 border-b px-4 py-2 flex justify-between items-center">
                         <div class="flex space-x-2">
-                            <span class="py-1 text-xs">JSON</span>
+                            <span class="py-1 text-xs">{{ 'jwt-decode-encode.decoder.labels.json' | translate }}</span>
                         </div>
                         <div class="flex space-x-1">
-                            <button class="p-1 hover:bg-gray-200 rounded-md" title="Copy to clipboard"
+                            <button class="p-1 hover:bg-gray-200 rounded-md" [title]="'jwt-decode-encode.shared.actions.copyToClipboard' | translate"
                                 (click)="copyToClipboard(toJson(jwtDecoded().header))">
                                 <lucide-angular name="copy" class="h-3 w-3 text-gray-500" />
                             </button>
@@ -111,14 +111,14 @@
             </div>
 
             <div class="space-y-2">
-                <label class="block text-sm font-medium text-gray-700">DECODED PAYLOAD</label>
+                <label class="block text-sm font-medium text-gray-700">{{ 'jwt-decode-encode.decoder.labels.decodedPayload' | translate }}</label>
                 <div class="border rounded-md overflow-hidden">
                     <div class="bg-gray-100 border-b px-4 py-2 flex justify-between items-center">
                         <div class="flex space-x-2">
-                            <span class="py-1 text-xs">JSON</span>
+                            <span class="py-1 text-xs">{{ 'jwt-decode-encode.decoder.labels.json' | translate }}</span>
                         </div>
                         <div class="flex space-x-1">
-                            <button class="p-1 hover:bg-gray-200 rounded-md" title="Copy to clipboard"
+                            <button class="p-1 hover:bg-gray-200 rounded-md" [title]="'jwt-decode-encode.shared.actions.copyToClipboard' | translate"
                                 (click)="copyToClipboard(toJson(jwtDecoded().payload))">
                                 <lucide-angular name="copy" class="h-3 w-3 text-gray-500" />
                             </button>

@@ -1,12 +1,15 @@
 import { NgClass, NgStyle } from '@angular/common';
 import {
   Component,
+  computed,
   effect,
+  inject,
   input,
   model,
   output,
   ChangeDetectionStrategy,
 } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import {
   FontTypesDefinition,
@@ -22,6 +25,7 @@ import {
   merge,
   Observable,
 } from 'rxjs';
+import { I18nService } from '@/app/i18n/i18n.service';
 
 export const DEFAULT_VALUES: OpenGraphTemplateFormInputFontOptions = {
   fontFamily: {
@@ -67,15 +71,15 @@ export const FONT_TYPES = [
 export type FontType = (typeof FONT_TYPES)[number]['key'];
 
 const FONT_WEIGHTS = [
-  { key: '100', label: 'Thin' },
-  { key: '200', label: 'Extra Light' },
-  { key: '300', label: 'Light' },
-  { key: '400', label: 'Regular' },
-  { key: '500', label: 'Medium' },
-  { key: '600', label: 'Semi Bold' },
-  { key: '700', label: 'Bold' },
-  { key: '800', label: 'Extra Bold' },
-  { key: '900', label: 'Black' },
+  { key: '100', labelKey: 'thin' },
+  { key: '200', labelKey: 'extraLight' },
+  { key: '300', labelKey: 'light' },
+  { key: '400', labelKey: 'regular' },
+  { key: '500', labelKey: 'medium' },
+  { key: '600', labelKey: 'semiBold' },
+  { key: '700', labelKey: 'bold' },
+  { key: '800', labelKey: 'extraBold' },
+  { key: '900', labelKey: 'black' },
 ] as const;
 
 export type FontWeight = (typeof FONT_WEIGHTS)[number]['key'];
@@ -93,15 +97,24 @@ export const FONT_COLORS = [
 
 @Component({
   selector: 'app-opengraph-font-options',
-  imports: [FormsModule, NgStyle, NgClass],
+  imports: [FormsModule, NgStyle, NgClass, TranslatePipe],
   templateUrl: './opengraph-font-options.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './opengraph-font-options.component.scss',
 })
 export class OpengraphFontOptionsComponent {
+  private readonly i18n = inject(I18nService);
+
   readonly FONT_COLORS = FONT_COLORS;
-  readonly FONT_WEIGHT = FONT_WEIGHTS;
   readonly FONT_TYPES = FONT_TYPES;
+  readonly FONT_WEIGHT = computed(() =>
+    FONT_WEIGHTS.map((fontWeight) => ({
+      key: fontWeight.key,
+      label: this.i18n.t(
+        `opengraph-generator.fontOptions.weights.${fontWeight.labelKey}`,
+      ),
+    })),
+  );
 
   // readonly defaultFontOptions = input.required<OpenGraphTemplateFormInputFontOptions>();
   readonly onFontOptionsUpdated =

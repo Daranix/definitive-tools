@@ -14,7 +14,12 @@ import { map, switchMap, from } from 'rxjs';
 import { marked } from 'marked';
 import fm from 'front-matter';
 import { CommonModule } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
+import { LanguageSwitcherComponent } from '@/app/components/language-switcher/language-switcher.component';
+import { LocalizeUrlPipe } from '@/app/pipes/localize-url.pipe';
+import { I18nService } from '@/app/i18n/i18n.service';
+import { DEFAULT_LANGUAGE, type Language } from '@/app/i18n/languages';
 
 interface LegalMetadata {
   title: string;
@@ -25,11 +30,25 @@ interface LegalMetadata {
   [key: string]: unknown;
 }
 
+/** Request key of the legal document resource: document + active language. */
+interface LegalDocParams {
+  doc: string | undefined;
+  language: Language;
+}
+
 import { FooterComponent } from '../../components/footer/footer.component';
 
 @Component({
   selector: 'app-legal',
-  imports: [CommonModule, RouterLink, LucideIconComponent, FooterComponent],
+  imports: [
+    CommonModule,
+    RouterLink,
+    LucideIconComponent,
+    FooterComponent,
+    LanguageSwitcherComponent,
+    LocalizeUrlPipe,
+    TranslatePipe,
+  ],
   templateUrl: './legal.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './legal.component.scss',
@@ -39,23 +58,33 @@ export class LegalComponent {
   private sanitizer = inject(DomSanitizer);
   private http = inject(HttpClient);
   private metadataService = inject(MetadataService);
+  private readonly i18n = inject(I18nService);
 
   readonly doc = toSignal(
-    this.route.paramMap.pipe(map((params) => params.get('doc')!)),
+    this.route.paramMap.pipe(map((params) => params.get('doc') ?? undefined)),
   );
 
   readonly docResource = rxResource({
-    params: () => this.doc(),
-    stream: (params) => this.loadDoc(params),
+    // The language is part of the key so switching language re-fetches the
+    // translated document instead of keeping the previous one cached.
+    params: (): LegalDocParams => ({
+      doc: this.doc(),
+      language: this.i18n.language(),
+    }),
+    stream: ({ params }) => this.loadDoc(params),
   });
 
-  private loadDoc({ params: doc }: { params: string | null | undefined }) {
+  private loadDoc({ doc, language }: LegalDocParams) {
     if (!doc) throw new Error('No doc parameter provided');
     if (doc.endsWith('.md')) {
       throw new Error('Invalid document name (recursion guard)');
     }
+    const path =
+      language === DEFAULT_LANGUAGE
+        ? `/legal/${doc}.md`
+        : `/legal/${language}/${doc}.md`;
     return this.http
-      .get(`/legal/${doc}.md`, { responseType: 'text' })
+      .get(path, { responseType: 'text' })
       .pipe(
         switchMap((rawMarkdown) => from(this.parseDocContent(rawMarkdown))),
       );
@@ -103,19 +132,23 @@ export class LegalComponent {
 
   private updateLegalMetadata(): void {
     effect(() => {
+      // Keep the SEO metadata in sync with the active language, so switching
+      // language updates the title/description to the translated document.
+      this.i18n.language();
+
       const docValue = this.docResource.value();
       if (!docValue?.metadata) return;
 
       const meta = docValue.metadata;
-      const description =
-        meta.description ||
-        `${meta.title} - Definitive Tools. Free, secure, client-side online tools.`;
 
       this.metadataService.updateMetadata({
         title: meta.title,
-        description,
+        description:
+          meta.description ||
+          this.i18n.t('common.legal.defaultDescription', { title: meta.title }),
         keywords:
-          meta.keywords || `${meta.title}, definitive tools, open source`,
+          meta.keywords ||
+          this.i18n.t('common.legal.defaultKeywords', { title: meta.title }),
       });
     });
   }

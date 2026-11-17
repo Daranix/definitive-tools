@@ -5,15 +5,18 @@ import {
   OnDestroy,
   PLATFORM_ID,
   afterNextRender,
+  computed,
   effect,
   inject,
   signal,
   viewChild
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MetadataService } from '@/app/services/metadata.service';
 import { TopNavbarComponent } from '@/app/components/top-navbar/top-navbar.component';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
+import { I18nService } from '@/app/i18n/i18n.service';
 import { MadridZbeMapService } from './madrid-zbe-map.service';
 import { MapSearchComponent } from './components/map-search/map-search.component';
 import { LayerControlsComponent } from './components/layer-controls/layer-controls.component';
@@ -68,7 +71,8 @@ function createSvgImage(svg: string, width = 36, height = 36): Promise<HTMLImage
     LayerControlsComponent,
     ZoneLegendComponent,
     DetailDrawerComponent,
-    AccessCheckerComponent
+    AccessCheckerComponent,
+    TranslatePipe
   ],
   templateUrl: './madrid-zbe-map.component.html',
   styleUrl: './madrid-zbe-map.component.scss',
@@ -80,6 +84,7 @@ function createSvgImage(svg: string, width = 36, height = 36): Promise<HTMLImage
 export class MadridZbeMapComponent implements OnDestroy {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly metadataService = inject(MetadataService);
+  private readonly i18n = inject(I18nService);
   readonly service = inject(MadridZbeMapService);
 
   readonly mapContainer = viewChild<ElementRef<HTMLDivElement>>('mapContainer');
@@ -94,6 +99,12 @@ export class MadridZbeMapComponent implements OnDestroy {
 
   readonly isDisclaimerDismissed = signal<boolean>(false);
 
+  /** Resolves the error banner copy, which is stored as a translation key. */
+  readonly errorMessage = computed(() => {
+    const error = this.service.networkError();
+    return error ? this.i18n.t(error) : '';
+  });
+
   // Mobile Bottom Sheet Gesture state
   readonly isDrawerExpanded = signal<boolean>(false);
   private touchStartY = 0;
@@ -101,12 +112,10 @@ export class MadridZbeMapComponent implements OnDestroy {
   private isDragging = false;
 
   constructor() {
-    this.metadataService.updateMetadata({
-      title: 'Madrid 360 & ZBE Map - Zonas de Bajas Emisiones Interactivas',
-      description:
-        'Mapa interactivo de Madrid 360 y Zonas de Bajas Emisiones (ZBE Distrito Centro, Plaza Elíptica, M-30, cámaras de control OCR y simulador de etiquetas DGT).',
-      keywords:
-        'Madrid 360, ZBE Madrid, Madrid Central, Distrito Centro ZBEDEP, Plaza Eliptica ZBE, M-30 bajas emisiones, camaras ZBE Madrid, etiquetas DGT Madrid'
+    this.updateMetadata();
+    effect(() => {
+      this.i18n.language();
+      this.updateMetadata();
     });
 
     afterNextRender(async () => {
@@ -194,6 +203,14 @@ export class MadridZbeMapComponent implements OnDestroy {
       this.map.remove();
       this.map = null;
     }
+  }
+
+  private updateMetadata(): void {
+    this.metadataService.updateMetadata({
+      title: this.i18n.t('madrid-zbe-map.seo.title'),
+      description: this.i18n.t('madrid-zbe-map.seo.description'),
+      keywords: this.i18n.t('madrid-zbe-map.seo.keywords')
+    });
   }
 
   selectDesktopTab(tab: 'layers' | 'detail' | 'checker'): void {
@@ -410,7 +427,8 @@ export class MadridZbeMapComponent implements OnDestroy {
       });
     } catch (err) {
       console.error('Failed to initialize MapLibre GL:', err);
-      this.service.setError('No se pudo inicializar el motor gráfico del mapa.');
+      // The banner resolves this key through I18nService.
+      this.service.setError('madrid-zbe-map.errors.mapInit');
     }
   }
 

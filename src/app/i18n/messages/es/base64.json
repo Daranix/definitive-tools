@@ -1,0 +1,46 @@
+{
+  "title": "Codificador / Decodificador Base64",
+  "modes": {
+    "encode": "Codificar",
+    "decode": "Decodificar"
+  },
+  "form": {
+    "inputLabelEncode": "Texto a codificar",
+    "inputLabelDecode": "Base64 a decodificar",
+    "inputPlaceholderEncode": "Escribe el texto que quieres codificar en Base64...",
+    "inputPlaceholderDecode": "Escribe el texto Base64 que quieres decodificar...",
+    "outputLabelEncode": "Salida en Base64",
+    "outputLabelDecode": "Texto decodificado",
+    "outputPlaceholderEncode": "La salida en Base64 aparecerá aquí...",
+    "outputPlaceholderDecode": "El texto decodificado aparecerá aquí..."
+  },
+  "actions": {
+    "processEncode": "Codificar a Base64",
+    "processDecode": "Decodificar desde Base64",
+    "swap": "Intercambiar",
+    "copy": "Copiar al portapapeles"
+  },
+  "messages": {
+    "invalidInput": "Entrada Base64 no válida",
+    "nothingToCopy": "No hay nada que copiar.",
+    "copied": "¡Copiado al portapapeles!",
+    "copyFailed": "No se ha podido copiar al portapapeles."
+  },
+  "about": {
+    "title": "Acerca de la codificación Base64",
+    "whatIsTitle": "¿Qué es Base64?",
+    "whatIsDescription": "Base64 es un esquema de codificación de binario a texto que representa datos binarios como una cadena ASCII. Se usa habitualmente cuando hay que codificar datos binarios que deben almacenarse y transferirse por medios diseñados para trabajar con texto.",
+    "usesTitle": "Usos habituales",
+    "uses": {
+      "embedding": "Incrustar imágenes en HTML, CSS o JSON",
+      "xml": "Codificar datos binarios en XML",
+      "email": "Enviar datos binarios a través de sistemas de correo electrónico",
+      "storage": "Almacenar datos complejos en formatos de texto simples"
+    }
+  },
+  "seo": {
+    "title": "Conversor Base64",
+    "description": "Codifica texto a Base64 o decodifica Base64 a texto fácilmente. Ideal para transferir datos, incrustar imágenes o trabajar con APIs.",
+    "keywords": "base64, codificar, decodificar, conversor, texto, imagen, api, transferencia de datos, incrustación, imágenes"
+  }
+}

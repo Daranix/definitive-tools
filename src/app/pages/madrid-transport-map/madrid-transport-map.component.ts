@@ -5,13 +5,16 @@ import {
   OnDestroy,
   PLATFORM_ID,
   afterNextRender,
+  computed,
   effect,
   inject,
   signal,
   viewChild
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MetadataService } from '@/app/services/metadata.service';
+import { I18nService } from '@/app/i18n/i18n.service';
 import { TopNavbarComponent } from '@/app/components/top-navbar/top-navbar.component';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import { MadridTransportMapService } from './madrid-transport-map.service';
@@ -97,7 +100,8 @@ function createSvgImage(svg: string, width = 36, height = 36): Promise<HTMLImage
     MapSearchComponent,
     LayerControlsComponent,
     ZoneLegendComponent,
-    DetailDrawerComponent
+    DetailDrawerComponent,
+    TranslatePipe
   ],
   templateUrl: './madrid-transport-map.component.html',
   styleUrl: './madrid-transport-map.component.scss',
@@ -109,6 +113,7 @@ function createSvgImage(svg: string, width = 36, height = 36): Promise<HTMLImage
 export class MadridTransportMapComponent implements OnDestroy {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly metadataService = inject(MetadataService);
+  private readonly i18n = inject(I18nService);
   readonly service = inject(MadridTransportMapService);
 
   readonly mapContainer = viewChild<ElementRef<HTMLDivElement>>('mapContainer');
@@ -123,13 +128,17 @@ export class MadridTransportMapComponent implements OnDestroy {
   readonly isMapReady = signal<boolean>(false);
   readonly isDisclaimerDismissed = signal<boolean>(false);
 
+  /** Resolves the error banner copy, which may be stored as a translation key. */
+  readonly errorMessage = computed(() => {
+    const error = this.service.networkError();
+    return error ? this.i18n.t(error) : '';
+  });
+
   constructor() {
-    this.metadataService.updateMetadata({
-      title: 'Madrid Transport Map - Metro, Cercanías & Fare Zones',
-      description:
-        'Interactive transit network and CRTM fare zones map for Madrid. Explore Metro, Cercanías, EMT, Interurban buses and tariff zones A through E2.',
-      keywords:
-        'Madrid transport map, Metro Madrid, Cercanias Renfe, EMT Madrid, CRTM zones, abono transporte, fare zones'
+    this.updateMetadata();
+    effect(() => {
+      this.i18n.language();
+      this.updateMetadata();
     });
 
     afterNextRender(async () => {
@@ -427,7 +436,7 @@ export class MadridTransportMapComponent implements OnDestroy {
       });
     } catch (err) {
       console.error('Failed to initialize MapLibre GL:', err);
-      this.service.setError('Failed to initialize map graphics engine.');
+      this.service.setError('madrid-transport-map.errors.mapInit');
     }
   }
 
@@ -753,11 +762,9 @@ export class MadridTransportMapComponent implements OnDestroy {
       if (feat && feat.properties) {
         this.service.selectZone({
           code: feat.properties['code'],
-          name: feat.properties['name'],
           color: feat.properties['color'],
           monthlyPassPriceEur: Number(feat.properties['monthlyPassPriceEur']),
-          tenTripPriceEur: Number(feat.properties['tenTripPriceEur']),
-          coverageDescription: feat.properties['coverageDescription']
+          tenTripPriceEur: Number(feat.properties['tenTripPriceEur'])
         });
       }
     };
@@ -1224,6 +1231,14 @@ export class MadridTransportMapComponent implements OnDestroy {
 
   dismissDisclaimer(): void {
     this.isDisclaimerDismissed.set(true);
+  }
+
+  private updateMetadata(): void {
+    this.metadataService.updateMetadata({
+      title: this.i18n.t('madrid-transport-map.seo.title'),
+      description: this.i18n.t('madrid-transport-map.seo.description'),
+      keywords: this.i18n.t('madrid-transport-map.seo.keywords')
+    });
   }
 
   ngOnDestroy(): void {

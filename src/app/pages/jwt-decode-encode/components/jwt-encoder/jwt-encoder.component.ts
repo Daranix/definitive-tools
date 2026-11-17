@@ -11,17 +11,25 @@ import * as jose from 'jose';
 import { ToastService } from '@/app/services/toast.service';
 import { JsonPipe, NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
+import { I18nService } from '@/app/i18n/i18n.service';
 import { JwtHighlightComponent } from '../jwt-highlight/jwt-highlight.component';
 
 @Component({
   selector: 'app-jwt-encoder',
-  imports: [LucideIconComponent, FormsModule, JwtHighlightComponent],
+  imports: [
+    LucideIconComponent,
+    FormsModule,
+    JwtHighlightComponent,
+    TranslatePipe,
+  ],
   templateUrl: './jwt-encoder.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './jwt-encoder.component.scss',
 })
 export class JwtEncoderComponent {
   private readonly toastService = inject(ToastService);
+  private readonly i18n = inject(I18nService);
 
   readonly secret = model<string>();
   readonly header = model<string>();
@@ -66,7 +74,7 @@ export class JwtEncoderComponent {
 
     await navigator.clipboard.writeText(text);
     this.toastService.info({
-      message: 'Copied to clipboard',
+      message: this.i18n.t('jwt-decode-encode.shared.messages.copied'),
       position: 'bottom-center',
     });
   }
@@ -83,7 +91,9 @@ export class JwtEncoderComponent {
     if (!secret || !payload || !header) {
       return {
         error: true,
-        errorMessage: 'Please provide all required fields',
+        errorMessage: this.i18n.t(
+          'jwt-decode-encode.encoder.messages.missingFields',
+        ),
       };
     }
 

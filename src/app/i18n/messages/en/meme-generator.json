@@ -1,0 +1,61 @@
+{
+  "title": "Meme Generator",
+  "subtitle": "Select a template or upload your own, customize captions, drag to position them, and create the perfect meme instantly!",
+  "tips": {
+    "drag": "Click & drag or swipe text boxes to reposition them anywhere on the image."
+  },
+  "sections": {
+    "selectTemplate": "1. Select Template",
+    "customize": "2. Customize Meme"
+  },
+  "templatePicker": {
+    "uploadLabel": "Upload Custom Image Template",
+    "supports": "Supports PNG, JPG, WEBP",
+    "searchPlaceholder": "Search templates..."
+  },
+  "captions": {
+    "number": "Caption #{{ number }}",
+    "removeBox": "Remove Text Box",
+    "deleteCaption": "Delete Caption",
+    "textPlaceholder": "Enter caption text...",
+    "add": "Add Caption"
+  },
+  "actions": {
+    "download": "Download Meme"
+  },
+  "fields": {
+    "fontSize": "Font Size",
+    "fontFamily": "Font Family",
+    "textColor": "Text Color",
+    "outlineColor": "Outline Color",
+    "alignment": "Alignment",
+    "outlineWidth": "Outline Width",
+    "caps": "Caps",
+    "capsExample": "Aa"
+  },
+  "alignment": {
+    "left": "L",
+    "center": "C",
+    "right": "R"
+  },
+  "defaults": {
+    "topText": "TOP TEXT",
+    "bottomText": "BOTTOM TEXT",
+    "textBox": "TEXT BOX {{ number }}",
+    "newText": "NEW TEXT",
+    "customImage": "Custom Image"
+  },
+  "messages": {
+    "generating": "Generating meme...",
+    "downloaded": "Meme downloaded successfully!",
+    "failed": "Failed to generate meme. Please try again."
+  },
+  "files": {
+    "meme": "{{ slug }}-meme.jpg"
+  },
+  "seo": {
+    "title": "Meme Generator - Definitive Tools",
+    "description": "Create funny memes with custom text overlays, drag-and-drop captions, font styling, and popular templates.",
+    "keywords": "meme generator, meme maker, create meme, drag text meme, custom meme generator, free meme creator"
+  }
+}

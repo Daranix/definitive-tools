@@ -6,13 +6,13 @@
     <div class="text-center mb-8">
       <div class="inline-flex items-center gap-2 px-3 py-1 bg-indigo-50 border border-indigo-200/60 rounded-full text-indigo-700 text-xs font-semibold uppercase tracking-wider mb-3">
         <lucide-icon name="sparkles" class="w-3.5 h-3.5 text-indigo-600"></lucide-icon>
-        Local WebGPU, FFmpeg WASM & Speech API
+        {{ 'audio-speech-to-text.badge' | translate }}
       </div>
       <h1 data-testid="tool-title" class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-        Speech to Text & Media Transcriber
+        {{ 'audio-speech-to-text.title' | translate }}
       </h1>
       <p class="mt-2.5 max-w-2xl mx-auto text-base sm:text-lg text-slate-600">
-        Convert live speech, audio, and video files into accurate transcripts and timestamped JSON captions with 100% on-device processing.
+        {{ 'audio-speech-to-text.subtitle' | translate }}
       </p>
     </div>
 
@@ -38,7 +38,7 @@
           @if (recognitionApiList().length > 1) {
             <div>
               <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
-                Transcription Engine
+                {{ 'audio-speech-to-text.engine.label' | translate }}
               </label>
               <div class="w-full flex justify-center">
                 <app-select-button
@@ -54,7 +54,7 @@
           @if (recognitionApi() === 'whisper') {
             <div>
               <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
-                Media Source
+                {{ 'audio-speech-to-text.source.label' | translate }}
               </label>
               <div class="flex p-1 bg-slate-100 rounded-xl">
                 <button
@@ -67,7 +67,7 @@
                   class="flex-1 py-2 px-3 text-xs font-semibold rounded-lg transition flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <lucide-icon name="mic" class="w-3.5 h-3.5"></lucide-icon>
-                  Live Microphone
+                  {{ 'audio-speech-to-text.source.mic' | translate }}
                 </button>
                 <button
                   type="button"
@@ -79,7 +79,7 @@
                   class="flex-1 py-2 px-3 text-xs font-semibold rounded-lg transition flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <lucide-icon name="file-audio" class="w-3.5 h-3.5"></lucide-icon>
-                  Audio / Video File
+                  {{ 'audio-speech-to-text.source.file' | translate }}
                 </button>
               </div>
             </div>
@@ -89,12 +89,12 @@
           <div>
             <div class="flex items-center justify-between mb-2">
               <label for="language-select" class="block text-xs font-bold text-slate-500 uppercase tracking-wider">
-                Spoken Language
+                {{ 'audio-speech-to-text.language.label' | translate }}
               </label>
               @if (detectedLanguage()) {
                 <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
                   <lucide-icon name="sparkles" class="w-3 h-3 text-emerald-600"></lucide-icon>
-                  Detected: {{ detectedLanguage() | titlecase }}
+                  {{ 'audio-speech-to-text.language.detected' | translate }} {{ detectedLanguage() | titlecase }}
                 </span>
               }
             </div>
@@ -104,9 +104,9 @@
                 [(ngModel)]="language"
                 class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition shadow-2xs"
               >
-                @for (lang of WHISPER_LANGUAGES | keyvalue; track lang.key) {
-                  <option [value]="lang.key">
-                    {{ lang.value | titlecase }} @if (lang.key !== 'auto') { ({{ lang.key }}) }
+                @for (option of languageOptions(); track option.value) {
+                  <option [value]="option.value">
+                    {{ option.label }} @if (option.value !== 'auto') { ({{ option.value }}) }
                   </option>
                 }
               </select>
@@ -114,7 +114,7 @@
             @if (language() === 'auto') {
               <p class="mt-1.5 text-[11px] text-indigo-600 font-medium flex items-center gap-1">
                 <lucide-icon name="sparkles" class="w-3 h-3"></lucide-icon>
-                <span>Automatic language detection enabled via Whisper AI</span>
+                <span>{{ 'audio-speech-to-text.language.autoHint' | translate }}</span>
               </p>
             }
           </div>
@@ -130,7 +130,7 @@
                   <button
                     (click)="stopRecording()"
                     class="relative z-10 w-16 h-16 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-red-500/30 transition cursor-pointer"
-                    title="Stop Recording"
+                    [title]="'audio-speech-to-text.recorder.stop' | translate"
                   >
                     <lucide-icon name="stop-circle" class="w-8 h-8"></lucide-icon>
                   </button>
@@ -138,15 +138,15 @@
                 <div class="space-y-1">
                   <div class="flex items-center justify-center gap-2 text-sm font-bold text-red-600">
                     <span class="w-2.5 h-2.5 bg-red-600 rounded-full animate-pulse"></span>
-                    Listening & Transcribing...
+                    {{ 'audio-speech-to-text.recorder.listening' | translate }}
                   </div>
-                  <p class="text-xs text-slate-500">Speak clearly into your microphone</p>
+                  <p class="text-xs text-slate-500">{{ 'audio-speech-to-text.recorder.speakClearly' | translate }}</p>
                 </div>
                 <button
                   (click)="stopRecording()"
                   class="w-full py-2.5 px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl transition cursor-pointer"
                 >
-                  Stop Recording
+                  {{ 'audio-speech-to-text.recorder.stop' | translate }}
                 </button>
               } @else {
                 <!-- Idle State -->
@@ -158,15 +158,15 @@
                   >
                     @if (isloading()) {
                       <app-loading-spinner-small></app-loading-spinner-small>
-                      <span>Initializing Audio Engine...</span>
+                      <span>{{ 'audio-speech-to-text.recorder.initializing' | translate }}</span>
                     } @else {
                       <lucide-icon name="mic" class="w-5 h-5"></lucide-icon>
-                      <span>Start Live Recording</span>
+                      <span>{{ 'audio-speech-to-text.recorder.start' | translate }}</span>
                     }
                   </button>
                 </div>
                 <p class="text-xs text-slate-400">
-                  Microphone audio is processed entirely client-side.
+                  {{ 'audio-speech-to-text.recorder.privacy' | translate }}
                 </p>
               }
             </div>
@@ -185,7 +185,7 @@
                   ></app-drag-and-drop-file>
                 </div>
                 <div class="text-[11px] text-slate-400 text-center">
-                  Audio: MP3, WAV, OGG, FLAC, M4A, AAC, OPUS &bull; Video: MP4, WebM, MOV, MKV, AVI
+                  {{ 'audio-speech-to-text.file.audioFormats' | translate }} &bull; {{ 'audio-speech-to-text.file.videoFormats' | translate }}
                 </div>
               } @else {
                 <!-- File Selected Card -->
@@ -212,14 +212,14 @@
                           </p>
                           @if (isVideoFile(uploadedFile())) {
                             <span class="px-1.5 py-0.5 text-[9px] font-bold bg-purple-100 text-purple-700 rounded-md shrink-0">
-                              VIDEO
+                              {{ 'audio-speech-to-text.file.videoBadge' | translate }}
                             </span>
                           }
                         </div>
                         <p class="text-[11px] text-slate-500">
-                          {{ ((uploadedFile()?.size || 0) / (1024 * 1024)) | number: '1.2-2' }} MB
+                          {{ fileSizeMb() }} MB
                           @if (isVideoFile(uploadedFile())) {
-                            &bull; <span class="text-purple-600 font-medium">Auto audio extraction with FFmpeg</span>
+                            &bull; <span class="text-purple-600 font-medium">{{ 'audio-speech-to-text.file.autoExtraction' | translate }}</span>
                           }
                         </p>
                       </div>
@@ -228,7 +228,7 @@
                       (click)="clearFileUpload()"
                       [disabled]="isloading() || isConvertingVideo()"
                       class="p-1.5 text-slate-400 hover:text-red-600 rounded-lg hover:bg-slate-100 transition disabled:opacity-30 cursor-pointer"
-                      title="Remove file"
+                      [title]="'audio-speech-to-text.file.remove' | translate"
                     >
                       <lucide-icon name="trash-2" class="w-4 h-4"></lucide-icon>
                     </button>
@@ -243,7 +243,7 @@
                           <span class="truncate max-w-[220px]">{{ conversionStatus() }}</span>
                         </div>
                         @if (conversionProgress() > 0) {
-                          <span class="font-bold text-purple-700">{{ conversionProgress() }}%</span>
+                          <span class="font-bold text-purple-700">{{ conversionPercent() }}</span>
                         }
                       </div>
                       <div class="w-full bg-purple-200 rounded-full h-1.5 overflow-hidden">
@@ -263,13 +263,13 @@
                   >
                     @if (isConvertingVideo()) {
                       <app-loading-spinner-small></app-loading-spinner-small>
-                      <span>Extracting Audio Track with FFmpeg...</span>
+                      <span>{{ 'audio-speech-to-text.file.extracting' | translate }}</span>
                     } @else if (isloading()) {
                       <app-loading-spinner-small></app-loading-spinner-small>
-                      <span>Transcribing Audio...</span>
+                      <span>{{ 'audio-speech-to-text.file.transcribing' | translate }}</span>
                     } @else {
                       <lucide-icon name="play" class="w-4 h-4"></lucide-icon>
-                      <span>{{ isVideoFile(uploadedFile()) ? 'Extract Audio & Transcribe' : 'Transcribe Audio File' }}</span>
+                      <span>{{ (isVideoFile(uploadedFile()) ? 'audio-speech-to-text.file.extractAndTranscribe' : 'audio-speech-to-text.file.transcribeFile') | translate }}</span>
                     }
                   </button>
                 </div>
@@ -305,7 +305,7 @@
                 class="px-3 py-1.5 text-xs font-bold rounded-lg transition flex items-center gap-1.5 cursor-pointer"
               >
                 <lucide-icon name="file-text" class="w-3.5 h-3.5"></lucide-icon>
-                Plain Text
+                {{ 'audio-speech-to-text.tabs.text' | translate }}
               </button>
 
               <button
@@ -318,7 +318,7 @@
                 class="px-3 py-1.5 text-xs font-bold rounded-lg transition flex items-center gap-1.5 cursor-pointer"
               >
                 <lucide-icon name="code" class="w-3.5 h-3.5"></lucide-icon>
-                JSON Captions
+                {{ 'audio-speech-to-text.tabs.json' | translate }}
                 @if (hasCaptionsJson()) {
                   <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
                 }
@@ -332,14 +332,14 @@
                   (click)="copyToClipboard()"
                   [disabled]="!transcript()"
                   class="inline-flex items-center gap-1.5 py-1.5 px-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold text-xs rounded-xl shadow-2xs transition disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
-                  title="Copy plain transcript"
+                  [title]="'audio-speech-to-text.actions.copyPlainTitle' | translate"
                 >
                   @if (copiedText()) {
                     <lucide-icon name="check" class="w-3.5 h-3.5 text-emerald-600"></lucide-icon>
-                    <span class="text-emerald-700">Copied!</span>
+                    <span class="text-emerald-700">{{ 'audio-speech-to-text.actions.copied' | translate }}</span>
                   } @else {
                     <lucide-icon name="copy" class="w-3.5 h-3.5 text-slate-500"></lucide-icon>
-                    <span>Copy Text</span>
+                    <span>{{ 'audio-speech-to-text.actions.copyText' | translate }}</span>
                   }
                 </button>
 
@@ -347,7 +347,7 @@
                   (click)="downloadTranscript('txt')"
                   [disabled]="!transcript()"
                   class="inline-flex items-center gap-1.5 py-1.5 px-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold text-xs rounded-xl shadow-2xs transition disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
-                  title="Download as .txt"
+                  [title]="'audio-speech-to-text.actions.downloadTxtTitle' | translate"
                 >
                   <lucide-icon name="download" class="w-3.5 h-3.5 text-slate-500"></lucide-icon>
                   <span>.txt</span>
@@ -357,14 +357,14 @@
                   (click)="copyJsonToClipboard()"
                   [disabled]="!hasCaptionsJson()"
                   class="inline-flex items-center gap-1.5 py-1.5 px-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold text-xs rounded-xl shadow-2xs transition disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
-                  title="Copy JSON captions"
+                  [title]="'audio-speech-to-text.actions.copyJsonTitle' | translate"
                 >
                   @if (copiedJson()) {
                     <lucide-icon name="check" class="w-3.5 h-3.5 text-emerald-600"></lucide-icon>
-                    <span class="text-emerald-700">Copied JSON!</span>
+                    <span class="text-emerald-700">{{ 'audio-speech-to-text.actions.copiedJson' | translate }}</span>
                   } @else {
                     <lucide-icon name="copy" class="w-3.5 h-3.5 text-slate-500"></lucide-icon>
-                    <span>Copy JSON</span>
+                    <span>{{ 'audio-speech-to-text.actions.copyJson' | translate }}</span>
                   }
                 </button>
 
@@ -372,7 +372,7 @@
                   (click)="downloadTranscript('json')"
                   [disabled]="!hasCaptionsJson()"
                   class="inline-flex items-center gap-1.5 py-1.5 px-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold text-xs rounded-xl shadow-2xs transition disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
-                  title="Download as .json"
+                  [title]="'audio-speech-to-text.actions.downloadJsonTitle' | translate"
                 >
                   <lucide-icon name="download" class="w-3.5 h-3.5 text-slate-500"></lucide-icon>
                   <span>.json</span>
@@ -383,7 +383,7 @@
                 (click)="clearTranscript()"
                 [disabled]="!transcript()"
                 class="p-1.5 text-slate-400 hover:text-red-600 rounded-lg hover:bg-slate-100 transition disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
-                title="Clear transcript"
+                [title]="'audio-speech-to-text.actions.clearTitle' | translate"
               >
                 <lucide-icon name="trash-2" class="w-4 h-4"></lucide-icon>
               </button>
@@ -400,10 +400,10 @@
                   <lucide-icon name="speech" class="w-8 h-8"></lucide-icon>
                 </div>
                 <h3 class="text-sm font-bold text-slate-700 mb-1">
-                  Ready to Transcribe
+                  {{ 'audio-speech-to-text.empty.title' | translate }}
                 </h3>
                 <p class="text-xs text-slate-500 max-w-sm">
-                  Click 'Start Live Recording' or upload an audio/video file. Your transcribed text and timestamped JSON captions will appear here in real time.
+                  {{ 'audio-speech-to-text.empty.description' | translate }}
                 </p>
               </div>
             }
@@ -418,8 +418,8 @@
                   <span class="w-2 h-8 bg-indigo-600 rounded-full animate-bounce [animation-delay:0.45s]"></span>
                   <span class="w-2 h-5 bg-indigo-500 rounded-full animate-bounce [animation-delay:0.6s]"></span>
                 </div>
-                <p class="text-xs font-bold text-indigo-900">Listening to microphone...</p>
-                <p class="text-[11px] text-slate-500">Audio will be decoded shortly</p>
+                <p class="text-xs font-bold text-indigo-900">{{ 'audio-speech-to-text.recorder.listeningToMic' | translate }}</p>
+                <p class="text-[11px] text-slate-500">{{ 'audio-speech-to-text.recorder.decoding' | translate }}</p>
               </div>
             }
 
@@ -430,7 +430,7 @@
                   id="transcript-text"
                   [(ngModel)]="transcript"
                   class="flex-1 w-full min-h-[320px] p-4 bg-slate-50/50 border border-slate-200 rounded-xl text-slate-800 text-sm leading-relaxed focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 resize-none font-sans"
-                  placeholder="Transcribed text will appear here..."
+                  [placeholder]="'audio-speech-to-text.empty.placeholder' | translate"
                 ></textarea>
               </div>
             }
@@ -445,9 +445,9 @@
                 } @else {
                   <div class="flex-1 flex flex-col items-center justify-center text-center p-8 bg-slate-50 border border-slate-200 rounded-xl min-h-[300px] space-y-2">
                     <lucide-icon name="code" class="w-8 h-8 text-slate-400"></lucide-icon>
-                    <p class="text-xs font-bold text-slate-700">JSON Captions are available with Whisper AI</p>
+                    <p class="text-xs font-bold text-slate-700">{{ 'audio-speech-to-text.empty.jsonTitle' | translate }}</p>
                     <p class="text-[11px] text-slate-500 max-w-sm">
-                      Switch the engine to Whisper AI to generate structured timestamped caption segments.
+                      {{ 'audio-speech-to-text.empty.jsonDescription' | translate }}
                     </p>
                   </div>
                 }
@@ -460,18 +460,18 @@
           @if (transcript()) {
             <div class="px-6 py-3 bg-slate-50 border-t border-slate-100 flex flex-wrap items-center justify-between text-xs text-slate-500 font-medium">
               <div class="flex items-center gap-4">
-                <span><strong>{{ stats().words }}</strong> words</span>
-                <span><strong>{{ stats().characters }}</strong> characters</span>
+                <span><strong>{{ wordCount() }}</strong> {{ 'audio-speech-to-text.stats.words' | translate }}</span>
+                <span><strong>{{ characterCount() }}</strong> {{ 'audio-speech-to-text.stats.characters' | translate }}</span>
                 @if (stats().chunks > 0) {
-                  <span><strong>{{ stats().chunks }}</strong> caption segments</span>
+                  <span><strong>{{ chunkCount() }}</strong> {{ 'audio-speech-to-text.stats.chunkSegments' | translate }}</span>
                 }
                 @if (detectedLanguage()) {
-                  <span class="text-emerald-700 font-semibold">Language: {{ detectedLanguage() | titlecase }}</span>
+                  <span class="text-emerald-700 font-semibold">{{ 'audio-speech-to-text.stats.language' | translate }} {{ detectedLanguage() | titlecase }}</span>
                 }
               </div>
               <div class="flex items-center gap-1.5 text-indigo-700 font-semibold text-[11px]">
                 <lucide-icon name="sparkles" class="w-3 h-3 text-indigo-600"></lucide-icon>
-                <span>{{ recognitionApi() === 'whisper' ? 'Whisper WebGPU AI' : 'Browser Speech Recognition' }}</span>
+                <span>{{ (recognitionApi() === 'whisper' ? 'audio-speech-to-text.engine.whisperFooter' : 'audio-speech-to-text.engine.browserFooter') | translate }}</span>
               </div>
             </div>
           }
@@ -487,9 +487,9 @@
         <div class="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl w-fit">
           <lucide-icon name="sparkles" class="w-5 h-5"></lucide-icon>
         </div>
-        <h3 class="font-bold text-slate-900 text-sm">Whisper AI (WebGPU)</h3>
+        <h3 class="font-bold text-slate-900 text-sm">{{ 'audio-speech-to-text.about.whisperTitle' | translate }}</h3>
         <p class="text-xs text-slate-600 leading-relaxed">
-          Executes transformer neural networks directly in your browser using hardware-accelerated WebGPU for robust multi-language transcription without cloud costs.
+          {{ 'audio-speech-to-text.about.whisperDescription' | translate }}
         </p>
       </div>
 
@@ -497,9 +497,9 @@
         <div class="p-2.5 bg-purple-50 text-purple-600 rounded-xl w-fit">
           <lucide-icon name="video" class="w-5 h-5"></lucide-icon>
         </div>
-        <h3 class="font-bold text-slate-900 text-sm">Video & Audio Processing (FFmpeg)</h3>
+        <h3 class="font-bold text-slate-900 text-sm">{{ 'audio-speech-to-text.about.ffmpegTitle' | translate }}</h3>
         <p class="text-xs text-slate-600 leading-relaxed">
-          Supports video uploads (MP4, WebM, MOV, MKV). Audio tracks are extracted and resampled client-side using FFmpeg WebAssembly before AI inference.
+          {{ 'audio-speech-to-text.about.ffmpegDescription' | translate }}
         </p>
       </div>
 
@@ -507,9 +507,9 @@
         <div class="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl w-fit">
           <lucide-icon name="lock-keyhole-open" class="w-5 h-5"></lucide-icon>
         </div>
-        <h3 class="font-bold text-slate-900 text-sm">100% Privacy & Zero Uploads</h3>
+        <h3 class="font-bold text-slate-900 text-sm">{{ 'audio-speech-to-text.about.privacyTitle' | translate }}</h3>
         <p class="text-xs text-slate-600 leading-relaxed">
-          Your voice, video, and audio files never leave your device. All machine learning inference and video demuxing happen locally in your browser sandbox.
+          {{ 'audio-speech-to-text.about.privacyDescription' | translate }}
         </p>
       </div>
     </div>

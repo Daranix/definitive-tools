@@ -28,16 +28,18 @@ import {
   ValidationErrors,
 } from '@angular/forms';
 import { NgClass } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { FileSizePipe } from '@app/pipes/file-size.pipe';
 import { ToastService } from '@app/services/toast.service';
+import { I18nService } from '@app/i18n/i18n.service';
 import { formatBytes } from '@app/utils/functions';
 
 @Component({
   selector: 'app-drag-and-drop-file',
   templateUrl: './drag-and-drop-file.component.html',
   styleUrls: ['./drag-and-drop-file.component.scss'],
-  imports: [NgClass, FileSizePipe],
+  imports: [NgClass, FileSizePipe, TranslatePipe],
   changeDetection: ChangeDetectionStrategy.Eager,
   providers: [
     {
@@ -57,6 +59,7 @@ export class DragAndDropFileComponent
   private readonly fileUploadInput =
     viewChild<ElementRef<HTMLInputElement>>('fileUploadInput');
   private readonly toastService = inject(ToastService);
+  private readonly i18n = inject(I18nService);
   readonly onFileChange = output<File | undefined>();
   private readonly injector = inject(Injector);
   private readonly renderer2 = inject(Renderer2);
@@ -69,8 +72,9 @@ export class DragAndDropFileComponent
   readonly hover = signal(false);
   readonly disabled = signal(false);
 
+  /** Validation message per Angular error key, resolved for the active language. */
   private readonly errorMessages: Record<string, string> = {
-    required: 'Field is required',
+    required: 'common.components.dragDrop.required',
   };
 
   onChange = (value?: File) => {
@@ -133,7 +137,9 @@ export class DragAndDropFileComponent
 
     if (this.maxFileSize() && file.size > this.maxFileSize()!) {
       this.toastService.error({
-        message: `The file exceeds the maximun size limit ${formatBytes(this.maxFileSize()!)}`,
+        message: this.i18n.t('common.components.dragDrop.fileTooLarge', {
+          size: formatBytes(this.maxFileSize()!),
+        }),
       });
       return;
     }
@@ -141,7 +147,9 @@ export class DragAndDropFileComponent
     const ext = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
     if (this.validExtensions() && !this.validExtensions()!.includes(ext)) {
       this.toastService.error({
-        message: `The file type is not supported. Only ${this.validExtensions()?.join(', ')} are allowed.`,
+        message: this.i18n.t('common.components.dragDrop.invalidExtension', {
+          extensions: this.validExtensions()?.join(', '),
+        }),
       });
       return;
     }
@@ -191,7 +199,10 @@ export class DragAndDropFileComponent
     }
 
     const keys = Object.keys(errors);
-    return keys.map((v) => this.errorMessages[v] || undefined);
+    return keys.map((v) => {
+      const key = this.errorMessages[v];
+      return key ? this.i18n.t(key) : undefined;
+    });
   }
 
   setProperty(key: string, value: any): void {

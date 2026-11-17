@@ -1,0 +1,46 @@
+{
+  "title": "Base64 Encoder/Decoder",
+  "modes": {
+    "encode": "Encode",
+    "decode": "Decode"
+  },
+  "form": {
+    "inputLabelEncode": "Text to Encode",
+    "inputLabelDecode": "Base64 to Decode",
+    "inputPlaceholderEncode": "Enter text to encode as Base64...",
+    "inputPlaceholderDecode": "Enter Base64 to decode...",
+    "outputLabelEncode": "Base64 Output",
+    "outputLabelDecode": "Decoded Text",
+    "outputPlaceholderEncode": "Base64 output will appear here...",
+    "outputPlaceholderDecode": "Decoded text will appear here..."
+  },
+  "actions": {
+    "processEncode": "Encode to Base64",
+    "processDecode": "Decode from Base64",
+    "swap": "Swap",
+    "copy": "Copy to Clipboard"
+  },
+  "messages": {
+    "invalidInput": "Invalid Base64 input",
+    "nothingToCopy": "Nothing to copy!",
+    "copied": "Copied to clipboard!",
+    "copyFailed": "Failed to copy to clipboard."
+  },
+  "about": {
+    "title": "About Base64 Encoding",
+    "whatIsTitle": "What is Base64?",
+    "whatIsDescription": "Base64 is a binary-to-text encoding scheme that represents binary data in an ASCII string format. It's commonly used when there's a need to encode binary data that needs to be stored and transferred over media that are designed to deal with text.",
+    "usesTitle": "Common Uses",
+    "uses": {
+      "embedding": "Embedding images in HTML, CSS, or JSON",
+      "xml": "Encoding binary data in XML",
+      "email": "Sending binary data through email systems",
+      "storage": "Storing complex data in simple text formats"
+    }
+  },
+  "seo": {
+    "title": "Base64 Converter",
+    "description": "Easily encode text to Base64 or decode Base64 to text. Perfect for data transfer, embedding images, or working with APIs.",
+    "keywords": "base64, encode, decode, converter, text, image, api, data transfer, embedding, images, api, data transfer, embedding, images"
+  }
+}

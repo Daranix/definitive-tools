@@ -1,0 +1,130 @@
+{
+  "hero": {
+    "badge": "100 % en tu navegador y seguro",
+    "title": "Lector y escáner de códigos QR",
+    "subtitle": "Escanea códigos QR con la cámara en tiempo real o sube y pega una imagen para descodificar su contenido al instante."
+  },
+  "modes": {
+    "file": "Subir / pegar imagen",
+    "camera": "Escanear con la cámara"
+  },
+  "camera": {
+    "stopped": "La cámara está detenida",
+    "start": "Iniciar cámara",
+    "unavailable": "Cámara no disponible",
+    "tryAgain": "Intentar de nuevo",
+    "switchToFile": "Cambiar a subir un archivo",
+    "instructions": "Apunta la cámara a un código QR y se escaneará automáticamente.",
+    "toggleFlashlight": "Activar o desactivar el flash",
+    "switchCamera": "Cambiar de cámara (frontal/trasera)",
+    "stop": "Detener cámara",
+    "scanFileName": "Escaneo-cámara-{{ time }}",
+    "notSupported": "Tu navegador o tu entorno no admiten el acceso a la cámara.",
+    "permissionDenied": "Se ha denegado el permiso de cámara. Permite el acceso a la cámara en la configuración de tu navegador.",
+    "notFound": "No se ha encontrado ninguna cámara en este sistema.",
+    "unknownError": "Error desconocido",
+    "unableToAccess": "No se ha podido acceder a la cámara: {{ error }}"
+  },
+  "upload": {
+    "label": "Sube una imagen con un código QR",
+    "formats": "Formatos: PNG, JPG, WEBP, GIF, SVG, BMP (máx. 10 MB)",
+    "pasteHint": "para pegar una captura",
+    "samplesTitle": "O prueba ahora mismo con un código QR de ejemplo",
+    "pastedImageName": "Imagen-pegada-{{ timestamp }}",
+    "samples": {
+      "url": "URL de un sitio web",
+      "wifi": "Red Wi-Fi",
+      "vcard": "Contacto (vCard)",
+      "json": "JSON de ejemplo"
+    },
+    "sampleFileNames": {
+      "url": "muestra-web-qr.png",
+      "wifi": "muestra-wifi-qr.png",
+      "vcard": "muestra-vcard-qr.png",
+      "json": "muestra-json-qr.png"
+    }
+  },
+  "result": {
+    "scanAgain": "Escanear otra vez",
+    "scannedImage": "Imagen escaneada",
+    "located": "Código QR localizado",
+    "scanning": "Escaneando el código QR...",
+    "overlayHint": "La zona del código QR detectada aparece marcada con un recuadro índigo.",
+    "characters": "{{ count }} caracteres",
+    "copyAll": "Copiar todo",
+    "copied": "¡Copiado!",
+    "decodedContent": "Contenido descodificado",
+    "readDirectly": "Leído directamente de la imagen",
+    "openWebsite": "Abrir sitio web",
+    "destinationWebsite": "Sitio web de destino",
+    "copyLink": "Copiar enlace"
+  },
+  "wifi": {
+    "title": "Credenciales de la red Wi-Fi",
+    "ssid": "Nombre de la red (SSID)",
+    "password": "Contraseña",
+    "open": "Ninguna (abierta)",
+    "security": "Tipo de seguridad",
+    "hidden": "Red oculta",
+    "yes": "Sí",
+    "no": "No",
+    "copySsid": "Copiar SSID",
+    "copyPassword": "Copiar contraseña"
+  },
+  "vcard": {
+    "contactFallback": "Contacto",
+    "fileNamePrefix": "contacto",
+    "save": "Guardar .vcf",
+    "phone": "Teléfono",
+    "email": "Correo electrónico",
+    "website": "Sitio web",
+    "address": "Dirección"
+  },
+  "email": {
+    "title": "Enviar correo electrónico",
+    "openApp": "Abrir aplicación de correo",
+    "to": "Para:",
+    "subject": "Asunto:",
+    "body": "Cuerpo:"
+  },
+  "geo": {
+    "coordinates": "Coordenadas: {{ latitude }}, {{ longitude }}",
+    "googleMaps": "Google Maps"
+  },
+  "noQr": {
+    "title": "No se ha detectado ningún código QR",
+    "description": "Hemos analizado esta imagen con detectores de códigos de barras nativos y algoritmos de imagen exhaustivos, pero no hemos podido detectar ningún código QR legible.",
+    "tipsTitle": "Consejos para escanear correctamente:",
+    "tip1": "Asegúrate de que los 3 cuadrados grandes de localización de las esquinas se vean bien y no estén cortados.",
+    "tip2": "Evita los reflejos fuertes, las sombras intensas y el desenfoque acusado.",
+    "tip3": "Recorta la imagen más cerca del código QR si ocupa una parte pequeña de una foto grande.",
+    "tip4": "Asegúrate de que haya suficiente contraste entre los patrones oscuros y claros.",
+    "trySample": "Probar un código QR de ejemplo"
+  },
+  "types": {
+    "url": "URL de un sitio web",
+    "wifi": "Wi-Fi",
+    "vcard": "Contacto (vCard)",
+    "email": "Correo electrónico",
+    "phone": "Teléfono",
+    "sms": "SMS",
+    "geo": "Ubicación",
+    "json": "Datos JSON",
+    "text": "Texto sin formato"
+  },
+  "toasts": {
+    "clipboardImage": "Imagen cargada desde el portapapeles",
+    "scanned": "Código QR escaneado: {{ type }}",
+    "detected": "Código QR detectado: {{ type }}",
+    "imageLoadFailed": "No se ha podido cargar la imagen.",
+    "readFileFailed": "Error al leer el archivo.",
+    "copied": "¡Contenido copiado al portapapeles!",
+    "vcardDownloaded": "Contacto .vcf descargado",
+    "sampleFailed": "No se ha podido cargar el código QR de ejemplo."
+  },
+  "seo": {
+    "title": "Lector y escáner de códigos QR - Escanea con la cámara o una imagen",
+    "description": "Sube, arrastra, pega desde el portapapeles o usa la cámara en tiempo real para escanear, descodificar y ver códigos QR en pantalla.",
+    "keywords": "lector de códigos qr, escáner de códigos qr, cámara qr, escáner qr con cámara, escanear código qr online, descodificar código qr, lector de qr web"
+  }
+}

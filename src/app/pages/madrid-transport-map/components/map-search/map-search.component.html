@@ -5,17 +5,17 @@
     <input
       #searchInput
       type="text"
-      placeholder="Search stations, stops, or lines (e.g. Sol, Atocha, C-5, L1)..."
+      [placeholder]="'madrid-transport-map.search.placeholder' | translate"
       [value]="service.searchQuery()"
       (input)="onInput($event)"
-      aria-label="Search Madrid transit stations and lines"
+      [attr.aria-label]="'madrid-transport-map.search.ariaLabel' | translate"
       class="w-full bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-hidden"
     />
     @if (service.searchQuery()) {
       <button
         (click)="clearSearch()"
         type="button"
-        aria-label="Clear search query"
+        [attr.aria-label]="'madrid-transport-map.search.clear' | translate"
         class="p-1 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors ml-1.5 shrink-0"
       >
         <lucide-icon name="x" class="w-4 h-4"></lucide-icon>
@@ -61,7 +61,7 @@
             <!-- Lines and Network -->
             <div class="flex items-center gap-1.5 mt-1 flex-wrap">
               <span class="text-xs text-slate-500 font-medium">
-                {{ networkMetas[item.network]?.shortName }}
+                {{ networkShortNames()[item.network] }}
               </span>
               <span class="text-slate-300 text-xs">•</span>
               @for (line of item.lines.slice(0, 5); track line) {
@@ -71,7 +71,7 @@
               }
               @if (item.lines.length > 5) {
                 <span class="text-[10px] text-slate-400 font-medium">
-                  +{{ item.lines.length - 5 }}
+                  +{{ formatCount(item.lines.length - 5) }}
                 </span>
               }
             </div>
@@ -80,8 +80,8 @@
       } @empty {
         <div class="px-4 py-6 text-center text-slate-500">
           <lucide-icon name="circle-off" class="w-8 h-8 mx-auto text-slate-300 mb-2"></lucide-icon>
-          <p class="text-sm font-medium text-slate-700">No matching stations found</p>
-          <p class="text-xs text-slate-400 mt-0.5">Try searching for a different station, stop, or line number</p>
+          <p class="text-sm font-medium text-slate-700">{{ 'madrid-transport-map.search.noResultsTitle' | translate }}</p>
+          <p class="text-xs text-slate-400 mt-0.5">{{ 'madrid-transport-map.search.noResultsHint' | translate }}</p>
         </div>
       }
     </div>

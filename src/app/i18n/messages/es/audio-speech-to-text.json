@@ -1,0 +1,103 @@
+{
+  "seo": {
+    "title": "Voz a texto y transcripción de audio y vídeo",
+    "description": "Convierte palabras habladas y archivos de audio y vídeo (MP4, WebM, MOV) en texto preciso y subtítulos JSON con marcas de tiempo, localmente en tu navegador, con Whisper WebGPU AI o el reconocimiento de voz del navegador."
+  },
+  "title": "Voz a texto y transcripción multimedia",
+  "badge": "WebGPU, FFmpeg WASM y API de voz locales",
+  "subtitle": "Convierte voz en directo y archivos de audio y vídeo en transcripciones precisas y subtítulos JSON con marcas de tiempo, con un 100 % de procesamiento en tu dispositivo.",
+  "engine": {
+    "label": "Motor de transcripción",
+    "whisper": "Whisper AI",
+    "browser": "API del navegador",
+    "whisperFooter": "Whisper AI con WebGPU",
+    "browserFooter": "Reconocimiento de voz del navegador"
+  },
+  "source": {
+    "label": "Origen del contenido",
+    "mic": "Micrófono en directo",
+    "file": "Archivo de audio o vídeo"
+  },
+  "language": {
+    "label": "Idioma hablado",
+    "auto": "Detectar el idioma automáticamente",
+    "detected": "Detectado:",
+    "autoHint": "Detección automática del idioma activada con Whisper AI"
+  },
+  "recorder": {
+    "stop": "Detener la grabación",
+    "listening": "Escuchando y transcribiendo...",
+    "speakClearly": "Habla claro y cerca del micrófono",
+    "initializing": "Iniciando el motor de audio...",
+    "start": "Iniciar grabación en directo",
+    "privacy": "El audio del micrófono se procesa por completo en el cliente.",
+    "listeningToMic": "Escuchando el micrófono...",
+    "decoding": "El audio se decodificará en breve"
+  },
+  "file": {
+    "audioFormats": "Audio: MP3, WAV, OGG, FLAC, M4A, AAC, OPUS",
+    "videoFormats": "Vídeo: MP4, WebM, MOV, MKV, AVI",
+    "videoBadge": "VÍDEO",
+    "autoExtraction": "Extracción automática del audio con FFmpeg",
+    "remove": "Quitar el archivo",
+    "extracting": "Extrayendo la pista de audio con FFmpeg...",
+    "transcribing": "Transcribiendo el audio...",
+    "extractAndTranscribe": "Extraer el audio y transcribir",
+    "transcribeFile": "Transcribir el archivo de audio"
+  },
+  "tabs": {
+    "text": "Texto plano",
+    "json": "Subtítulos JSON"
+  },
+  "actions": {
+    "copyText": "Copiar texto",
+    "copied": "¡Copiado!",
+    "copyPlainTitle": "Copiar la transcripción en texto plano",
+    "downloadTxtTitle": "Descargar como .txt",
+    "copyJson": "Copiar JSON",
+    "copiedJson": "¡JSON copiado!",
+    "copyJsonTitle": "Copiar los subtítulos JSON",
+    "downloadJsonTitle": "Descargar como .json",
+    "clearTitle": "Borrar la transcripción"
+  },
+  "empty": {
+    "title": "Todo listo para transcribir",
+    "description": "Haz clic en «Iniciar grabación en directo» o sube un archivo de audio o vídeo. El texto transcrito y los subtítulos JSON con marcas de tiempo aparecerán aquí en tiempo real.",
+    "placeholder": "El texto transcrito aparecerá aquí...",
+    "jsonTitle": "Los subtítulos JSON están disponibles con Whisper AI",
+    "jsonDescription": "Cambia el motor a Whisper AI para generar segmentos de subtítulos estructurados con marcas de tiempo."
+  },
+  "stats": {
+    "words": "palabras",
+    "characters": "caracteres",
+    "chunkSegments": "segmentos de subtítulos",
+    "language": "Idioma:"
+  },
+  "fileConversion": {
+    "loadingCore": "Cargando el núcleo FFmpeg WASM...",
+    "initializing": "Iniciando el motor de extracción de vídeo...",
+    "reading": "Leyendo el archivo de vídeo en memoria...",
+    "extracting": "Extrayendo y convirtiendo la pista de audio con FFmpeg...",
+    "finalizing": "Finalizando el flujo de audio...",
+    "extracted": "¡Audio extraído correctamente!"
+  },
+  "errors": {
+    "micAccess": "No se ha podido acceder al micrófono. Comprueba que has concedido los permisos de micrófono.",
+    "getUserMediaUnsupported": "Tu navegador no admite getUserMedia.",
+    "browserApiUnsupported": "Este navegador no admite la API de reconocimiento de voz.",
+    "generic": "Se ha producido un error al acceder al micrófono o al iniciar el reconocimiento de voz.",
+    "whisperFile": "Se ha producido un error al procesar el archivo multimedia con Whisper."
+  },
+  "about": {
+    "whisperTitle": "Whisper AI (WebGPU)",
+    "whisperDescription": "Ejecuta redes neuronales transformer directamente en tu navegador con la aceleración por hardware de WebGPU para transcribir en varios idiomas sin depender de la nube.",
+    "ffmpegTitle": "Procesamiento de vídeo y audio (FFmpeg)",
+    "ffmpegDescription": "Admite la subida de vídeos (MP4, WebM, MOV, MKV). Las pistas de audio se extraen y se remuestrean en el cliente con FFmpeg WebAssembly antes de la inferencia de la IA.",
+    "privacyTitle": "100 % de privacidad y cero subidas",
+    "privacyDescription": "Tu voz y tus archivos de vídeo y audio nunca salen de tu dispositivo. Toda la inferencia de machine learning y el demuxing de vídeo se realizan localmente en el entorno aislado del navegador."
+  },
+  "downloads": {
+    "transcriptFileName": "transcripcion.txt",
+    "captionsFileName": "subtitulos.json"
+  }
+}

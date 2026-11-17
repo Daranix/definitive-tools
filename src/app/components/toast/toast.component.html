@@ -30,7 +30,7 @@
         </div>
 
         <!-- Close Button -->
-        <button type="button" class="toast-close-btn" (click)="removeToast(toast.id)" aria-label="Close toast">
+        <button type="button" class="toast-close-btn" (click)="removeToast(toast.id)" [attr.aria-label]="'common.components.closeToast' | translate">
           <svg class="toast-close-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>

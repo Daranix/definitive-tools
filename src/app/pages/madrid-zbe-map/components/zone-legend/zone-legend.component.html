@@ -3,14 +3,14 @@
   <div class="w-full space-y-4 pt-1">
     <div class="flex items-center justify-between pb-1">
       <span class="text-xs font-bold text-slate-700 uppercase tracking-wider">
-        Zonas de Bajas Emisiones
+        {{ 'madrid-zbe-map.legend.titleEmbedded' | translate }}
       </span>
-      <span class="text-[11px] text-slate-500 font-medium">{{ zonesList.length }} zonas activas</span>
+      <span class="text-[11px] text-slate-500 font-medium">{{ 'madrid-zbe-map.legend.countEmbedded' | translate: { count: i18n.formatNumber(zonesList.length) } }}</span>
     </div>
 
     <!-- Madrid Capital -->
     <div class="space-y-2">
-      <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block px-0.5">Madrid Capital</span>
+      <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block px-0.5">{{ 'madrid-zbe-map.layers.madridCapital' | translate }}</span>
       @for (zone of madridZones(); track zone.id) {
         <button
           type="button"
@@ -31,7 +31,7 @@
                 [style.backgroundColor]="zone.color"
               ></span>
               <span class="text-xs font-bold text-slate-800 group-hover:text-emerald-700 transition-colors">
-                {{ zone.shortName }}
+                {{ 'madrid-zbe-map.zones.' + zone.id + '.shortName' | translate }}
               </span>
             </div>
             <span
@@ -39,17 +39,17 @@
               [style.backgroundColor]="zone.color + '20'"
               [style.color]="zone.color"
             >
-              {{ zone.restrictionLevel }}
+              {{ 'madrid-zbe-map.zones.' + zone.id + '.restrictionLevel' | translate }}
             </span>
           </div>
 
           <p class="text-[11px] text-slate-600 line-clamp-2 leading-relaxed">
-            {{ zone.description }}
+            {{ 'madrid-zbe-map.zones.' + zone.id + '.description' | translate }}
           </p>
 
           <div class="flex items-center justify-between text-[10px] text-slate-500 pt-1 border-t border-slate-100">
-            <span>Superficie: <strong>{{ zone.areaKm2 }} km²</strong></span>
-            <span>Multa: <strong class="text-red-600">{{ zone.sanctionEur }} €</strong></span>
+            <span>{{ 'madrid-zbe-map.legend.surfaceLabel' | translate }} <strong>{{ 'madrid-zbe-map.legend.area' | translate: { value: i18n.formatNumber(zone.areaKm2) } }}</strong></span>
+            <span>{{ 'madrid-zbe-map.legend.fineLabel' | translate }} <strong class="text-red-600">{{ i18n.formatCurrency(zone.sanctionEur) }}</strong></span>
           </div>
         </button>
       }
@@ -57,7 +57,7 @@
 
     <!-- Corona Metropolitana -->
     <div class="space-y-2 pt-1">
-      <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block px-0.5">Corona Metropolitana</span>
+      <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block px-0.5">{{ 'madrid-zbe-map.layers.metropolitanRing' | translate }}</span>
       @for (zone of metropolitanZones(); track zone.id) {
         <button
           type="button"
@@ -78,7 +78,7 @@
                 [style.backgroundColor]="zone.color"
               ></span>
               <span class="text-xs font-bold text-slate-800 group-hover:text-emerald-700 transition-colors">
-                {{ zone.shortName }}
+                {{ 'madrid-zbe-map.zones.' + zone.id + '.shortName' | translate }}
               </span>
             </div>
             <span
@@ -86,17 +86,17 @@
               [style.backgroundColor]="zone.color + '20'"
               [style.color]="zone.color"
             >
-              {{ zone.restrictionLevel }}
+              {{ 'madrid-zbe-map.zones.' + zone.id + '.restrictionLevel' | translate }}
             </span>
           </div>
 
           <p class="text-[11px] text-slate-600 line-clamp-2 leading-relaxed">
-            {{ zone.description }}
+            {{ 'madrid-zbe-map.zones.' + zone.id + '.description' | translate }}
           </p>
 
           <div class="flex items-center justify-between text-[10px] text-slate-500 pt-1 border-t border-slate-100">
-            <span>Superficie: <strong>{{ zone.areaKm2 }} km²</strong></span>
-            <span>Multa: <strong class="text-red-600">{{ zone.sanctionEur }} €</strong></span>
+            <span>{{ 'madrid-zbe-map.legend.surfaceLabel' | translate }} <strong>{{ 'madrid-zbe-map.legend.area' | translate: { value: i18n.formatNumber(zone.areaKm2) } }}</strong></span>
+            <span>{{ 'madrid-zbe-map.legend.fineLabel' | translate }} <strong class="text-red-600">{{ i18n.formatCurrency(zone.sanctionEur) }}</strong></span>
           </div>
         </button>
       }
@@ -104,7 +104,7 @@
 
     <div class="text-[11px] text-slate-500 bg-slate-50 p-2.5 rounded-xl border border-slate-200 flex items-start gap-2">
       <lucide-icon name="info" class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5"></lucide-icon>
-      <span>Toca una zona para enfocar el mapa e inspeccionar las restricciones completas por etiqueta DGT.</span>
+      <span>{{ 'madrid-zbe-map.legend.hintEmbedded' | translate }}</span>
     </div>
   </div>
 } @else {
@@ -117,14 +117,14 @@
       type="button"
       (click)="toggleExpand()"
       class="w-full px-4 py-3 flex items-center justify-between text-left font-semibold text-slate-800 hover:bg-slate-50/80 transition-colors focus:outline-hidden cursor-pointer"
-      aria-label="Alternar leyenda de zonas ZBE"
+      [attr.aria-label]="'madrid-zbe-map.legend.toggleAria' | translate"
     >
       <div class="flex items-center gap-2">
         <div class="w-4 h-4 rounded-sm bg-linear-to-tr from-red-500 via-amber-500 to-blue-500 shrink-0"></div>
-        <span class="text-xs font-bold text-slate-800 uppercase tracking-wide">Leyenda ZBE</span>
+        <span class="text-xs font-bold text-slate-800 uppercase tracking-wide">{{ 'madrid-zbe-map.legend.title' | translate }}</span>
       </div>
       <div class="flex items-center gap-2">
-        <span class="text-[11px] font-normal text-slate-500">{{ zonesList.length }} Zonas</span>
+        <span class="text-[11px] font-normal text-slate-500">{{ 'madrid-zbe-map.legend.count' | translate: { count: i18n.formatNumber(zonesList.length) } }}</span>
         <lucide-icon
           name="chevron-down"
           [class]="'w-4 h-4 text-slate-400 transition-transform duration-200 ' + (isExpanded() ? 'rotate-180' : '')"
@@ -135,12 +135,12 @@
     @if (isExpanded()) {
       <div class="p-3.5 pt-0 space-y-3 border-t border-slate-100 max-h-96 overflow-y-auto">
         <p class="text-[11px] text-slate-500 mt-2">
-          Haz clic en cualquier zona para centrar el mapa y ver las restricciones vehiculares.
+          {{ 'madrid-zbe-map.legend.hint' | translate }}
         </p>
 
         <!-- Madrid Capital -->
         <div class="space-y-1.5">
-          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block px-0.5">Madrid Capital</span>
+          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block px-0.5">{{ 'madrid-zbe-map.layers.madridCapital' | translate }}</span>
           @for (zone of madridZones(); track zone.id) {
             <button
               type="button"
@@ -161,7 +161,7 @@
                     [style.backgroundColor]="zone.color"
                   ></span>
                   <span class="text-xs font-bold text-slate-800 group-hover:text-emerald-700 transition-colors truncate">
-                    {{ zone.shortName }}
+                    {{ 'madrid-zbe-map.zones.' + zone.id + '.shortName' | translate }}
                   </span>
                 </div>
                 <span
@@ -169,17 +169,17 @@
                   [style.backgroundColor]="zone.color + '20'"
                   [style.color]="zone.color"
                 >
-                  {{ zone.restrictionLevel }}
+                  {{ 'madrid-zbe-map.zones.' + zone.id + '.restrictionLevel' | translate }}
                 </span>
               </div>
 
               <p class="text-[10px] text-slate-600 line-clamp-2 leading-relaxed">
-                {{ zone.description }}
+                {{ 'madrid-zbe-map.zones.' + zone.id + '.description' | translate }}
               </p>
 
               <div class="flex items-center justify-between text-[10px] text-slate-400 pt-1 border-t border-slate-100/80">
-                <span>{{ zone.areaKm2 }} km²</span>
-                <span class="font-medium text-red-600">Sanción: {{ zone.sanctionEur }} €</span>
+                <span>{{ 'madrid-zbe-map.legend.area' | translate: { value: i18n.formatNumber(zone.areaKm2) } }}</span>
+                <span class="font-medium text-red-600">{{ 'madrid-zbe-map.legend.sanction' | translate: { amount: i18n.formatCurrency(zone.sanctionEur) } }}</span>
               </div>
             </button>
           }
@@ -187,7 +187,7 @@
 
         <!-- Corona Metropolitana -->
         <div class="space-y-1.5 pt-1">
-          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block px-0.5">Corona Metropolitana</span>
+          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block px-0.5">{{ 'madrid-zbe-map.layers.metropolitanRing' | translate }}</span>
           @for (zone of metropolitanZones(); track zone.id) {
             <button
               type="button"
@@ -208,7 +208,7 @@
                     [style.backgroundColor]="zone.color"
                   ></span>
                   <span class="text-xs font-bold text-slate-800 group-hover:text-emerald-700 transition-colors truncate">
-                    {{ zone.shortName }}
+                    {{ 'madrid-zbe-map.zones.' + zone.id + '.shortName' | translate }}
                   </span>
                 </div>
                 <span
@@ -216,17 +216,17 @@
                   [style.backgroundColor]="zone.color + '20'"
                   [style.color]="zone.color"
                 >
-                  {{ zone.restrictionLevel }}
+                  {{ 'madrid-zbe-map.zones.' + zone.id + '.restrictionLevel' | translate }}
                 </span>
               </div>
 
               <p class="text-[10px] text-slate-600 line-clamp-2 leading-relaxed">
-                {{ zone.description }}
+                {{ 'madrid-zbe-map.zones.' + zone.id + '.description' | translate }}
               </p>
 
               <div class="flex items-center justify-between text-[10px] text-slate-400 pt-1 border-t border-slate-100/80">
-                <span>{{ zone.areaKm2 }} km²</span>
-                <span class="font-medium text-red-600">Sanción: {{ zone.sanctionEur }} €</span>
+                <span>{{ 'madrid-zbe-map.legend.area' | translate: { value: i18n.formatNumber(zone.areaKm2) } }}</span>
+                <span class="font-medium text-red-600">{{ 'madrid-zbe-map.legend.sanction' | translate: { amount: i18n.formatCurrency(zone.sanctionEur) } }}</span>
               </div>
             </button>
           }

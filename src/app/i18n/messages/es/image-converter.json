@@ -1,0 +1,75 @@
+{
+  "title": "Conversor de imágenes en el navegador",
+  "subtitle": "Convierte y redimensiona tus imágenes directamente en tu navegador. Con la potencia de WebAssembly para una privacidad del 100 % y un procesamiento totalmente local.",
+  "file": {
+    "originalSize": "Tamaño original: {{ bytes }} bytes ({{ kilobytes }} KB)"
+  },
+  "view": {
+    "sideBySide": "Lado a lado",
+    "slider": "Control deslizante",
+    "comparison": "Comparación antes y después",
+    "original": "Original",
+    "converted": "Convertida",
+    "originalAlt": "Vista previa del original",
+    "convertedAlt": "Vista previa de la imagen convertida"
+  },
+  "preview": {
+    "source": "Imagen de origen",
+    "sourceAlt": "Vista previa del origen",
+    "result": "Resultado convertido",
+    "resultAlt": "Vista previa del resultado",
+    "emptyHint": "Ajusta la configuración y pulsa «Convertir imagen» para generar el resultado."
+  },
+  "status": {
+    "converting": "Convirtiendo..."
+  },
+  "result": {
+    "successTitle": "¡Conversión completada!",
+    "newSize": "Nuevo tamaño: {{ kilobytes }} KB",
+    "saved": "Has ahorrado un {{ percent }}",
+    "increased": "Ha aumentado un {{ percent }}",
+    "download": "Descargar resultado"
+  },
+  "console": {
+    "title": "Registro de la consola de ejecución",
+    "empty": "Aún no hay registros. Empieza a convertir para ver los registros."
+  },
+  "options": {
+    "title": "Opciones de conversión",
+    "targetFormat": "Formato de destino",
+    "quality": "Calidad de compresión",
+    "qualityHint": "Una calidad más baja genera archivos más pequeños, pero puede difuminar los detalles de alta frecuencia.",
+    "resize": "Dimensiones de redimensionado (opcional)",
+    "width": "Ancho (px)",
+    "height": "Alto (px)",
+    "auto": "Auto",
+    "resizeHint": "Deja cualquier dimensión en blanco para calcularla automáticamente y mantener la relación de aspecto nativa."
+  },
+  "validation": {
+    "widthPositive": "El ancho debe ser un número positivo",
+    "heightPositive": "El alto debe ser un número positivo"
+  },
+  "logs": {
+    "loadingCore": "Cargando FFmpeg Core en local...",
+    "coreLoaded": "FFmpeg Core se ha cargado correctamente.",
+    "error": "Error: {{ message }}",
+    "loadingInput": "Cargando «{{ name }}» en el sistema de archivos virtual...",
+    "executing": "Ejecutando: ffmpeg {{ command }}",
+    "executionFailed": "La ejecución ha fallado: {{ message }}"
+  },
+  "messages": {
+    "selectFile": "Selecciona primero un archivo de imagen.",
+    "fixValidation": "Corrige primero los errores de validación.",
+    "loadFailed": "No se han podido cargar los recursos de FFmpeg Core.",
+    "converted": "¡Imagen convertida correctamente!",
+    "conversionFailed": "La conversión ha fallado: {{ message }}",
+    "ffmpegNotLoaded": "FFmpeg no se ha cargado correctamente."
+  },
+  "files": {
+    "converted": "{{ baseName }}_convertido{{ extension }}"
+  },
+  "seo": {
+    "title": "Conversor de imágenes",
+    "description": "Convierte imágenes en tu navegador entre distintos formatos como PNG, JPEG, WEBP, GIF, BMP y TIFF con FFmpeg.wasm. Redimensiona y comprime con privacidad."
+  }
+}

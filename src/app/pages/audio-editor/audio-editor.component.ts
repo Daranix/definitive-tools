@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   HostListener,
+  effect,
   inject,
   model,
   signal,
@@ -9,6 +10,8 @@ import {
 } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
+import { I18nService } from '@/app/i18n/i18n.service';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import { TopNavbarComponent } from '@/app/components/top-navbar/top-navbar.component';
 import { FooterComponent } from '@/app/components/footer/footer.component';
@@ -34,6 +37,7 @@ import { AudioExportService } from './services/audio-export.service';
     FooterComponent,
     SingleTrackEditorComponent,
     MultiTrackStudioComponent,
+    TranslatePipe,
   ],
   templateUrl: './audio-editor.component.html',
   styleUrl: './audio-editor.component.scss',
@@ -41,6 +45,7 @@ import { AudioExportService } from './services/audio-export.service';
 })
 export class AudioEditorComponent {
   private readonly metadataService = inject(MetadataService);
+  private readonly i18n = inject(I18nService);
   readonly audioExport = inject(AudioExportService);
 
   readonly singleTrackEditor =
@@ -59,20 +64,45 @@ export class AudioEditorComponent {
   readonly showLogs = signal<boolean>(false);
 
   // Multi-Track Studio state
-  readonly tracks = signal<AudioTrack[]>([
-    { id: 'track-1', name: 'Track 1 (Voice)', volume: 1, muted: false, solo: false, color: '#6366f1' },
-    { id: 'track-2', name: 'Track 2 (Music / FX)', volume: 0.75, muted: false, solo: false, color: '#10b981' },
-  ]);
+  readonly tracks = signal<AudioTrack[]>(this.createDefaultTracks());
   readonly timelineClips = signal<TimelineClip[]>([]);
   readonly selectedClipId = signal<string | null>(null);
   readonly masterVolume = signal<number>(1);
   readonly activeTool = signal<'pointer' | 'razor'>('pointer');
 
   constructor() {
+    this.updateMetadata();
+    effect(() => {
+      this.i18n.language();
+      this.updateMetadata();
+    });
+  }
+
+  private createDefaultTracks(): AudioTrack[] {
+    return [
+      {
+        id: 'track-1',
+        name: this.i18n.t('audio-editor.tracks.voice'),
+        volume: 1,
+        muted: false,
+        solo: false,
+        color: '#6366f1',
+      },
+      {
+        id: 'track-2',
+        name: this.i18n.t('audio-editor.tracks.music'),
+        volume: 0.75,
+        muted: false,
+        solo: false,
+        color: '#10b981',
+      },
+    ];
+  }
+
+  private updateMetadata(): void {
     this.metadataService.updateMetadata({
-      title: 'Multi-Track Audio Editor & Studio',
-      description:
-        'Trim, cut out parts, split into clips, layer multiple tracks, and connect clips with smooth crossfades — 100% private, processed in your browser with WebAssembly.',
+      title: this.i18n.t('audio-editor.seo.title'),
+      description: this.i18n.t('audio-editor.seo.description'),
       updateCanonical: true,
     });
   }

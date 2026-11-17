@@ -1,0 +1,136 @@
+{
+  "app": {
+    "name": "Definitive Tools",
+    "shortName": "Def. Tools",
+    "tagline": "Tu destino único para herramientas online gratuitas y de alta calidad."
+  },
+  "nav": {
+    "home": "Inicio",
+    "about": "Acerca de",
+    "github": "GitHub",
+    "star": "Estrella",
+    "menu": "Menú",
+    "toggleMenu": "Mostrar u ocultar el menú móvil",
+    "mainNavigation": "Navegación principal"
+  },
+  "language": {
+    "label": "Idioma",
+    "change": "Cambiar idioma",
+    "en": "English",
+    "es": "Español"
+  },
+  "actions": {
+    "copy": "Copiar",
+    "copied": "¡Copiado!",
+    "download": "Descargar",
+    "upload": "Subir",
+    "clear": "Limpiar",
+    "reset": "Restablecer",
+    "close": "Cerrar",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "remove": "Quitar",
+    "add": "Añadir",
+    "search": "Buscar",
+    "loading": "Cargando…",
+    "processing": "Procesando…",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "tryAgain": "Intentar de nuevo",
+    "start": "Iniciar",
+    "stop": "Detener"
+  },
+  "toolBar": {
+    "favorited": "En favoritos",
+    "save": "Guardar",
+    "saveToFavorites": "Guardar en favoritos",
+    "share": "Compartir",
+    "hideHeader": "Ocultar cabecera",
+    "showHeader": "Mostrar cabecera",
+    "addedToFavorites": "¡{{ name }} añadido a favoritos!",
+    "removedFromFavorites": "{{ name }} eliminado de favoritos.",
+    "sharedSuccessfully": "¡Compartido correctamente!",
+    "linkCopied": "¡Enlace copiado al portapapeles!",
+    "linkCopyFailed": "No se ha podido copiar el enlace al portapapeles.",
+    "shareTitle": "{{ name }} - Definitive Tools"
+  },
+  "footer": {
+    "tagline": "Tu destino único para herramientas online gratuitas y de alta calidad.",
+    "githubRepository": "Repositorio de GitHub",
+    "quickLinks": "Enlaces rápidos",
+    "legal": "Legal",
+    "contact": "Contacto",
+    "links": {
+      "home": "Inicio",
+      "qrGenerator": "Generador de códigos QR",
+      "backgroundRemover": "Eliminador de fondos",
+      "jwtDecodeEncode": "Decodificador / Codificador JWT",
+      "swaggerEditor": "Editor Swagger",
+      "audioEditor": "Editor de audio"
+    },
+    "legalLinks": {
+      "privacy": "Política de privacidad",
+      "terms": "Términos del servicio",
+      "cookies": "Política de cookies",
+      "gdpr": "RGPD"
+    }
+  },
+  "legal": {
+    "loading": "Cargando documento…",
+    "notFoundTitle": "Documento no encontrado",
+    "notFoundDescription": "El documento legal que buscas no existe o ya no está disponible.",
+    "backHome": "Volver al inicio",
+    "updatedOn": "Última actualización: {{ date }}",
+    "errorDescription": "No se ha podido cargar este documento. Inténtalo de nuevo más tarde.",
+    "defaultDescription": "{{ title }} - Definitive Tools. Herramientas online gratuitas, seguras y en tu navegador.",
+    "defaultKeywords": "{{ title }}, definitive tools, código abierto"
+  },
+  "seo": {
+    "siteName": "Definitive Tools",
+    "titleSuffix": "Definitive Tools"
+  },
+  "errors": {
+    "generic": "Algo ha ido mal. Inténtalo de nuevo.",
+    "unexpected": "Se ha producido un error inesperado.",
+    "fileTooLarge": "El archivo es demasiado grande.",
+    "invalidFile": "Este tipo de archivo no es compatible.",
+    "browserOnly": "Esta herramienta solo funciona en el navegador."
+  },
+  "components": {
+    "loading": "Cargando...",
+    "menu": "Menú",
+    "closeToast": "Cerrar notificación",
+    "dragDrop": {
+      "prompt": "Arrastra y suelta tu archivo o",
+      "browse": "haz clic aquí",
+      "maxSize": "Máx.",
+      "required": "Este campo es obligatorio",
+      "fileTooLarge": "El archivo supera el tamaño máximo permitido ({{ size }})",
+      "invalidExtension": "El tipo de archivo no es compatible. Solo se permiten {{ extensions }}."
+    },
+    "modelDownload": {
+      "downloading": "Descargando modelo ...",
+      "loading": "Cargando ...",
+      "loadingFile": "Cargando archivo del modelo ..."
+    }
+  },
+  "validation": {
+    "mustBeText": "Este campo debe ser un texto",
+    "mustBeNumber": "Este campo debe ser un valor numérico",
+    "required": "Este campo es obligatorio",
+    "minCharacters": "Este campo debe tener al menos {{ minimum }} caracteres",
+    "minValue": "El valor debe ser al menos {{ minimum }}",
+    "maxCharacters": "Este campo no puede superar los {{ maximum }} caracteres",
+    "maxValue": "El valor no puede ser mayor que {{ maximum }}",
+    "minItems": "Selecciona al menos {{ minimum }} opción(es)",
+    "maxItems": "Selecciona como máximo {{ maximum }} opción(es)",
+    "email": "Introduce una dirección de correo electrónico válida",
+    "url": "Introduce una URL válida",
+    "invalidFormat": "Este valor tiene un formato no válido",
+    "invalidOption": "Selecciona una de las opciones disponibles",
+    "notUnique": "Este valor debe ser único",
+    "invalidDate": "Introduce una fecha válida"
+  }
+}

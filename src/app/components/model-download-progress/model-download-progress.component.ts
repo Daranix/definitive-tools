@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
 import { input } from '@angular/core';
 
@@ -32,7 +33,7 @@ export type ProgressInfo = InitialProgressInfo | DownloadingProgressInfo | Downl
 
 @Component({
   selector: 'app-model-download-progress',
-  imports: [ProgressBarComponent],
+  imports: [ProgressBarComponent, TranslatePipe],
   templateUrl: './model-download-progress.component.html',
   styleUrl: './model-download-progress.component.scss'
 })

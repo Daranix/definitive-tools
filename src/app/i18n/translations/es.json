@@ -1,0 +1,2768 @@
+{
+  "audio-editor": {
+    "actions": {
+      "addCut": "Añadir corte",
+      "addCutAtPlayhead": "Añadir corte en el cursor",
+      "pause": "Pausar",
+      "play": "Reproducir",
+      "playTrimmed": "Reproducir recorte",
+      "removeFile": "Quitar archivo",
+      "splitAtPlayhead": "Dividir en el cursor"
+    },
+    "clip": {
+      "fadeInTitle": "Arrastra horizontalmente para ajustar el fundido de entrada",
+      "fadeOutTitle": "Arrastra horizontalmente para ajustar el fundido de salida",
+      "trimEndTitle": "Ajustar la duración del final del clip",
+      "trimStartTitle": "Ajustar la duración del inicio del clip"
+    },
+    "clips": {
+      "copySuffix": "{{ name }} (Copia)",
+      "description": "Cada clip se exportará como un archivo independiente y se empaquetará en un archivo .ZIP.",
+      "filesCount": "{{ count }} archivo(s)",
+      "name": "Clip {{ index }}",
+      "namePlaceholder": "Nombre del clip",
+      "packaging": "Empaquetado:",
+      "packagingValue": "Descargas individuales + archivo .ZIP",
+      "part": "Parte {{ index }}",
+      "partSuffix": "{{ name }} (Parte 2)",
+      "removeBoundaryTitle": "Quitar límite del clip",
+      "summaryTitle": "Resumen de clips divididos",
+      "title": "Clips de audio ({{ count }})",
+      "totalClips": "Clips totales:"
+    },
+    "cuts": {
+      "deleteTitle": "Eliminar corte",
+      "description": "Estos intervalos se eliminarán. El resto se empalmará de forma continua en un único audio.",
+      "duration": "Duración del corte: {{ duration }} s",
+      "empty": "Todavía no hay partes marcadas para eliminar. Haz clic en «Añadir corte en el cursor» o arrastra sobre la forma de onda.",
+      "endLabel": "Fin:",
+      "estimatedOutput": "Duración estimada de salida:",
+      "finalDuration": "Duración final",
+      "keptSegments": "Segmentos conservados:",
+      "original": "Original",
+      "partsCount": "{{ count }} parte(s)",
+      "regionsCount": "{{ count }} región(es)",
+      "removed": "Eliminado",
+      "startLabel": "Inicio:",
+      "summaryTitle": "Resumen de eliminación",
+      "title": "Regiones de corte (partes a eliminar)",
+      "totalCuts": "Cortes totales:"
+    },
+    "errors": {
+      "allCutOut": "¡Se ha eliminado todo el audio! No hay nada que exportar.",
+      "noActiveClips": "No hay clips activos o sin silenciar en la línea de tiempo para exportar.",
+      "noClips": "No hay clips definidos para exportar."
+    },
+    "export": {
+      "clipsDescription": "Descarga los clips individuales o el archivo ZIP completo a continuación.",
+      "clipsSuccessTitle": "¡Se han exportado {{ count }} clips correctamente!",
+      "downloadAll": "Descargar todo (.ZIP)",
+      "downloadFile": "Descargar {{ fileName }}",
+      "exporting": "Exportando...",
+      "exportingWithFfmpeg": "Exportando audio con FFmpeg...",
+      "masterButton": "Exportar mezcla maestra",
+      "masterTitle": "Exportación de la mezcla maestra",
+      "output": "Salida: {{ size }}",
+      "remove": "Exportar audio empalmado",
+      "renderingMix": "Renderizando la mezcla...",
+      "split": "Exportar todos los clips (ZIP)",
+      "successSpliceTitle": "¡Empalme exportado correctamente!",
+      "successTrimTitle": "¡Recorte exportado correctamente!",
+      "trim": "Exportar audio recortado"
+    },
+    "file": {
+      "duration": "Duración: {{ time }}"
+    },
+    "files": {
+      "clipsZip": "{{ baseName }}_clips.zip",
+      "defaultClipsZip": "clips.zip",
+      "masterMix": "Mezcla_Maestra_{{ timestamp }}{{ extension }}",
+      "spliced": "{{ baseName }}_empalmado{{ extension }}",
+      "trimmed": "{{ baseName }}_recortado{{ extension }}"
+    },
+    "inspector": {
+      "assignedTrack": "Pista asignada",
+      "clipName": "Nombre del clip",
+      "crossfade": "Fundido cruzado con el clip anterior",
+      "duplicate": "Duplicar",
+      "empty": "Haz clic en cualquier clip de la línea de tiempo para configurar su volumen, posición y fundidos.",
+      "fadeIn": "Fundido de entrada (s)",
+      "fadeOut": "Fundido de salida (s)",
+      "fadesTitle": "Curvas de fundido y transiciones",
+      "selected": "Seleccionado",
+      "startPosition": "Posición inicial (s)",
+      "title": "Inspector del clip",
+      "volume": "Volumen ({{ percent }})"
+    },
+    "logs": {
+      "bundlingZip": "Empaquetando los clips en un archivo ZIP...",
+      "coreLoaded": "Núcleo de FFmpeg cargado correctamente.",
+      "empty": "Todavía no hay registros. Exporta un archivo de audio para ver el registro.",
+      "executing": "Ejecutando: ffmpeg {{ command }}",
+      "exportingClip": "Exportando el clip {{ index }} de {{ total }}: «{{ name }}»...",
+      "loadingCore": "Cargando el núcleo de FFmpeg localmente...",
+      "loadingFiles": "Cargando los archivos de audio en el sistema de archivos virtual...",
+      "masterMixdown": "Ejecutando la mezcla maestra con {{ count }} capas...",
+      "mixing": "Mezclando {{ count }} clips en la pista maestra...",
+      "processingTrim": "Procesando el recorte de audio...",
+      "splicing": "Empalmando y concatenando {{ count }} segmentos...",
+      "title": "Registro de la consola de ejecución",
+      "writeFile": "Escribiendo el archivo en el sistema de archivos virtual..."
+    },
+    "master": {
+      "download": "Descargar audio maestro",
+      "output": "Salida: {{ size }} · Todas las pistas renderizadas con curvas de volumen y fundidos.",
+      "ready": "¡Mezcla maestra lista!"
+    },
+    "messages": {
+      "addClipFirst": "Añade al menos un clip de audio a la línea de tiempo.",
+      "addedCut": "Región de corte añadida en el cursor.",
+      "addedToTrack": "Se ha añadido «{{ name }}» a la pista.",
+      "clickInsideClip": "Haz clic más adentro del clip para dividirlo.",
+      "clipDeleted": "Se ha eliminado el clip «{{ name }}».",
+      "clipDuplicated": "Clip duplicado.",
+      "clipsExported": "¡Se han exportado {{ count }} clips!",
+      "crossfadeApplied": "Se ha aplicado un fundido cruzado de {{ duration }} s entre «{{ previous }}» y «{{ name }}».",
+      "cutClipAt": "Se ha cortado «{{ name }}» en {{ time }}.",
+      "decodeFailed": "No se ha podido decodificar el audio: {{ message }}",
+      "exportFailed": "La exportación ha fallado: {{ message }}",
+      "failedToLoad": "No se ha podido cargar el audio: {{ message }}",
+      "masterExported": "¡Mezcla maestra exportada correctamente!",
+      "movePlayhead": "Mueve el cursor dentro del clip seleccionado para dividirlo.",
+      "mustHaveTrack": "Debe haber al menos una pista.",
+      "noPreviousClip": "No se ha encontrado ningún clip anterior en esta pista con el que hacer el fundido cruzado.",
+      "selectClipToSplit": "Selecciona primero un clip para dividirlo.",
+      "splicedExported": "¡Audio empalmado exportado correctamente!",
+      "splitClips": "Audio dividido en {{ count }} clips.",
+      "trimmedExported": "¡Audio recortado exportado correctamente!",
+      "unsupportedFile": "El archivo «{{ name }}» no es un formato de audio compatible."
+    },
+    "modes": {
+      "multitrack": "Estudio multipista (mezcla y fundidos)",
+      "remove": "Cortar y unir (eliminar partes)",
+      "split": "Dividir en clips (exportación múltiple)",
+      "trim": "Recortar (conservar rango)"
+    },
+    "options": {
+      "bitrate": "Bitrate",
+      "format": "Formato",
+      "sampleRate": "Sample Rate",
+      "targetFormat": "Formato de destino",
+      "title": "Opciones de exportación"
+    },
+    "page": {
+      "subtitle": "Recorta, elimina partes, divide en clips, combina varias pistas y conecta clips con fundidos cruzados suaves — 100 % privado, procesado en tu navegador con WebAssembly.",
+      "title": "Editor de audio y estudio multipista en el navegador"
+    },
+    "progress": {
+      "renderingMaster": "Renderizando la mezcla maestra..."
+    },
+    "sampleRates": {
+      "cd": "Calidad CD",
+      "fm": "Calidad FM",
+      "pro": "Pro / DVD"
+    },
+    "seo": {
+      "description": "Recorta, elimina partes, divide en clips, combina varias pistas y conecta clips con fundidos cruzados suaves — 100 % privado, procesado en tu navegador con WebAssembly.",
+      "title": "Editor de audio multipista y estudio"
+    },
+    "timeline": {
+      "delete": "Eliminar",
+      "playPause": "Reproducir/Pausar",
+      "razorHint": "✂ Modo cuchilla: haz clic en cualquier clip donde quieras cortar",
+      "splitPlayhead": "Dividir en el cursor",
+      "totalActiveClips": "Clips activos totales:",
+      "zoom": "Zoom (1x - 32x)"
+    },
+    "tools": {
+      "pointer": "Seleccionar",
+      "pointerTitle": "Herramienta de puntero (seleccionar y mover)",
+      "razor": "Cortar al hacer clic",
+      "razorTitle": "Herramienta de cuchilla (haz clic en cualquier clip para cortarlo)",
+      "split": "Cortar en el cursor",
+      "splitTitle": "Dividir el clip seleccionado en la posición del cursor (atajo: S)"
+    },
+    "tracks": {
+      "add": "Añadir pista",
+      "addClip": "Añadir clip",
+      "defaultName": "Pista {{ number }}",
+      "deleteTitle": "Eliminar pista",
+      "header": "Pistas ({{ count }})",
+      "music": "Pista 2 (Música / Efectos)",
+      "muteTitle": "Silenciar pista",
+      "soloTitle": "Solo de la pista",
+      "voice": "Pista 1 (Voz)",
+      "volSolo": "Vol. / Solo"
+    },
+    "transport": {
+      "stopTitle": "Detener y volver al inicio"
+    },
+    "trim": {
+      "duration": "Duración",
+      "end": "Fin",
+      "endSec": "Fin (s)",
+      "start": "Inicio",
+      "startSec": "Inicio (s)",
+      "title": "Selección de recorte"
+    },
+    "waveform": {
+      "decoding": "Decodificando el audio y generando la pirámide de picos de alta resolución...",
+      "endMarker": "Fin: {{ time }}",
+      "helpRemove": "Arrastra los tiradores rojos para ajustar los intervalos de corte. Haz clic en «Añadir corte en el cursor» para añadir más cortes.",
+      "helpSplit": "Arrastra los tiradores entre clips para ajustar los límites de división. Haz clic en «Dividir en el cursor» para cortar.",
+      "helpTrim": "Arrastra los tiradores cian y rosa para ajustar el inicio y el final. [Space] para reproducir o pausar. Rueda del ratón para hacer zoom.",
+      "modeRemove": "Forma de onda · Modo eliminar y unir",
+      "modeSplit": "Forma de onda · Modo dividir clips",
+      "modeTrim": "Forma de onda · Modo recorte",
+      "startMarker": "Inicio: {{ time }}",
+      "zoomActive": "Zoom activo ({{ zoom }}x) · Muestreo de onda dinámico de alta resolución"
+    },
+    "zoom": {
+      "in": "Acercar",
+      "out": "Alejar"
+    }
+  },
+  "audio-speech-to-text": {
+    "about": {
+      "ffmpegDescription": "Admite la subida de vídeos (MP4, WebM, MOV, MKV). Las pistas de audio se extraen y se remuestrean en el cliente con FFmpeg WebAssembly antes de la inferencia de la IA.",
+      "ffmpegTitle": "Procesamiento de vídeo y audio (FFmpeg)",
+      "privacyDescription": "Tu voz y tus archivos de vídeo y audio nunca salen de tu dispositivo. Toda la inferencia de machine learning y el demuxing de vídeo se realizan localmente en el entorno aislado del navegador.",
+      "privacyTitle": "100 % de privacidad y cero subidas",
+      "whisperDescription": "Ejecuta redes neuronales transformer directamente en tu navegador con la aceleración por hardware de WebGPU para transcribir en varios idiomas sin depender de la nube.",
+      "whisperTitle": "Whisper AI (WebGPU)"
+    },
+    "actions": {
+      "clearTitle": "Borrar la transcripción",
+      "copied": "¡Copiado!",
+      "copiedJson": "¡JSON copiado!",
+      "copyJson": "Copiar JSON",
+      "copyJsonTitle": "Copiar los subtítulos JSON",
+      "copyPlainTitle": "Copiar la transcripción en texto plano",
+      "copyText": "Copiar texto",
+      "downloadJsonTitle": "Descargar como .json",
+      "downloadTxtTitle": "Descargar como .txt"
+    },
+    "badge": "WebGPU, FFmpeg WASM y API de voz locales",
+    "downloads": {
+      "captionsFileName": "subtitulos.json",
+      "transcriptFileName": "transcripcion.txt"
+    },
+    "empty": {
+      "description": "Haz clic en «Iniciar grabación en directo» o sube un archivo de audio o vídeo. El texto transcrito y los subtítulos JSON con marcas de tiempo aparecerán aquí en tiempo real.",
+      "jsonDescription": "Cambia el motor a Whisper AI para generar segmentos de subtítulos estructurados con marcas de tiempo.",
+      "jsonTitle": "Los subtítulos JSON están disponibles con Whisper AI",
+      "placeholder": "El texto transcrito aparecerá aquí...",
+      "title": "Todo listo para transcribir"
+    },
+    "engine": {
+      "browser": "API del navegador",
+      "browserFooter": "Reconocimiento de voz del navegador",
+      "label": "Motor de transcripción",
+      "whisper": "Whisper AI",
+      "whisperFooter": "Whisper AI con WebGPU"
+    },
+    "errors": {
+      "browserApiUnsupported": "Este navegador no admite la API de reconocimiento de voz.",
+      "generic": "Se ha producido un error al acceder al micrófono o al iniciar el reconocimiento de voz.",
+      "getUserMediaUnsupported": "Tu navegador no admite getUserMedia.",
+      "micAccess": "No se ha podido acceder al micrófono. Comprueba que has concedido los permisos de micrófono.",
+      "whisperFile": "Se ha producido un error al procesar el archivo multimedia con Whisper."
+    },
+    "file": {
+      "audioFormats": "Audio: MP3, WAV, OGG, FLAC, M4A, AAC, OPUS",
+      "autoExtraction": "Extracción automática del audio con FFmpeg",
+      "extractAndTranscribe": "Extraer el audio y transcribir",
+      "extracting": "Extrayendo la pista de audio con FFmpeg...",
+      "remove": "Quitar el archivo",
+      "transcribeFile": "Transcribir el archivo de audio",
+      "transcribing": "Transcribiendo el audio...",
+      "videoBadge": "VÍDEO",
+      "videoFormats": "Vídeo: MP4, WebM, MOV, MKV, AVI"
+    },
+    "fileConversion": {
+      "extracted": "¡Audio extraído correctamente!",
+      "extracting": "Extrayendo y convirtiendo la pista de audio con FFmpeg...",
+      "finalizing": "Finalizando el flujo de audio...",
+      "initializing": "Iniciando el motor de extracción de vídeo...",
+      "loadingCore": "Cargando el núcleo FFmpeg WASM...",
+      "reading": "Leyendo el archivo de vídeo en memoria..."
+    },
+    "language": {
+      "auto": "Detectar el idioma automáticamente",
+      "autoHint": "Detección automática del idioma activada con Whisper AI",
+      "detected": "Detectado:",
+      "label": "Idioma hablado"
+    },
+    "recorder": {
+      "decoding": "El audio se decodificará en breve",
+      "initializing": "Iniciando el motor de audio...",
+      "listening": "Escuchando y transcribiendo...",
+      "listeningToMic": "Escuchando el micrófono...",
+      "privacy": "El audio del micrófono se procesa por completo en el cliente.",
+      "speakClearly": "Habla claro y cerca del micrófono",
+      "start": "Iniciar grabación en directo",
+      "stop": "Detener la grabación"
+    },
+    "seo": {
+      "description": "Convierte palabras habladas y archivos de audio y vídeo (MP4, WebM, MOV) en texto preciso y subtítulos JSON con marcas de tiempo, localmente en tu navegador, con Whisper WebGPU AI o el reconocimiento de voz del navegador.",
+      "title": "Voz a texto y transcripción de audio y vídeo"
+    },
+    "source": {
+      "file": "Archivo de audio o vídeo",
+      "label": "Origen del contenido",
+      "mic": "Micrófono en directo"
+    },
+    "stats": {
+      "characters": "caracteres",
+      "chunkSegments": "segmentos de subtítulos",
+      "language": "Idioma:",
+      "words": "palabras"
+    },
+    "subtitle": "Convierte voz en directo y archivos de audio y vídeo en transcripciones precisas y subtítulos JSON con marcas de tiempo, con un 100 % de procesamiento en tu dispositivo.",
+    "tabs": {
+      "json": "Subtítulos JSON",
+      "text": "Texto plano"
+    },
+    "title": "Voz a texto y transcripción multimedia"
+  },
+  "background-remover": {
+    "about": {
+      "description": "La eliminación de fondos es una técnica de edición digital de imágenes que separa el motivo principal de su fondo. Así se crean imágenes transparentes que puedes colocar sobre cualquier fondo nuevo.",
+      "heading": "¿Qué es la eliminación de fondos?",
+      "title": "Acerca de la eliminación de fondos"
+    },
+    "actions": {
+      "cancel": "Cancelar",
+      "download": "Descargar imagen",
+      "processAnother": "Procesar otra imagen",
+      "removeBackground": "Eliminar el fondo"
+    },
+    "files": {
+      "output": "salida.png"
+    },
+    "messages": {
+      "error": "Se ha producido un error al intentar eliminar el fondo. Inténtalo de nuevo."
+    },
+    "seo": {
+      "description": "Elimina fondos de imágenes al instante. Crea imágenes transparentes con aspecto profesional para tus proyectos, productos y diseños.",
+      "title": "Eliminador de fondos"
+    },
+    "status": {
+      "downloadingModel": "Descargando el modelo ...",
+      "loadingModel": "Cargando el archivo del modelo ...",
+      "processing": "Procesando la imagen ..."
+    },
+    "title": "Subida y procesamiento de imágenes"
+  },
+  "base64": {
+    "about": {
+      "title": "Acerca de la codificación Base64",
+      "uses": {
+        "email": "Enviar datos binarios a través de sistemas de correo electrónico",
+        "embedding": "Incrustar imágenes en HTML, CSS o JSON",
+        "storage": "Almacenar datos complejos en formatos de texto simples",
+        "xml": "Codificar datos binarios en XML"
+      },
+      "usesTitle": "Usos habituales",
+      "whatIsDescription": "Base64 es un esquema de codificación de binario a texto que representa datos binarios como una cadena ASCII. Se usa habitualmente cuando hay que codificar datos binarios que deben almacenarse y transferirse por medios diseñados para trabajar con texto.",
+      "whatIsTitle": "¿Qué es Base64?"
+    },
+    "actions": {
+      "copy": "Copiar al portapapeles",
+      "processDecode": "Decodificar desde Base64",
+      "processEncode": "Codificar a Base64",
+      "swap": "Intercambiar"
+    },
+    "form": {
+      "inputLabelDecode": "Base64 a decodificar",
+      "inputLabelEncode": "Texto a codificar",
+      "inputPlaceholderDecode": "Escribe el texto Base64 que quieres decodificar...",
+      "inputPlaceholderEncode": "Escribe el texto que quieres codificar en Base64...",
+      "outputLabelDecode": "Texto decodificado",
+      "outputLabelEncode": "Salida en Base64",
+      "outputPlaceholderDecode": "El texto decodificado aparecerá aquí...",
+      "outputPlaceholderEncode": "La salida en Base64 aparecerá aquí..."
+    },
+    "messages": {
+      "copied": "¡Copiado al portapapeles!",
+      "copyFailed": "No se ha podido copiar al portapapeles.",
+      "invalidInput": "Entrada Base64 no válida",
+      "nothingToCopy": "No hay nada que copiar."
+    },
+    "modes": {
+      "decode": "Decodificar",
+      "encode": "Codificar"
+    },
+    "seo": {
+      "description": "Codifica texto a Base64 o decodifica Base64 a texto fácilmente. Ideal para transferir datos, incrustar imágenes o trabajar con APIs.",
+      "keywords": "base64, codificar, decodificar, conversor, texto, imagen, api, transferencia de datos, incrustación, imágenes",
+      "title": "Conversor Base64"
+    },
+    "title": "Codificador / Decodificador Base64"
+  },
+  "calculators": {
+    "mortgage": {
+      "badge": "Sistema de amortización francés",
+      "cash": {
+        "downPayment": "Entrada aportada:",
+        "initialFees": "Gastos iniciales préstamo:",
+        "taxes": "Impuestos y notaría ({{ percent }}):",
+        "title": "Ahorro total necesario"
+      },
+      "csv": {
+        "annualFileName": "amortizacion-hipoteca-anual.csv",
+        "annualPayment": "Cuota anual (EUR)",
+        "balance": "Capital pendiente (EUR)",
+        "exported": "Cuadro de amortización exportado en CSV",
+        "interest": "Intereses (EUR)",
+        "month": "Mes",
+        "monthlyFileName": "amortizacion-hipoteca-mensual.csv",
+        "payment": "Cuota (EUR)",
+        "principal": "Capital amortizado (EUR)",
+        "year": "Año"
+      },
+      "errors": {
+        "downPaymentRange": "La entrada aportada debe ser mayor o igual a 0 y menor que el precio de la vivienda.",
+        "feesNegative": "Los gastos e impuestos adicionales no pueden ser negativos.",
+        "pricePositive": "El precio de la vivienda debe ser mayor que cero.",
+        "termRange": "El plazo de la hipoteca debe situarse entre 1 y 40 años.",
+        "tinRange": "El TIN anual debe estar comprendido entre 0 % y 30 %.",
+        "title": "Datos de entrada no válidos"
+      },
+      "fees": {
+        "initialFees": "Gastos iniciales (€)",
+        "initialFeesHint": "Tasación, apertura, etc.",
+        "purchaseTax": "Impuestos y gastos de compraventa (% ITP / IVA + notaría)",
+        "recurringCost": "Coste anual vinculado (€)",
+        "recurringCostHint": "Seguros hogar/vida anuales",
+        "subtitle": "Opcionales para calcular la TAE real y la liquidez total necesaria.",
+        "title": "Gastos e impuestos (TAE y ahorro)"
+      },
+      "loan": {
+        "downPayment": "Ahorro aportado / Entrada",
+        "downPaymentPercent": "Porcentaje de entrada",
+        "downPaymentPercentAria": "Selector deslizante porcentaje de entrada",
+        "price": "Precio de la vivienda (€)",
+        "priceAria": "Selector deslizante precio de la vivienda",
+        "sectionTitle": "Datos del préstamo",
+        "term": "Plazo de amortización (años)",
+        "termAria": "Selector deslizante plazo en años",
+        "termValue": "{{ years }} años ({{ payments }} cuotas)",
+        "tin": "Tipo de interés nominal (TIN anual %)",
+        "tinAria": "Selector deslizante TIN anual"
+      },
+      "result": {
+        "loanAmount": "Préstamo",
+        "ltv": "Financiación (LTV)",
+        "monthlyPayment": "Cuota mensual estimada",
+        "tae": "TAE efectiva",
+        "totalInterest": "Total intereses",
+        "totalPaid": "Total a devolver"
+      },
+      "schedule": {
+        "annual": "Vista Anual",
+        "ariaView": "Vista de amortización",
+        "balance": "Pendiente",
+        "export": "Exportar CSV",
+        "interest": "Intereses",
+        "month": "Mes",
+        "monthRow": "Mes {{ month }}",
+        "monthly": "Vista Mensual",
+        "payment": "Cuota",
+        "principal": "Capital",
+        "year": "Año",
+        "yearRow": "Año {{ year }}"
+      },
+      "seo": {
+        "description": "Simula tu hipoteca con sistema francés, calcula la cuota mensual, la TAE efectiva con gastos, el ahorro necesario y descarga el cuadro de amortización en CSV.",
+        "keywords": "calculadora hipoteca, simulador hipoteca, cuota mensual, calcular TAE, cuadro de amortizacion frances",
+        "title": "Calculadora de Hipotecas - Cuota, TAE y Cuadro de Amortización"
+      },
+      "split": {
+        "interest": "Intereses totales ({{ percent }})",
+        "principal": "Capital prestado ({{ percent }})",
+        "title": "Distribución del pago total"
+      },
+      "subtitle": "Calcula tu cuota mensual, la TAE efectiva considerando gastos y seguros, el ahorro total necesario y el cuadro de amortización completo.",
+      "title": "Calculadora de Hipotecas",
+      "validation": {
+        "downPaymentBelowPrice": "La entrada aportada debe ser inferior al precio de la vivienda.",
+        "downPaymentMin": "La entrada no puede ser negativa.",
+        "downPaymentPercentMax": "El porcentaje máximo de entrada es 99,9 %.",
+        "downPaymentPercentMin": "El porcentaje mínimo es 0 %.",
+        "downPaymentPercentRequired": "Introduce el porcentaje de entrada.",
+        "downPaymentRequired": "Introduce el importe de la entrada.",
+        "initialFeesMin": "Los gastos iniciales no pueden ser negativos.",
+        "initialFeesRequired": "Introduce los gastos iniciales (0 si no hay).",
+        "priceMax": "El precio máximo es de 50.000.000 €.",
+        "priceMin": "El precio mínimo es de 1.000 €.",
+        "priceRequired": "Introduce el precio de la vivienda.",
+        "purchaseTaxMax": "El porcentaje máximo admitido es 25 %.",
+        "purchaseTaxMin": "El porcentaje no puede ser negativo.",
+        "purchaseTaxRequired": "Introduce el porcentaje de impuestos y gastos.",
+        "recurringCostMin": "El coste anual vinculado no puede ser negativo.",
+        "recurringCostRequired": "Introduce el coste anual vinculado (0 si no hay).",
+        "termInteger": "El plazo debe ser un número entero de años.",
+        "termMax": "El plazo máximo es 40 años.",
+        "termMin": "El plazo mínimo es 1 año.",
+        "termRequired": "Introduce el plazo en años.",
+        "tinMax": "El TIN máximo admitido es 30 %.",
+        "tinMin": "El TIN no puede ser negativo.",
+        "tinRequired": "Introduce el TIN anual."
+      }
+    },
+    "netSalary": {
+      "badge": "Nómina España 2026 (IRPF + Seguridad Social)",
+      "disclaimer": "Cálculo orientativo basado en las tablas de referencia del IRPF y las bases y cuota de solidaridad de la Seguridad Social para 2026 (base máxima {{ maxBase }}/mes y MEI del {{ meiRate }}). No sustituye al algoritmo oficial de retenciones de la AEAT ni contempla deducciones específicas adicionales.",
+      "distribution": {
+        "gross": "Bruto: {{ amount }}",
+        "irpf": "IRPF",
+        "net": "Neto",
+        "socialSecurity": "Seg. Social",
+        "title": "Distribución del salario bruto"
+      },
+      "errors": {
+        "childrenInvalid": "El número de hijos a cargo debe ser un valor numérico válido.",
+        "extraPaymentsRange": "El número de pagas extra debe ser un entero entre 0 y 12.",
+        "grossNegative": "El salario bruto anual debe ser un importe mayor o igual a 0 €."
+      },
+      "fields": {
+        "age": "Tramo de edad",
+        "age65to74": "De 65 a 74 años",
+        "age75plus": "75 años o más",
+        "ageUnder65": "Menor de 65 años",
+        "childrenTotal": "Hijos a cargo (0–10)",
+        "childrenUnder3": "Menores de 3 años",
+        "contractIndefinite": "Indefinido (1,55 % desempleo)",
+        "contractTemporary": "Temporal (1,60 % desempleo)",
+        "contractType": "Tipo de contrato",
+        "disability": "Discapacidad",
+        "disability33to64": "Grado del 33 % al 64 %",
+        "disability65plus": "Grado del 65 % o superior",
+        "disabilityNone": "Sin discapacidad",
+        "extraPayments": "Número de pagas extra",
+        "extraPaymentsHint": "0 = 12 pagas, 2 = 14 pagas · Total: {{ total }} pagas/año",
+        "family": "Situación familiar",
+        "familyMarriedLowIncome": "Casado/a (cónyuge < 1.500 €/año)",
+        "familyOther": "Casado/a (otras situaciones)",
+        "familySingle": "Soltero/a, viudo/a o divorciado/a",
+        "geographicMobility": "Movilidad geográfica (+2.000 € de gasto deducible)",
+        "grossAnnual": "Salario bruto anual (€)",
+        "grossAnnualAria": "Selector deslizante salario bruto anual",
+        "region": "Comunidad Autónoma",
+        "regionAndalucia": "Andalucía",
+        "regionCataluna": "Cataluña",
+        "regionGalicia": "Galicia",
+        "regionGeneral": "Referencia general",
+        "regionMadrid": "Comunidad de Madrid",
+        "regionValencia": "Comunidad Valenciana",
+        "sharedCustody": "Descendientes prorrateados al 50 % (custodia compartida o dos declarantes)"
+      },
+      "kpi": {
+        "extraPaymentMany": "+ {{ count }} pagas extra de {{ amount }}",
+        "extraPaymentOne": "+ {{ count }} paga extra de {{ amount }}",
+        "irpfWithholding": "Retención IRPF",
+        "netAnnual": "Salario neto anual",
+        "netMonthly": "Salario neto mensual ({{ count }} pagas)",
+        "socialSecurity": "Seguridad Social"
+      },
+      "sectionTitle": "Datos salariales y personales",
+      "seo": {
+        "description": "Calcula tu sueldo neto mensual y anual en España para 2026 incluyendo Seguridad Social, cuota de solidaridad, MEI y retención de IRPF.",
+        "keywords": "calculadora salario neto espana, sueldo neto 2026, calcular irpf, seguridad social, cuota solidaridad",
+        "title": "Calculadora de Salario Neto España 2026 - IRPF y Seguridad Social"
+      },
+      "subtitle": "Estima tu sueldo neto mensual y anual con cotizaciones a la Seguridad Social 2026, cuota de solidaridad, MEI y retención de IRPF.",
+      "table": {
+        "annual": "Anual",
+        "art20": "Reducción rendimientos trabajo (Art. 20): {{ amount }}",
+        "concept": "Concepto",
+        "grossSalary": "Salario bruto",
+        "irpf": "IRPF estimado ({{ percent }})",
+        "irpfBase": "Base liquidable: {{ base }} · Mínimo personal/familiar: {{ minimum }}",
+        "netSalary": "Salario neto percibido",
+        "perPayment": "Por paga ({{ count }})",
+        "socialSecurity": "Seguridad Social (base {{ base }})",
+        "solidarityIncluded": "Incluye {{ amount }} de cuota de solidaridad 2026",
+        "title": "Desglose anual y mensual"
+      },
+      "title": "Calculadora de Salario Neto España 2026",
+      "validation": {
+        "age": "Selecciona un tramo de edad válido.",
+        "childrenInteger": "El número de hijos debe ser un entero.",
+        "childrenMax": "El máximo admitido es 10 hijos.",
+        "childrenMin": "No puede ser negativo.",
+        "childrenRequired": "Introduce el número de hijos a cargo.",
+        "contract": "Selecciona un tipo de contrato válido.",
+        "disability": "Selecciona un grado de discapacidad válido.",
+        "extraInteger": "El número de pagas extra debe ser un número entero.",
+        "extraMax": "El máximo de pagas extra es 12.",
+        "extraMin": "El mínimo de pagas extra es 0.",
+        "extraRequired": "Introduce el número de pagas extra.",
+        "family": "Selecciona una situación familiar válida.",
+        "grossMax": "El salario bruto anual no puede superar 2.000.000 €.",
+        "grossNegative": "El salario bruto anual no puede ser negativo.",
+        "grossRequired": "Introduce el salario bruto anual.",
+        "region": "Selecciona una comunidad autónoma válida.",
+        "under3Exceeds": "Los hijos menores de 3 años no pueden superar el total de hijos.",
+        "under3Integer": "Debe ser un número entero.",
+        "under3Max": "El máximo admitido es 10.",
+        "under3Min": "No puede ser negativo.",
+        "under3Required": "Introduce los hijos menores de 3 años."
+      }
+    },
+    "ruleOfThree": {
+      "actions": {
+        "addCondition": "Añadir magnitud",
+        "invertCases": "Invertir casos",
+        "reset": "Reiniciar",
+        "swapRows": "Intercambiar filas"
+      },
+      "badge": "Cálculo proporcional de precisión",
+      "compound": {
+        "baseCase": "Caso base",
+        "baseLabel": "Valor conocido de referencia",
+        "description": "Combina entre 2 y 6 magnitudes con relación directa o inversa respecto al objetivo.",
+        "newCase": "Nuevo caso",
+        "relation": "Relación",
+        "relationDirect": "Directa",
+        "relationInverse": "Inversa",
+        "rowName": "Magnitud {{ index }}",
+        "targetLabel": "Magnitud a calcular (objetivo)",
+        "targetPlaceholder": "Ej. Días",
+        "title": "Regla de 3 Compuesta"
+      },
+      "decimals": {
+        "label": "Decimales:"
+      },
+      "defaults": {
+        "compoundTarget": "Días",
+        "cost": "Coste (€)",
+        "defaultTarget": "Resultado",
+        "distance": "Distancia (km)",
+        "flour": "Harina (g)",
+        "hoursPerDay": "Horas al día",
+        "magnitudeA": "Magnitud A",
+        "magnitudeB": "Magnitud B",
+        "magnitudeIndexed": "Magnitud {{ index }}",
+        "metersBuilt": "Metros construidos",
+        "servings": "Comensales",
+        "speed": "Velocidad (km/h)",
+        "time": "Tiempo (horas)",
+        "trucks": "Camiones",
+        "unitKnown": "Unidades",
+        "unitResult": "Precio (€)",
+        "workers": "Trabajadores"
+      },
+      "errors": {
+        "baseValue": "Introduce un valor base válido para la magnitud objetivo.",
+        "compoundRange": "La regla de tres compuesta requiere entre 2 y 6 magnitudes.",
+        "directKnownZero": "El valor conocido de \"{{ name }}\" no puede ser cero en relación directa.",
+        "directZero": "El valor A no puede ser cero en una regla de tres directa.",
+        "inverseTargetZero": "El valor objetivo de \"{{ name }}\" no puede ser cero en relación inversa.",
+        "inverseZero": "El valor C no puede ser cero en una regla de tres inversa.",
+        "missingValues": "Introduce todos los valores numéricos (A, B y C) para calcular el resultado.",
+        "rowValues": "Revisa los valores numéricos de \"{{ name }}\"."
+      },
+      "examples": {
+        "factory": "Obra mixta (compuesta)",
+        "label": "Ejemplos:",
+        "logistics": "Transporte (compuesta)",
+        "recipe": "Receta (directa)",
+        "speed": "Velocidad y tiempo (inversa)"
+      },
+      "result": {
+        "stepsTitle": "Desglose paso a paso",
+        "title": "Resultado calculado",
+        "unknownFallback": "Incógnita X"
+      },
+      "seo": {
+        "description": "Calcula reglas de tres simples directas, inversas y compuestas mixtas paso a paso con alta precisión decimal.",
+        "keywords": "regla de tres, regla de 3 directa, regla de 3 inversa, regla de 3 compuesta, calculadora proporcionalidad",
+        "title": "Calculadora de Regla de 3 Online - Directa, Inversa y Compuesta"
+      },
+      "simple": {
+        "directDescription": "A mayor valor de la primera magnitud, mayor valor de la segunda.",
+        "directTitle": "Proporción Directa",
+        "fieldA": "Si {{ name }} es (A)",
+        "fieldB": "Entonces {{ name }} es (B)",
+        "fieldC": "Para {{ name }} igual a (C)",
+        "inverseDescription": "A mayor valor de la primera magnitud, menor valor de la segunda.",
+        "inverseTitle": "Proporción Inversa",
+        "labelKnown": "Nombre de magnitud 1",
+        "labelResult": "Nombre de magnitud 2",
+        "placeholderKnown": "Ej. Unidades",
+        "placeholderResult": "Ej. Precio (€)",
+        "unknown": "Incógnita {{ name }} (X)"
+      },
+      "steps": {
+        "compoundDirect": "{{ name }} (directa): factor = {{ expression }} = {{ factor }}.",
+        "compoundInverse": "{{ name }} (inversa): factor = {{ expression }} = {{ factor }}.",
+        "compoundResult": "Resultado ({{ target }}): {{ base }} × {{ factors }} = {{ result }}.",
+        "constantProduct": "Producto constante: X = ({{ left }} × {{ right }}) / {{ denominator }}.",
+        "crossMultiply": "Multiplicación en cruz: X = ({{ left }} × {{ right }}) / {{ denominator }}.",
+        "intermediate": "Operación intermedia: {{ numerator }} / {{ denominator }} = {{ result }}.",
+        "simpleDirect": "Planteamiento directo: si {{ a }} → {{ b }}, entonces {{ c }} → X.",
+        "simpleInverse": "Planteamiento inverso: si {{ a }} → {{ b }}, entonces {{ c }} → X."
+      },
+      "subtitle": "Resuelve reglas de tres simples directas, inversas y compuestas mixtas con fórmula y desglose paso a paso.",
+      "tabs": {
+        "ariaLabel": "Tipo de regla de tres",
+        "compound": "Compuesta (Directa / Inversa / Mixta)",
+        "simpleDirect": "Simple Directa",
+        "simpleInverse": "Simple Inversa"
+      },
+      "title": "Calculadora de Regla de 3",
+      "validation": {
+        "baseFor": "Introduce un valor base válido para \"{{ name }}\".",
+        "baseValue": "Introduce un valor base válido para la magnitud objetivo.",
+        "compoundRange": "La regla de tres compuesta requiere entre 2 y 6 magnitudes.",
+        "directZeroField": "El valor A no puede ser cero en una regla de tres directa.",
+        "directZeroFor": "El valor conocido de \"{{ name }}\" no puede ser cero en relación directa.",
+        "inverseZeroField": "El valor C no puede ser cero en una regla de tres inversa.",
+        "inverseZeroFor": "El valor objetivo de \"{{ name }}\" no puede ser cero en relación inversa.",
+        "number": "Introduce un número válido.",
+        "relation": "Selecciona una relación válida.",
+        "targetFor": "Introduce un nuevo valor válido para \"{{ name }}\".",
+        "value": "Introduce un valor numérico válido."
+      }
+    },
+    "scientific": {
+      "angleAria": "Unidad angular",
+      "badge": "Aritmética decimal de precisión arbitraria",
+      "errors": {
+        "acosRange": "El argumento de acos debe estar entre -1 y 1.",
+        "asinRange": "El argumento de asin debe estar entre -1 y 1.",
+        "divisionByZero": "División por cero.",
+        "emptyExpression": "Introduce una expresión matemática.",
+        "evaluation": "Error al evaluar la expresión.",
+        "factorialInteger": "El factorial solo está definido para enteros no negativos.",
+        "factorialMax": "El factorial máximo permitido es {{ max }}!.",
+        "factorialUsage": "Uso no válido del operador factorial (!).",
+        "incompleteExpression": "Expresión incompleta.",
+        "incompleteOperation": "Operación incompleta: faltan operandos.",
+        "invZero": "División por cero en 1/x.",
+        "invalidCharacter": "Carácter no válido en la expresión: \"{{ char }}\".",
+        "invalidExpression": "Expresión matemática no válida.",
+        "lnPositive": "El logaritmo neperiano requiere un valor positivo.",
+        "log2Positive": "El logaritmo base 2 requiere un valor positivo.",
+        "logPositive": "El logaritmo base 10 requiere un valor positivo.",
+        "missingArgument": "Falta argumento para la función \"{{ name }}\".",
+        "missingFactorialOperand": "Falta operando para el factorial.",
+        "moduloByZero": "Módulo por cero.",
+        "negativeBaseExponent": "No se admite base negativa con exponente no entero en reales.",
+        "outOfRange": "El resultado excede el rango finito permitido.",
+        "powerUndefined": "Potencia indefinida (0 elevado a exponente negativo).",
+        "sqrtNegative": "No se puede calcular la raíz cuadrada de un número negativo.",
+        "tanUndefined": "Tangente indefinida para este ángulo.",
+        "unbalancedParens": "Paréntesis desbalanceados.",
+        "unknownSymbol": "Símbolo o función desconocida: \"{{ symbol }}\".",
+        "unsupportedFunction": "Función no soportada: \"{{ name }}\"."
+      },
+      "expressionAria": "Expresión matemática",
+      "history": {
+        "clear": "Limpiar",
+        "empty": "Todavía no hay operaciones registradas. Pulsa «=» o Intro para calcular.",
+        "shortcutsAfter": "para limpiar.",
+        "shortcutsBefore": "Introduce expresiones con el teclado y pulsa",
+        "shortcutsClearKey": "Esc",
+        "shortcutsEvaluateKey": "Intro",
+        "shortcutsMiddle": "para evaluar o",
+        "shortcutsTitle": "Atajos de teclado:",
+        "title": "Historial de cálculos"
+      },
+      "memoryBadge": "M: {{ value }}",
+      "messages": {
+        "memoryAddInvalid": "No hay un valor válido para sumar a memoria",
+        "memoryCleared": "Memoria borrada (MC)",
+        "memorySubtractInvalid": "No hay un valor válido para restar de memoria"
+      },
+      "placeholder": "Ej. sin(30) + sqrt(2) * 10",
+      "precisionLabel": "Precisión:",
+      "precisionOption": "{{ value }} dígitos",
+      "precisionShort": "{{ value }} díg.",
+      "seo": {
+        "description": "Calculadora científica online con precisión arbitraria de 15, 30 o 50 dígitos, trigonometría, logaritmos, factorial, memoria e historial.",
+        "keywords": "calculadora cientifica, calculadora alta precision, trigonometria, logaritmos, factorial, decimal.js",
+        "title": "Calculadora Científica de Alta Precisión"
+      },
+      "subtitle": "Calcula con hasta 50 dígitos significativos, funciones trigonométricas, hiperbólicas, logaritmos, potencias, memoria e historial.",
+      "title": "Calculadora Científica"
+    },
+    "severance": {
+      "badge": "Estatuto de los Trabajadores · Reforma 2012",
+      "cap": {
+        "title": "Tope legal aplicado"
+      },
+      "caps": {
+        "modification270": "Tope máximo legal de 9 mensualidades (270 días).",
+        "objective360": "Tope máximo legal de 12 mensualidades (360 días).",
+        "unfairMax1260": "Tope máximo de 42 mensualidades (1.260 días) sobre el tramo anterior al 12/02/2012.",
+        "unfairMax720": "Tope máximo legal de 24 mensualidades (720 días).",
+        "unfairPre720": "Tramo previo al 12/02/2012 superior a 720 días: se consolidan los días devengados antes de la reforma sin añadir días posteriores."
+      },
+      "dismissals": {
+        "disciplinary": "Despido disciplinario procedente (0 días)",
+        "modification": "Modificación sustancial o traslado (20 días/año, máx. 9 meses)",
+        "objective": "Despido objetivo o ERE procedente (20 días/año, máx. 12 meses)",
+        "temporaryEnd": "Fin de contrato temporal (12 días/año)",
+        "unfair": "Despido improcedente (45 / 33 días por año)"
+      },
+      "errors": {
+        "dates": "Introduce fechas de inicio y fin válidas (AAAA-MM-DD).",
+        "endBeforeStart": "La fecha de despido o fin debe ser igual o posterior a la fecha de inicio.",
+        "extraPaymentsRange": "El número de pagas extra debe ser un entero entre 0 y 12.",
+        "salaryNegative": "El salario bruto debe ser un importe mayor o igual a 0 €."
+      },
+      "fields": {
+        "dismissalDisciplinary": "Despido disciplinario procedente (0 días)",
+        "dismissalModification": "Modificación sustancial o traslado (20 días)",
+        "dismissalObjective": "Despido objetivo o ERE procedente (20 días)",
+        "dismissalTemporaryEnd": "Fin de contrato temporal (12 días)",
+        "dismissalType": "Tipo de extinción o despido",
+        "dismissalUnfair": "Despido improcedente (45 / 33 días)",
+        "endDate": "Fecha de despido / fin",
+        "extraPayments": "Número de pagas extra",
+        "extraPaymentsHint": "0 = 12 pagas, 2 = 14 pagas · Total: {{ total }} pagas/año",
+        "salaryAnnual": "Salario bruto anual (€)",
+        "salaryMode": "Modo de salario bruto",
+        "salaryModeAnnual": "Bruto anual",
+        "salaryModeMonthly": "Bruto mensual",
+        "salaryMonthly": "Salario bruto mensual (€)",
+        "startDate": "Fecha de inicio de contrato"
+      },
+      "irpf": {
+        "exemptExceededPrefix": "La indemnización supera el límite exento de 180.000 €. El exceso de",
+        "exemptExceededSuffix": "tributa como rendimiento del trabajo en el IRPF.",
+        "exemptLimit": "Límite exento de IRPF",
+        "grossAnnual": "Salario bruto anual de cálculo",
+        "notExemptPrefix": "Esta indemnización no está exenta de IRPF: los",
+        "notExemptSuffix": "tributan como rendimiento del trabajo.",
+        "note": "El cálculo sigue el criterio del Tribunal Supremo de computar cada fracción de mes como mes completo (salario bruto anual / 365 días). Recuerda que la finalización de contrato temporal no goza de exención en IRPF."
+      },
+      "kpi": {
+        "computableMonths": "Meses computables",
+        "dailySalary": "Salario diario",
+        "dayValueOne": "{{ days }} día",
+        "days": "Días indemnizados",
+        "daysValue": "{{ days }} días",
+        "monthValueOne": "{{ months }} mes",
+        "monthsValue": "{{ months }} meses",
+        "seniority": "Antigüedad",
+        "tenure": "{{ years }}a {{ months }}m {{ days }}d",
+        "total": "Indemnización total estimada"
+      },
+      "reform": {
+        "computableMonths": "Meses computables",
+        "days": "Días",
+        "module": "Módulo",
+        "module33": "33 días/año",
+        "module45": "45 días/año",
+        "note": "Nota: Cada tramo (previo y posterior al 12/02/2012) redondea independientemente cualquier fracción de mes al mes completo según la doctrina del Tribunal Supremo.",
+        "period": "Tramo",
+        "post": "Desde el 12/02/2012",
+        "pre": "Previo al 12/02/2012",
+        "title": "Desglose por reforma laboral (12/02/2012)",
+        "total": "Total días tras aplicar topes"
+      },
+      "sectionTitle": "Datos de la relación laboral",
+      "seo": {
+        "description": "Calcula la indemnización por despido improcedente (45/33 días), objetivo (20 días), fin de contrato temporal o modificación sustancial en España.",
+        "keywords": "calculadora indemnizacion despido espana, despido improcedente 45 33 dias, despido objetivo, finiquito indemnizacion",
+        "title": "Calculadora de Indemnización por Despido España"
+      },
+      "subtitle": "Calcula la indemnización laboral en España con prorrateo mensual del Tribunal Supremo, tramo mixto 45/33 días, topes legales y límite exento de IRPF.",
+      "title": "Calculadora de Indemnización por Despido",
+      "validation": {
+        "dismissalType": "Selecciona un tipo de despido válido.",
+        "endBeforeStart": "La fecha de despido o fin debe ser igual o posterior a la fecha de inicio.",
+        "endInvalid": "Introduce una fecha de fin válida (AAAA-MM-DD).",
+        "endRequired": "Introduce la fecha de despido o fin.",
+        "extraInteger": "El número de pagas extra debe ser un número entero.",
+        "extraMax": "El máximo de pagas extra es 12.",
+        "extraMin": "El mínimo de pagas extra es 0.",
+        "extraRequired": "Introduce el número de pagas extra.",
+        "salaryMax": "El importe salarial excede el máximo permitido.",
+        "salaryMode": "Selecciona un modo de salario válido.",
+        "salaryNegative": "El salario bruto no puede ser negativo.",
+        "salaryRequired": "Introduce el importe del salario bruto.",
+        "startInvalid": "Introduce una fecha de inicio válida (AAAA-MM-DD).",
+        "startRequired": "Introduce la fecha de inicio de contrato."
+      }
+    },
+    "shared": {
+      "copied": "Resultado copiado al portapapeles",
+      "copiedLabel": "Copiado",
+      "copy": "Copiar",
+      "copyFailed": "No se pudo copiar el resultado",
+      "formError": "Revisa los datos introducidos en el formulario.",
+      "notAvailable": "N/A",
+      "removeItem": "Eliminar {{ name }}"
+    }
+  },
+  "common": {
+    "actions": {
+      "add": "Añadir",
+      "back": "Atrás",
+      "cancel": "Cancelar",
+      "clear": "Limpiar",
+      "close": "Cerrar",
+      "copied": "¡Copiado!",
+      "copy": "Copiar",
+      "delete": "Eliminar",
+      "download": "Descargar",
+      "loading": "Cargando…",
+      "next": "Siguiente",
+      "previous": "Anterior",
+      "processing": "Procesando…",
+      "remove": "Quitar",
+      "reset": "Restablecer",
+      "save": "Guardar",
+      "search": "Buscar",
+      "start": "Iniciar",
+      "stop": "Detener",
+      "tryAgain": "Intentar de nuevo",
+      "upload": "Subir"
+    },
+    "app": {
+      "name": "Definitive Tools",
+      "shortName": "Def. Tools",
+      "tagline": "Tu destino único para herramientas online gratuitas y de alta calidad."
+    },
+    "components": {
+      "closeToast": "Cerrar notificación",
+      "dragDrop": {
+        "browse": "haz clic aquí",
+        "fileTooLarge": "El archivo supera el tamaño máximo permitido ({{ size }})",
+        "invalidExtension": "El tipo de archivo no es compatible. Solo se permiten {{ extensions }}.",
+        "maxSize": "Máx.",
+        "prompt": "Arrastra y suelta tu archivo o",
+        "required": "Este campo es obligatorio"
+      },
+      "loading": "Cargando...",
+      "menu": "Menú",
+      "modelDownload": {
+        "downloading": "Descargando modelo ...",
+        "loading": "Cargando ...",
+        "loadingFile": "Cargando archivo del modelo ..."
+      }
+    },
+    "errors": {
+      "browserOnly": "Esta herramienta solo funciona en el navegador.",
+      "fileTooLarge": "El archivo es demasiado grande.",
+      "generic": "Algo ha ido mal. Inténtalo de nuevo.",
+      "invalidFile": "Este tipo de archivo no es compatible.",
+      "unexpected": "Se ha producido un error inesperado."
+    },
+    "footer": {
+      "contact": "Contacto",
+      "githubRepository": "Repositorio de GitHub",
+      "legal": "Legal",
+      "legalLinks": {
+        "cookies": "Política de cookies",
+        "gdpr": "RGPD",
+        "privacy": "Política de privacidad",
+        "terms": "Términos del servicio"
+      },
+      "links": {
+        "audioEditor": "Editor de audio",
+        "backgroundRemover": "Eliminador de fondos",
+        "home": "Inicio",
+        "jwtDecodeEncode": "Decodificador / Codificador JWT",
+        "qrGenerator": "Generador de códigos QR",
+        "swaggerEditor": "Editor Swagger"
+      },
+      "quickLinks": "Enlaces rápidos",
+      "tagline": "Tu destino único para herramientas online gratuitas y de alta calidad."
+    },
+    "language": {
+      "change": "Cambiar idioma",
+      "en": "English",
+      "es": "Español",
+      "label": "Idioma"
+    },
+    "legal": {
+      "backHome": "Volver al inicio",
+      "defaultDescription": "{{ title }} - Definitive Tools. Herramientas online gratuitas, seguras y en tu navegador.",
+      "defaultKeywords": "{{ title }}, definitive tools, código abierto",
+      "errorDescription": "No se ha podido cargar este documento. Inténtalo de nuevo más tarde.",
+      "loading": "Cargando documento…",
+      "notFoundDescription": "El documento legal que buscas no existe o ya no está disponible.",
+      "notFoundTitle": "Documento no encontrado",
+      "updatedOn": "Última actualización: {{ date }}"
+    },
+    "nav": {
+      "about": "Acerca de",
+      "github": "GitHub",
+      "home": "Inicio",
+      "mainNavigation": "Navegación principal",
+      "menu": "Menú",
+      "star": "Estrella",
+      "toggleMenu": "Mostrar u ocultar el menú móvil"
+    },
+    "seo": {
+      "siteName": "Definitive Tools",
+      "titleSuffix": "Definitive Tools"
+    },
+    "toolBar": {
+      "addedToFavorites": "¡{{ name }} añadido a favoritos!",
+      "favorited": "En favoritos",
+      "hideHeader": "Ocultar cabecera",
+      "linkCopied": "¡Enlace copiado al portapapeles!",
+      "linkCopyFailed": "No se ha podido copiar el enlace al portapapeles.",
+      "removedFromFavorites": "{{ name }} eliminado de favoritos.",
+      "save": "Guardar",
+      "saveToFavorites": "Guardar en favoritos",
+      "share": "Compartir",
+      "shareTitle": "{{ name }} - Definitive Tools",
+      "sharedSuccessfully": "¡Compartido correctamente!",
+      "showHeader": "Mostrar cabecera"
+    },
+    "validation": {
+      "email": "Introduce una dirección de correo electrónico válida",
+      "invalidDate": "Introduce una fecha válida",
+      "invalidFormat": "Este valor tiene un formato no válido",
+      "invalidOption": "Selecciona una de las opciones disponibles",
+      "maxCharacters": "Este campo no puede superar los {{ maximum }} caracteres",
+      "maxItems": "Selecciona como máximo {{ maximum }} opción(es)",
+      "maxValue": "El valor no puede ser mayor que {{ maximum }}",
+      "minCharacters": "Este campo debe tener al menos {{ minimum }} caracteres",
+      "minItems": "Selecciona al menos {{ minimum }} opción(es)",
+      "minValue": "El valor debe ser al menos {{ minimum }}",
+      "mustBeNumber": "Este campo debe ser un valor numérico",
+      "mustBeText": "Este campo debe ser un texto",
+      "notUnique": "Este valor debe ser único",
+      "required": "Este campo es obligatorio",
+      "url": "Introduce una URL válida"
+    }
+  },
+  "home": {
+    "hero": {
+      "badge": "100% en tu navegador y seguro",
+      "searchPlaceholder": "Busca herramientas (p. ej. QR, Swagger, Base64, MD)...",
+      "subtitle": "Herramientas gratuitas, rápidas y fáciles de usar para todas tus necesidades digitales. Tus datos nunca salen de tu navegador.",
+      "title": "Tu kit definitivo de herramientas digitales"
+    },
+    "seo": {
+      "description": "Accede a herramientas gratuitas y fáciles de usar para todas tus necesidades digitales, sin registro ni descargas.",
+      "keywords": "herramientas online, herramientas gratis, herramientas digitales, herramientas web, generador de QR, utilidades",
+      "title": "Definitive Tools - Utilidades digitales gratuitas"
+    },
+    "tools": {
+      "launch": "Abrir herramienta",
+      "noResultsDescription": "No hemos encontrado herramientas que coincidan con tus criterios. Prueba a cambiar la búsqueda o los filtros de categoría.",
+      "noResultsTitle": "No se han encontrado herramientas",
+      "subtitle": "Selecciona cualquier herramienta para empezar a procesar directamente en tu navegador.",
+      "title": "Utilidades populares"
+    }
+  },
+  "image-base64-converter": {
+    "about": {
+      "bestPractices": {
+        "caching": "Para el rendimiento, confía en la caché del navegador para los archivos estáticos en lugar de cargar grandes Data URI en las hojas de estilo.",
+        "largeImages": "Evita codificar imágenes grandes (p. ej. >1 MB) en Base64, porque aumenta el tamaño de la carga útil en torno a un 33 %."
+      },
+      "bestPracticesTitle": "Buenas prácticas",
+      "description": "La codificación Base64 convierte los datos binarios de una imagen en una cadena ASCII. Esta cadena se puede incrustar directamente en HTML, CSS o cargas útiles JSON.",
+      "title": "Acerca de la conversión de imágenes a Base64",
+      "whenToUse": {
+        "email": "Plantillas de correo en las que las imágenes externas podrían estar bloqueadas.",
+        "icons": "Iconos pequeños, SVG o gráficos para reducir las peticiones HTTP.",
+        "offline": "Trabajar sin conexión o en entornos web independientes.",
+        "storage": "Almacenar cargas útiles de imágenes dinámicas en conjuntos de datos JSON/XML."
+      },
+      "whenToUseTitle": "Cuándo usar Base64"
+    },
+    "decoder": {
+      "clear": "Limpiar",
+      "decode": "Decodificar Base64",
+      "download": "Descargar archivo de imagen",
+      "errorTitle": "Error al decodificar",
+      "estimatedSize": "Tamaño binario estimado:",
+      "imageSize": "Dimensiones de la imagen:",
+      "inferredFormat": "Formato inferido:",
+      "inputLabel": "Pega los datos de imagen codificados en Base64",
+      "inputPlaceholder": "Pega aquí la cadena Base64 (p. ej. data:image/png;base64,... o Base64 sin procesar)...",
+      "metadataTitle": "Metadatos del archivo decodificado",
+      "mimeType": "Tipo MIME:",
+      "previewAlt": "Vista previa decodificada",
+      "previewTitle": "Vista previa decodificada"
+    },
+    "download": {
+      "fileName": "imagen-decodificada.{{ ext }}"
+    },
+    "encoder": {
+      "copy": "Copiar Base64",
+      "dimensions": "Dimensiones:",
+      "dropzone": "Selecciona o arrastra una imagen",
+      "fileSize": "Tamaño del archivo:",
+      "formatsHint": "Formatos compatibles: PNG, JPG, JPEG, WEBP, GIF, SVG, BMP. Tamaño máximo: 5 MB.",
+      "name": "Nombre:",
+      "outputPlaceholder": "La salida codificada en Base64 aparecerá aquí...",
+      "remove": "Quitar imagen",
+      "representationTitle": "Representación en Base64",
+      "sourceAlt": "Vista previa de la imagen de origen",
+      "sourceTitle": "Imagen de origen",
+      "type": "Tipo:"
+    },
+    "formats": {
+      "css": "CSS",
+      "dataUri": "Data URI",
+      "html": "HTML",
+      "raw": "Raw"
+    },
+    "labels": {
+      "loading": "Cargando...",
+      "unknown": "desconocido"
+    },
+    "messages": {
+      "copied": "¡Copiado al portapapeles!",
+      "copyFailed": "No se ha podido copiar al portapapeles.",
+      "decodeFailed": "No se ha podido decodificar la imagen. Asegúrate de que el texto pegado es una imagen codificada en Base64 válida.",
+      "downloadFailed": "No se ha podido descargar la imagen decodificada.",
+      "downloaded": "¡Imagen descargada correctamente!",
+      "emptyInput": "Introduce una cadena Base64 para decodificar."
+    },
+    "modes": {
+      "decode": "Base64 a imagen",
+      "encode": "Imagen a Base64"
+    },
+    "outputAlt": "Imagen Base64",
+    "seo": {
+      "description": "Convierte cualquier archivo de imagen en una cadena codificada en Base64 o decodifica datos Base64 para recuperar las imágenes. Conversión rápida, segura y en tu navegador con vista previa en vivo.",
+      "keywords": "base64, imagen a base64, base64 a imagen, decodificador base64, codificador base64, data uri, webp, png, jpeg",
+      "title": "Conversor de imagen a Base64 y de Base64 a imagen"
+    },
+    "subtitle": "Convierte imágenes en cadenas Base64 o decodifica cadenas Base64 para previsualizar y descargar las imágenes.",
+    "title": "Conversor de imagen a Base64"
+  },
+  "image-converter": {
+    "console": {
+      "empty": "Aún no hay registros. Empieza a convertir para ver los registros.",
+      "title": "Registro de la consola de ejecución"
+    },
+    "file": {
+      "originalSize": "Tamaño original: {{ bytes }} bytes ({{ kilobytes }} KB)"
+    },
+    "files": {
+      "converted": "{{ baseName }}_convertido{{ extension }}"
+    },
+    "logs": {
+      "coreLoaded": "FFmpeg Core se ha cargado correctamente.",
+      "error": "Error: {{ message }}",
+      "executing": "Ejecutando: ffmpeg {{ command }}",
+      "executionFailed": "La ejecución ha fallado: {{ message }}",
+      "loadingCore": "Cargando FFmpeg Core en local...",
+      "loadingInput": "Cargando «{{ name }}» en el sistema de archivos virtual..."
+    },
+    "messages": {
+      "conversionFailed": "La conversión ha fallado: {{ message }}",
+      "converted": "¡Imagen convertida correctamente!",
+      "ffmpegNotLoaded": "FFmpeg no se ha cargado correctamente.",
+      "fixValidation": "Corrige primero los errores de validación.",
+      "loadFailed": "No se han podido cargar los recursos de FFmpeg Core.",
+      "selectFile": "Selecciona primero un archivo de imagen."
+    },
+    "options": {
+      "auto": "Auto",
+      "height": "Alto (px)",
+      "quality": "Calidad de compresión",
+      "qualityHint": "Una calidad más baja genera archivos más pequeños, pero puede difuminar los detalles de alta frecuencia.",
+      "resize": "Dimensiones de redimensionado (opcional)",
+      "resizeHint": "Deja cualquier dimensión en blanco para calcularla automáticamente y mantener la relación de aspecto nativa.",
+      "targetFormat": "Formato de destino",
+      "title": "Opciones de conversión",
+      "width": "Ancho (px)"
+    },
+    "preview": {
+      "emptyHint": "Ajusta la configuración y pulsa «Convertir imagen» para generar el resultado.",
+      "result": "Resultado convertido",
+      "resultAlt": "Vista previa del resultado",
+      "source": "Imagen de origen",
+      "sourceAlt": "Vista previa del origen"
+    },
+    "result": {
+      "download": "Descargar resultado",
+      "increased": "Ha aumentado un {{ percent }}",
+      "newSize": "Nuevo tamaño: {{ kilobytes }} KB",
+      "saved": "Has ahorrado un {{ percent }}",
+      "successTitle": "¡Conversión completada!"
+    },
+    "seo": {
+      "description": "Convierte imágenes en tu navegador entre distintos formatos como PNG, JPEG, WEBP, GIF, BMP y TIFF con FFmpeg.wasm. Redimensiona y comprime con privacidad.",
+      "title": "Conversor de imágenes"
+    },
+    "status": {
+      "converting": "Convirtiendo..."
+    },
+    "subtitle": "Convierte y redimensiona tus imágenes directamente en tu navegador. Con la potencia de WebAssembly para una privacidad del 100 % y un procesamiento totalmente local.",
+    "title": "Conversor de imágenes en el navegador",
+    "validation": {
+      "heightPositive": "El alto debe ser un número positivo",
+      "widthPositive": "El ancho debe ser un número positivo"
+    },
+    "view": {
+      "comparison": "Comparación antes y después",
+      "converted": "Convertida",
+      "convertedAlt": "Vista previa de la imagen convertida",
+      "original": "Original",
+      "originalAlt": "Vista previa del original",
+      "sideBySide": "Lado a lado",
+      "slider": "Control deslizante"
+    }
+  },
+  "jwt-decode-encode": {
+    "decoder": {
+      "aria": {
+        "jwtEditorInput": "Entrada del editor JWT"
+      },
+      "labels": {
+        "decodedPayload": "Carga útil decodificada",
+        "json": "JSON",
+        "signatureVerificationOptional": "Verificación de la firma JWT (opcional)"
+      },
+      "status": {
+        "invalidJwtFormat": "Formato de JWT no válido",
+        "validJwt": "JWT válido",
+        "validSecret": "Secreto válido"
+      }
+    },
+    "encoder": {
+      "actions": {
+        "clearField": "Limpiar campo"
+      },
+      "labels": {
+        "decodedValue": "Valor decodificado",
+        "headerJson": "Cabecera (JSON)",
+        "payloadJson": "Carga útil (JSON)"
+      },
+      "messages": {
+        "missingFields": "Introduce todos los campos obligatorios"
+      },
+      "placeholders": {
+        "header": "Pega aquí la cabecera JSON.",
+        "payload": "Pega aquí la carga útil JSON."
+      }
+    },
+    "page": {
+      "about": {
+        "commonUses": {
+          "authentication": "Autenticación y autorización en aplicaciones web",
+          "informationExchange": "Intercambio de información entre las partes",
+          "securingApis": "Protección de los endpoints de la API"
+        },
+        "commonUsesTitle": "Usos habituales",
+        "title": "Acerca de los tokens JWT",
+        "whatIsDescription": "JSON Web Token (JWT) es un estándar abierto que define una forma compacta y autocontenida de transmitir información entre partes de forma segura como un objeto JSON. Esta información se puede verificar y es fiable porque está firmada digitalmente.",
+        "whatIsTitle": "¿Qué es un JWT?"
+      },
+      "modes": {
+        "decode": "Decodificar JWT",
+        "encode": "Codificar JWT"
+      }
+    },
+    "seo": {
+      "description": "Decodifica y codifica fácilmente JSON Web Tokens (JWT) para una autenticación y autorización seguras y verificables.",
+      "title": "Decodificar / codificar JWT"
+    },
+    "shared": {
+      "actions": {
+        "clear": "Limpiar",
+        "copyToClipboard": "Copiar al portapapeles",
+        "generateExample": "Generar ejemplo"
+      },
+      "labels": {
+        "decodedHeader": "Cabecera decodificada",
+        "encodedValue": "Valor codificado",
+        "jwtToken": "Token web JSON (JWT)",
+        "signatureHint": "Introduce abajo el secreto usado para firmar el JWT:",
+        "signatureVerification": "Verificación de la firma JWT"
+      },
+      "messages": {
+        "copied": "Copiado al portapapeles"
+      },
+      "placeholders": {
+        "secretKey": "Clave secreta"
+      },
+      "status": {
+        "invalidToken": "Token no válido para el secreto indicado"
+      }
+    }
+  },
+  "legal-page": {
+    "breadcrumb": {
+      "label": "Ruta de navegación",
+      "legal": "Legal"
+    },
+    "error": {
+      "code": "({{ code }})"
+    }
+  },
+  "madrid-transport-map": {
+    "actions": {
+      "dismissError": "Descartar el error"
+    },
+    "basemaps": {
+      "gray": {
+        "name": "Lienzo claro",
+        "shortName": "Claro"
+      },
+      "satellite": {
+        "name": "Vista satélite",
+        "shortName": "Satélite"
+      },
+      "streets": {
+        "name": "Vista de calles",
+        "shortName": "Calles"
+      }
+    },
+    "detail": {
+      "accessible": "Accesible",
+      "active": "Activa",
+      "activeRoute": "Ruta activa",
+      "centerOnMap": "Centrar en el mapa",
+      "clearRoute": "Quitar ruta",
+      "close": "Cerrar la ficha de detalle",
+      "crtmZone": "Zona tarifaria del CRTM",
+      "deselectLine": "Quitar la línea",
+      "disclaimerBody": "Trazados, estaciones y tarifas son una aproximación orientativa y pueden contener fallos. Consulta siempre fuentes oficiales del CRTM, Metro y Cercanías.",
+      "disclaimerTitle": "Aviso:",
+      "dismissRoute": "Quitar el resaltado de la ruta",
+      "free": "Gratuito",
+      "linesServed": "Líneas disponibles (haz clic para ver la ruta):",
+      "metrobusTenTrip": "Metrobús / 10 viajes:",
+      "monthlyPass": "Abono Transporte (30 días):",
+      "passValidity": "Los abonos son válidos en todos los modos de transporte (Metro, Cercanías, EMT e Interurbanos) dentro de esta zona.",
+      "routeDisplayed": "Ruta mostrada",
+      "routeHighlighted": "La ruta completa y las paradas de esta línea se resaltan en el mapa.",
+      "senior": "Mayores de 65:",
+      "seniorShort": "+65 años:",
+      "tenTripTicket": "Billete 10 viajes:",
+      "viewLineRoute": "Ver la ruta completa de la línea {{ line }}",
+      "youthPass": "Abono Joven (≤ 26 años):",
+      "zoneBadge": "Zona {{ zone }}"
+    },
+    "disclaimer": {
+      "approximation": "aproximación orientativa",
+      "ariaLabel": "Aviso legal y de precisión",
+      "dismiss": "Cerrar aviso",
+      "lede": "Las líneas, paradas y tarifas son una",
+      "suffix": "y pueden contener fallos o variaciones de servicio. Consulta siempre canales oficiales (CRTM / Metro / Renfe).",
+      "title": "Aviso:"
+    },
+    "drawer": {
+      "closePanel": "Cerrar panel",
+      "collapse": "Contraer",
+      "dragHint": "Arrastra o toca para expandir o contraer",
+      "expand": "Expandir"
+    },
+    "errors": {
+      "loadBusEmt": "No se ha podido cargar el conjunto de datos de la red de autobuses de la EMT. Inténtalo de nuevo.",
+      "loadBusInterurban": "No se ha podido cargar el conjunto de datos de la red de autobuses interurbanos. Inténtalo de nuevo.",
+      "mapInit": "No se ha podido inicializar el motor gráfico del mapa."
+    },
+    "layers": {
+      "fareRegions": "Regiones tarifarias del CRTM",
+      "mapView": "Vista del mapa",
+      "networks": "Redes",
+      "tariffZones": "Zonas tarifarias (A - E2)",
+      "title": "Redes de transporte",
+      "togglePanel": "Mostrar u ocultar el panel de capas de red"
+    },
+    "legend": {
+      "abono": "Abono:",
+      "allZones": "(todas las zonas)",
+      "hint": "Toca cualquier tarjeta de zona para centrar e inspeccionar municipios y abonos.",
+      "hintExpanded": "Haz clic en cualquier tarjeta de zona de arriba o directamente en el mapa para consultar municipios y abonos.",
+      "opacityAria": "Control de opacidad del relleno de zonas",
+      "opacityLabel": "Opacidad del relleno de zonas",
+      "opacityPercent": "{{ percent }} % de opacidad",
+      "senior": "Mayores de 65 años:",
+      "seniorFree": "Gratuito ({{ price }})",
+      "subsidised": "✨ Tarifas bonificadas vigentes (descuento del 50 % al 60 % del CRTM)",
+      "subtle": "Suave (5 %)",
+      "tenTrips": "10 viajes:",
+      "title": "Leyenda de zonas tarifarias y tarifas",
+      "toggle": "Mostrar u ocultar la leyenda de zonas tarifarias del CRTM",
+      "vibrant": "Intenso (80 %)",
+      "youthPass": "Abono Joven (≤ 26 años):"
+    },
+    "mobile": {
+      "faresZones": "Tarifas y zonas",
+      "layersNetworks": "Capas y redes",
+      "openLayers": "Abrir controles de capas"
+    },
+    "networks": {
+      "cercanias": {
+        "name": "Cercanías Renfe",
+        "shortName": "Cercanías"
+      },
+      "emt": {
+        "name": "EMT Madrid (Autobuses)",
+        "shortName": "EMT"
+      },
+      "interurban": {
+        "name": "Autobuses interurbanos",
+        "shortName": "Interurbanos"
+      },
+      "metro": {
+        "name": "Metro de Madrid",
+        "shortName": "Metro"
+      }
+    },
+    "search": {
+      "ariaLabel": "Buscar estaciones y líneas de transporte de Madrid",
+      "clear": "Borrar la búsqueda",
+      "noResultsHint": "Prueba a buscar otra estación, parada o número de línea",
+      "noResultsTitle": "No se han encontrado estaciones",
+      "placeholder": "Busca estaciones, paradas o líneas (p. ej. Sol, Atocha, C-5, L1)..."
+    },
+    "seo": {
+      "description": "Mapa interactivo de la red de transporte y las zonas tarifarias del CRTM de Madrid. Explora Metro, Cercanías, EMT, autobuses interurbanos y las zonas tarifarias A–E2.",
+      "keywords": "mapa transporte Madrid, Metro Madrid, Cercanías Renfe, EMT Madrid, zonas CRTM, abono transporte, zonas tarifarias",
+      "title": "Mapa de transporte de Madrid: Metro, Cercanías y zonas tarifarias"
+    },
+    "tabs": {
+      "details": "Detalles",
+      "faresZones": "Tarifas y zonas",
+      "layers": "Capas"
+    },
+    "zones": {
+      "a": {
+        "coverage": "Municipio de Madrid capital (Sol, Atocha, Chamartín, Barajas, Vallecas, Carabanchel)",
+        "name": "Zona A"
+      },
+      "b1": {
+        "coverage": "Primera corona metropolitana (Alcobendas, San Sebastián de los Reyes, Pozuelo, Majadahonda, Coslada, San Fernando, Getafe, Leganés, Alcorcón)",
+        "name": "Zona B1"
+      },
+      "b2": {
+        "coverage": "Segunda corona metropolitana (Las Rozas, Móstoles, Fuenlabrada, Parla, Pinto, Rivas-Vaciamadrid, Torrejón de Ardoz, Tres Cantos)",
+        "name": "Zona B2"
+      },
+      "b3": {
+        "coverage": "Tercer anillo metropolitano (Alcalá de Henares, Colmenar Viejo, Collado Villalba, Valdemoro, Navalcarnero, Arganda del Rey, Arroyomolinos)",
+        "name": "Zona B3"
+      },
+      "c1": {
+        "coverage": "Región metropolitana exterior (Aranjuez, El Escorial, Guadarrama, Chinchón, San Martín de Valdeiglesias, Buitrago del Lozoya)",
+        "name": "Zona C1"
+      },
+      "c2": {
+        "coverage": "Municipios fronterizos de la Comunidad de Madrid (Cercedilla, Santa María de la Alameda, Puebla de la Sierra)",
+        "name": "Zona C2"
+      },
+      "e1": {
+        "coverage": "Corredor limítrofe de Castilla-La Mancha (Guadalajara, Azuqueca de Henares, Illescas)",
+        "name": "Zona E1"
+      },
+      "e2": {
+        "coverage": "Corredor ampliado de Castilla-La Mancha (Talavera de la Reina, Toledo capital, Tarancón)",
+        "name": "Zona E2"
+      }
+    }
+  },
+  "madrid-zbe-map": {
+    "badges": {
+      "a": {
+        "chip": "Sin etiq.",
+        "description": "Vehículos más contaminantes: gasolina anteriores a 2001 (anteriores a Euro 3) y diésel anteriores a 2006 (anteriores a Euro 4).",
+        "label": "Sin etiqueta (A)"
+      },
+      "b": {
+        "chip": "B",
+        "description": "Turismos de gasolina matriculados entre {{ petrolDate }} y 2005 (Euro 3), y diésel matriculados entre 2006 y {{ dieselDate }} (Euro 4 y 5).",
+        "label": "B (amarilla)"
+      },
+      "c": {
+        "chip": "C",
+        "description": "Turismos y furgonetas ligeras de gasolina matriculados a partir de {{ petrolDate }} (Euro 4, 5 y 6) y diésel desde {{ dieselDate }} (Euro 6).",
+        "label": "C (verde)"
+      },
+      "cero": {
+        "chip": "Emisiones",
+        "description": "Vehículos 100 % eléctricos (BEV), híbridos enchufables (PHEV) con autonomía ≥ 40 km y pila de combustible.",
+        "label": "0 emisiones"
+      },
+      "eco": {
+        "chip": "ECO",
+        "description": "Híbridos no enchufables (HEV), enchufables con menos de 40 km, microhíbridos (MHEV) y vehículos a gas (GLP/GNC).",
+        "label": "ECO"
+      }
+    },
+    "detail": {
+      "camera": {
+        "direction": "Sentido:",
+        "function": "Función:",
+        "gps": "Coordenadas GPS:",
+        "lanes": "Carriles / equipos:",
+        "lanesValue": "{{ lanes }} carriles monitorizados ({{ devices }} lectores LPR)",
+        "location": "Ubicación:",
+        "technology": "Tecnología:",
+        "zone": "Zona controlada:",
+        "zoom": "Acercar la cámara"
+      },
+      "close": "Cerrar detalles",
+      "empty": {
+        "description": "Haz clic en cualquier zona del mapa o de la leyenda para ver sus restricciones de acceso, las excepciones por etiqueta DGT y las sanciones.",
+        "footnote": "Datos aproximados y orientativos. Consulta siempre fuentes oficiales.",
+        "title": "Información de zonas ZBE"
+      },
+      "focusZone": "Centrar la zona en el mapa",
+      "footnote": {
+        "body": "Las delimitaciones, cámaras y normativas son una aproximación orientativa y pueden contener errores. Consulta siempre la normativa oficial del Ayuntamiento de Madrid y de la DGT.",
+        "lead": "Aviso:"
+      },
+      "legalNotice": "Infracción grave según la Ley sobre Tráfico ({{ amount }} por pronto pago). Base legal: {{ law }}.",
+      "parking": {
+        "address": "Dirección:",
+        "benefit": "Ventaja Madrid 360:",
+        "capacity": "{{ count }} plazas totales",
+        "electric": "Plazas eléctricas:",
+        "hours": "Horario:",
+        "pmr": "Plazas PMR:",
+        "transit": "Conexión Metro / Cercanías:",
+        "zoom": "Acercar el aparcamiento"
+      },
+      "rulesTitle": "Normativa de acceso según la etiqueta DGT",
+      "sanction": "Sanción por acceso no autorizado: {{ amount }}"
+    },
+    "disclaimer": {
+      "after": "y pueden contener errores. Consulta siempre las ordenanzas oficiales del Ayuntamiento de Madrid y de la DGT.",
+      "aria": "Aviso legal y de precisión",
+      "before": "Las delimitaciones, cámaras y normativas son una",
+      "close": "Cerrar aviso",
+      "highlight": "aproximación orientativa",
+      "lead": "Aviso:"
+    },
+    "errorBanner": {
+      "close": "Cerrar notificación"
+    },
+    "errors": {
+      "mapInit": "No se pudo inicializar el motor gráfico del mapa.",
+      "pointsLoad": "No se pudieron cargar los puntos de control y los aparcamientos."
+    },
+    "layers": {
+      "basemapTitle": "Estilo del mapa",
+      "basemaps": {
+        "gray": {
+          "name": "Gris claro cartográfico",
+          "shortName": "Claro"
+        },
+        "satellite": {
+          "name": "Satélite de alta resolución",
+          "shortName": "Satélite"
+        },
+        "streets": {
+          "name": "Calles y carreteras",
+          "shortName": "Calles"
+        }
+      },
+      "camerasHint": "Puntos de control de matrículas",
+      "camerasLabel": "Cámaras de acceso (OCR)",
+      "camerasShort": "Cámaras OCR",
+      "keyPointsTitle": "Puntos clave",
+      "madridCapital": "Madrid capital",
+      "mapViewTitle": "Vista del mapa",
+      "metropolitanRing": "Corona metropolitana",
+      "opacityAria": "Ajustar la transparencia de las capas de zonas",
+      "opacityAriaShort": "Ajustar la opacidad de las zonas",
+      "opacityLabel": "Opacidad de las zonas",
+      "opacityShort": "Opacidad de zonas",
+      "parkingsHint": "Park & Ride conectados a Metro y Cercanías",
+      "parkingsLabel": "Aparcamientos disuasorios",
+      "parkingsShort": "Aparcamientos P+R",
+      "poiTitle": "Puntos de control e infraestructura",
+      "quickFocus": "Enfoques rápidos",
+      "quickFocusShort": "Enfoque rápido",
+      "title": "Capas y controles",
+      "toggleAria": "Desplegar o contraer el panel de capas",
+      "zonesTitle": "Zonas de Bajas Emisiones"
+    },
+    "legend": {
+      "area": "{{ value }} km²",
+      "count": "{{ count }} zonas",
+      "countEmbedded": "{{ count }} zonas activas",
+      "fineLabel": "Multa:",
+      "hint": "Haz clic en cualquier zona para centrar el mapa y ver las restricciones de vehículos.",
+      "hintEmbedded": "Toca una zona para enfocar el mapa y consultar las restricciones completas por etiqueta DGT.",
+      "sanction": "Sanción: {{ amount }}",
+      "surfaceLabel": "Superficie:",
+      "title": "Leyenda ZBE",
+      "titleEmbedded": "Zonas de Bajas Emisiones",
+      "toggleAria": "Alternar la leyenda de zonas ZBE"
+    },
+    "mobile": {
+      "closePanel": "Cerrar panel",
+      "details": "Detalles",
+      "dragHandle": "Arrastra o toca para desplegar o contraer",
+      "layers": "Capas",
+      "openLayers": "Abrir controles de capas",
+      "simulator": "Simulador",
+      "simulatorDgt": "Simulador DGT",
+      "zones": "Zonas ZBE",
+      "zonesShort": "Zonas"
+    },
+    "panel": {
+      "collapse": "Contraer panel",
+      "expand": "Desplegar panel"
+    },
+    "search": {
+      "aria": "Buscar en Madrid 360 y Zonas de Bajas Emisiones",
+      "badges": {
+        "camera": "Cámara OCR",
+        "parking": "Aparcamiento P+R",
+        "zone": "Zona ZBE"
+      },
+      "cameraSubtitle": "{{ location }} ({{ zone }})",
+      "clear": "Borrar búsqueda",
+      "emptyHint": "Prueba a buscar por Centro, Plaza Elíptica, M-30, Pitis o Alcalá",
+      "emptyTitle": "Sin coincidencias",
+      "parkingSubtitle": "{{ capacity }} plazas • {{ transit }}",
+      "placeholder": "Buscar zona ZBE, cámara o aparcamiento P+R...",
+      "zoneSubtitle": "{{ level }} • {{ area }} km²"
+    },
+    "seo": {
+      "description": "Mapa interactivo de Madrid 360 y las Zonas de Bajas Emisiones (ZBE Distrito Centro, Plaza Elíptica, M-30, cámaras de control OCR y simulador de etiquetas DGT).",
+      "keywords": "Madrid 360, ZBE Madrid, Madrid Central, Distrito Centro ZBEDEP, Plaza Elíptica ZBE, M-30 bajas emisiones, cámaras ZBE Madrid, etiquetas DGT Madrid",
+      "title": "Mapa Madrid 360 y ZBE - Zonas de Bajas Emisiones interactivas"
+    },
+    "simulator": {
+      "centro": {
+        "ceroMessage": "Circulación y estacionamiento en el SER permitidos, sin coste ni límite de horario.",
+        "ceroTitle": "Acceso y estacionamiento libres",
+        "deniedMessage": "Prohibida la entrada a vehículos sin distintivo (A) bajo sanción de {{ amount }} ({{ earlyAmount }} por pronto pago).",
+        "deniedTitle": "Acceso prohibido las 24 horas",
+        "ecoMessage": "Acceso libre. En superficie (SER) puedes estacionar un máximo de 2 horas. En aparcamiento público, sin límite.",
+        "ecoTitle": "Acceso libre (SER máx. 2 h)",
+        "historicMessage": "Solo está permitido si el vehículo ya estaba empadronado en el distrito antes de 2021 o si traslada a personas con movilidad reducida (PMR).",
+        "historicTitle": "Acceso solo para residentes históricos",
+        "motorcycleMessage": "Las motocicletas y los ciclomotores con etiqueta B o C pueden acceder libremente de 07:00 a 22:00 h.",
+        "motorcycleTitle": "Acceso por horario (de 07:00 a 22:00)",
+        "parkingMessage": "Es obligatorio estacionar en un aparcamiento de uso público o en un garaje privado concertado. Está prohibido aparcar en la calle.",
+        "parkingTitle": "Acceso condicionado a aparcamiento",
+        "residentMessage": "Como residente empadronado en Distrito Centro, puedes acceder y estacionar en tu barrio.",
+        "residentTitle": "Acceso permitido (residente)",
+        "transitMessage": "Los vehículos con etiqueta B y C no pueden acceder solo de paso (tránsito) ni para aparcar en la calle (SER).",
+        "transitTitle": "Acceso denegado (multa de {{ amount }})"
+      },
+      "eliptica": {
+        "defaultMessage": "Sin restricciones específicas de ZBE para los distintivos CERO, ECO, C y B.",
+        "defaultTitle": "Acceso y circulación libres",
+        "deniedMessage": "Prohibido el acceso y la circulación a vehículos sin distintivo (A). Sanción: {{ amount }}.",
+        "deniedTitle": "Acceso prohibido las 24 horas",
+        "residentMessage": "Vehículo empadronado en el perímetro delimitado de Plaza Elíptica.",
+        "residentTitle": "Permitido solo a residentes"
+      },
+      "getafe": {
+        "deniedMessage": "Prohibida la circulación de vehículos sin distintivo (A) por el perímetro de la ZBE de Getafe.",
+        "deniedTitle": "Prohibido el acceso (sanción {{ amount }})",
+        "freeMessage": "Los vehículos CERO y ECO pueden circular y estacionar sin restricciones por el centro de Getafe.",
+        "freeTitle": "Acceso libre (CERO / ECO)",
+        "parkingMessage": "Se permite el acceso a no residentes si se dirigen a aparcamientos públicos o a reservas de estacionamiento.",
+        "parkingTitle": "Acceso permitido con destino a aparcamiento",
+        "residentMessage": "Los vehículos censados e inscritos en el padrón de Getafe tienen libre acceso al casco urbano.",
+        "residentTitle": "Acceso permitido (empadronado en Getafe)",
+        "restrictedMessage": "Solo los vehículos de residentes con autorización o PMR pueden acceder sin etiqueta.",
+        "restrictedTitle": "Acceso restringido a residentes",
+        "transitMessage": "Los vehículos B y C no empadronados deben justificar su estancia o destino en el perímetro de Getafe.",
+        "transitTitle": "Tránsito restringido"
+      },
+      "m30": {
+        "defaultMessage": "Circulación permitida por la M-30 y las calles interiores según la normativa general de tráfico y el SER.",
+        "defaultTitle": "Acceso y circulación libres",
+        "deniedMessage": "Los vehículos A no domiciliados en la capital tienen prohibido circular por la M-30 y por el interior. Sanción: {{ amount }}.",
+        "deniedTitle": "Prohibido circular por la M-30 y el interior",
+        "residentMessage": "Permitido solo si el turismo paga el Impuesto de Tracción Mecánica (IVTM) en Madrid capital.",
+        "residentTitle": "Permitido (IVTM en Madrid capital)"
+      },
+      "municipio": {
+        "defaultMessage": "Circulación permitida por todas las vías del municipio de Madrid.",
+        "defaultTitle": "Acceso libre en todo Madrid",
+        "deniedMessage": "Prohibida la circulación por cualquier vía pública del término municipal de Madrid. Sanción: {{ amount }}.",
+        "deniedTitle": "Prohibido en todo el municipio",
+        "residentMessage": "Turismos A domiciliados en Madrid con el IVTM al día.",
+        "residentTitle": "Permitido temporalmente (empadronados)"
+      },
+      "purposes": {
+        "publicParking": "Aparcamiento público / garaje",
+        "serStreet": "Estacionar en la calle (SER)",
+        "transit": "Tránsito de paso (sin aparcar)"
+      },
+      "residency": {
+        "madridResident": "Residente en Madrid capital",
+        "nonResident": "No residente (externo)",
+        "zoneResident": "Residente en Distrito Centro"
+      },
+      "resultsTitle": "Resultado por zona ZBE",
+      "ser": {
+        "allowed": "Permitido",
+        "denied": "No permitido",
+        "label": "Estacionamiento SER:",
+        "max": "Máx. {{ hours }} h"
+      },
+      "stepBadge": "1. Distintivo ambiental DGT",
+      "stepPurpose": "4. Motivo o destino del viaje",
+      "stepResidency": "3. Situación de residencia",
+      "stepVehicle": "2. Tipo de vehículo",
+      "subtitle": "Comprueba al instante si tu vehículo puede circular y dónde puede aparcar",
+      "title": "Simulador de acceso Madrid 360",
+      "vehicleTypes": {
+        "car": "Turismo",
+        "motorcycle": "Moto / Ciclomotor",
+        "van": "Furgoneta / Mixto"
+      },
+      "verdict": {
+        "allowed": "PERMITIDO",
+        "conditional": "CONDICIONADO",
+        "denied": "PROHIBIDO"
+      },
+      "viewOnMap": "Ver en el mapa",
+      "zones": {
+        "zbe-distrito-centro": "ZBEDEP Distrito Centro",
+        "zbe-getafe": "ZBE Centro de Getafe",
+        "zbe-interior-m30": "Madrid ZBE - Interior M-30",
+        "zbe-municipio": "Madrid ZBE (Término Municipal)",
+        "zbe-plaza-eliptica": "ZBEDEP Plaza Elíptica"
+      }
+    },
+    "tabs": {
+      "detail": "Info de zona",
+      "layers": "Capas",
+      "simulator": "Simulador"
+    },
+    "zones": {
+      "zbe-alcala": {
+        "description": "ZBE en el Casco Histórico, Patrimonio de la Humanidad. Las restricciones se activan automáticamente en los episodios de contaminación elevada.",
+        "lawReference": "Ordenanza Reguladora de la ZBE de Alcalá de Henares (BOCM 2025)",
+        "name": "ZBE Casco Histórico de Alcalá de Henares",
+        "restrictionLevel": "Control dinámico (por episodios de NO₂)",
+        "rules": {
+          "a": "Libre circulación ordinaria salvo activación del protocolo por superación de 180 µg/m³ de NO₂.",
+          "b": "Libre circulación ordinaria; restricciones solo en episodios severos de contaminación.",
+          "c": "Libre circulación ordinaria; restricciones solo en episodios severos de contaminación.",
+          "cero": "Libre acceso y circulación sin restricciones en todo momento.",
+          "eco": "Libre acceso y circulación sin restricciones en todo momento."
+        },
+        "shortName": "Alcalá Histórico"
+      },
+      "zbe-alcobendas": {
+        "description": "Zona de Bajas Emisiones del núcleo histórico y comercial de Alcobendas, en torno a Marquesa Viuda de Aldama y la Av. de España.",
+        "lawReference": "Ordenanza Reguladora de la ZBE de Alcobendas",
+        "name": "ZBE Distrito Centro de Alcobendas",
+        "restrictionLevel": "Regulada (CERO/ECO/C/B libre; A restringido)",
+        "rules": {
+          "a": "Prohibición de circulación a vehículos sin distintivo ambiental no empadronados.",
+          "b": "Libre acceso y circulación sin restricciones.",
+          "c": "Libre acceso y circulación sin restricciones.",
+          "cero": "Libre acceso y circulación sin restricciones.",
+          "eco": "Libre acceso y circulación sin restricciones."
+        },
+        "shortName": "Alcobendas Centro"
+      },
+      "zbe-alcorcon": {
+        "description": "Zona de Bajas Emisiones del casco urbano de Alcorcón que protege el entorno comercial y peatonal de Calle Mayor y Plaza de España.",
+        "lawReference": "Ordenanza Municipal de la ZBE de Alcorcón",
+        "name": "ZBE Casco Antiguo de Alcorcón",
+        "restrictionLevel": "Regulada (tráfico de paso sin etiqueta)",
+        "rules": {
+          "a": "Restricción de tráfico de paso para vehículos sin distintivo ambiental no empadronados.",
+          "b": "Acceso libre para empadronados y vehículos con destino a la zona.",
+          "c": "Acceso libre para empadronados y vehículos con destino a la zona.",
+          "cero": "Libre acceso y estacionamiento sin restricciones.",
+          "eco": "Libre acceso y estacionamiento sin restricciones."
+        },
+        "shortName": "Alcorcón Centro"
+      },
+      "zbe-distrito-centro": {
+        "description": "Zona de Bajas Emisiones de Especial Protección en el corazón histórico de Madrid. Reglas estrictas de acceso según el distintivo ambiental y aparcamiento obligatorio.",
+        "lawReference": "Ordenanza de Movilidad Sostenible (OMS) art. 23",
+        "name": "ZBEDEP Distrito Centro (Madrid Central)",
+        "restrictionLevel": "Restricción máxima",
+        "rules": {
+          "a": "Acceso totalmente prohibido salvo para residentes empadronados antes de 2021, PMR y servicios de emergencia.",
+          "b": "Solo se puede acceder si se estaciona en un aparcamiento de uso público o privado concertado, o con invitación de un residente.",
+          "c": "Solo se puede acceder si se estaciona en un aparcamiento de uso público o privado concertado, o con invitación de un residente.",
+          "cero": "Acceso libre y estacionamiento gratuito en superficie (SER), sin coste ni límite de horario.",
+          "eco": "Acceso libre. Estacionamiento en superficie (SER) durante un máximo de 2 horas o en aparcamientos subterráneos."
+        },
+        "shortName": "Distrito Centro"
+      },
+      "zbe-fuenlabrada": {
+        "description": "Zona de Bajas Emisiones del Distrito Centro de Fuenlabrada con exención general para los vehículos censados en el municipio.",
+        "lawReference": "Ordenanza de Movilidad Sostenible y ZBE de Fuenlabrada",
+        "name": "ZBE Distrito Centro de Fuenlabrada",
+        "restrictionLevel": "Regulada (empadronados y B/C/ECO/CERO)",
+        "rules": {
+          "a": "Restricción general de paso para vehículos sin distintivo no empadronados en Fuenlabrada.",
+          "b": "Acceso permitido a residentes y a vehículos con destino o estancia justificada en el área.",
+          "c": "Acceso permitido a residentes y a vehículos con destino o estancia justificada en el área.",
+          "cero": "Libre acceso y circulación sin restricciones.",
+          "eco": "Libre acceso y circulación sin restricciones."
+        },
+        "shortName": "Fuenlabrada Centro"
+      },
+      "zbe-getafe": {
+        "description": "Zona de Bajas Emisiones del centro urbano y casco histórico de Getafe delimitada por C/ Toledo, Sur, Ferrocarril y Juan de la Cierva.",
+        "lawReference": "Ordenanza Reguladora ZBE de Getafe (BOCM enero 2025)",
+        "name": "ZBE Centro de Getafe",
+        "restrictionLevel": "Regulada (CERO/ECO libre; B/C con destino o residentes)",
+        "rules": {
+          "a": "Prohibido el acceso y la circulación salvo residentes empadronados y PMR autorizados.",
+          "b": "Acceso permitido a residentes empadronados, vehículos con destino a aparcamientos o autorizaciones.",
+          "c": "Acceso permitido a residentes empadronados, vehículos con destino a aparcamientos o autorizaciones.",
+          "cero": "Libre acceso y estacionamiento sin restricciones.",
+          "eco": "Libre acceso y estacionamiento sin restricciones."
+        },
+        "shortName": "Getafe Centro"
+      },
+      "zbe-interior-m30": {
+        "description": "Área delimitada por el anillo de la autovía M-30 que comprende los 7 distritos centrales de la capital.",
+        "lawReference": "Ordenanza de Movilidad Sostenible (OMS) art. 21",
+        "name": "Madrid ZBE - Interior M-30",
+        "restrictionLevel": "Alto (vehículos A y M-30)",
+        "rules": {
+          "a": "Prohibida la circulación por la M-30 y las calles interiores para turismos sin distintivo ambiental no domiciliados en Madrid.",
+          "b": "Acceso libre. Estacionamiento SER ordinario.",
+          "c": "Acceso libre. Estacionamiento SER ordinario.",
+          "cero": "Acceso libre y estacionamiento SER sin límite de tiempo.",
+          "eco": "Acceso libre. Estacionamiento SER ordinario con bonificación tarifaria."
+        },
+        "shortName": "Interior M-30"
+      },
+      "zbe-mostoles": {
+        "description": "Zona de Bajas Emisiones y pacificación del tráfico sobre el perímetro del Área 20 de Móstoles (C/ Cristo, Juan XXIII, Reyes Católicos, Ricardo Medem).",
+        "lawReference": "Ordenanza de Tráfico y Movilidad de Móstoles",
+        "name": "ZBE Área 20 Almendra Central de Móstoles",
+        "restrictionLevel": "Área 20 residencial (restricción de vehículos sin distintivo)",
+        "rules": {
+          "a": "Restricción de paso al interior de la almendra central salvo residentes empadronados y PMR.",
+          "b": "Libre acceso a aparcamientos y residentes; libre circulación por el anillo perimetral.",
+          "c": "Libre acceso a aparcamientos y residentes; libre circulación por el anillo perimetral.",
+          "cero": "Libre circulación y estacionamiento sin restricciones.",
+          "eco": "Libre circulación y estacionamiento sin restricciones."
+        },
+        "shortName": "Móstoles Centro"
+      },
+      "zbe-municipio": {
+        "description": "Zona de Bajas Emisiones que abarca la totalidad del término municipal de Madrid (los 21 distritos de la capital).",
+        "lawReference": "Ordenanza de Movilidad Sostenible (OMS) art. 21 y Ley sobre Tráfico",
+        "name": "Madrid ZBE (Término Municipal Completo)",
+        "restrictionLevel": "Moderado (vehículos A)",
+        "rules": {
+          "a": "Prohibido el acceso y la circulación si el vehículo no está domiciliado en Madrid capital y no abona el IVTM en el Ayuntamiento.",
+          "b": "Acceso y estacionamiento permitidos sin restricción.",
+          "c": "Acceso y estacionamiento permitidos sin restricción.",
+          "cero": "Acceso y estacionamiento permitidos sin restricción.",
+          "eco": "Acceso y estacionamiento permitidos sin restricción."
+        },
+        "shortName": "Madrid ZBE Global"
+      },
+      "zbe-parla": {
+        "description": "Zona de Bajas Emisiones del casco histórico y comercial de Parla que regula el acceso en torno a Calle Real, Calle Pinto y Calle Torrejón.",
+        "lawReference": "Ordenanza Reguladora ZBE Parla (BOCM 20240424-72)",
+        "name": "ZBE Casco Antiguo de Parla",
+        "restrictionLevel": "Regulada (BOCM 2024/2025)",
+        "rules": {
+          "a": "Prohibida la circulación al interior salvo residentes empadronados y vehículos esenciales.",
+          "b": "Acceso permitido a residentes, aparcamientos y autorizaciones comerciales.",
+          "c": "Acceso permitido a residentes, aparcamientos y autorizaciones comerciales.",
+          "cero": "Libre acceso y estacionamiento sin restricciones.",
+          "eco": "Libre acceso y estacionamiento sin restricciones."
+        },
+        "shortName": "Parla Centro"
+      },
+      "zbe-plaza-eliptica": {
+        "description": "Zona de Bajas Emisiones de Especial Protección centrada en el histórico punto de emisiones de Usera y Carabanchel, alrededor de la A-42.",
+        "lawReference": "Ordenanza de Movilidad Sostenible (OMS) art. 24",
+        "name": "ZBEDEP Plaza Elíptica",
+        "restrictionLevel": "Muy alto (especial protección)",
+        "rules": {
+          "a": "Acceso totalmente prohibido las 24 horas a los vehículos A (sin distintivo), salvo residentes empadronados o traslados de PMR.",
+          "b": "Libre circulación y estacionamiento sin restricciones específicas de ZBE.",
+          "c": "Libre circulación y estacionamiento sin restricciones específicas de ZBE.",
+          "cero": "Libre circulación y estacionamiento sin restricciones específicas de ZBE.",
+          "eco": "Libre circulación y estacionamiento sin restricciones específicas de ZBE."
+        },
+        "shortName": "Plaza Elíptica"
+      },
+      "zbe-rivas": {
+        "description": "Zona de Bajas Emisiones de Rivas que protege los entornos escolares y los ejes residenciales de alta afluencia peatonal.",
+        "lawReference": "Plan de Movilidad Escolar Sostenible y ZBE de Rivas",
+        "name": "ZBE Rivas-Vaciamadrid",
+        "restrictionLevel": "Regulada (entornos escolares y centro)",
+        "rules": {
+          "a": "Control de paso y limitación horaria en los entornos escolares señalizados.",
+          "b": "Acceso regulado prioritario.",
+          "c": "Acceso regulado prioritario.",
+          "cero": "Libre acceso sin restricciones.",
+          "eco": "Libre acceso sin restricciones."
+        },
+        "shortName": "Rivas ZBE"
+      }
+    }
+  },
+  "markdown-to-excel": {
+    "howTo": {
+      "steps": {
+        "check": {
+          "descriptionPrefix": "Descubre al instante cómo queda tu tabla. Admitimos marcadores de alineación de columna como",
+          "descriptionSuffix": ".",
+          "title": "2. Revisa la vista previa"
+        },
+        "export": {
+          "description": "Pulsa «Copiar para Excel» y pega directamente en Excel, Google Sheets o Numbers. No hace falta descargar ningún archivo.",
+          "title": "3. Pega en Excel"
+        },
+        "paste": {
+          "description": "Copia tu tabla de Markdown desde GitHub, VS Code o cualquier archivo MD y pégala en el editor de la izquierda.",
+          "title": "1. Pega el Markdown"
+        }
+      },
+      "title": "Cómo usar esta herramienta"
+    },
+    "input": {
+      "label": "Tabla de Markdown",
+      "placeholder": "| Columna 1 | Columna 2 |\\n| --- | --- |\\n| Fila 1 | Fila 2 |"
+    },
+    "preview": {
+      "empty": "Pega una tabla de Markdown válida para ver la vista previa.",
+      "hint": "Selecciona y copia la tabla de abajo",
+      "title": "Vista previa de Excel"
+    },
+    "seo": {
+      "description": "Convierte tablas de Markdown a formatos compatibles con Excel (TSV) de forma sencilla. Copia y pega tus datos directamente en tu hoja de cálculo favorita.",
+      "keywords": "markdown, excel, conversor, tabla, tsv, hoja de cálculo, herramientas para desarrolladores",
+      "title": "Conversor de Markdown a Excel"
+    },
+    "title": "Markdown a Excel"
+  },
+  "markdown-to-html": {
+    "actions": {
+      "copyHtml": "Copiar HTML",
+      "downloadHtml": "Descargar HTML",
+      "downloadHtmlDocument": "Descargar el documento HTML",
+      "print": "Imprimir",
+      "printDocument": "Imprimir documento",
+      "styles": "Estilos"
+    },
+    "editor": {
+      "clear": "Vaciar el editor",
+      "copyMarkdown": "Copiar Markdown",
+      "downloadMarkdown": "Descargar Markdown (.md)",
+      "loading": "Cargando el editor...",
+      "title": "Editor de Markdown"
+    },
+    "errors": {
+      "invalidCssFile": "Sube un archivo CSS válido (.css)"
+    },
+    "files": {
+      "htmlName": "documento.html",
+      "htmlTitle": "Documento convertido",
+      "markdownName": "documento.md",
+      "printTitle": "Documento para imprimir"
+    },
+    "mermaid": {
+      "downloadPng": "Descargar PNG",
+      "downloadSvg": "Descargar SVG",
+      "resetZoom": "Restablecer el zoom",
+      "syntaxError": "Error de sintaxis en el diagrama de Mermaid: {{ message }}",
+      "zoomIn": "Acercar",
+      "zoomOut": "Alejar"
+    },
+    "panels": {
+      "editor": "Editor",
+      "output": "Salida",
+      "toEditor": "Cambiar a la vista del editor",
+      "toOutput": "Cambiar a la vista de salida"
+    },
+    "presets": {
+      "github": "GitHub claro",
+      "indigo": "Índigo moderno",
+      "warm": "Serif cálido"
+    },
+    "preview": {
+      "emptyDescription": "Escribe Markdown estándar a la izquierda para revisar el HTML generado",
+      "emptyTitle": "Aún no hay nada que previsualizar",
+      "loading": "Cargando la vista previa del HTML..."
+    },
+    "seo": {
+      "description": "Convierte texto Markdown en código HTML limpio al instante con edición en paralelo en el navegador, preajustes de estilo CSS personalizados y exportaciones de código sencillas.",
+      "keywords": "markdown a html, generador de html, vista previa css, estilos dinámicos, css en línea, editor de marcado, código limpio",
+      "title": "Conversor de Markdown a HTML | definitive-tools"
+    },
+    "styles": {
+      "browse": "búscalo",
+      "cssSource": "Código fuente CSS",
+      "loading": "Cargando los estilos...",
+      "presets": "Preajustes de tema",
+      "reset": "Restablecer la plantilla predeterminada",
+      "title": "Personalización de estilos",
+      "upload": "Subir una hoja de estilos",
+      "uploadDescription": "Admite archivos de estilos (*.css)",
+      "uploadHint": "Arrastra aquí tu archivo CSS local o"
+    },
+    "tabs": {
+      "code": "Código",
+      "preview": "Vista previa"
+    }
+  },
+  "markdown-to-pdf": {
+    "actions": {
+      "generate": "Generar PDF",
+      "generating": "Generando..."
+    },
+    "editor": {
+      "clear": "Vaciar el editor",
+      "copyMarkdown": "Copiar Markdown",
+      "loading": "Cargando el editor...",
+      "title": "Editor"
+    },
+    "files": {
+      "pdfName": "documento.pdf"
+    },
+    "preview": {
+      "emptyDescription": "Empieza a escribir en el editor para ver la magia",
+      "emptyTitle": "Aún no hay nada que previsualizar",
+      "title": "Vista previa"
+    },
+    "seo": {
+      "description": "Convierte tu texto Markdown en documentos PDF profesionales al instante. Vista previa en vivo, estilos de primera y descarga sencilla.",
+      "keywords": "markdown, pdf, conversor, documentación, editor de markdown, pdf profesional, herramientas online",
+      "title": "Conversor de Markdown a PDF"
+    }
+  },
+  "meme-generator": {
+    "actions": {
+      "download": "Descargar meme"
+    },
+    "alignment": {
+      "center": "C",
+      "left": "I",
+      "right": "D"
+    },
+    "captions": {
+      "add": "Añadir texto",
+      "deleteCaption": "Eliminar texto",
+      "number": "Texto n.º {{ number }}",
+      "removeBox": "Quitar cuadro de texto",
+      "textPlaceholder": "Escribe el texto..."
+    },
+    "defaults": {
+      "bottomText": "TEXTO INFERIOR",
+      "customImage": "Imagen personalizada",
+      "newText": "TEXTO NUEVO",
+      "textBox": "CUADRO DE TEXTO {{ number }}",
+      "topText": "TEXTO SUPERIOR"
+    },
+    "fields": {
+      "alignment": "Alineación",
+      "caps": "Mayúsculas",
+      "capsExample": "Aa",
+      "fontFamily": "Familia tipográfica",
+      "fontSize": "Tamaño de fuente",
+      "outlineColor": "Color del contorno",
+      "outlineWidth": "Grosor del contorno",
+      "textColor": "Color del texto"
+    },
+    "files": {
+      "meme": "{{ slug }}-meme.jpg"
+    },
+    "messages": {
+      "downloaded": "¡Meme descargado correctamente!",
+      "failed": "No se ha podido generar el meme. Inténtalo de nuevo.",
+      "generating": "Generando el meme..."
+    },
+    "sections": {
+      "customize": "2. Personaliza el meme",
+      "selectTemplate": "1. Elige una plantilla"
+    },
+    "seo": {
+      "description": "Crea memes divertidos con textos personalizados, arrastra los textos para colocarlos, personaliza las fuentes y usa plantillas populares.",
+      "keywords": "generador de memes, creador de memes, crear meme, arrastrar texto meme, generador de memes personalizado, creador de memes gratis",
+      "title": "Generador de memes - Definitive Tools"
+    },
+    "subtitle": "Elige una plantilla o sube la tuya, personaliza los textos, arrástralos para colocarlos donde quieras y crea el meme perfecto al instante.",
+    "templatePicker": {
+      "searchPlaceholder": "Busca plantillas...",
+      "supports": "Admite PNG, JPG y WEBP",
+      "uploadLabel": "Sube tu propia plantilla de imagen"
+    },
+    "tips": {
+      "drag": "Haz clic y arrastra, o desliza los cuadros de texto para colocarlos en cualquier parte de la imagen."
+    },
+    "title": "Generador de memes"
+  },
+  "opengraph-generator": {
+    "about": {
+      "description": "Open Graph es una tecnología que permite que las páginas web se conviertan en objetos enriquecidos en las redes sociales. Cuando compartes un enlace en las redes sociales, las metaetiquetas de Open Graph determinan qué imagen, título y descripción aparecen en la publicación.",
+      "heading": "¿Qué es Open Graph?",
+      "title": "Sobre la generación de imágenes"
+    },
+    "actions": {
+      "downloadImage": "Descargar imagen"
+    },
+    "background": {
+      "gradientDirection": "Dirección del degradado",
+      "hint": "Define un fondo personalizado para tu imagen.",
+      "label": "Fondo",
+      "overlay": {
+        "blurRadius": "Radio de desenfoque",
+        "color": "Color",
+        "hint": "Personaliza la superposición de cuadrícula del fondo.",
+        "label": "Superposición de fondo",
+        "opacity": "Opacidad",
+        "pattern": "Patrón",
+        "patterns": {
+          "dots": "Puntos",
+          "graph": "Trama",
+          "grid": "Cuadrícula",
+          "none": "Ninguno"
+        },
+        "title": "Superposición de cuadrícula de fondo"
+      },
+      "types": {
+        "gradient": "Degradado",
+        "image": "Imagen",
+        "solid": "Color sólido"
+      }
+    },
+    "defaults": {
+      "easyStorage": "Almacenamiento sencillo",
+      "managedDatabases": "Bases de datos gestionadas para todos",
+      "marketing": "Marketing",
+      "openGraphImages": "Crea imágenes Open Graph atractivas"
+    },
+    "dimensions": "Dimensiones: {{ width }}x{{ height }}",
+    "download": {
+      "fileName": "imagen-opengraph"
+    },
+    "fields": {
+      "description": "Descripción",
+      "file": "Archivo:",
+      "image": "Imagen",
+      "logo": "Logotipo",
+      "tag": "Etiqueta",
+      "title": "Título"
+    },
+    "fontOptions": {
+      "color": "Color del texto",
+      "family": "Familia tipográfica",
+      "hint": "Personaliza la fuente de la etiqueta.",
+      "size": "Tamaño de la fuente",
+      "title": "Ajustes de fuente",
+      "weight": "Grosor de la fuente",
+      "weights": {
+        "black": "Negra",
+        "bold": "Negrita",
+        "extraBold": "Extranegrita",
+        "extraLight": "Extrafina",
+        "light": "Fina",
+        "medium": "Media",
+        "regular": "Normal",
+        "semiBold": "Seminegrita",
+        "thin": "Ultrafina"
+      }
+    },
+    "platforms": {
+      "openGraph": "Open Graph",
+      "twitter": "Twitter / X"
+    },
+    "sections": {
+      "chooseTemplate": "Elige una plantilla",
+      "imagePreview": "Vista previa de la imagen",
+      "templateProperties": "Propiedades de la plantilla"
+    },
+    "seo": {
+      "description": "Crea imágenes Open Graph y Twitter Cards profesionales que aumentan la visibilidad de tu sitio web en las redes sociales. Una herramienta fácil de usar para generar vistas previas sociales personalizadas.",
+      "keywords": "generador de opengraph, twitter cards, vista previa en redes sociales, metaetiquetas, imágenes para compartir, protocolo open graph, optimización para redes sociales, metadatos del sitio web, imágenes sociales personalizadas",
+      "title": "Generador de Open Graph"
+    }
+  },
+  "qr-generator": {
+    "about": {
+      "description": "Los códigos QR (Quick Response) son códigos de barras bidimensionales que se pueden escanear con la cámara de un teléfono. Almacenan distintos tipos de información, como URL, texto, datos de contacto y mucho más. Se desarrollaron originalmente en Japón para el seguimiento de piezas de automoción y se han vuelto omnipresentes para compartir información rápidamente.",
+      "heading": "¿Qué son los códigos QR?",
+      "title": "Acerca de los códigos QR"
+    },
+    "actions": {
+      "generate": "Generar código QR"
+    },
+    "contentType": {
+      "email": "Correo electrónico",
+      "geo": "Ubicación",
+      "label": "Tipo de contenido",
+      "phone": "Teléfono",
+      "sms": "SMS",
+      "text": "Texto",
+      "url": "URL",
+      "vcard": "vCard",
+      "wifi": "WiFi"
+    },
+    "customization": {
+      "backgroundColor": "Color de fondo",
+      "cornersInnerDotStyle": "Estilo del punto interior de las esquinas",
+      "cornersInnerDotStyleHint": "El estilo de las esquinas del código QR.",
+      "cornersStyle": "Estilo de las esquinas",
+      "cornersStyleHint": "El estilo de las esquinas del código QR.",
+      "dotStyles": {
+        "classy": "Elegantes",
+        "classyRounded": "Elegantes redondeados",
+        "dot": "Punto",
+        "dots": "Puntos",
+        "extraRounded": "Extra redondeados",
+        "rounded": "Redondeados",
+        "square": "Cuadrados"
+      },
+      "dotsShape": "Forma de los puntos",
+      "dotsShapeHint": "La forma de los puntos del código QR.",
+      "errorCorrection": "Nivel de corrección de errores",
+      "errorCorrectionHint": "Los niveles de corrección más altos hacen que tu código QR sea más fiable, pero aumentan la complejidad.",
+      "errorCorrectionLevels": {
+        "high": "Alto (H)",
+        "low": "Bajo (L)",
+        "medium": "Medio (M)",
+        "quartile": "Cuartil (Q)"
+      },
+      "foregroundColor": "Color de primer plano",
+      "size": "Tamaño",
+      "title": "Personaliza el código QR"
+    },
+    "download": {
+      "fileName": "codigo-qr"
+    },
+    "email": {
+      "address": "Dirección de correo electrónico",
+      "addressPlaceholder": "recipient@example.com",
+      "body": "Cuerpo (opcional)",
+      "bodyPlaceholder": "Contenido del correo",
+      "subject": "Asunto (opcional)",
+      "subjectPlaceholder": "Asunto del correo"
+    },
+    "geo": {
+      "latitude": "Latitud",
+      "latitudePlaceholder": "p. ej. 37.7749",
+      "longitude": "Longitud",
+      "longitudePlaceholder": "p. ej. -122.4194",
+      "useCurrentLocation": "Usar mi ubicación actual"
+    },
+    "messages": {
+      "geolocationFailed": "No se ha podido acceder a la geolocalización."
+    },
+    "phone": {
+      "label": "Número de teléfono",
+      "placeholder": "+1 555 123 4567"
+    },
+    "preview": {
+      "downloadAs": "Descargar como {{ format }}",
+      "empty": "Tu código QR aparecerá aquí",
+      "imageAlt": "Código QR",
+      "testDescription": "Escanea el código QR con tu dispositivo para comprobar que funciona correctamente.",
+      "testTitle": "Prueba tu código QR",
+      "title": "Código QR"
+    },
+    "seo": {
+      "description": "Genera códigos QR personalizados para URL, texto, información de contacto y mucho más. Códigos QR de alta calidad que funcionan en cualquier lugar.",
+      "keywords": "generador de códigos qr, código qr, códigos qr, qr, qrcode, qrcodes, generador de códigos qr gratis, generador de qrcode gratis, código qr gratis, códigos qr gratis, generador de códigos qr online, generador de qrcode online, código qr online, códigos qr online, qr online, qrcode online, qrcodes online, código qr gratis online, qrcode gratis online, códigos qr gratis online, qrcodes gratis online",
+      "title": "Generador de códigos QR - Definitive Tools"
+    },
+    "sms": {
+      "message": "Mensaje",
+      "messagePlaceholder": "Contenido del SMS",
+      "number": "Número de teléfono",
+      "numberPlaceholder": "+1 555 123 4567"
+    },
+    "text": {
+      "label": "Contenido de texto",
+      "placeholder": "Introduce el texto que quieras codificar en el código QR"
+    },
+    "title": "Configuración del código QR",
+    "url": {
+      "hint": "Introduce la URL completa, incluido https://, para los sitios web.",
+      "label": "URL del sitio web",
+      "placeholder": "https://www.example.com"
+    },
+    "validation": {
+      "firstNameRequired": "El nombre es obligatorio",
+      "fixErrors": "Corrige primero todos los errores de validación.",
+      "invalidEmail": "Correo no válido",
+      "invalidEmailAddress": "Dirección de correo no válida",
+      "invalidPhoneNumber": "Número de teléfono no válido",
+      "invalidText": "Texto no válido",
+      "invalidUrl": "Introduce una URL válida",
+      "invalidValue": "Valor no válido",
+      "lastNameRequired": "Los apellidos son obligatorios",
+      "latitudeRequired": "La latitud es obligatoria",
+      "longitudeRequired": "La longitud es obligatoria",
+      "phoneRequired": "El número de teléfono es obligatorio",
+      "sizeMax": "El tamaño debe ser como máximo 2000 px",
+      "sizeMin": "El tamaño debe ser de al menos 100 px",
+      "ssidRequired": "El SSID de la red es obligatorio"
+    },
+    "vcard": {
+      "address": "Dirección (opcional)",
+      "company": "Empresa (opcional)",
+      "email": "Correo electrónico",
+      "firstName": "Nombre",
+      "lastName": "Apellidos",
+      "phone": "Número de teléfono",
+      "website": "Sitio web (opcional)"
+    },
+    "wifi": {
+      "encryption": "Tipo de cifrado",
+      "encryptionTypes": {
+        "none": "Ninguna",
+        "wep": "WEP",
+        "wpa": "WPA/WPA2"
+      },
+      "password": "Contraseña",
+      "ssid": "Nombre de la red (SSID)"
+    }
+  },
+  "qr-reader": {
+    "camera": {
+      "instructions": "Apunta la cámara a un código QR y se escaneará automáticamente.",
+      "notFound": "No se ha encontrado ninguna cámara en este sistema.",
+      "notSupported": "Tu navegador o tu entorno no admiten el acceso a la cámara.",
+      "permissionDenied": "Se ha denegado el permiso de cámara. Permite el acceso a la cámara en la configuración de tu navegador.",
+      "scanFileName": "Escaneo-cámara-{{ time }}",
+      "start": "Iniciar cámara",
+      "stop": "Detener cámara",
+      "stopped": "La cámara está detenida",
+      "switchCamera": "Cambiar de cámara (frontal/trasera)",
+      "switchToFile": "Cambiar a subir un archivo",
+      "toggleFlashlight": "Activar o desactivar el flash",
+      "tryAgain": "Intentar de nuevo",
+      "unableToAccess": "No se ha podido acceder a la cámara: {{ error }}",
+      "unavailable": "Cámara no disponible",
+      "unknownError": "Error desconocido"
+    },
+    "email": {
+      "body": "Cuerpo:",
+      "openApp": "Abrir aplicación de correo",
+      "subject": "Asunto:",
+      "title": "Enviar correo electrónico",
+      "to": "Para:"
+    },
+    "geo": {
+      "coordinates": "Coordenadas: {{ latitude }}, {{ longitude }}",
+      "googleMaps": "Google Maps"
+    },
+    "hero": {
+      "badge": "100 % en tu navegador y seguro",
+      "subtitle": "Escanea códigos QR con la cámara en tiempo real o sube y pega una imagen para descodificar su contenido al instante.",
+      "title": "Lector y escáner de códigos QR"
+    },
+    "modes": {
+      "camera": "Escanear con la cámara",
+      "file": "Subir / pegar imagen"
+    },
+    "noQr": {
+      "description": "Hemos analizado esta imagen con detectores de códigos de barras nativos y algoritmos de imagen exhaustivos, pero no hemos podido detectar ningún código QR legible.",
+      "tip1": "Asegúrate de que los 3 cuadrados grandes de localización de las esquinas se vean bien y no estén cortados.",
+      "tip2": "Evita los reflejos fuertes, las sombras intensas y el desenfoque acusado.",
+      "tip3": "Recorta la imagen más cerca del código QR si ocupa una parte pequeña de una foto grande.",
+      "tip4": "Asegúrate de que haya suficiente contraste entre los patrones oscuros y claros.",
+      "tipsTitle": "Consejos para escanear correctamente:",
+      "title": "No se ha detectado ningún código QR",
+      "trySample": "Probar un código QR de ejemplo"
+    },
+    "result": {
+      "characters": "{{ count }} caracteres",
+      "copied": "¡Copiado!",
+      "copyAll": "Copiar todo",
+      "copyLink": "Copiar enlace",
+      "decodedContent": "Contenido descodificado",
+      "destinationWebsite": "Sitio web de destino",
+      "located": "Código QR localizado",
+      "openWebsite": "Abrir sitio web",
+      "overlayHint": "La zona del código QR detectada aparece marcada con un recuadro índigo.",
+      "readDirectly": "Leído directamente de la imagen",
+      "scanAgain": "Escanear otra vez",
+      "scannedImage": "Imagen escaneada",
+      "scanning": "Escaneando el código QR..."
+    },
+    "seo": {
+      "description": "Sube, arrastra, pega desde el portapapeles o usa la cámara en tiempo real para escanear, descodificar y ver códigos QR en pantalla.",
+      "keywords": "lector de códigos qr, escáner de códigos qr, cámara qr, escáner qr con cámara, escanear código qr online, descodificar código qr, lector de qr web",
+      "title": "Lector y escáner de códigos QR - Escanea con la cámara o una imagen"
+    },
+    "toasts": {
+      "clipboardImage": "Imagen cargada desde el portapapeles",
+      "copied": "¡Contenido copiado al portapapeles!",
+      "detected": "Código QR detectado: {{ type }}",
+      "imageLoadFailed": "No se ha podido cargar la imagen.",
+      "readFileFailed": "Error al leer el archivo.",
+      "sampleFailed": "No se ha podido cargar el código QR de ejemplo.",
+      "scanned": "Código QR escaneado: {{ type }}",
+      "vcardDownloaded": "Contacto .vcf descargado"
+    },
+    "types": {
+      "email": "Correo electrónico",
+      "geo": "Ubicación",
+      "json": "Datos JSON",
+      "phone": "Teléfono",
+      "sms": "SMS",
+      "text": "Texto sin formato",
+      "url": "URL de un sitio web",
+      "vcard": "Contacto (vCard)",
+      "wifi": "Wi-Fi"
+    },
+    "upload": {
+      "formats": "Formatos: PNG, JPG, WEBP, GIF, SVG, BMP (máx. 10 MB)",
+      "label": "Sube una imagen con un código QR",
+      "pasteHint": "para pegar una captura",
+      "pastedImageName": "Imagen-pegada-{{ timestamp }}",
+      "sampleFileNames": {
+        "json": "muestra-json-qr.png",
+        "url": "muestra-web-qr.png",
+        "vcard": "muestra-vcard-qr.png",
+        "wifi": "muestra-wifi-qr.png"
+      },
+      "samples": {
+        "json": "JSON de ejemplo",
+        "url": "URL de un sitio web",
+        "vcard": "Contacto (vCard)",
+        "wifi": "Red Wi-Fi"
+      },
+      "samplesTitle": "O prueba ahora mismo con un código QR de ejemplo"
+    },
+    "vcard": {
+      "address": "Dirección",
+      "contactFallback": "Contacto",
+      "email": "Correo electrónico",
+      "fileNamePrefix": "contacto",
+      "phone": "Teléfono",
+      "save": "Guardar .vcf",
+      "website": "Sitio web"
+    },
+    "wifi": {
+      "copyPassword": "Copiar contraseña",
+      "copySsid": "Copiar SSID",
+      "hidden": "Red oculta",
+      "no": "No",
+      "open": "Ninguna (abierta)",
+      "password": "Contraseña",
+      "security": "Tipo de seguridad",
+      "ssid": "Nombre de la red (SSID)",
+      "title": "Credenciales de la red Wi-Fi",
+      "yes": "Sí"
+    }
+  },
+  "random-password-generator": {
+    "about": {
+      "bestPractices": {
+        "manager": "Plantéate usar un gestor de contraseñas",
+        "private": "No compartas nunca tus contraseñas con nadie",
+        "rotate": "Cambia tus contraseñas con regularidad",
+        "twoFactor": "Activa la autenticación de dos factores cuando esté disponible",
+        "unique": "Usa una contraseña distinta para cada cuenta"
+      },
+      "bestPracticesTitle": "Buenas prácticas con contraseñas",
+      "strongDescription": "Una contraseña segura es larga, compleja y única. Debe combinar letras mayúsculas y minúsculas, números y caracteres especiales.",
+      "strongTitle": "¿Qué hace que una contraseña sea segura?",
+      "title": "Consejos de seguridad para contraseñas"
+    },
+    "actions": {
+      "copyPassword": "Copiar contraseña",
+      "generate": "Generar contraseña",
+      "generateNew": "Generar contraseña nueva"
+    },
+    "characterTypes": {
+      "lowercase": "Letras minúsculas (a-z)",
+      "numbers": "Números (0-9)",
+      "symbols": "Caracteres especiales (!@#$%&)",
+      "title": "Tipos de caracteres",
+      "uppercase": "Letras mayúsculas (A-Z)"
+    },
+    "length": {
+      "label": "Longitud de la contraseña: {{ length }}",
+      "max": "32",
+      "min": "4"
+    },
+    "messages": {
+      "copied": "Contraseña copiada al portapapeles",
+      "noCharacterType": "Selecciona al menos un tipo de carácter"
+    },
+    "placeholder": "Tu contraseña aparecerá aquí",
+    "seo": {
+      "description": "Genera contraseñas seguras y aleatorias. Ajusta la complejidad según tus necesidades de seguridad.",
+      "keywords": "contraseña, aleatoria, generador, segura, complejidad, seguridad, requisitos",
+      "title": "Generador de contraseñas aleatorias"
+    },
+    "title": "Genera contraseñas seguras"
+  },
+  "swagger-editor": {
+    "actions": {
+      "cancel": "Cancelar",
+      "close": "Cerrar",
+      "minimize": "Minimizar"
+    },
+    "editor": {
+      "importModal": {
+        "description": "Pega el enlace a tu definición de OpenAPI",
+        "submit": "Importar",
+        "title": "Importar desde URL"
+      },
+      "loading": "Cargando Swagger UI...",
+      "messages": {
+        "corsError": "Error de CORS: el servidor externo ha bloqueado la solicitud. Suele ocurrir cuando el servidor no permite solicitudes de origen cruzado. Prueba a descargar el archivo y usar «Importar archivo» en su lugar.",
+        "emptyEditor": "El editor está vacío. No hay nada que guardar.",
+        "generationInProgress": "Ya hay un proceso de generación activo. Espera o cancélalo.",
+        "invalidJson": "No se ha podido convertir el contenido actual a un JSON válido.",
+        "loadFailed": "No se ha podido cargar la definición desde la URL indicada. Comprueba la URL e inténtalo de nuevo."
+      }
+    },
+    "modal": {
+      "downloads": {
+        "generatedZip": "{{ generator }}-generado.zip"
+      },
+      "footer": {
+        "engine": "Motor:",
+        "events": "{{ count }} eventos",
+        "java": "Java:",
+        "ready": "Listo",
+        "status": "Estado:",
+        "wait": "En espera"
+      },
+      "generation": {
+        "bundling": "Comprimiendo los archivos en un ZIP...",
+        "cancelling": "Cancelación en curso...",
+        "cleaningFilesystem": "Limpiando el sistema de archivos virtual...",
+        "complete": "¡Generación completada!",
+        "failed": "La generación ha fallado.",
+        "generating": "Generando {{ lang }}...",
+        "initializing": "Inicializando...",
+        "preparingRuntime": "Preparando el entorno de ejecución de CheerpJ...",
+        "preparingSpec": "Preparando la especificación OpenAPI..."
+      },
+      "logs": {
+        "accessingFilesystem": "Accediendo al sistema de archivos virtual desde:",
+        "addingToZip": "Añadiendo al ZIP:",
+        "cancellationRequested": "El usuario ha solicitado la cancelación. Abortando...",
+        "generationFailed": "La generación ha fallado",
+        "idbEntryFound": "Entrada de IDB encontrada:",
+        "processFinishedAfterCancel": "El proceso ha terminado tras la cancelación. Salida descartada."
+      },
+      "minimized": {
+        "label": "CLI del generador",
+        "showConsole": "Mostrar consola"
+      },
+      "status": {
+        "active": "Activo"
+      },
+      "terminal": {
+        "empty": "Terminal inicializada. Esperando a que empiece el proceso..."
+      }
+    },
+    "seo": {
+      "description": "Edita y visualiza especificaciones Swagger/OpenAPI en tu navegador, previsualiza la documentación de la API y genera SDK de cliente o servidor localmente.",
+      "keywords": "editor swagger, editor openapi, swagger ui, generador openapi, documentación de api, generar sdk",
+      "title": "Editor Swagger - Edita, previsualiza y genera clientes OpenAPI"
+    },
+    "toolbar": {
+      "file": {
+        "clear": "Limpiar editor",
+        "importFile": "Importar archivo",
+        "importUrl": "Importar URL",
+        "loadExample": "Cargar ejemplo de Petstore",
+        "saveJson": "Convertir y guardar como JSON",
+        "saveYaml": "Guardar como YAML"
+      },
+      "menus": {
+        "file": "Archivo",
+        "generateClient": "Generar cliente",
+        "generateServer": "Generar servidor"
+      },
+      "panels": {
+        "editor": "Editor",
+        "preview": "UI"
+      },
+      "title": "Editor Swagger"
+    }
+  },
+  "text-to-speech": {
+    "about": {
+      "advantageCost": "Realiza el procesado con la CPU de tu equipo.",
+      "advantageCostTitle": "Cero costes de servidor",
+      "advantageOffline": "Guarda los modelos en el sistema de archivos privado del origen (OPFS).",
+      "advantageOfflineTitle": "Funciona sin conexión",
+      "advantagePrivate": "Tu texto nunca sale de tu dispositivo.",
+      "advantagePrivateTitle": "100 % privado",
+      "advantagesTitle": "Ventajas",
+      "description": "Los sistemas tradicionales de texto a voz dependen de servidores en la nube (como Google TTS u OpenAI Audio) para procesar el texto y devolver el audio. Esta herramienta compila y ejecuta la inferencia neuronal de texto a voz por completo en tu navegador, con total privacidad y funcionamiento sin conexión.",
+      "onnx": "Backend WebAssembly para ejecutar redes neuronales con rapidez en el navegador.",
+      "onnxTitle": "ONNX Runtime Web",
+      "piper": "Pesos del proyecto Piper de Rhasspy optimizados para una síntesis de voz nítida.",
+      "piperTitle": "Piper TTS",
+      "technicalTitle": "Base técnica",
+      "title": "Acerca del TTS web local (VITS)",
+      "vits": "Inferencia variacional de extremo a extremo con aprendizaje adversarial.",
+      "vitsTitle": "Arquitectura VITS"
+    },
+    "actions": {
+      "download": "Descargar la voz en WAV",
+      "generate": "Generar audio hablado",
+      "generating": "Generando la voz..."
+    },
+    "downloads": {
+      "audioFileName": "voz-sintetizada-{{ voiceId }}.wav"
+    },
+    "errors": {
+      "appUpdated": "La aplicación se ha actualizado en segundo plano. Recarga la página para sintetizar voz.",
+      "engine": "Se ha producido un error en el motor de voz en segundo plano. Recarga la página.",
+      "enterText": "Escribe algún texto.",
+      "selectVoice": "Selecciona un modelo de voz.",
+      "synthesisFailed": "No se ha podido sintetizar la voz.",
+      "workersUnsupported": "Este navegador no admite Web Workers. No se puede sintetizar voz."
+    },
+    "help": {
+      "cache": "Los modelos descargados se guardan en la caché del navegador (OPFS) para generar al instante y sin conexión en las siguientes ocasiones.",
+      "firstRun": "La primera generación descarga el modelo de voz seleccionado (~15-40 MB).",
+      "title": "Cómo funciona:",
+      "worker": "ONNX Runtime compila el modelo de voz en un Web Worker en segundo plano."
+    },
+    "input": {
+      "characters": "Caracteres: {{ count }}",
+      "label": "Texto que quieres sintetizar",
+      "offlineNote": "Toda la síntesis se realiza sin conexión en tu equipo",
+      "placeholder": "Escribe la frase que quieres que lea la IA..."
+    },
+    "messages": {
+      "generated": "¡Voz generada correctamente!"
+    },
+    "output": {
+      "computing": "Calculando las muestras WAV con el modelo VITS local",
+      "downloading": "Descargando el modelo de voz ONNX",
+      "emptyHint": "Haz clic en «Generar audio hablado» para empezar",
+      "emptyTitle": "La voz sintetizada aparecerá aquí",
+      "loading": "Cargando...",
+      "ready": "¡Listo para reproducir!",
+      "synthesizing": "Sintetizando el audio...",
+      "title": "Salida de audio"
+    },
+    "progress": {
+      "connecting": "Conectando y descargando el modelo...",
+      "modelFile": "Archivo del modelo"
+    },
+    "seo": {
+      "description": "Genera audio hablado de sonido natural a partir de texto localmente en tu navegador. Se ejecuta por completo en el cliente con WebAssembly y ONNX Runtime.",
+      "keywords": "texto a voz, tts, síntesis de voz, tts local, piper, vits, webassembly, onnx runtime",
+      "title": "Generador local de texto a voz (TTS)"
+    },
+    "subtitle": "Convierte texto en voz de sonido natural directamente en tu navegador. Con la potencia de los modelos VITS WebAssembly.",
+    "title": "Texto a voz (TTS)",
+    "voice": {
+      "label": "Selecciona un modelo de voz",
+      "language": "Idioma:",
+      "loading": "Cargando la lista de voces disponibles...",
+      "modelId": "ID del modelo:",
+      "quality": "Clase de calidad:",
+      "unknownLanguage": "Idioma desconocido"
+    }
+  },
+  "tools": {
+    "audio-editor": {
+      "description": "Recorta, corta y convierte archivos de audio directamente en tu navegador. Exporta a MP3, WAV, OGG, AAC y FLAC con bitrate y frecuencia de muestreo personalizados.",
+      "name": "Editor de audio"
+    },
+    "audio-speech-to-text": {
+      "description": "Convierte palabras habladas en texto de forma eficiente.",
+      "name": "Audio a texto"
+    },
+    "background-remover": {
+      "description": "Elimina los fondos de tus imágenes al instante. Crea imágenes transparentes con aspecto profesional para tus proyectos, productos y diseños.",
+      "name": "Eliminador de fondos"
+    },
+    "base64-encoder-decoder": {
+      "description": "Codifica texto a Base64 o decodifica Base64 a texto fácilmente. Ideal para transferir datos, incrustar imágenes o trabajar con APIs.",
+      "name": "Codificador / Decodificador Base64"
+    },
+    "calculadora-cientifica": {
+      "description": "Realiza cálculos científicos de alta precisión con trigonometría, logaritmos, potencias y memoria.",
+      "name": "Calculadora Científica"
+    },
+    "calculadora-hipoteca": {
+      "description": "Simula la cuota mensual, la TAE efectiva, los intereses totales y el cuadro de amortización francés.",
+      "name": "Calculadora de Hipotecas"
+    },
+    "categories": {
+      "all": "Todas",
+      "calculators": "Calculadoras",
+      "dev": "Herramientas de desarrollo",
+      "favorites": "Favoritos",
+      "image": "Herramientas de imagen",
+      "maps": "Mapas",
+      "media": "Herramientas multimedia",
+      "text": "Herramientas de texto"
+    },
+    "image-base64-converter": {
+      "description": "Convierte imágenes a cadenas Base64 o decodifica datos Base64 para previsualizar y descargar imágenes. Compatible con varios formatos.",
+      "name": "Conversor de imagen a Base64"
+    },
+    "image-converter": {
+      "description": "Convierte imágenes entre distintos formatos (PNG, JPEG, WEBP, GIF, BMP) en tu navegador con controles de calidad y dimensiones.",
+      "name": "Conversor de imágenes"
+    },
+    "indemnizacion-despido-espana": {
+      "description": "Calcula la indemnización laboral en España según el tipo de despido, la antigüedad y la reforma de 2012.",
+      "name": "Indemnización por Despido"
+    },
+    "jwt-decode-encode": {
+      "description": "Codifica y decodifica JSON Web Tokens (JWT) y verifica sus firmas fácilmente. Ideal para desarrollar APIs, depurar la autenticación e inspeccionar tokens.",
+      "name": "Decodificador / Codificador y Validador JWT"
+    },
+    "madrid-transport-map": {
+      "description": "Mapa interactivo de la red de transporte multimodal y las zonas tarifarias del CRTM de Madrid (Metro, Cercanías, EMT, interurbanos, zonas A-E2).",
+      "name": "Mapa de transporte de Madrid"
+    },
+    "madrid-zbe-map": {
+      "description": "Mapa interactivo de las Zonas de Bajas Emisiones de Madrid 360 (Distrito Centro, Plaza Elíptica, anillo M-30, cámaras y comprobador de etiqueta DGT).",
+      "name": "Mapa Madrid 360 y ZBE"
+    },
+    "markdown-to-excel": {
+      "description": "Convierte tablas Markdown a formatos compatibles con Excel fácilmente. Copia y pega tus datos directamente en tu hoja de cálculo favorita.",
+      "name": "Markdown a Excel"
+    },
+    "markdown-to-html": {
+      "description": "Convierte texto Markdown en código HTML limpio con vista previa en vivo. Aplica estilos al HTML al instante con CSS personalizado, hojas de estilo o presets de diseño.",
+      "name": "Markdown a HTML"
+    },
+    "meme-generator": {
+      "description": "Crea memes divertidos con textos superpuestos personalizados, leyendas arrastrables, estilos de fuente y plantillas prediseñadas populares.",
+      "name": "Generador de memes"
+    },
+    "opengraph-generator": {
+      "description": "Crea tarjetas Open Graph y de Twitter para tus sitios web.",
+      "name": "Generador de Open Graph"
+    },
+    "qr-generator": {
+      "description": "Crea códigos QR personalizados para URLs, texto, datos de contacto y mucho más. Códigos QR de alta calidad que funcionan en cualquier lugar.",
+      "name": "Generador de códigos QR"
+    },
+    "qr-reader": {
+      "description": "Sube o pega una imagen que contenga un código QR para decodificar e inspeccionar su contenido, enlaces, contraseñas Wi-Fi y datos de contacto.",
+      "name": "Lector de códigos QR"
+    },
+    "random-password-generator": {
+      "description": "Crea contraseñas seguras y aleatorias al instante. Ajusta la complejidad según tus necesidades de seguridad.",
+      "name": "Generador de contraseñas aleatorias"
+    },
+    "regla-de-tres": {
+      "description": "Calcula reglas de tres simples directas, inversas y compuestas con desglose paso a paso.",
+      "name": "Regla de 3"
+    },
+    "salario-neto-espana": {
+      "description": "Estima tu salario neto anual y mensual en España a partir del bruto, con cotizaciones a la Seguridad Social e IRPF.",
+      "name": "Salario Neto España"
+    },
+    "swagger-editor": {
+      "description": "Edita y visualiza especificaciones de API Swagger.",
+      "name": "Editor Swagger"
+    },
+    "text-to-speech": {
+      "description": "Convierte texto en audio hablado localmente en tu navegador. Basado en modelos VITS WebAssembly.",
+      "name": "Texto a voz (TTS)"
+    }
+  }
+}

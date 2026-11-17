@@ -1,0 +1,35 @@
+{
+  "title": "Markdown to Excel",
+  "input": {
+    "label": "Markdown Table",
+    "placeholder": "| Column 1 | Column 2 |\\n| --- | --- |\\n| Row 1 | Row 2 |"
+  },
+  "preview": {
+    "title": "Excel Preview",
+    "hint": "Select and copy the table below",
+    "empty": "Paste a valid Markdown table to see the preview."
+  },
+  "howTo": {
+    "title": "How to use this tool",
+    "steps": {
+      "paste": {
+        "title": "1. Paste Markdown",
+        "description": "Copy your markdown table from GitHub, VS Code, or any MD file and paste it in the left editor."
+      },
+      "check": {
+        "title": "2. Check Preview",
+        "descriptionPrefix": "Instantly see how your table looks. We support column alignment markers like",
+        "descriptionSuffix": "."
+      },
+      "export": {
+        "title": "3. Paste in Excel",
+        "description": "Click \"Copy for Excel\" and paste directly into Excel, Google Sheets, or Numbers. No file download needed!"
+      }
+    }
+  },
+  "seo": {
+    "title": "Markdown to Excel Converter",
+    "description": "Convert Markdown tables to Excel-compatible formats (TSV) easily. Copy and paste your data directly into your favorite spreadsheet software.",
+    "keywords": "markdown, excel, converter, table, tsv, spreadsheet, developer tools"
+  }
+}

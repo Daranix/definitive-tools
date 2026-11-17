@@ -5,17 +5,20 @@ import {
   inject,
   signal,
   computed,
+  effect,
   ChangeDetectionStrategy,
   PLATFORM_ID,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 import { TopNavbarComponent } from '@/app/components/top-navbar/top-navbar.component';
 import { FooterComponent } from '@/app/components/footer/footer.component';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import { MetadataService } from '@/app/services/metadata.service';
 import { ToastService } from '@/app/services/toast.service';
 import { FileSizePipe } from '@/app/pipes/file-size.pipe';
+import { I18nService } from '@/app/i18n/i18n.service';
 
 interface VoiceItem {
   id: string;
@@ -77,6 +80,7 @@ type WorkerMessage = VoicesListMessage | ProgressMessage | ResultMessage | Error
     FooterComponent,
     LucideIconComponent,
     FileSizePipe,
+    TranslatePipe,
   ],
   templateUrl: './text-to-speech.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -86,6 +90,7 @@ export class TextToSpeechComponent implements OnInit, OnDestroy {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly metadataService = inject(MetadataService);
   private readonly toastService = inject(ToastService);
+  private readonly i18n = inject(I18nService);
 
   private worker?: Worker;
   private audioBlob?: Blob;
@@ -100,6 +105,17 @@ export class TextToSpeechComponent implements OnInit, OnDestroy {
   readonly audioUrl = signal<string | undefined>(undefined);
 
   readonly downloadProgress = signal<DownloadProgress | undefined>(undefined);
+
+  // Character counter, formatted for the active language
+  readonly characterCount = computed(() =>
+    this.i18n.formatNumber(this.inputText().length),
+  );
+
+  // Download percentage label, formatted for the active language
+  readonly downloadPercent = computed(() => {
+    const progress = this.downloadProgress();
+    return progress ? this.i18n.formatPercent(progress.percent / 100) : '';
+  });
 
   // Grouped voices list computed for the select dropdown
   readonly groupedVoices = computed(() => {
@@ -123,11 +139,18 @@ export class TextToSpeechComponent implements OnInit, OnDestroy {
   });
 
   constructor() {
+    this.updateMetadata();
+    effect(() => {
+      this.i18n.language();
+      this.updateMetadata();
+    });
+  }
+
+  private updateMetadata(): void {
     this.metadataService.updateMetadata({
-      title: 'Local Text to Speech (TTS) Generator',
-      description:
-        'Synthesize natural-sounding spoken audio from text locally in your browser. Runs completely client-side using WebAssembly and ONNX Runtime.',
-      keywords: 'text to speech, tts, speech synthesis, local tts, piper, vits, webassembly, onnx runtime',
+      title: this.i18n.t('text-to-speech.seo.title'),
+      description: this.i18n.t('text-to-speech.seo.description'),
+      keywords: this.i18n.t('text-to-speech.seo.keywords'),
     });
   }
 
@@ -169,11 +192,11 @@ export class TextToSpeechComponent implements OnInit, OnDestroy {
 
         if (isChunkError) {
           this.toastService.error({
-            message: 'App updated in background. Please refresh the page to synthesize speech.',
+            message: this.i18n.t('text-to-speech.errors.appUpdated'),
           });
         } else {
           this.toastService.error({
-            message: 'An error occurred in the background speech engine. Please reload.',
+            message: this.i18n.t('text-to-speech.errors.engine'),
           });
         }
       });
@@ -181,7 +204,7 @@ export class TextToSpeechComponent implements OnInit, OnDestroy {
       this.worker.postMessage({ type: 'get_voices' });
     } else {
       this.toastService.error({
-        message: 'Web Workers are not supported in this browser. Synthesis cannot run.',
+        message: this.i18n.t('text-to-speech.errors.workersUnsupported'),
       });
     }
   }
@@ -196,7 +219,10 @@ export class TextToSpeechComponent implements OnInit, OnDestroy {
         const parsed: VoiceItem[] = [];
 
         for (const val of data.voices) {
-          const baseLang = val.language?.name_english || val.language?.name || 'Unknown Language';
+          const baseLang =
+            val.language?.name_english ||
+            val.language?.name ||
+            this.i18n.t('text-to-speech.voice.unknownLanguage');
           const country = val.language?.country_english || val.language?.region || '';
           const langName = country ? `${baseLang} (${country})` : baseLang;
 
@@ -233,7 +259,7 @@ export class TextToSpeechComponent implements OnInit, OnDestroy {
         const total = data.total || 0;
         const percent = total > 0 ? Math.round((loaded * 100) / total) : 0;
 
-        let modelName = 'Model file';
+        let modelName = this.i18n.t('text-to-speech.progress.modelFile');
         if (data.url) {
           const parts = data.url.split('/');
           modelName = parts[parts.length - 1] || 'model';
@@ -258,13 +284,18 @@ export class TextToSpeechComponent implements OnInit, OnDestroy {
         const blob = data.audio;
         this.audioBlob = blob;
         this.audioUrl.set(URL.createObjectURL(blob));
-        this.toastService.success({ message: 'Speech generated successfully!' });
+        this.toastService.success({
+          message: this.i18n.t('text-to-speech.messages.generated'),
+        });
         break;
 
       case 'error':
         this.generating.set(false);
         this.downloadProgress.set(undefined);
-        this.toastService.error({ message: data.message || 'Speech synthesis failed.' });
+        this.toastService.error({
+          message:
+            data.message || this.i18n.t('text-to-speech.errors.synthesisFailed'),
+        });
         console.error(data.message);
         break;
     }
@@ -275,11 +306,15 @@ export class TextToSpeechComponent implements OnInit, OnDestroy {
     const voiceId = this.selectedVoiceId();
 
     if (!text) {
-      this.toastService.warning({ message: 'Please enter some text.' });
+      this.toastService.warning({
+        message: this.i18n.t('text-to-speech.errors.enterText'),
+      });
       return;
     }
     if (!voiceId) {
-      this.toastService.warning({ message: 'Please select a voice model.' });
+      this.toastService.warning({
+        message: this.i18n.t('text-to-speech.errors.selectVoice'),
+      });
       return;
     }
 
@@ -291,7 +326,7 @@ export class TextToSpeechComponent implements OnInit, OnDestroy {
         percent: 0,
         loaded: 0,
         total: 0,
-        modelName: 'Connecting and downloading model...',
+        modelName: this.i18n.t('text-to-speech.progress.connecting'),
       });
 
       this.worker.postMessage({
@@ -308,7 +343,9 @@ export class TextToSpeechComponent implements OnInit, OnDestroy {
     const url = URL.createObjectURL(this.audioBlob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `synthesized-speech-${this.selectedVoiceId()}.wav`;
+    link.download = this.i18n.t('text-to-speech.downloads.audioFileName', {
+      voiceId: this.selectedVoiceId(),
+    });
     link.click();
 
     setTimeout(() => URL.revokeObjectURL(url), 100);

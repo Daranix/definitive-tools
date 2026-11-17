@@ -1,10 +1,12 @@
 import {
   Component,
+  computed,
   inject,
   input,
   signal,
   ChangeDetectionStrategy
 } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MadridZbeMapService } from '../../madrid-zbe-map.service';
 import {
   BasemapType,
@@ -12,6 +14,7 @@ import {
   ZbeZoneId
 } from '../../madrid-zbe-map.models';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
+import { I18nService } from '@/app/i18n/i18n.service';
 
 export interface BasemapConfig {
   type: BasemapType;
@@ -23,38 +26,39 @@ export interface BasemapConfig {
 @Component({
   selector: 'app-zbe-layer-controls',
   standalone: true,
-  imports: [LucideIconComponent],
+  imports: [LucideIconComponent, TranslatePipe],
   templateUrl: './layer-controls.component.html',
   styleUrl: './layer-controls.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LayerControlsComponent {
   readonly service = inject(MadridZbeMapService);
+  readonly i18n = inject(I18nService);
   readonly embedded = input<boolean>(false);
   readonly isCollapsed = signal<boolean>(false);
 
   readonly basemapsList: BasemapType[] = ['streets', 'satellite', 'gray'];
 
-  readonly basemapConfigs: Record<BasemapType, BasemapConfig> = {
+  readonly basemapConfigs = computed<Record<BasemapType, BasemapConfig>>(() => ({
     streets: {
       type: 'streets',
-      name: 'Calles & Carreteras',
-      shortName: 'Calles',
+      name: this.i18n.t('madrid-zbe-map.layers.basemaps.streets.name'),
+      shortName: this.i18n.t('madrid-zbe-map.layers.basemaps.streets.shortName'),
       icon: 'map'
     },
     satellite: {
       type: 'satellite',
-      name: 'Satélite Alta Resolución',
-      shortName: 'Satélite',
+      name: this.i18n.t('madrid-zbe-map.layers.basemaps.satellite.name'),
+      shortName: this.i18n.t('madrid-zbe-map.layers.basemaps.satellite.shortName'),
       icon: 'globe'
     },
     gray: {
       type: 'gray',
-      name: 'Gris Claro Cartográfico',
-      shortName: 'Claro',
+      name: this.i18n.t('madrid-zbe-map.layers.basemaps.gray.name'),
+      shortName: this.i18n.t('madrid-zbe-map.layers.basemaps.gray.shortName'),
       icon: 'layers'
     }
-  };
+  }));
 
   readonly madridZones: ZbeZoneId[] = [
     'zbe-distrito-centro',

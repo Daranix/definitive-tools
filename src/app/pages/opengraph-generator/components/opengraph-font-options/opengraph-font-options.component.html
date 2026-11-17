@@ -1,15 +1,15 @@
 
 <div class="grid gap-4">
     <div class="space-y-2">
-        <h4 class="font-medium leading-none">Font Settings</h4>
-        <p class="text-sm text-gray-400">Customize the tag font.</p>
+        <h4 class="font-medium leading-none">{{ 'opengraph-generator.fontOptions.title' | translate }}</h4>
+        <p class="text-sm text-gray-400">{{ 'opengraph-generator.fontOptions.hint' | translate }}</p>
     </div>
     <div class="grid gap-4">
         <div class="grid gap-2">
             <div class="grid grid-cols-3 items-center gap-4">
                 <label
                     class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    for="font-family">Font family</label>
+                    for="font-family">{{ 'opengraph-generator.fontOptions.family' | translate }}</label>
                 <select [(ngModel)]="fontFamily"
                     class="bg-gray-50 px-2 py-1 border border-gray-300 rounded-md text-gray-900 col-span-2">
                     @for (fontType of FONT_TYPES; track $index) {
@@ -20,11 +20,11 @@
             <div class="grid grid-cols-3 items-center gap-4">
                 <label
                     class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    for="font-weight">Font weight</label>
+                    for="font-weight">{{ 'opengraph-generator.fontOptions.weight' | translate }}</label>
                 <select
                     [(ngModel)]="fontWeight"
                     class="bg-gray-50 px-2 py-1 border border-gray-300 rounded-md text-gray-900 col-span-2">
-                    @for (fontWeight of FONT_WEIGHT; track $index) {
+                    @for (fontWeight of FONT_WEIGHT(); track $index) {
                         <option [value]="fontWeight.key">{{fontWeight.label}}</option>
                     }
                 </select>
@@ -32,7 +32,7 @@
             <div class="grid grid-cols-3 items-center gap-4">
                 <label
                     class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    for="font-size">Font size</label>
+                    for="font-size">{{ 'opengraph-generator.fontOptions.size' | translate }}</label>
                 <input type="number"
                     [(ngModel)]="fontSize"
                     class="w-full px-2 py-1 border border-gray-300 rounded-md bg-white text-gray-900 col-span-2" />
@@ -40,7 +40,7 @@
             <div class="grid grid-cols-3 items-center gap-4">
                 <label
                     class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    for="text-color">Text Color</label>
+                    for="text-color">{{ 'opengraph-generator.fontOptions.color' | translate }}</label>
                 <div class="grid gap-2 col-span-2 outline-hidden">
                     <div class="flex flex-wrap gap-1">
                         @for (fontColorOpt of FONT_COLORS; track $index) {

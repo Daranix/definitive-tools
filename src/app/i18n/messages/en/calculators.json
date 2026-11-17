@@ -1,0 +1,500 @@
+{
+  "shared": {
+    "copy": "Copy",
+    "copiedLabel": "Copied",
+    "copied": "Result copied to the clipboard",
+    "copyFailed": "Could not copy the result",
+    "notAvailable": "N/A",
+    "formError": "Check the data entered in the form.",
+    "removeItem": "Remove {{ name }}"
+  },
+  "ruleOfThree": {
+    "badge": "Precision proportional calculation",
+    "title": "Rule of Three Calculator",
+    "subtitle": "Solve simple direct, simple inverse and mixed compound rules of three with the formula and a step-by-step breakdown.",
+    "seo": {
+      "title": "Online Rule of Three Calculator - Direct, Inverse and Compound",
+      "description": "Calculate simple direct, inverse and mixed compound rules of three step by step with high decimal precision.",
+      "keywords": "rule of three, direct rule of three, inverse rule of three, compound rule of three, proportionality calculator"
+    },
+    "tabs": {
+      "ariaLabel": "Type of rule of three",
+      "simpleDirect": "Simple direct",
+      "simpleInverse": "Simple inverse",
+      "compound": "Compound (direct / inverse / mixed)"
+    },
+    "examples": {
+      "label": "Examples:",
+      "recipe": "Recipe (direct)",
+      "speed": "Speed and time (inverse)",
+      "factory": "Mixed construction job (compound)",
+      "logistics": "Freight (compound)"
+    },
+    "decimals": {
+      "label": "Decimals:"
+    },
+    "actions": {
+      "reset": "Reset",
+      "swapRows": "Swap rows",
+      "invertCases": "Swap cases",
+      "addCondition": "Add metric"
+    },
+    "simple": {
+      "directTitle": "Direct proportion",
+      "directDescription": "The higher the first value, the higher the second value.",
+      "inverseTitle": "Inverse proportion",
+      "inverseDescription": "The higher the first value, the lower the second value.",
+      "labelKnown": "Name of metric 1",
+      "labelResult": "Name of metric 2",
+      "placeholderKnown": "e.g. Units",
+      "placeholderResult": "e.g. Price (€)",
+      "fieldA": "If {{ name }} is (A)",
+      "fieldB": "Then {{ name }} is (B)",
+      "fieldC": "For {{ name }} equal to (C)",
+      "unknown": "Unknown {{ name }} (X)"
+    },
+    "compound": {
+      "title": "Compound rule of three",
+      "description": "Combine 2 to 6 metrics with a direct or inverse relationship to the target.",
+      "targetLabel": "Metric to calculate (target)",
+      "targetPlaceholder": "e.g. Days",
+      "baseLabel": "Known reference value",
+      "rowName": "Metric {{ index }}",
+      "baseCase": "Base case",
+      "newCase": "New case",
+      "relation": "Relationship",
+      "relationDirect": "Direct",
+      "relationInverse": "Inverse"
+    },
+    "result": {
+      "title": "Calculated result",
+      "unknownFallback": "Unknown X",
+      "stepsTitle": "Step-by-step breakdown"
+    },
+    "defaults": {
+      "unitKnown": "Units",
+      "unitResult": "Price (€)",
+      "compoundTarget": "Days",
+      "workers": "Workers",
+      "hoursPerDay": "Hours per day",
+      "metersBuilt": "Square metres built",
+      "defaultTarget": "Result",
+      "magnitudeA": "Metric A",
+      "magnitudeB": "Metric B",
+      "magnitudeIndexed": "Metric {{ index }}",
+      "servings": "Servings",
+      "flour": "Flour (g)",
+      "speed": "Speed (km/h)",
+      "time": "Time (hours)",
+      "trucks": "Trucks",
+      "distance": "Distance (km)",
+      "cost": "Cost (€)"
+    },
+    "steps": {
+      "simpleDirect": "Direct setup: if {{ a }} → {{ b }}, then {{ c }} → X.",
+      "simpleInverse": "Inverse setup: if {{ a }} → {{ b }}, then {{ c }} → X.",
+      "crossMultiply": "Cross multiplication: X = ({{ left }} × {{ right }}) / {{ denominator }}.",
+      "constantProduct": "Constant product: X = ({{ left }} × {{ right }}) / {{ denominator }}.",
+      "intermediate": "Intermediate operation: {{ numerator }} / {{ denominator }} = {{ result }}.",
+      "compoundDirect": "{{ name }} (direct): factor = {{ expression }} = {{ factor }}.",
+      "compoundInverse": "{{ name }} (inverse): factor = {{ expression }} = {{ factor }}.",
+      "compoundResult": "Result ({{ target }}): {{ base }} × {{ factors }} = {{ result }}."
+    },
+    "errors": {
+      "missingValues": "Enter all numeric values (A, B and C) to calculate the result.",
+      "directZero": "Value A cannot be zero in a direct rule of three.",
+      "inverseZero": "Value C cannot be zero in an inverse rule of three.",
+      "compoundRange": "A compound rule of three requires between 2 and 6 metrics.",
+      "baseValue": "Enter a valid base value for the target metric.",
+      "rowValues": "Check the numeric values of \"{{ name }}\".",
+      "directKnownZero": "The known value of \"{{ name }}\" cannot be zero in a direct relationship.",
+      "inverseTargetZero": "The target value of \"{{ name }}\" cannot be zero in an inverse relationship."
+    },
+    "validation": {
+      "number": "Enter a valid number.",
+      "value": "Enter a valid numeric value.",
+      "relation": "Select a valid relationship.",
+      "directZeroField": "Value A cannot be zero in a direct rule of three.",
+      "inverseZeroField": "Value C cannot be zero in an inverse rule of three.",
+      "baseValue": "Enter a valid base value for the target metric.",
+      "compoundRange": "A compound rule of three requires between 2 and 6 metrics.",
+      "baseFor": "Enter a valid base value for \"{{ name }}\".",
+      "directZeroFor": "The known value of \"{{ name }}\" cannot be zero in a direct relationship.",
+      "targetFor": "Enter a valid new value for \"{{ name }}\".",
+      "inverseZeroFor": "The target value of \"{{ name }}\" cannot be zero in an inverse relationship."
+    }
+  },
+  "netSalary": {
+    "badge": "Spanish payslip 2026 (income tax + Social Security)",
+    "title": "Net Salary Spain 2026 Calculator",
+    "subtitle": "Estimate your monthly and annual net salary with 2026 Social Security contributions, the solidarity contribution, MEI and personal income tax withholding.",
+    "seo": {
+      "title": "Net Salary Spain 2026 Calculator - Income Tax and Social Security",
+      "description": "Calculate your monthly and annual net salary in Spain for 2026, including Social Security contributions, the solidarity contribution, MEI and income tax withholding.",
+      "keywords": "net salary spain calculator, net pay 2026, income tax calculator, social security, solidarity contribution"
+    },
+    "sectionTitle": "Salary and personal details",
+    "fields": {
+      "grossAnnual": "Gross annual salary (€)",
+      "grossAnnualAria": "Gross annual salary slider",
+      "extraPayments": "Number of extra payments",
+      "extraPaymentsHint": "0 = 12 payments, 2 = 14 payments · Total: {{ total }} payments/year",
+      "contractType": "Contract type",
+      "contractIndefinite": "Permanent (1.55% unemployment)",
+      "contractTemporary": "Temporary (1.60% unemployment)",
+      "region": "Autonomous community",
+      "regionGeneral": "General reference",
+      "regionMadrid": "Community of Madrid",
+      "regionCataluna": "Catalonia",
+      "regionAndalucia": "Andalusia",
+      "regionValencia": "Valencian Community",
+      "regionGalicia": "Galicia",
+      "age": "Age bracket",
+      "ageUnder65": "Under 65",
+      "age65to74": "65 to 74",
+      "age75plus": "75 or over",
+      "family": "Family situation",
+      "familySingle": "Single, widowed or divorced",
+      "familyMarriedLowIncome": "Married (spouse under €1,500/year)",
+      "familyOther": "Married (other situations)",
+      "disability": "Disability",
+      "disabilityNone": "No disability",
+      "disability33to64": "Degree between 33% and 64%",
+      "disability65plus": "Degree of 65% or higher",
+      "childrenTotal": "Dependent children (0–10)",
+      "childrenUnder3": "Children under 3",
+      "sharedCustody": "Dependants split 50% (joint custody or two taxpayers)",
+      "geographicMobility": "Geographic mobility (+€2,000 deductible expense)"
+    },
+    "kpi": {
+      "netMonthly": "Net monthly salary ({{ count }} payments)",
+      "extraPaymentOne": "+ {{ count }} extra payment of {{ amount }}",
+      "extraPaymentMany": "+ {{ count }} extra payments of {{ amount }}",
+      "netAnnual": "Net annual salary",
+      "irpfWithholding": "Income tax withholding",
+      "socialSecurity": "Social Security"
+    },
+    "distribution": {
+      "title": "Gross salary distribution",
+      "gross": "Gross: {{ amount }}",
+      "net": "Net",
+      "irpf": "Income tax",
+      "socialSecurity": "Social Security"
+    },
+    "table": {
+      "title": "Annual and monthly breakdown",
+      "concept": "Item",
+      "annual": "Annual",
+      "perPayment": "Per payment ({{ count }})",
+      "grossSalary": "Gross salary",
+      "socialSecurity": "Social Security (base {{ base }})",
+      "solidarityIncluded": "Includes {{ amount }} in the 2026 solidarity contribution",
+      "irpf": "Estimated income tax ({{ percent }})",
+      "irpfBase": "Taxable base: {{ base }} · Personal/family minimum: {{ minimum }}",
+      "art20": "Employment income reduction (Art. 20): {{ amount }}",
+      "netSalary": "Net salary received"
+    },
+    "disclaimer": "Estimate based on the reference personal income tax tables and the 2026 Social Security contribution bases and solidarity contribution (maximum base {{ maxBase }}/month and MEI of {{ meiRate }}). It does not replace the AEAT's official withholding algorithm and does not include additional specific deductions.",
+    "errors": {
+      "grossNegative": "The gross annual salary must be an amount greater than or equal to €0.",
+      "extraPaymentsRange": "The number of extra payments must be an integer between 0 and 12.",
+      "childrenInvalid": "The number of dependent children must be a valid numeric value."
+    },
+    "validation": {
+      "grossRequired": "Enter the gross annual salary.",
+      "grossNegative": "The gross annual salary cannot be negative.",
+      "grossMax": "The gross annual salary cannot exceed €2,000,000.",
+      "extraRequired": "Enter the number of extra payments.",
+      "extraInteger": "The number of extra payments must be a whole number.",
+      "extraMin": "The minimum number of extra payments is 0.",
+      "extraMax": "The maximum number of extra payments is 12.",
+      "region": "Select a valid autonomous community.",
+      "age": "Select a valid age bracket.",
+      "contract": "Select a valid contract type.",
+      "family": "Select a valid family situation.",
+      "childrenRequired": "Enter the number of dependent children.",
+      "childrenInteger": "The number of children must be a whole number.",
+      "childrenMin": "It cannot be negative.",
+      "childrenMax": "The maximum allowed is 10 children.",
+      "under3Required": "Enter the number of children under 3.",
+      "under3Integer": "It must be a whole number.",
+      "under3Min": "It cannot be negative.",
+      "under3Max": "The maximum allowed is 10.",
+      "under3Exceeds": "Children under 3 cannot exceed the total number of children.",
+      "disability": "Select a valid disability degree."
+    }
+  },
+  "severance": {
+    "badge": "Workers' Statute · 2012 labour reform",
+    "title": "Severance Pay Spain Calculator",
+    "subtitle": "Calculate statutory severance pay in Spain with the Supreme Court's monthly proration, the mixed 45/33-day period, statutory caps and the income tax exemption limit.",
+    "seo": {
+      "title": "Severance Pay Spain Calculator",
+      "description": "Calculate unfair dismissal (45/33 days), objective dismissal (20 days), end of temporary contract or substantial modification severance pay in Spain.",
+      "keywords": "severance pay spain calculator, unfair dismissal 45 33 days, objective dismissal, settlement compensation"
+    },
+    "sectionTitle": "Employment details",
+    "fields": {
+      "startDate": "Contract start date",
+      "endDate": "Dismissal / end date",
+      "salaryMode": "Gross salary mode",
+      "salaryModeAnnual": "Gross annual",
+      "salaryModeMonthly": "Gross monthly",
+      "salaryAnnual": "Gross annual salary (€)",
+      "salaryMonthly": "Gross monthly salary (€)",
+      "extraPayments": "Number of extra payments",
+      "extraPaymentsHint": "0 = 12 payments, 2 = 14 payments · Total: {{ total }} payments/year",
+      "dismissalType": "Type of termination or dismissal",
+      "dismissalUnfair": "Unfair dismissal (45 / 33 days)",
+      "dismissalObjective": "Objective dismissal or approved collective redundancy (20 days)",
+      "dismissalModification": "Substantial modification or relocation (20 days)",
+      "dismissalTemporaryEnd": "End of temporary contract (12 days)",
+      "dismissalDisciplinary": "Fair disciplinary dismissal (0 days)"
+    },
+    "dismissals": {
+      "unfair": "Unfair dismissal (45 / 33 days per year)",
+      "objective": "Objective dismissal or approved collective redundancy (20 days/year, max. 12 months)",
+      "modification": "Substantial modification or relocation (20 days/year, max. 9 months)",
+      "temporaryEnd": "End of temporary contract (12 days/year)",
+      "disciplinary": "Fair disciplinary dismissal (0 days)"
+    },
+    "kpi": {
+      "total": "Estimated total severance",
+      "days": "Compensated days",
+      "dayValueOne": "{{ days }} day",
+      "daysValue": "{{ days }} days",
+      "dailySalary": "Daily salary",
+      "seniority": "Seniority",
+      "tenure": "{{ years }}y {{ months }}m {{ days }}d",
+      "computableMonths": "Computable months",
+      "monthValueOne": "{{ months }} month",
+      "monthsValue": "{{ months }} months"
+    },
+    "reform": {
+      "title": "Breakdown by labour reform (12/02/2012)",
+      "period": "Period",
+      "computableMonths": "Computable months",
+      "module": "Rate",
+      "days": "Days",
+      "pre": "Before 12/02/2012",
+      "post": "From 12/02/2012",
+      "module45": "45 days/year",
+      "module33": "33 days/year",
+      "total": "Total days after applying caps",
+      "note": "Note: Each period (before and after 12/02/2012) rounds any fraction of a month up to a full month independently, in line with Supreme Court case law."
+    },
+    "cap": {
+      "title": "Statutory cap applied"
+    },
+    "caps": {
+      "unfairMax1260": "Maximum cap of 42 monthly payments (1,260 days) on the period before 12/02/2012.",
+      "unfairPre720": "Period before 12/02/2012 exceeding 720 days: days accrued before the reform are consolidated without adding subsequent days.",
+      "unfairMax720": "Statutory maximum of 24 monthly payments (720 days).",
+      "objective360": "Statutory maximum of 12 monthly payments (360 days).",
+      "modification270": "Statutory maximum of 9 monthly payments (270 days)."
+    },
+    "irpf": {
+      "grossAnnual": "Gross annual salary used for the calculation",
+      "exemptLimit": "Income tax exemption limit",
+      "notExemptPrefix": "This severance payment is not exempt from income tax: the",
+      "notExemptSuffix": "is taxed as employment income.",
+      "exemptExceededPrefix": "The severance payment exceeds the €180,000 exemption limit. The excess of",
+      "exemptExceededSuffix": "is taxed as employment income for income tax purposes.",
+      "note": "The calculation follows the Supreme Court's criterion of counting every fraction of a month as a full month (gross annual salary / 365 days). Note that the end of a temporary contract is not exempt from income tax."
+    },
+    "errors": {
+      "dates": "Enter valid start and end dates (YYYY-MM-DD).",
+      "endBeforeStart": "The dismissal or end date must be the same as or later than the start date.",
+      "salaryNegative": "The gross salary must be an amount greater than or equal to €0.",
+      "extraPaymentsRange": "The number of extra payments must be an integer between 0 and 12."
+    },
+    "validation": {
+      "startRequired": "Enter the contract start date.",
+      "startInvalid": "Enter a valid start date (YYYY-MM-DD).",
+      "endRequired": "Enter the dismissal or end date.",
+      "endInvalid": "Enter a valid end date (YYYY-MM-DD).",
+      "salaryMode": "Select a valid salary mode.",
+      "salaryRequired": "Enter the gross salary amount.",
+      "salaryNegative": "The gross salary cannot be negative.",
+      "salaryMax": "The salary amount exceeds the maximum allowed.",
+      "extraRequired": "Enter the number of extra payments.",
+      "dismissalType": "Select a valid dismissal type.",
+      "endBeforeStart": "The dismissal or end date must be the same as or later than the start date.",
+      "extraInteger": "The number of extra payments must be a whole number.",
+      "extraMin": "The minimum number of extra payments is 0.",
+      "extraMax": "The maximum number of extra payments is 12."
+    }
+  },
+  "mortgage": {
+    "badge": "French amortisation system",
+    "title": "Mortgage Calculator",
+    "subtitle": "Calculate your monthly payment, the effective APR including fees and insurance, the total cash required and the full amortisation schedule.",
+    "seo": {
+      "title": "Mortgage Calculator - Payment, APR and Amortisation Schedule",
+      "description": "Simulate your mortgage with the French system, calculate the monthly payment, the effective APR including fees, the cash required and download the amortisation schedule as CSV.",
+      "keywords": "mortgage calculator, mortgage simulator, monthly payment, calculate APR, french amortisation schedule"
+    },
+    "loan": {
+      "sectionTitle": "Loan details",
+      "price": "Property price (€)",
+      "priceAria": "Property price slider",
+      "downPayment": "Deposit / down payment",
+      "downPaymentPercent": "Deposit percentage",
+      "downPaymentPercentAria": "Deposit percentage slider",
+      "term": "Amortisation term (years)",
+      "termAria": "Term in years slider",
+      "termValue": "{{ years }} years ({{ payments }} payments)",
+      "tin": "Nominal annual interest rate (TIN %)",
+      "tinAria": "Nominal annual interest rate slider"
+    },
+    "fees": {
+      "title": "Fees and taxes (APR and cash)",
+      "subtitle": "Optional, used to calculate the real APR and the total cash required.",
+      "initialFees": "Upfront fees (€)",
+      "initialFeesHint": "Valuation, arrangement fee, etc.",
+      "recurringCost": "Annual linked cost (€)",
+      "recurringCostHint": "Annual home/life insurance",
+      "purchaseTax": "Purchase taxes and fees (% transfer tax / VAT + notary)"
+    },
+    "result": {
+      "monthlyPayment": "Estimated monthly payment",
+      "tae": "Effective APR",
+      "loanAmount": "Loan",
+      "ltv": "Financing (LTV)",
+      "totalInterest": "Total interest",
+      "totalPaid": "Total to repay"
+    },
+    "cash": {
+      "title": "Total cash required",
+      "downPayment": "Deposit paid:",
+      "taxes": "Taxes and notary fees ({{ percent }}):",
+      "initialFees": "Upfront loan fees:"
+    },
+    "split": {
+      "title": "Total payment split",
+      "principal": "Borrowed capital ({{ percent }})",
+      "interest": "Total interest ({{ percent }})"
+    },
+    "schedule": {
+      "ariaView": "Amortisation view",
+      "annual": "Annual view",
+      "monthly": "Monthly view",
+      "export": "Export CSV",
+      "year": "Year",
+      "month": "Month",
+      "payment": "Payment",
+      "principal": "Capital",
+      "interest": "Interest",
+      "balance": "Outstanding",
+      "yearRow": "Year {{ year }}",
+      "monthRow": "Month {{ month }}"
+    },
+    "errors": {
+      "title": "Invalid input data",
+      "pricePositive": "The property price must be greater than zero.",
+      "downPaymentRange": "The deposit must be greater than or equal to 0 and less than the property price.",
+      "termRange": "The mortgage term must be between 1 and 40 years.",
+      "tinRange": "The nominal annual rate must be between 0% and 30%.",
+      "feesNegative": "Additional fees and taxes cannot be negative."
+    },
+    "validation": {
+      "priceRequired": "Enter the property price.",
+      "priceMin": "The minimum price is €1,000.",
+      "priceMax": "The maximum price is €50,000,000.",
+      "downPaymentRequired": "Enter the deposit amount.",
+      "downPaymentMin": "The deposit cannot be negative.",
+      "downPaymentPercentRequired": "Enter the deposit percentage.",
+      "downPaymentPercentMin": "The minimum percentage is 0%.",
+      "downPaymentPercentMax": "The maximum deposit percentage is 99.9%.",
+      "termRequired": "Enter the term in years.",
+      "termInteger": "The term must be a whole number of years.",
+      "termMin": "The minimum term is 1 year.",
+      "termMax": "The maximum term is 40 years.",
+      "tinRequired": "Enter the nominal annual rate.",
+      "tinMin": "The rate cannot be negative.",
+      "tinMax": "The maximum allowed rate is 30%.",
+      "initialFeesRequired": "Enter the upfront fees (0 if none).",
+      "initialFeesMin": "Upfront fees cannot be negative.",
+      "recurringCostRequired": "Enter the annual linked cost (0 if none).",
+      "recurringCostMin": "The annual linked cost cannot be negative.",
+      "purchaseTaxRequired": "Enter the tax and fee percentage.",
+      "purchaseTaxMin": "The percentage cannot be negative.",
+      "purchaseTaxMax": "The maximum allowed percentage is 25%.",
+      "downPaymentBelowPrice": "The deposit must be less than the property price."
+    },
+    "csv": {
+      "annualFileName": "mortgage-amortisation-annual.csv",
+      "monthlyFileName": "mortgage-amortisation-monthly.csv",
+      "year": "Year",
+      "annualPayment": "Annual payment (EUR)",
+      "principal": "Principal repaid (EUR)",
+      "interest": "Interest (EUR)",
+      "balance": "Outstanding balance (EUR)",
+      "month": "Month",
+      "payment": "Payment (EUR)",
+      "exported": "Amortisation schedule exported as CSV"
+    }
+  },
+  "scientific": {
+    "badge": "Arbitrary-precision decimal arithmetic",
+    "title": "Scientific Calculator",
+    "subtitle": "Calculate with up to 50 significant digits, trigonometric and hyperbolic functions, logarithms, powers, memory and history.",
+    "seo": {
+      "title": "High-Precision Scientific Calculator",
+      "description": "Online scientific calculator with arbitrary precision of 15, 30 or 50 digits, trigonometry, logarithms, factorial, memory and history.",
+      "keywords": "scientific calculator, high precision calculator, trigonometry, logarithms, factorial, decimal.js"
+    },
+    "angleAria": "Angle unit",
+    "precisionLabel": "Precision:",
+    "precisionOption": "{{ value }} digits",
+    "precisionShort": "{{ value }} digits",
+    "expressionAria": "Mathematical expression",
+    "placeholder": "e.g. sin(30) + sqrt(2) * 10",
+    "memoryBadge": "M: {{ value }}",
+    "history": {
+      "title": "Calculation history",
+      "clear": "Clear",
+      "empty": "No calculations yet. Press \"=\" or Enter to calculate.",
+      "shortcutsTitle": "Keyboard shortcuts:",
+      "shortcutsBefore": "Type expressions with the keyboard and press",
+      "shortcutsEvaluateKey": "Enter",
+      "shortcutsMiddle": "to evaluate or",
+      "shortcutsClearKey": "Esc",
+      "shortcutsAfter": "to clear."
+    },
+    "messages": {
+      "memoryCleared": "Memory cleared (MC)",
+      "memoryAddInvalid": "There is no valid value to add to memory",
+      "memorySubtractInvalid": "There is no valid value to subtract from memory"
+    },
+    "errors": {
+      "unknownSymbol": "Unknown symbol or function: \"{{ symbol }}\".",
+      "invalidCharacter": "Invalid character in the expression: \"{{ char }}\".",
+      "factorialUsage": "Invalid use of the factorial operator (!).",
+      "unbalancedParens": "Unbalanced parentheses.",
+      "factorialInteger": "Factorial is only defined for non-negative integers.",
+      "factorialMax": "The maximum allowed factorial is {{ max }}!.",
+      "tanUndefined": "Tangent is undefined for this angle.",
+      "asinRange": "The argument of asin must be between -1 and 1.",
+      "acosRange": "The argument of acos must be between -1 and 1.",
+      "lnPositive": "The natural logarithm requires a positive value.",
+      "logPositive": "The base-10 logarithm requires a positive value.",
+      "log2Positive": "The base-2 logarithm requires a positive value.",
+      "sqrtNegative": "Cannot calculate the square root of a negative number.",
+      "invZero": "Division by zero in 1/x.",
+      "unsupportedFunction": "Unsupported function: \"{{ name }}\".",
+      "emptyExpression": "Enter a mathematical expression.",
+      "missingArgument": "Missing argument for the function \"{{ name }}\".",
+      "incompleteExpression": "Incomplete expression.",
+      "missingFactorialOperand": "Missing operand for the factorial.",
+      "incompleteOperation": "Incomplete operation: missing operands.",
+      "divisionByZero": "Division by zero.",
+      "moduloByZero": "Modulo by zero.",
+      "powerUndefined": "Undefined power (0 raised to a negative exponent).",
+      "negativeBaseExponent": "A negative base with a non-integer exponent is not supported in real numbers.",
+      "invalidExpression": "Invalid mathematical expression.",
+      "outOfRange": "The result exceeds the allowed finite range.",
+      "evaluation": "Error while evaluating the expression."
+    }
+  }
+}

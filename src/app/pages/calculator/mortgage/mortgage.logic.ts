@@ -1,5 +1,5 @@
 import Decimal from 'decimal.js';
-import { round2 } from '../shared/calculator-format';
+import { round2, type CalculatorTranslate } from '../shared/calculator-format';
 
 export interface MortgageInput {
   propertyPrice: number;
@@ -44,6 +44,14 @@ export interface MortgageSummary {
 export type MortgageResult =
   | { ok: true; data: MortgageSummary }
   | { ok: false; error: string };
+
+/**
+ * Presentation options: the UI passes the active translator so error messages
+ * follow the current language. Pure logic callers may omit it.
+ */
+export interface MortgageOptions {
+  translate?: CalculatorTranslate;
+}
 
 /**
  * Solves monthly IRR using safeguarded Newton-Raphson with bisection fallback
@@ -132,7 +140,11 @@ function solveEffectiveTaePercent(
 /**
  * Calculates French-system mortgage amortization, TAE via IRR, and upfront cash requirements.
  */
-export function calculateMortgage(input: MortgageInput): MortgageResult {
+export function calculateMortgage(
+  input: MortgageInput,
+  options: MortgageOptions = {},
+): MortgageResult {
+  const t: CalculatorTranslate = options.translate ?? ((key) => key);
   const {
     propertyPrice,
     downPayment,
@@ -144,20 +156,20 @@ export function calculateMortgage(input: MortgageInput): MortgageResult {
   } = input;
 
   if (!Number.isFinite(propertyPrice) || propertyPrice <= 0) {
-    return { ok: false, error: 'El precio de la vivienda debe ser mayor que cero.' };
+    return { ok: false, error: t('calculators.mortgage.errors.pricePositive') };
   }
   if (!Number.isFinite(downPayment) || downPayment < 0 || downPayment >= propertyPrice) {
     return {
       ok: false,
-      error: 'La entrada aportada debe ser mayor o igual a 0 y menor que el precio de la vivienda.',
+      error: t('calculators.mortgage.errors.downPaymentRange'),
     };
   }
   const intYears = Math.trunc(years);
   if (!Number.isFinite(years) || intYears < 1 || intYears > 40) {
-    return { ok: false, error: 'El plazo de la hipoteca debe situarse entre 1 y 40 años.' };
+    return { ok: false, error: t('calculators.mortgage.errors.termRange') };
   }
   if (!Number.isFinite(tinAnnual) || tinAnnual < 0 || tinAnnual > 30) {
-    return { ok: false, error: 'El TIN anual debe estar comprendido entre 0 % y 30 %.' };
+    return { ok: false, error: t('calculators.mortgage.errors.tinRange') };
   }
   if (
     !Number.isFinite(additionalInitialFees) ||
@@ -167,7 +179,7 @@ export function calculateMortgage(input: MortgageInput): MortgageResult {
     !Number.isFinite(purchaseTaxPercent) ||
     purchaseTaxPercent < 0
   ) {
-    return { ok: false, error: 'Los gastos e impuestos adicionales no pueden ser negativos.' };
+    return { ok: false, error: t('calculators.mortgage.errors.feesNegative') };
   }
 
   const priceDec = new Decimal(propertyPrice);

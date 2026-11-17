@@ -1,6 +1,6 @@
-<button class="block" aria-label="Menu">
+<button class="block" [attr.aria-label]="'common.components.menu' | translate">
     <label for="menu-hamburger" class="hamburger-menu">
-        <input type="checkbox" aria-hidden="true" class="hidden" aria-label="Menu" id="menu-hamburger" [(ngModel)]="toggleMenu" />
+        <input type="checkbox" aria-hidden="true" class="hidden" [attr.aria-label]="'common.components.menu' | translate" id="menu-hamburger" [(ngModel)]="toggleMenu" />
         <lucide-icon name="menu"></lucide-icon>
     </label>
     

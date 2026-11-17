@@ -2,13 +2,13 @@
     @let progressInfo = downloadProgress();
     @if(progressInfo) {
         @if(progressInfo.status === 'progress' && progressInfo.file.endsWith('.onnx')) {
-            <div>Downloading model ...</div>
+            <div>{{ 'common.components.modelDownload.downloading' | translate }}</div>
             @let percent = progressInfo.status === 'progress' ? progressInfo.progress : 0;
             <app-progress-bar [progress]="percent"></app-progress-bar>
         } @else if(progressInfo.status === 'done') {
-            <div>Loading ...</div>
+            <div>{{ 'common.components.modelDownload.loading' | translate }}</div>
         } @else if(progressInfo.status !== 'progress' && progressInfo.status !== undefined) {
-            <div>Loading model file ...</div>
+            <div>{{ 'common.components.modelDownload.loadingFile' | translate }}</div>
         }
     }
 </div>

@@ -1,0 +1,40 @@
+<div class="relative">
+  <button
+    type="button"
+    (click)="toggle()"
+    [attr.aria-expanded]="open()"
+    [attr.aria-label]="'common.language.change' | translate"
+    [class]="buttonClass()"
+    data-testid="language-switcher">
+    <lucide-icon name="globe" class="h-4 w-4"></lucide-icon>
+    <span>{{ i18nService.shortLabel() }}</span>
+    <lucide-icon name="chevron-down" class="h-3 w-3"></lucide-icon>
+  </button>
+
+  @if (open()) {
+    <div class="fixed inset-0 z-40" (click)="open.set(false)" aria-hidden="true"></div>
+    <ul
+      class="absolute right-0 z-50 mt-2 w-44 overflow-hidden rounded-lg border border-slate-200 bg-white py-1 shadow-lg"
+      [attr.aria-label]="'common.language.label' | translate"
+      role="menu">
+      @for (language of languages; track language) {
+        <li>
+          <button
+            type="button"
+            role="menuitem"
+            (click)="select(language)"
+            [attr.data-testid]="'language-option-' + language"
+            [attr.aria-current]="language === i18nService.language()"
+            class="flex w-full items-center justify-between gap-2 px-4 py-2 text-left text-sm text-slate-700 transition-colors hover:bg-slate-50 hover:text-indigo-600"
+            [class.font-semibold]="language === i18nService.language()"
+            [class.text-indigo-600]="language === i18nService.language()">
+            <span>{{ 'common.language.' + language | translate }}</span>
+            @if (language === i18nService.language()) {
+              <lucide-icon name="check" class="h-4 w-4"></lucide-icon>
+            }
+          </button>
+        </li>
+      }
+    </ul>
+  }
+</div>

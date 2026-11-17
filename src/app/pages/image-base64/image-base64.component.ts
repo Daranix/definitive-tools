@@ -1,6 +1,7 @@
 import {
   Component,
   computed,
+  effect,
   inject,
   model,
   signal,
@@ -8,10 +9,12 @@ import {
 } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 import { TopNavbarComponent } from '@/app/components/top-navbar/top-navbar.component';
 import { FooterComponent } from '@/app/components/footer/footer.component';
 import { DragAndDropFileComponent } from '@/app/components/drag-and-drop-file/drag-and-drop-file.component';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
+import { I18nService } from '@/app/i18n/i18n.service';
 import { MetadataService } from '@/app/services/metadata.service';
 import { ToastService } from '@/app/services/toast.service';
 import { FileSizePipe } from '@/app/pipes/file-size.pipe';
@@ -28,6 +31,7 @@ export type OutputFormat = 'dataUri' | 'raw' | 'html' | 'css';
     DragAndDropFileComponent,
     LucideIconComponent,
     FileSizePipe,
+    TranslatePipe,
   ],
   templateUrl: './image-base64.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -36,6 +40,7 @@ export type OutputFormat = 'dataUri' | 'raw' | 'html' | 'css';
 export class ImageBase64Component {
   private readonly metadataService = inject(MetadataService);
   private readonly toastService = inject(ToastService);
+  private readonly i18n = inject(I18nService);
 
   readonly mode = signal<'encode' | 'decode'>('encode');
 
@@ -70,7 +75,7 @@ export class ImageBase64Component {
         const parts = rawDataUri.split(';base64,');
         return parts.length > 1 ? parts[1] : rawDataUri;
       case 'html':
-        return `<img src="${rawDataUri}" alt="${this.imageName() || 'Base64 Image'}" />`;
+        return `<img src="${rawDataUri}" alt="${this.imageName() || this.i18n.t('image-base64-converter.outputAlt')}" />`;
       case 'css':
         return `background-image: url("${rawDataUri}");`;
       case 'dataUri':
@@ -80,11 +85,10 @@ export class ImageBase64Component {
   });
 
   constructor() {
-    this.metadataService.updateMetadata({
-      title: 'Image to Base64 & Base64 to Image Converter',
-      description:
-        'Convert any image file to a Base64 encoded string or decode Base64 data back to images. Fast, secure, client-side conversion with live previews.',
-      keywords: 'base64, image to base64, base64 to image, base64 decoder, base64 encoder, data uri, webp, png, jpeg',
+    this.updateMetadata();
+    effect(() => {
+      this.i18n.language();
+      this.updateMetadata();
     });
   }
 
@@ -128,7 +132,7 @@ export class ImageBase64Component {
   handleDecode() {
     const rawInput = this.base64Input().trim();
     if (!rawInput) {
-      this.decodeError.set('Please enter a Base64 string to decode.');
+      this.decodeError.set(this.i18n.t('image-base64-converter.messages.emptyInput'));
       this.decodedImageSrc.set(undefined);
       this.decodedMetadata.set(undefined);
       return;
@@ -182,7 +186,7 @@ export class ImageBase64Component {
     };
     img.onerror = () => {
       this.decodeError.set(
-        'Could not decode image. Please ensure the pasted text is a valid Base64 encoded image string.'
+        this.i18n.t('image-base64-converter.messages.decodeFailed')
       );
       this.decodedImageSrc.set(undefined);
       this.decodedMetadata.set(undefined);
@@ -202,9 +206,13 @@ export class ImageBase64Component {
     if (!text) return;
     try {
       await navigator.clipboard.writeText(text);
-      this.toastService.success({ message: 'Copied to clipboard!' });
+      this.toastService.success({
+        message: this.i18n.t('image-base64-converter.messages.copied'),
+      });
     } catch {
-      this.toastService.error({ message: 'Failed to copy to clipboard.' });
+      this.toastService.error({
+        message: this.i18n.t('image-base64-converter.messages.copyFailed'),
+      });
     }
   }
 
@@ -244,13 +252,27 @@ export class ImageBase64Component {
 
       const link = document.createElement('a');
       link.href = blobUrl;
-      link.download = `decoded-image.${ext}`;
+      link.download = this.i18n.t('image-base64-converter.download.fileName', {
+        ext,
+      });
       link.click();
 
       setTimeout(() => URL.revokeObjectURL(blobUrl), 100);
-      this.toastService.success({ message: 'Image downloaded successfully!' });
+      this.toastService.success({
+        message: this.i18n.t('image-base64-converter.messages.downloaded'),
+      });
     } catch (e) {
-      this.toastService.error({ message: 'Failed to download the decoded image.' });
+      this.toastService.error({
+        message: this.i18n.t('image-base64-converter.messages.downloadFailed'),
+      });
     }
+  }
+
+  private updateMetadata(): void {
+    this.metadataService.updateMetadata({
+      title: this.i18n.t('image-base64-converter.seo.title'),
+      description: this.i18n.t('image-base64-converter.seo.description'),
+      keywords: this.i18n.t('image-base64-converter.seo.keywords'),
+    });
   }
 }

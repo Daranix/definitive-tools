@@ -1,0 +1,9 @@
+{
+  "breadcrumb": {
+    "label": "Ruta de navegación",
+    "legal": "Legal"
+  },
+  "error": {
+    "code": "({{ code }})"
+  }
+}

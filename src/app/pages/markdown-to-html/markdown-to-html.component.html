@@ -7,33 +7,33 @@
       <div class="h-11 md:h-14 px-2 md:px-4 bg-slate-800/50 border-b border-slate-700/50 flex items-center justify-between gap-1">
         <div class="flex items-center gap-1.5 shrink-0">
           <lucide-icon name="code" class="w-4 h-4 text-indigo-400"></lucide-icon>
-          <span class="text-xs md:text-sm font-semibold tracking-wide text-slate-300 uppercase hidden sm:inline">Markdown Editor</span>
+          <span class="text-xs md:text-sm font-semibold tracking-wide text-slate-300 uppercase hidden sm:inline">{{ 'markdown-to-html.editor.title' | translate }}</span>
         </div>
         <div class="flex items-center gap-1">
           <!-- Mobile Switch to Output -->
           <button (click)="mobilePanel.set('preview')"
                   data-testid="md-html-mobile-to-output-btn"
                   class="flex md:hidden items-center gap-1 px-2 py-1 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-semibold shadow-xs transition-all"
-                  title="Switch to Output View">
+                  [title]="'markdown-to-html.panels.toOutput' | translate">
             <lucide-icon name="eye" class="w-3.5 h-3.5"></lucide-icon>
-            <span>Output</span>
+            <span>{{ 'markdown-to-html.panels.output' | translate }}</span>
           </button>
           <button (click)="handleClear()" 
                   data-testid="md-html-clear-btn"
                   class="p-1 md:p-1.5 hover:bg-slate-700/80 rounded-lg transition-colors text-slate-400 hover:text-red-400"
-                  title="Clear Editor">
+                  [title]="'markdown-to-html.editor.clear' | translate">
             <lucide-icon name="trash-2" class="w-3.5 h-3.5 md:w-4 md:h-4"></lucide-icon>
           </button>
           <button (click)="downloadMarkdown()"
                   [disabled]="!markdownText()"
                   class="p-1 md:p-1.5 hover:bg-slate-700/80 rounded-lg transition-colors text-slate-400 hover:text-indigo-400 disabled:opacity-30 disabled:cursor-not-allowed"
-                  title="Download Markdown (.md)">
+                  [title]="'markdown-to-html.editor.downloadMarkdown' | translate">
             <lucide-icon name="download" class="w-3.5 h-3.5 md:w-4 md:h-4"></lucide-icon>
           </button>
           <button (click)="handleCopyMarkdown()" 
                   [disabled]="!markdownText()"
                   class="p-1 md:p-1.5 hover:bg-slate-700/80 rounded-lg transition-colors text-slate-400 hover:text-indigo-400 disabled:opacity-30 disabled:cursor-not-allowed"
-                  title="Copy Markdown">
+                  [title]="'markdown-to-html.editor.copyMarkdown' | translate">
             <lucide-icon name="copy" class="w-3.5 h-3.5 md:w-4 md:h-4"></lucide-icon>
           </button>
         </div>
@@ -50,7 +50,7 @@
           </app-monaco-editor>
         } @else {
           <div class="h-full w-full flex items-center justify-center bg-[#1e293b]">
-            <div class="animate-pulse text-slate-500">Loading editor...</div>
+            <div class="animate-pulse text-slate-500">{{ 'markdown-to-html.editor.loading' | translate }}</div>
           </div>
         }
       </div>
@@ -76,9 +76,9 @@
           <button (click)="mobilePanel.set('editor')"
                   data-testid="md-html-mobile-to-editor-btn"
                   class="flex md:hidden items-center gap-1 px-2 py-1 bg-slate-700 hover:bg-slate-600 text-white rounded-lg text-xs font-semibold shadow-xs transition-all"
-                  title="Switch to Editor View">
+                  [title]="'markdown-to-html.panels.toEditor' | translate">
             <lucide-icon name="code" class="w-3.5 h-3.5 text-indigo-400"></lucide-icon>
-            <span>Editor</span>
+            <span>{{ 'markdown-to-html.panels.editor' | translate }}</span>
           </button>
           <div class="flex bg-slate-900/60 p-0.5 rounded-lg border border-slate-700/30">
             <button (click)="activeTab.set('preview')"
@@ -88,7 +88,7 @@
                     [class.text-slate-400]="activeTab() !== 'preview'"
                     class="flex items-center gap-1 px-2 md:px-3.5 py-1 rounded-md text-xs font-semibold tracking-wide uppercase transition-all duration-200">
               <lucide-icon name="book-open" class="w-3.5 h-3.5"></lucide-icon>
-              <span class="hidden sm:inline">Preview</span>
+              <span class="hidden sm:inline">{{ 'markdown-to-html.tabs.preview' | translate }}</span>
             </button>
             <button (click)="activeTab.set('code')"
                     data-testid="md-html-code-tab"
@@ -97,7 +97,7 @@
                     [class.text-slate-400]="activeTab() !== 'code'"
                     class="flex items-center gap-1 px-2 md:px-3.5 py-1 rounded-md text-xs font-semibold tracking-wide uppercase transition-all duration-200">
               <lucide-icon name="file-text" class="w-3.5 h-3.5"></lucide-icon>
-              <span class="hidden sm:inline">Code</span>
+              <span class="hidden sm:inline">{{ 'markdown-to-html.tabs.code' | translate }}</span>
             </button>
           </div>
         </div>
@@ -108,33 +108,33 @@
             <button (click)="downloadHtml()"
                     [disabled]="!previewHtml()"
                     class="flex items-center gap-1.5 p-1.5 md:px-3 md:py-1.5 bg-slate-700 hover:bg-slate-600 disabled:opacity-40 disabled:cursor-not-allowed text-slate-200 rounded-lg transition-all text-xs font-medium border border-slate-600/40"
-                    title="Download HTML Document">
+                    [title]="'markdown-to-html.actions.downloadHtmlDocument' | translate">
               <lucide-icon name="download" class="w-3.5 h-3.5"></lucide-icon>
-              <span class="hidden sm:inline">Download HTML</span>
+              <span class="hidden sm:inline">{{ 'markdown-to-html.actions.downloadHtml' | translate }}</span>
             </button>
             <button (click)="handleCopyHtml()" 
                     [disabled]="!previewHtml()"
                     data-testid="md-html-copy-btn"
                     class="flex items-center gap-1.5 p-1.5 md:px-3 md:py-1.5 bg-slate-700 hover:bg-slate-600 disabled:opacity-40 disabled:cursor-not-allowed text-slate-200 rounded-lg transition-all text-xs font-medium border border-slate-600/40"
-                    title="Copy HTML">
+                    [title]="'markdown-to-html.actions.copyHtml' | translate">
               <lucide-icon name="copy" class="w-3.5 h-3.5"></lucide-icon>
-              <span class="hidden sm:inline">Copy HTML</span>
+              <span class="hidden sm:inline">{{ 'markdown-to-html.actions.copyHtml' | translate }}</span>
             </button>
           }
           @if (activeTab() === 'preview') {
             <button (click)="printPreview()"
                     [disabled]="!previewHtml()"
                     class="flex items-center gap-1.5 p-1.5 md:px-3 md:py-1.5 bg-slate-700 hover:bg-slate-600 disabled:opacity-40 disabled:cursor-not-allowed text-slate-200 rounded-lg transition-all text-xs font-medium border border-slate-600/40"
-                    title="Print Document">
+                    [title]="'markdown-to-html.actions.printDocument' | translate">
               <lucide-icon name="printer" class="w-3.5 h-3.5"></lucide-icon>
-              <span class="hidden sm:inline">Print</span>
+              <span class="hidden sm:inline">{{ 'markdown-to-html.actions.print' | translate }}</span>
             </button>
           }
           <button (click)="toggleStylesDrawer()" 
                   data-testid="md-html-styles-btn"
                   class="flex items-center gap-1 md:gap-1.5 px-2 md:px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition-all text-xs font-semibold uppercase tracking-wider shadow-lg shadow-indigo-500/20 border border-indigo-500/30">
             <lucide-icon name="palette" class="w-3.5 h-3.5"></lucide-icon>
-            <span class="hidden sm:inline">Styles</span>
+            <span class="hidden sm:inline">{{ 'markdown-to-html.actions.styles' | translate }}</span>
           </button>
         </div>
       </div>
@@ -153,8 +153,8 @@
             @if (!previewHtml()) {
               <div class="h-full flex flex-col items-center justify-center text-slate-400 py-20 bg-slate-900/10">
                 <lucide-icon name="file-text" class="w-12 h-12 mb-4 opacity-20 text-indigo-400"></lucide-icon>
-                <p class="text-lg font-medium opacity-50">Nothing to preview yet</p>
-                <p class="text-sm opacity-40">Draft standard Markdown on the left to review HTML output</p>
+                <p class="text-lg font-medium opacity-50">{{ 'markdown-to-html.preview.emptyTitle' | translate }}</p>
+                <p class="text-sm opacity-40">{{ 'markdown-to-html.preview.emptyDescription' | translate }}</p>
               </div>
             }
           </div>
@@ -172,7 +172,7 @@
               </app-monaco-editor>
             } @else {
               <div class="h-full w-full flex items-center justify-center bg-[#1e293b]">
-                <div class="animate-pulse text-slate-500">Loading HTML preview...</div>
+                <div class="animate-pulse text-slate-500">{{ 'markdown-to-html.preview.loading' | translate }}</div>
               </div>
             }
           </div>
@@ -195,14 +195,14 @@
         <div class="px-5 py-4 bg-slate-900/80 border-b border-slate-800 flex items-center justify-between">
           <div class="flex items-center gap-2">
             <lucide-icon name="sliders" class="w-4 h-4 text-indigo-400"></lucide-icon>
-            <span class="text-sm font-semibold tracking-wider text-slate-200 uppercase">Styles Customization</span>
+            <span class="text-sm font-semibold tracking-wider text-slate-200 uppercase">{{ 'markdown-to-html.styles.title' | translate }}</span>
           </div>
           <div class="flex items-center gap-2">
             <button (click)="resetStyles()" 
                     class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-sm text-xs transition-colors flex items-center gap-1 border border-slate-700/50"
-                    title="Reset to default template">
+                    [title]="'markdown-to-html.styles.reset' | translate">
               <lucide-icon name="rotate-cw" class="w-3 h-3"></lucide-icon>
-              Reset
+              {{ 'common.actions.reset' | translate }}
             </button>
             <button (click)="toggleStylesDrawer()" 
                     class="p-1 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-white transition-colors">
@@ -216,42 +216,28 @@
           
           <!-- Presets select options -->
           <div class="space-y-2">
-            <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider block">Theme Presets</label>
+            <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider block">{{ 'markdown-to-html.styles.presets' | translate }}</label>
             <div class="grid grid-cols-3 gap-2">
-              <button (click)="applyPreset('github')"
-                      [class.border-indigo-500]="selectedPreset() === 'github'"
-                      [class.border-slate-800]="selectedPreset() !== 'github'"
-                      [class.bg-indigo-600/10]="selectedPreset() === 'github'"
-                      [class.text-indigo-400]="selectedPreset() === 'github'"
-                      class="py-2.5 px-3 bg-slate-900 hover:bg-slate-800 border rounded-lg text-xs font-medium text-slate-300 transition-all text-center">
-                GitHub Light
-              </button>
-              <button (click)="applyPreset('indigo')"
-                      [class.border-indigo-500]="selectedPreset() === 'indigo'"
-                      [class.border-slate-800]="selectedPreset() !== 'indigo'"
-                      [class.bg-indigo-600/10]="selectedPreset() === 'indigo'"
-                      [class.text-indigo-400]="selectedPreset() === 'indigo'"
-                      class="py-2.5 px-3 bg-slate-900 hover:bg-slate-800 border rounded-lg text-xs font-medium text-slate-300 transition-all text-center">
-                Modern Indigo
-              </button>
-              <button (click)="applyPreset('warm')"
-                      [class.border-indigo-500]="selectedPreset() === 'warm'"
-                      [class.border-slate-800]="selectedPreset() !== 'warm'"
-                      [class.bg-indigo-600/10]="selectedPreset() === 'warm'"
-                      [class.text-indigo-400]="selectedPreset() === 'warm'"
-                      class="py-2.5 px-3 bg-slate-900 hover:bg-slate-800 border rounded-lg text-xs font-medium text-slate-300 transition-all text-center">
-                Warm Serif
-              </button>
+              @for (preset of presets(); track preset.id) {
+                <button (click)="applyPreset(preset.id)"
+                        [class.border-indigo-500]="selectedPreset() === preset.id"
+                        [class.border-slate-800]="selectedPreset() !== preset.id"
+                        [class.bg-indigo-600/10]="selectedPreset() === preset.id"
+                        [class.text-indigo-400]="selectedPreset() === preset.id"
+                        class="py-2.5 px-3 bg-slate-900 hover:bg-slate-800 border rounded-lg text-xs font-medium text-slate-300 transition-all text-center">
+                  {{ preset.label }}
+                </button>
+              }
             </div>
           </div>
 
           <!-- File Upload drop boundary -->
           <div class="space-y-2">
-            <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider block">Upload Stylesheet</label>
+            <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider block">{{ 'markdown-to-html.styles.upload' | translate }}</label>
             <div class="relative group cursor-pointer border border-dashed border-slate-800 hover:border-indigo-500/60 bg-slate-950 p-4 rounded-xl flex flex-col items-center justify-center transition-all duration-200">
               <lucide-icon name="upload" class="w-6 h-6 mb-2 text-slate-500 group-hover:text-indigo-400 transition-colors"></lucide-icon>
-              <span class="text-xs font-medium text-slate-300">Drop local CSS file here, or <span class="text-indigo-400 hover:underline">browse</span></span>
-              <span class="text-[10px] text-slate-500 mt-1">Accepts raw styles (*.css) files</span>
+              <span class="text-xs font-medium text-slate-300">{{ 'markdown-to-html.styles.uploadHint' | translate }} <span class="text-indigo-400 hover:underline">{{ 'markdown-to-html.styles.browse' | translate }}</span></span>
+              <span class="text-[10px] text-slate-500 mt-1">{{ 'markdown-to-html.styles.uploadDescription' | translate }}</span>
               <input type="file" 
                      (change)="onCssFileUpload($event)" 
                      accept=".css" 
@@ -261,7 +247,7 @@
 
           <!-- CSS Text box Editor -->
           <div class="flex-1 flex flex-col space-y-2" style="height: calc(100% - 220px); min-height: 300px;">
-            <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider block">CSS Source Code</label>
+            <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider block">{{ 'markdown-to-html.styles.cssSource' | translate }}</label>
             <div class="flex-1 border border-slate-800 rounded-xl overflow-hidden bg-slate-950" style="min-height: 250px;">
               @if (isBrowser()) {
                 <app-monaco-editor 
@@ -273,7 +259,7 @@
                 </app-monaco-editor>
               } @else {
                 <div class="h-full w-full flex items-center justify-center bg-[#1e293b]">
-                  <div class="animate-pulse text-slate-500">Loading styles...</div>
+                  <div class="animate-pulse text-slate-500">{{ 'markdown-to-html.styles.loading' | translate }}</div>
                 </div>
               }
             </div>

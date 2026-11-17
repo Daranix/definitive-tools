@@ -1,5 +1,6 @@
 import { Injectable, PLATFORM_ID, inject, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { I18nService } from '@/app/i18n/i18n.service';
 import {
   AudioClip,
   AudioFormat,
@@ -18,6 +19,7 @@ export interface ExportProgressEvent {
 })
 export class AudioExportService {
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly i18n = inject(I18nService);
   private ffmpeg: any = null;
   readonly loaded = signal<boolean>(false);
   readonly logs = signal<string[]>([]);
@@ -60,7 +62,10 @@ export class AudioExportService {
     if (!isPlatformBrowser(this.platformId)) return;
     if (this.loaded()) return;
 
-    this.logs.update((l) => [...l, 'Loading FFmpeg Core locally...']);
+    this.logs.update((l) => [
+      ...l,
+      this.i18n.t('audio-editor.logs.loadingCore'),
+    ]);
     const { FFmpeg } = await import('@ffmpeg/ffmpeg');
     const { toBlobURL } = await import('@ffmpeg/util');
 
@@ -82,7 +87,10 @@ export class AudioExportService {
     });
 
     this.loaded.set(true);
-    this.logs.update((l) => [...l, 'FFmpeg core loaded successfully.']);
+    this.logs.update((l) => [
+      ...l,
+      this.i18n.t('audio-editor.logs.coreLoaded'),
+    ]);
   }
 
   // 1. Export Trimmed Range
@@ -101,7 +109,7 @@ export class AudioExportService {
     const outputExt = fmt === 'aac' ? '.m4a' : `.${fmt}`;
     const outputName = `output_${Date.now()}${outputExt}`;
 
-    if (onStep) onStep('Writing file to virtual FS...');
+    if (onStep) onStep(this.i18n.t('audio-editor.logs.writeFile'));
     const { fetchFile } = await import('@ffmpeg/util');
     await this.ffmpeg.writeFile(inputName, await fetchFile(file));
 
@@ -113,15 +121,21 @@ export class AudioExportService {
       outputName,
     ];
 
-    if (onStep) onStep('Processing audio trim...');
-    this.logs.update((l) => [...l, `Executing: ffmpeg ${args.join(' ')}`]);
+    if (onStep) onStep(this.i18n.t('audio-editor.logs.processingTrim'));
+    this.logs.update((l) => [
+      ...l,
+      this.i18n.t('audio-editor.logs.executing', { command: args.join(' ') }),
+    ]);
     await this.ffmpeg.exec(args);
 
     const data = await this.ffmpeg.readFile(outputName);
     const blob = new Blob([data.buffer as ArrayBuffer], { type: this.getMimeType(fmt) });
 
     const baseName = file.name.substring(0, file.name.lastIndexOf('.'));
-    const fileName = `${baseName}_trimmed${outputExt}`;
+    const fileName = this.i18n.t('audio-editor.files.trimmed', {
+      baseName,
+      extension: outputExt,
+    });
 
     await this.ffmpeg.deleteFile(inputName);
     await this.ffmpeg.deleteFile(outputName);
@@ -140,7 +154,7 @@ export class AudioExportService {
   ): Promise<{ blob: Blob; fileName: string }> {
     await this.initFFmpeg();
     if (keptIntervals.length === 0) {
-      throw new Error('All audio has been cut out! Nothing to export.');
+      throw new Error(this.i18n.t('audio-editor.errors.allCutOut'));
     }
 
     const ext = file.name.substring(file.name.lastIndexOf('.'));
@@ -148,7 +162,7 @@ export class AudioExportService {
     const outputExt = fmt === 'aac' ? '.m4a' : `.${fmt}`;
     const outputName = `output_${Date.now()}${outputExt}`;
 
-    if (onStep) onStep('Writing file to virtual FS...');
+    if (onStep) onStep(this.i18n.t('audio-editor.logs.writeFile'));
     const { fetchFile } = await import('@ffmpeg/util');
     await this.ffmpeg.writeFile(inputName, await fetchFile(file));
 
@@ -181,15 +195,26 @@ export class AudioExportService {
       ];
     }
 
-    if (onStep) onStep(`Splicing & concatenating ${keptIntervals.length} segments...`);
-    this.logs.update((l) => [...l, `Executing: ffmpeg ${args.join(' ')}`]);
+    if (onStep)
+      onStep(
+        this.i18n.t('audio-editor.logs.splicing', {
+          count: keptIntervals.length,
+        }),
+      );
+    this.logs.update((l) => [
+      ...l,
+      this.i18n.t('audio-editor.logs.executing', { command: args.join(' ') }),
+    ]);
     await this.ffmpeg.exec(args);
 
     const data = await this.ffmpeg.readFile(outputName);
     const blob = new Blob([data.buffer as ArrayBuffer], { type: this.getMimeType(fmt) });
 
     const baseName = file.name.substring(0, file.name.lastIndexOf('.'));
-    const fileName = `${baseName}_spliced${outputExt}`;
+    const fileName = this.i18n.t('audio-editor.files.spliced', {
+      baseName,
+      extension: outputExt,
+    });
 
     await this.ffmpeg.deleteFile(inputName);
     await this.ffmpeg.deleteFile(outputName);
@@ -208,7 +233,7 @@ export class AudioExportService {
   ): Promise<{ exportedClips: ExportedClip[]; zipBlob?: Blob; zipFileName?: string }> {
     await this.initFFmpeg();
     if (clips.length === 0) {
-      throw new Error('No clips defined to export.');
+      throw new Error(this.i18n.t('audio-editor.errors.noClips'));
     }
 
     const ext = file.name.substring(file.name.lastIndexOf('.'));
@@ -216,7 +241,7 @@ export class AudioExportService {
     const outputExt = fmt === 'aac' ? '.m4a' : `.${fmt}`;
     const baseName = file.name.substring(0, file.name.lastIndexOf('.'));
 
-    if (onStep) onStep('Writing file to virtual FS...');
+    if (onStep) onStep(this.i18n.t('audio-editor.logs.writeFile'));
     const { fetchFile } = await import('@ffmpeg/util');
     await this.ffmpeg.writeFile(inputName, await fetchFile(file));
 
@@ -225,9 +250,19 @@ export class AudioExportService {
     for (let i = 0; i < clips.length; i++) {
       const clip = clips[i];
       const clipOutputName = `clip_${i}_${Date.now()}${outputExt}`;
-      const safeClipName = (clip.name || `Clip ${i + 1}`).replace(/[\\/:*?"<>|]/g, '_');
+      const safeClipName = (
+        clip.name ||
+        this.i18n.t('audio-editor.clips.name', { index: i + 1 })
+      ).replace(/[\\/:*?"<>|]/g, '_');
 
-      if (onStep) onStep(`Exporting clip ${i + 1} of ${clips.length}: "${clip.name}"...`);
+      if (onStep)
+        onStep(
+          this.i18n.t('audio-editor.logs.exportingClip', {
+            index: i + 1,
+            total: clips.length,
+            name: clip.name,
+          }),
+        );
 
       const args: string[] = [
         '-ss', clip.start.toFixed(3),
@@ -259,7 +294,7 @@ export class AudioExportService {
     let zipBlob: Blob | undefined;
     let zipFileName: string | undefined;
 
-    if (onStep) onStep('Bundling clips into ZIP archive...');
+    if (onStep) onStep(this.i18n.t('audio-editor.logs.bundlingZip'));
     try {
       const JSZip = (await import('jszip')).default;
       const zip = new JSZip();
@@ -269,7 +304,7 @@ export class AudioExportService {
       }
 
       zipBlob = await zip.generateAsync({ type: 'blob' });
-      zipFileName = `${baseName}_clips.zip`;
+      zipFileName = this.i18n.t('audio-editor.files.clipsZip', { baseName });
     } catch (zipErr) {
       console.error('Failed to create ZIP:', zipErr);
     }
@@ -295,7 +330,7 @@ export class AudioExportService {
     const activeClips = clips.filter((c) => activeTrackIds.has(c.trackId));
 
     if (activeClips.length === 0) {
-      throw new Error('No active/unmuted clips on the timeline to export.');
+      throw new Error(this.i18n.t('audio-editor.errors.noActiveClips'));
     }
 
     const outputExt = fmt === 'aac' ? '.m4a' : `.${fmt}`;
@@ -303,7 +338,7 @@ export class AudioExportService {
 
     const { fetchFile } = await import('@ffmpeg/util');
 
-    if (onStep) onStep('Loading audio files into virtual FS...');
+    if (onStep) onStep(this.i18n.t('audio-editor.logs.loadingFiles'));
     const fileMap = new Map<File, string>();
     const createdFiles: string[] = [];
 
@@ -375,13 +410,26 @@ export class AudioExportService {
       outputName,
     ];
 
-    if (onStep) onStep(`Mixing ${activeClips.length} clips into master track...`);
-    this.logs.update((l) => [...l, `Executing master mixdown with ${activeClips.length} layers...`]);
+    if (onStep)
+      onStep(
+        this.i18n.t('audio-editor.logs.mixing', {
+          count: activeClips.length,
+        }),
+      );
+    this.logs.update((l) => [
+      ...l,
+      this.i18n.t('audio-editor.logs.masterMixdown', {
+        count: activeClips.length,
+      }),
+    ]);
     await this.ffmpeg.exec(args);
 
     const data = await this.ffmpeg.readFile(outputName);
     const blob = new Blob([data.buffer as ArrayBuffer], { type: this.getMimeType(fmt) });
-    const fileName = `Master_Mix_${Date.now()}${outputExt}`;
+    const fileName = this.i18n.t('audio-editor.files.masterMix', {
+      timestamp: Date.now(),
+      extension: outputExt,
+    });
 
     for (const f of createdFiles) {
       await this.ffmpeg.deleteFile(f);

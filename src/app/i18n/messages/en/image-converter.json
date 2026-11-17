@@ -1,0 +1,75 @@
+{
+  "title": "Client-Side Image Converter",
+  "subtitle": "Convert and resize your images directly in your browser. Powered by WebAssembly for 100% privacy and local-only processing.",
+  "file": {
+    "originalSize": "Original Size: {{ bytes }} bytes ({{ kilobytes }} KB)"
+  },
+  "view": {
+    "sideBySide": "Side by Side",
+    "slider": "Split Slider",
+    "comparison": "Before & After Comparison",
+    "original": "Original",
+    "converted": "Converted",
+    "originalAlt": "Original preview",
+    "convertedAlt": "Converted preview"
+  },
+  "preview": {
+    "source": "Source Image",
+    "sourceAlt": "Source preview",
+    "result": "Converted Result",
+    "resultAlt": "Output preview",
+    "emptyHint": "Adjust configurations and hit \"Convert Image\" to render the output."
+  },
+  "status": {
+    "converting": "Converting..."
+  },
+  "result": {
+    "successTitle": "Conversion Successful!",
+    "newSize": "New Size: {{ kilobytes }} KB",
+    "saved": "Saved {{ percent }}",
+    "increased": "Increased by {{ percent }}",
+    "download": "Download Output"
+  },
+  "console": {
+    "title": "Execution Console Logger",
+    "empty": "No logs recorded yet. Start converting to see logs."
+  },
+  "options": {
+    "title": "Conversion Options",
+    "targetFormat": "Target Format",
+    "quality": "Quality Compression",
+    "qualityHint": "Lower quality results in smaller files, but can blur high-frequency details.",
+    "resize": "Resize Dimensions (Optional)",
+    "width": "Width (px)",
+    "height": "Height (px)",
+    "auto": "Auto",
+    "resizeHint": "Leave any dimensions blank to auto-calculate maintaining the native aspect ratio."
+  },
+  "validation": {
+    "widthPositive": "Width must be a positive number",
+    "heightPositive": "Height must be a positive number"
+  },
+  "logs": {
+    "loadingCore": "Loading FFmpeg Core locally...",
+    "coreLoaded": "FFmpeg core loaded successfully.",
+    "error": "Error: {{ message }}",
+    "loadingInput": "Loading \"{{ name }}\" into virtual file system...",
+    "executing": "Executing: ffmpeg {{ command }}",
+    "executionFailed": "Execution failed: {{ message }}"
+  },
+  "messages": {
+    "selectFile": "Please select an image file first.",
+    "fixValidation": "Please fix validation errors first.",
+    "loadFailed": "Failed to load FFmpeg core resources.",
+    "converted": "Image converted successfully!",
+    "conversionFailed": "Conversion failed: {{ message }}",
+    "ffmpegNotLoaded": "FFmpeg failed to load properly."
+  },
+  "files": {
+    "converted": "{{ baseName }}_converted{{ extension }}"
+  },
+  "seo": {
+    "title": "Image Converter",
+    "description": "Convert images client-side between different formats like PNG, JPEG, WEBP, GIF, BMP, and TIFF using FFmpeg.wasm. Resize and compress with privacy."
+  }
+}

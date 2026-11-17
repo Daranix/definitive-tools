@@ -2,6 +2,13 @@ import { z } from "zod";
 import { Prettify } from "../../utils/types";
 import { CornerDotType, CornerSquareType, DotType } from "qr-code-styling";
 
+/**
+ * Validation messages are translation keys, not copy. The templates pipe them
+ * through `translate`, so the same schema renders in the active language and
+ * follows language switches without rebuilding the form.
+ */
+const INVALID_VALUE_MESSAGE = "qr-generator.validation.invalidValue";
+
 export const QR_CONTENT_TYPES = [
     'url',
     'text',
@@ -34,14 +41,14 @@ export const CORNERS_DOT_STYLES = [
 
 
 export const QrBaseSchema = z.object({
-    contentType: z.enum([...QR_CONTENT_TYPES]).default('url'),
-    size: z.number().min(100).max(2000).default(200),
-    errorCorrectionLevel: z.enum(['low', 'medium', 'quartile', 'high']).default('quartile'),
+    contentType: z.enum([...QR_CONTENT_TYPES], { error: INVALID_VALUE_MESSAGE }).default('url'),
+    size: z.number().min(100, { error: 'qr-generator.validation.sizeMin' }).max(2000, { error: 'qr-generator.validation.sizeMax' }).default(200),
+    errorCorrectionLevel: z.enum(['low', 'medium', 'quartile', 'high'], { error: INVALID_VALUE_MESSAGE }).default('quartile'),
     foregroundColor: z.string().default('#000000'),
     backgroundColor: z.string().default('#ffffff'),
-    dotsType: z.enum([...DOT_TYPES]).default('square'),
-    cornersInnerDotStyle: z.enum([...CORNERS_INNER_DOT_STYLES]).default('square'),
-    cornersStyle: z.enum(['dot', 'dots', 'rounded', 'classy', 'classy-rounded', 'square', 'extra-rounded']).default('square')
+    dotsType: z.enum([...DOT_TYPES], { error: INVALID_VALUE_MESSAGE }).default('square'),
+    cornersInnerDotStyle: z.enum([...CORNERS_INNER_DOT_STYLES], { error: INVALID_VALUE_MESSAGE }).default('square'),
+    cornersStyle: z.enum(['dot', 'dots', 'rounded', 'classy', 'classy-rounded', 'square', 'extra-rounded'], { error: INVALID_VALUE_MESSAGE }).default('square')
 });
 
 export type QrBase = z.infer<typeof QrBaseSchema>;
@@ -49,7 +56,7 @@ export type QrContentType = QrBase['contentType'];
 
 export const QrUrlSchema = QrBaseSchema.extend({
     contentType: z.literal('url'),
-    url: z.string().url()
+    url: z.string().url({ error: 'qr-generator.validation.invalidUrl' })
 });
 
 export type QrUrl = Prettify<z.infer<typeof QrUrlSchema>>;
@@ -102,7 +109,7 @@ export const QrWifiSchema = QrBaseSchema.extend({
     contentType: z.literal('wifi'),
     wifiSsid: z.string(),
     wifiPassword: z.string().optional(),
-    wifiEncryption: z.enum(['wpa', 'wep', 'none']).default('wpa')
+    wifiEncryption: z.enum(['wpa', 'wep', 'none'], { error: INVALID_VALUE_MESSAGE }).default('wpa')
 });
 
 export type QrWifi = Prettify<z.infer<typeof QrWifiSchema>>;

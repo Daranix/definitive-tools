@@ -1,0 +1,80 @@
+{
+  "title": "Conversor de imagen a Base64",
+  "subtitle": "Convierte imágenes en cadenas Base64 o decodifica cadenas Base64 para previsualizar y descargar las imágenes.",
+  "modes": {
+    "encode": "Imagen a Base64",
+    "decode": "Base64 a imagen"
+  },
+  "labels": {
+    "unknown": "desconocido",
+    "loading": "Cargando..."
+  },
+  "encoder": {
+    "dropzone": "Selecciona o arrastra una imagen",
+    "formatsHint": "Formatos compatibles: PNG, JPG, JPEG, WEBP, GIF, SVG, BMP. Tamaño máximo: 5 MB.",
+    "sourceTitle": "Imagen de origen",
+    "sourceAlt": "Vista previa de la imagen de origen",
+    "remove": "Quitar imagen",
+    "name": "Nombre:",
+    "type": "Tipo:",
+    "fileSize": "Tamaño del archivo:",
+    "dimensions": "Dimensiones:",
+    "representationTitle": "Representación en Base64",
+    "outputPlaceholder": "La salida codificada en Base64 aparecerá aquí...",
+    "copy": "Copiar Base64"
+  },
+  "formats": {
+    "dataUri": "Data URI",
+    "raw": "Raw",
+    "html": "HTML",
+    "css": "CSS"
+  },
+  "outputAlt": "Imagen Base64",
+  "decoder": {
+    "inputLabel": "Pega los datos de imagen codificados en Base64",
+    "inputPlaceholder": "Pega aquí la cadena Base64 (p. ej. data:image/png;base64,... o Base64 sin procesar)...",
+    "clear": "Limpiar",
+    "decode": "Decodificar Base64",
+    "errorTitle": "Error al decodificar",
+    "previewTitle": "Vista previa decodificada",
+    "previewAlt": "Vista previa decodificada",
+    "metadataTitle": "Metadatos del archivo decodificado",
+    "inferredFormat": "Formato inferido:",
+    "mimeType": "Tipo MIME:",
+    "estimatedSize": "Tamaño binario estimado:",
+    "imageSize": "Dimensiones de la imagen:",
+    "download": "Descargar archivo de imagen"
+  },
+  "messages": {
+    "emptyInput": "Introduce una cadena Base64 para decodificar.",
+    "decodeFailed": "No se ha podido decodificar la imagen. Asegúrate de que el texto pegado es una imagen codificada en Base64 válida.",
+    "copied": "¡Copiado al portapapeles!",
+    "copyFailed": "No se ha podido copiar al portapapeles.",
+    "downloaded": "¡Imagen descargada correctamente!",
+    "downloadFailed": "No se ha podido descargar la imagen decodificada."
+  },
+  "download": {
+    "fileName": "imagen-decodificada.{{ ext }}"
+  },
+  "about": {
+    "title": "Acerca de la conversión de imágenes a Base64",
+    "description": "La codificación Base64 convierte los datos binarios de una imagen en una cadena ASCII. Esta cadena se puede incrustar directamente en HTML, CSS o cargas útiles JSON.",
+    "whenToUseTitle": "Cuándo usar Base64",
+    "whenToUse": {
+      "icons": "Iconos pequeños, SVG o gráficos para reducir las peticiones HTTP.",
+      "email": "Plantillas de correo en las que las imágenes externas podrían estar bloqueadas.",
+      "storage": "Almacenar cargas útiles de imágenes dinámicas en conjuntos de datos JSON/XML.",
+      "offline": "Trabajar sin conexión o en entornos web independientes."
+    },
+    "bestPracticesTitle": "Buenas prácticas",
+    "bestPractices": {
+      "largeImages": "Evita codificar imágenes grandes (p. ej. >1 MB) en Base64, porque aumenta el tamaño de la carga útil en torno a un 33 %.",
+      "caching": "Para el rendimiento, confía en la caché del navegador para los archivos estáticos en lugar de cargar grandes Data URI en las hojas de estilo."
+    }
+  },
+  "seo": {
+    "title": "Conversor de imagen a Base64 y de Base64 a imagen",
+    "description": "Convierte cualquier archivo de imagen en una cadena codificada en Base64 o decodifica datos Base64 para recuperar las imágenes. Conversión rápida, segura y en tu navegador con vista previa en vivo.",
+    "keywords": "base64, imagen a base64, base64 a imagen, decodificador base64, codificador base64, data uri, webp, png, jpeg"
+  }
+}

@@ -4,19 +4,23 @@ import {
   ElementRef,
   HostListener,
   OnDestroy,
+  computed,
+  effect,
   inject,
   signal,
   viewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 import { TopNavbarComponent } from '@/app/components/top-navbar/top-navbar.component';
 import { FooterComponent } from '@/app/components/footer/footer.component';
 import { DragAndDropFileComponent } from '@/app/components/drag-and-drop-file/drag-and-drop-file.component';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import { FileSizePipe } from '@/app/pipes/file-size.pipe';
+import { I18nService } from '@/app/i18n/i18n.service';
 import { MetadataService } from '@/app/services/metadata.service';
 import { ToastService } from '@/app/services/toast.service';
-import { parseQrContent, ParsedQrResult } from './qr-reader.parser';
+import { parseQrContent, ParsedQrResult, QrDataType } from './qr-reader.parser';
 import jsQR from 'jsqr';
 import QRCodeStyling from 'qr-code-styling';
 
@@ -37,6 +41,7 @@ interface QrLocation {
     DragAndDropFileComponent,
     LucideIconComponent,
     FileSizePipe,
+    TranslatePipe,
   ],
   templateUrl: './qr-reader.component.html',
   styleUrl: './qr-reader.component.scss',
@@ -45,6 +50,9 @@ interface QrLocation {
 export class QrReaderComponent implements OnDestroy {
   private readonly metadataService = inject(MetadataService);
   private readonly toastService = inject(ToastService);
+  private readonly i18n = inject(I18nService);
+
+  readonly i18nService = this.i18n;
 
   readonly previewCanvas = viewChild<ElementRef<HTMLCanvasElement>>('previewCanvas');
   readonly videoElement = viewChild<ElementRef<HTMLVideoElement>>('videoElement');
@@ -78,13 +86,29 @@ export class QrReaderComponent implements OnDestroy {
 
   readonly allowedExtensions = ['.png', '.jpg', '.jpeg', '.webp', '.svg', '.gif', '.bmp'];
 
+  /** Translated label for every QR content type the parser can detect. */
+  readonly typeLabels = computed<Record<QrDataType, string>>(() => ({
+    url: this.i18n.t('qr-reader.types.url'),
+    wifi: this.i18n.t('qr-reader.types.wifi'),
+    vcard: this.i18n.t('qr-reader.types.vcard'),
+    email: this.i18n.t('qr-reader.types.email'),
+    phone: this.i18n.t('qr-reader.types.phone'),
+    sms: this.i18n.t('qr-reader.types.sms'),
+    geo: this.i18n.t('qr-reader.types.geo'),
+    json: this.i18n.t('qr-reader.types.json'),
+    text: this.i18n.t('qr-reader.types.text'),
+  }));
+
+  /** Fallback contact name, also used as the vCard `FN` value. */
+  readonly contactFallback = computed(() =>
+    this.i18n.t('qr-reader.vcard.contactFallback'),
+  );
+
   constructor() {
-    this.metadataService.updateMetadata({
-      title: 'QR Code Reader & Scanner - Scan from Camera or Image',
-      description:
-        'Upload, drag-and-drop, paste from clipboard, or use your camera in real time to scan, decode, and view QR codes on screen.',
-      keywords:
-        'qr reader, qr scanner, qr camera, camera qr scanner, scan qr code online, decode qr code, web qr reader',
+    this.updateMetadata();
+    effect(() => {
+      this.i18n.language();
+      this.updateMetadata();
     });
   }
 
@@ -105,8 +129,15 @@ export class QrReaderComponent implements OnDestroy {
           event.preventDefault();
           this.stopCamera();
           this.scanMode.set('file');
-          this.processImageFile(file, `Pasted-Image-${Date.now()}`);
-          this.toastService.info({ message: 'Image loaded from clipboard' });
+          this.processImageFile(
+            file,
+            this.i18n.t('qr-reader.upload.pastedImageName', {
+              timestamp: Date.now(),
+            }),
+          );
+          this.toastService.info({
+            message: this.i18n.t('qr-reader.toasts.clipboardImage'),
+          });
           break;
         }
       }
@@ -131,7 +162,7 @@ export class QrReaderComponent implements OnDestroy {
     this.isCameraActive.set(true);
 
     if (typeof navigator === 'undefined' || !navigator.mediaDevices?.getUserMedia) {
-      this.cameraError.set('Camera access is not supported by your browser or environment.');
+      this.cameraError.set(this.i18n.t('qr-reader.camera.notSupported'));
       this.isCameraActive.set(false);
       return;
     }
@@ -169,11 +200,15 @@ export class QrReaderComponent implements OnDestroy {
       this.isCameraActive.set(false);
 
       if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
-        this.cameraError.set('Camera permission was denied. Please allow camera access in your browser settings.');
+        this.cameraError.set(this.i18n.t('qr-reader.camera.permissionDenied'));
       } else if (error.name === 'NotFoundError' || error.name === 'DevicesNotFoundError') {
-        this.cameraError.set('No camera device was found on this system.');
+        this.cameraError.set(this.i18n.t('qr-reader.camera.notFound'));
       } else {
-        this.cameraError.set(`Unable to access camera: ${error.message || 'Unknown error'}`);
+        this.cameraError.set(
+          this.i18n.t('qr-reader.camera.unableToAccess', {
+            error: error.message || this.i18n.t('qr-reader.camera.unknownError'),
+          }),
+        );
       }
     }
   }
@@ -362,13 +397,21 @@ export class QrReaderComponent implements OnDestroy {
     // 4. Update state to show the result
     const parsed = parseQrContent(rawValue);
     this.imageSrc.set(snapshotUrl);
-    this.imageName.set(`Camera-Scan-${new Date().toLocaleTimeString()}`);
+    this.imageName.set(
+      this.i18n.t('qr-reader.camera.scanFileName', {
+        time: this.i18n.formatDate(new Date(), { timeStyle: 'medium' }),
+      }),
+    );
     this.imageSize.set(Math.round((snapshotUrl.length * 3) / 4));
     this.imageDimensions.set({ width: video.videoWidth, height: video.videoHeight });
     this.scanResult.set(parsed);
     this.noQrFound.set(false);
 
-    this.toastService.success({ message: `QR Code scanned: ${parsed.badgeLabel}` });
+    this.toastService.success({
+      message: this.i18n.t('qr-reader.toasts.scanned', {
+        type: this.typeLabels()[parsed.type],
+      }),
+    });
 
     // 5. Render snapshot on preview canvas with bounding box overlay
     const img = new Image();
@@ -406,13 +449,17 @@ export class QrReaderComponent implements OnDestroy {
       };
       img.onerror = () => {
         this.isScanning.set(false);
-        this.toastService.error({ message: 'Failed to load the image.' });
+        this.toastService.error({
+          message: this.i18n.t('qr-reader.toasts.imageLoadFailed'),
+        });
       };
       img.src = dataUrl;
     };
     reader.onerror = () => {
       this.isScanning.set(false);
-      this.toastService.error({ message: 'Error reading file.' });
+      this.toastService.error({
+        message: this.i18n.t('qr-reader.toasts.readFileFailed'),
+      });
     };
     reader.readAsDataURL(file);
   }
@@ -425,7 +472,11 @@ export class QrReaderComponent implements OnDestroy {
         const parsed = parseQrContent(detection.data);
         this.scanResult.set(parsed);
         this.noQrFound.set(false);
-        this.toastService.success({ message: `QR Code detected: ${parsed.badgeLabel}` });
+        this.toastService.success({
+          message: this.i18n.t('qr-reader.toasts.detected', {
+            type: this.typeLabels()[parsed.type],
+          }),
+        });
         this.renderCanvasWithOverlay(img, detection.location);
       } else {
         this.scanResult.set(undefined);
@@ -601,7 +652,9 @@ export class QrReaderComponent implements OnDestroy {
     if (!text) return;
     navigator.clipboard.writeText(text).then(() => {
       this.copied.set(true);
-      this.toastService.success({ message: 'Content copied to clipboard!' });
+      this.toastService.success({
+        message: this.i18n.t('qr-reader.toasts.copied'),
+      });
       setTimeout(() => this.copied.set(false), 2000);
     });
   }
@@ -611,12 +664,13 @@ export class QrReaderComponent implements OnDestroy {
     const raw = this.scanResult()?.raw;
     if (!raw) return;
 
+    const contactLabel = this.i18n.t('qr-reader.vcard.contactFallback');
     let vcfContent = raw;
     if (!vcfContent.toUpperCase().startsWith('BEGIN:VCARD')) {
       vcfContent = [
         'BEGIN:VCARD',
         'VERSION:3.0',
-        `FN:${vcard?.fullName || 'Contact'}`,
+        `FN:${vcard?.fullName || contactLabel}`,
         vcard?.phone ? `TEL:${vcard.phone}` : '',
         vcard?.email ? `EMAIL:${vcard.email}` : '',
         vcard?.organization ? `ORG:${vcard.organization}` : '',
@@ -634,10 +688,12 @@ export class QrReaderComponent implements OnDestroy {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `${(vcard?.fullName || 'contact').replace(/\s+/g, '_')}.vcf`;
+    link.download = `${(vcard?.fullName || this.i18n.t('qr-reader.vcard.fileNamePrefix')).replace(/\s+/g, '_')}.vcf`;
     link.click();
     URL.revokeObjectURL(url);
-    this.toastService.success({ message: 'Contact .vcf downloaded' });
+    this.toastService.success({
+      message: this.i18n.t('qr-reader.toasts.vcardDownloaded'),
+    });
   }
 
   async loadSample(type: 'url' | 'wifi' | 'vcard' | 'text'): Promise<void> {
@@ -648,21 +704,21 @@ export class QrReaderComponent implements OnDestroy {
     switch (type) {
       case 'url':
         sampleData = 'https://github.com/Daranix/definitive-tools';
-        sampleName = 'sample-website-qr.png';
+        sampleName = this.i18n.t('qr-reader.upload.sampleFileNames.url');
         break;
       case 'wifi':
         sampleData = 'WIFI:S:Office-Guest-5G;T:WPA;P:SuperSecretPass2026;H:false;;';
-        sampleName = 'sample-wifi-qr.png';
+        sampleName = this.i18n.t('qr-reader.upload.sampleFileNames.wifi');
         break;
       case 'vcard':
         sampleData =
           'BEGIN:VCARD\r\nVERSION:3.0\r\nFN:Alex Rivera\r\nORG:Tech Solutions Inc.\r\nTITLE:Senior Cloud Architect\r\nTEL:+1-555-839-2041\r\nEMAIL:alex.rivera@techsolutions.io\r\nURL:https://alexrivera.dev\r\nADR:;;123 Innovation Way;Silicon Valley;CA;94025;USA\r\nNOTE:Met at Global Tech Summit 2026\r\nEND:VCARD';
-        sampleName = 'sample-vcard-qr.png';
+        sampleName = this.i18n.t('qr-reader.upload.sampleFileNames.vcard');
         break;
       case 'text':
       default:
         sampleData = '{\n  "status": "success",\n  "scanner": "Definitive Tools QR Reader",\n  "version": "1.0",\n  "offline": true\n}';
-        sampleName = 'sample-json-qr.png';
+        sampleName = this.i18n.t('qr-reader.upload.sampleFileNames.json');
         break;
     }
 
@@ -696,7 +752,9 @@ export class QrReaderComponent implements OnDestroy {
       }
     } catch (e) {
       console.error('Error generating sample:', e);
-      this.toastService.error({ message: 'Could not load sample QR code.' });
+      this.toastService.error({
+        message: this.i18n.t('qr-reader.toasts.sampleFailed'),
+      });
       this.isScanning.set(false);
     }
   }
@@ -726,5 +784,13 @@ export class QrReaderComponent implements OnDestroy {
     if (this.scanMode() === 'camera') {
       this.startCamera();
     }
+  }
+
+  private updateMetadata(): void {
+    this.metadataService.updateMetadata({
+      title: this.i18n.t('qr-reader.seo.title'),
+      description: this.i18n.t('qr-reader.seo.description'),
+      keywords: this.i18n.t('qr-reader.seo.keywords'),
+    });
   }
 }

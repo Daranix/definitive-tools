@@ -6,6 +6,7 @@ import { provideRouter } from '@angular/router';
 import { MadridTransportMapComponent } from './madrid-transport-map.component';
 import { MadridTransportMapService } from './madrid-transport-map.service';
 import { MetadataService } from '@/app/services/metadata.service';
+import { provideI18nTesting } from '@/app/i18n/i18n.testing';
 
 describe('MadridTransportMapComponent', () => {
   describe('Server-Side Rendering (SSR) Isolation', () => {

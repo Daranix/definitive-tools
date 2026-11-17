@@ -22,6 +22,11 @@ export default defineConfig({
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: 'http://localhost:4200',
 
+    /* The suite asserts English copy, so pin the browser locale regardless of
+       the machine running it. */
+    locale: 'en-US',
+    timezoneId: 'Europe/Madrid',
+
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',

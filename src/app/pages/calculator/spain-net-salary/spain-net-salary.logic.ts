@@ -1,5 +1,9 @@
 import Decimal from 'decimal.js';
-import { computeTotalPayments, round2 } from '../shared/calculator-format';
+import {
+  computeTotalPayments,
+  round2,
+  type CalculatorTranslate,
+} from '../shared/calculator-format';
 
 export type AgeBracket = 'under65' | '65to74' | '75plus';
 export type FamilySituation = 'single' | 'married_low_income' | 'other';
@@ -62,6 +66,14 @@ export interface SpainNetSalarySummary {
 export type SpainNetSalaryResult =
   | { ok: true; data: SpainNetSalarySummary }
   | { ok: false; error: string };
+
+/**
+ * Presentation options: the UI passes the active translator so validation
+ * messages follow the current language. Pure logic callers may omit it.
+ */
+export interface SpainNetSalaryOptions {
+  translate?: CalculatorTranslate;
+}
 
 interface TaxBracket {
   limit: number | null;
@@ -245,7 +257,11 @@ function applyTaxScale(amount: Decimal, brackets: readonly TaxBracket[]): Decima
 /**
  * Estimates Spain 2026 net salary, Social Security (including 2026 solidarity quota), and IRPF.
  */
-export function calculateSpainNetSalary(input: SpainNetSalaryInput): SpainNetSalaryResult {
+export function calculateSpainNetSalary(
+  input: SpainNetSalaryInput,
+  options: SpainNetSalaryOptions = {},
+): SpainNetSalaryResult {
+  const t: CalculatorTranslate = options.translate ?? ((key) => key);
   const {
     grossAnnual,
     extraPayments,
@@ -263,7 +279,7 @@ export function calculateSpainNetSalary(input: SpainNetSalaryInput): SpainNetSal
   if (!Number.isFinite(grossAnnual) || grossAnnual < 0) {
     return {
       ok: false,
-      error: 'El salario bruto anual debe ser un importe mayor o igual a 0 €.',
+      error: t('calculators.netSalary.errors.grossNegative'),
     };
   }
 
@@ -275,7 +291,7 @@ export function calculateSpainNetSalary(input: SpainNetSalaryInput): SpainNetSal
   ) {
     return {
       ok: false,
-      error: 'El número de pagas extra debe ser un entero entre 0 y 12.',
+      error: t('calculators.netSalary.errors.extraPaymentsRange'),
     };
   }
 
@@ -284,7 +300,7 @@ export function calculateSpainNetSalary(input: SpainNetSalaryInput): SpainNetSal
   if (!Number.isFinite(childrenTotal) || !Number.isFinite(childrenUnder3)) {
     return {
       ok: false,
-      error: 'El número de hijos a cargo debe ser un valor numérico válido.',
+      error: t('calculators.netSalary.errors.childrenInvalid'),
     };
   }
 

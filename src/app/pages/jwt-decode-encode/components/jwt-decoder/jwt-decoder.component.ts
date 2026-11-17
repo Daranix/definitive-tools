@@ -9,9 +9,11 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import * as jose from 'jose';
 import { ToastService } from '@/app/services/toast.service';
+import { I18nService } from '@/app/i18n/i18n.service';
 import { JwtHighlightComponent } from '../jwt-highlight/jwt-highlight.component';
 
 @Component({
@@ -22,6 +24,7 @@ import { JwtHighlightComponent } from '../jwt-highlight/jwt-highlight.component'
     FormsModule,
     JsonPipe,
     JwtHighlightComponent,
+    TranslatePipe,
   ],
   templateUrl: './jwt-decoder.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -29,6 +32,7 @@ import { JwtHighlightComponent } from '../jwt-highlight/jwt-highlight.component'
 })
 export class JwtDecoderComponent {
   private readonly toastService = inject(ToastService);
+  private readonly i18n = inject(I18nService);
 
   readonly secret = model<string>();
   readonly jwtEncoded = model<string>();
@@ -104,7 +108,7 @@ export class JwtDecoderComponent {
 
     await navigator.clipboard.writeText(text);
     this.toastService.info({
-      message: 'Copied to clipboard',
+      message: this.i18n.t('jwt-decode-encode.shared.messages.copied'),
       position: 'bottom-center',
     });
   }

@@ -1,0 +1,440 @@
+{
+  "seo": {
+    "title": "Mapa Madrid 360 y ZBE - Zonas de Bajas Emisiones interactivas",
+    "description": "Mapa interactivo de Madrid 360 y las Zonas de Bajas Emisiones (ZBE Distrito Centro, Plaza Elíptica, M-30, cámaras de control OCR y simulador de etiquetas DGT).",
+    "keywords": "Madrid 360, ZBE Madrid, Madrid Central, Distrito Centro ZBEDEP, Plaza Elíptica ZBE, M-30 bajas emisiones, cámaras ZBE Madrid, etiquetas DGT Madrid"
+  },
+  "errors": {
+    "mapInit": "No se pudo inicializar el motor gráfico del mapa.",
+    "pointsLoad": "No se pudieron cargar los puntos de control y los aparcamientos."
+  },
+  "errorBanner": {
+    "close": "Cerrar notificación"
+  },
+  "disclaimer": {
+    "aria": "Aviso legal y de precisión",
+    "lead": "Aviso:",
+    "before": "Las delimitaciones, cámaras y normativas son una",
+    "highlight": "aproximación orientativa",
+    "after": "y pueden contener errores. Consulta siempre las ordenanzas oficiales del Ayuntamiento de Madrid y de la DGT.",
+    "close": "Cerrar aviso"
+  },
+  "tabs": {
+    "layers": "Capas",
+    "detail": "Info de zona",
+    "simulator": "Simulador"
+  },
+  "panel": {
+    "expand": "Desplegar panel",
+    "collapse": "Contraer panel"
+  },
+  "mobile": {
+    "openLayers": "Abrir controles de capas",
+    "layers": "Capas",
+    "zones": "Zonas ZBE",
+    "zonesShort": "Zonas",
+    "simulator": "Simulador",
+    "simulatorDgt": "Simulador DGT",
+    "details": "Detalles",
+    "dragHandle": "Arrastra o toca para desplegar o contraer",
+    "closePanel": "Cerrar panel"
+  },
+  "search": {
+    "placeholder": "Buscar zona ZBE, cámara o aparcamiento P+R...",
+    "aria": "Buscar en Madrid 360 y Zonas de Bajas Emisiones",
+    "clear": "Borrar búsqueda",
+    "emptyTitle": "Sin coincidencias",
+    "emptyHint": "Prueba a buscar por Centro, Plaza Elíptica, M-30, Pitis o Alcalá",
+    "badges": {
+      "zone": "Zona ZBE",
+      "camera": "Cámara OCR",
+      "parking": "Aparcamiento P+R"
+    },
+    "zoneSubtitle": "{{ level }} • {{ area }} km²",
+    "cameraSubtitle": "{{ location }} ({{ zone }})",
+    "parkingSubtitle": "{{ capacity }} plazas • {{ transit }}"
+  },
+  "layers": {
+    "title": "Capas y controles",
+    "basemapTitle": "Estilo del mapa",
+    "mapViewTitle": "Vista del mapa",
+    "quickFocus": "Enfoques rápidos",
+    "quickFocusShort": "Enfoque rápido",
+    "madridCapital": "Madrid capital",
+    "metropolitanRing": "Corona metropolitana",
+    "zonesTitle": "Zonas de Bajas Emisiones",
+    "poiTitle": "Puntos de control e infraestructura",
+    "keyPointsTitle": "Puntos clave",
+    "camerasLabel": "Cámaras de acceso (OCR)",
+    "camerasHint": "Puntos de control de matrículas",
+    "camerasShort": "Cámaras OCR",
+    "parkingsLabel": "Aparcamientos disuasorios",
+    "parkingsHint": "Park & Ride conectados a Metro y Cercanías",
+    "parkingsShort": "Aparcamientos P+R",
+    "opacityLabel": "Opacidad de las zonas",
+    "opacityShort": "Opacidad de zonas",
+    "opacityAria": "Ajustar la transparencia de las capas de zonas",
+    "opacityAriaShort": "Ajustar la opacidad de las zonas",
+    "toggleAria": "Desplegar o contraer el panel de capas",
+    "basemaps": {
+      "streets": {
+        "name": "Calles y carreteras",
+        "shortName": "Calles"
+      },
+      "satellite": {
+        "name": "Satélite de alta resolución",
+        "shortName": "Satélite"
+      },
+      "gray": {
+        "name": "Gris claro cartográfico",
+        "shortName": "Claro"
+      }
+    }
+  },
+  "legend": {
+    "title": "Leyenda ZBE",
+    "titleEmbedded": "Zonas de Bajas Emisiones",
+    "toggleAria": "Alternar la leyenda de zonas ZBE",
+    "count": "{{ count }} zonas",
+    "countEmbedded": "{{ count }} zonas activas",
+    "hint": "Haz clic en cualquier zona para centrar el mapa y ver las restricciones de vehículos.",
+    "hintEmbedded": "Toca una zona para enfocar el mapa y consultar las restricciones completas por etiqueta DGT.",
+    "surfaceLabel": "Superficie:",
+    "area": "{{ value }} km²",
+    "fineLabel": "Multa:",
+    "sanction": "Sanción: {{ amount }}"
+  },
+  "detail": {
+    "close": "Cerrar detalles",
+    "rulesTitle": "Normativa de acceso según la etiqueta DGT",
+    "sanction": "Sanción por acceso no autorizado: {{ amount }}",
+    "legalNotice": "Infracción grave según la Ley sobre Tráfico ({{ amount }} por pronto pago). Base legal: {{ law }}.",
+    "focusZone": "Centrar la zona en el mapa",
+    "camera": {
+      "location": "Ubicación:",
+      "direction": "Sentido:",
+      "zone": "Zona controlada:",
+      "lanes": "Carriles / equipos:",
+      "lanesValue": "{{ lanes }} carriles monitorizados ({{ devices }} lectores LPR)",
+      "gps": "Coordenadas GPS:",
+      "technology": "Tecnología:",
+      "function": "Función:",
+      "zoom": "Acercar la cámara"
+    },
+    "parking": {
+      "capacity": "{{ count }} plazas totales",
+      "address": "Dirección:",
+      "transit": "Conexión Metro / Cercanías:",
+      "electric": "Plazas eléctricas:",
+      "pmr": "Plazas PMR:",
+      "hours": "Horario:",
+      "benefit": "Ventaja Madrid 360:",
+      "zoom": "Acercar el aparcamiento"
+    },
+    "empty": {
+      "title": "Información de zonas ZBE",
+      "description": "Haz clic en cualquier zona del mapa o de la leyenda para ver sus restricciones de acceso, las excepciones por etiqueta DGT y las sanciones.",
+      "footnote": "Datos aproximados y orientativos. Consulta siempre fuentes oficiales."
+    },
+    "footnote": {
+      "lead": "Aviso:",
+      "body": "Las delimitaciones, cámaras y normativas son una aproximación orientativa y pueden contener errores. Consulta siempre la normativa oficial del Ayuntamiento de Madrid y de la DGT."
+    }
+  },
+  "simulator": {
+    "title": "Simulador de acceso Madrid 360",
+    "subtitle": "Comprueba al instante si tu vehículo puede circular y dónde puede aparcar",
+    "stepBadge": "1. Distintivo ambiental DGT",
+    "stepVehicle": "2. Tipo de vehículo",
+    "stepResidency": "3. Situación de residencia",
+    "stepPurpose": "4. Motivo o destino del viaje",
+    "resultsTitle": "Resultado por zona ZBE",
+    "verdict": {
+      "allowed": "PERMITIDO",
+      "conditional": "CONDICIONADO",
+      "denied": "PROHIBIDO"
+    },
+    "ser": {
+      "label": "Estacionamiento SER:",
+      "max": "Máx. {{ hours }} h",
+      "allowed": "Permitido",
+      "denied": "No permitido"
+    },
+    "viewOnMap": "Ver en el mapa",
+    "vehicleTypes": {
+      "car": "Turismo",
+      "motorcycle": "Moto / Ciclomotor",
+      "van": "Furgoneta / Mixto"
+    },
+    "residency": {
+      "nonResident": "No residente (externo)",
+      "madridResident": "Residente en Madrid capital",
+      "zoneResident": "Residente en Distrito Centro"
+    },
+    "purposes": {
+      "publicParking": "Aparcamiento público / garaje",
+      "serStreet": "Estacionar en la calle (SER)",
+      "transit": "Tránsito de paso (sin aparcar)"
+    },
+    "zones": {
+      "zbe-distrito-centro": "ZBEDEP Distrito Centro",
+      "zbe-plaza-eliptica": "ZBEDEP Plaza Elíptica",
+      "zbe-interior-m30": "Madrid ZBE - Interior M-30",
+      "zbe-municipio": "Madrid ZBE (Término Municipal)",
+      "zbe-getafe": "ZBE Centro de Getafe"
+    },
+    "centro": {
+      "ceroTitle": "Acceso y estacionamiento libres",
+      "ceroMessage": "Circulación y estacionamiento en el SER permitidos, sin coste ni límite de horario.",
+      "ecoTitle": "Acceso libre (SER máx. 2 h)",
+      "ecoMessage": "Acceso libre. En superficie (SER) puedes estacionar un máximo de 2 horas. En aparcamiento público, sin límite.",
+      "residentTitle": "Acceso permitido (residente)",
+      "residentMessage": "Como residente empadronado en Distrito Centro, puedes acceder y estacionar en tu barrio.",
+      "motorcycleTitle": "Acceso por horario (de 07:00 a 22:00)",
+      "motorcycleMessage": "Las motocicletas y los ciclomotores con etiqueta B o C pueden acceder libremente de 07:00 a 22:00 h.",
+      "parkingTitle": "Acceso condicionado a aparcamiento",
+      "parkingMessage": "Es obligatorio estacionar en un aparcamiento de uso público o en un garaje privado concertado. Está prohibido aparcar en la calle.",
+      "transitTitle": "Acceso denegado (multa de {{ amount }})",
+      "transitMessage": "Los vehículos con etiqueta B y C no pueden acceder solo de paso (tránsito) ni para aparcar en la calle (SER).",
+      "historicTitle": "Acceso solo para residentes históricos",
+      "historicMessage": "Solo está permitido si el vehículo ya estaba empadronado en el distrito antes de 2021 o si traslada a personas con movilidad reducida (PMR).",
+      "deniedTitle": "Acceso prohibido las 24 horas",
+      "deniedMessage": "Prohibida la entrada a vehículos sin distintivo (A) bajo sanción de {{ amount }} ({{ earlyAmount }} por pronto pago)."
+    },
+    "eliptica": {
+      "defaultTitle": "Acceso y circulación libres",
+      "defaultMessage": "Sin restricciones específicas de ZBE para los distintivos CERO, ECO, C y B.",
+      "residentTitle": "Permitido solo a residentes",
+      "residentMessage": "Vehículo empadronado en el perímetro delimitado de Plaza Elíptica.",
+      "deniedTitle": "Acceso prohibido las 24 horas",
+      "deniedMessage": "Prohibido el acceso y la circulación a vehículos sin distintivo (A). Sanción: {{ amount }}."
+    },
+    "m30": {
+      "defaultTitle": "Acceso y circulación libres",
+      "defaultMessage": "Circulación permitida por la M-30 y las calles interiores según la normativa general de tráfico y el SER.",
+      "residentTitle": "Permitido (IVTM en Madrid capital)",
+      "residentMessage": "Permitido solo si el turismo paga el Impuesto de Tracción Mecánica (IVTM) en Madrid capital.",
+      "deniedTitle": "Prohibido circular por la M-30 y el interior",
+      "deniedMessage": "Los vehículos A no domiciliados en la capital tienen prohibido circular por la M-30 y por el interior. Sanción: {{ amount }}."
+    },
+    "municipio": {
+      "defaultTitle": "Acceso libre en todo Madrid",
+      "defaultMessage": "Circulación permitida por todas las vías del municipio de Madrid.",
+      "residentTitle": "Permitido temporalmente (empadronados)",
+      "residentMessage": "Turismos A domiciliados en Madrid con el IVTM al día.",
+      "deniedTitle": "Prohibido en todo el municipio",
+      "deniedMessage": "Prohibida la circulación por cualquier vía pública del término municipal de Madrid. Sanción: {{ amount }}."
+    },
+    "getafe": {
+      "freeTitle": "Acceso libre (CERO / ECO)",
+      "freeMessage": "Los vehículos CERO y ECO pueden circular y estacionar sin restricciones por el centro de Getafe.",
+      "residentTitle": "Acceso permitido (empadronado en Getafe)",
+      "residentMessage": "Los vehículos censados e inscritos en el padrón de Getafe tienen libre acceso al casco urbano.",
+      "parkingTitle": "Acceso permitido con destino a aparcamiento",
+      "parkingMessage": "Se permite el acceso a no residentes si se dirigen a aparcamientos públicos o a reservas de estacionamiento.",
+      "transitTitle": "Tránsito restringido",
+      "transitMessage": "Los vehículos B y C no empadronados deben justificar su estancia o destino en el perímetro de Getafe.",
+      "restrictedTitle": "Acceso restringido a residentes",
+      "restrictedMessage": "Solo los vehículos de residentes con autorización o PMR pueden acceder sin etiqueta.",
+      "deniedTitle": "Prohibido el acceso (sanción {{ amount }})",
+      "deniedMessage": "Prohibida la circulación de vehículos sin distintivo (A) por el perímetro de la ZBE de Getafe."
+    }
+  },
+  "badges": {
+    "cero": {
+      "label": "0 emisiones",
+      "chip": "Emisiones",
+      "description": "Vehículos 100 % eléctricos (BEV), híbridos enchufables (PHEV) con autonomía ≥ 40 km y pila de combustible."
+    },
+    "eco": {
+      "label": "ECO",
+      "chip": "ECO",
+      "description": "Híbridos no enchufables (HEV), enchufables con menos de 40 km, microhíbridos (MHEV) y vehículos a gas (GLP/GNC)."
+    },
+    "c": {
+      "label": "C (verde)",
+      "chip": "C",
+      "description": "Turismos y furgonetas ligeras de gasolina matriculados a partir de {{ petrolDate }} (Euro 4, 5 y 6) y diésel desde {{ dieselDate }} (Euro 6)."
+    },
+    "b": {
+      "label": "B (amarilla)",
+      "chip": "B",
+      "description": "Turismos de gasolina matriculados entre {{ petrolDate }} y 2005 (Euro 3), y diésel matriculados entre 2006 y {{ dieselDate }} (Euro 4 y 5)."
+    },
+    "a": {
+      "label": "Sin etiqueta (A)",
+      "chip": "Sin etiq.",
+      "description": "Vehículos más contaminantes: gasolina anteriores a 2001 (anteriores a Euro 3) y diésel anteriores a 2006 (anteriores a Euro 4)."
+    }
+  },
+  "zones": {
+    "zbe-distrito-centro": {
+      "name": "ZBEDEP Distrito Centro (Madrid Central)",
+      "shortName": "Distrito Centro",
+      "restrictionLevel": "Restricción máxima",
+      "description": "Zona de Bajas Emisiones de Especial Protección en el corazón histórico de Madrid. Reglas estrictas de acceso según el distintivo ambiental y aparcamiento obligatorio.",
+      "lawReference": "Ordenanza de Movilidad Sostenible (OMS) art. 23",
+      "rules": {
+        "cero": "Acceso libre y estacionamiento gratuito en superficie (SER), sin coste ni límite de horario.",
+        "eco": "Acceso libre. Estacionamiento en superficie (SER) durante un máximo de 2 horas o en aparcamientos subterráneos.",
+        "c": "Solo se puede acceder si se estaciona en un aparcamiento de uso público o privado concertado, o con invitación de un residente.",
+        "b": "Solo se puede acceder si se estaciona en un aparcamiento de uso público o privado concertado, o con invitación de un residente.",
+        "a": "Acceso totalmente prohibido salvo para residentes empadronados antes de 2021, PMR y servicios de emergencia."
+      }
+    },
+    "zbe-plaza-eliptica": {
+      "name": "ZBEDEP Plaza Elíptica",
+      "shortName": "Plaza Elíptica",
+      "restrictionLevel": "Muy alto (especial protección)",
+      "description": "Zona de Bajas Emisiones de Especial Protección centrada en el histórico punto de emisiones de Usera y Carabanchel, alrededor de la A-42.",
+      "lawReference": "Ordenanza de Movilidad Sostenible (OMS) art. 24",
+      "rules": {
+        "cero": "Libre circulación y estacionamiento sin restricciones específicas de ZBE.",
+        "eco": "Libre circulación y estacionamiento sin restricciones específicas de ZBE.",
+        "c": "Libre circulación y estacionamiento sin restricciones específicas de ZBE.",
+        "b": "Libre circulación y estacionamiento sin restricciones específicas de ZBE.",
+        "a": "Acceso totalmente prohibido las 24 horas a los vehículos A (sin distintivo), salvo residentes empadronados o traslados de PMR."
+      }
+    },
+    "zbe-interior-m30": {
+      "name": "Madrid ZBE - Interior M-30",
+      "shortName": "Interior M-30",
+      "restrictionLevel": "Alto (vehículos A y M-30)",
+      "description": "Área delimitada por el anillo de la autovía M-30 que comprende los 7 distritos centrales de la capital.",
+      "lawReference": "Ordenanza de Movilidad Sostenible (OMS) art. 21",
+      "rules": {
+        "cero": "Acceso libre y estacionamiento SER sin límite de tiempo.",
+        "eco": "Acceso libre. Estacionamiento SER ordinario con bonificación tarifaria.",
+        "c": "Acceso libre. Estacionamiento SER ordinario.",
+        "b": "Acceso libre. Estacionamiento SER ordinario.",
+        "a": "Prohibida la circulación por la M-30 y las calles interiores para turismos sin distintivo ambiental no domiciliados en Madrid."
+      }
+    },
+    "zbe-municipio": {
+      "name": "Madrid ZBE (Término Municipal Completo)",
+      "shortName": "Madrid ZBE Global",
+      "restrictionLevel": "Moderado (vehículos A)",
+      "description": "Zona de Bajas Emisiones que abarca la totalidad del término municipal de Madrid (los 21 distritos de la capital).",
+      "lawReference": "Ordenanza de Movilidad Sostenible (OMS) art. 21 y Ley sobre Tráfico",
+      "rules": {
+        "cero": "Acceso y estacionamiento permitidos sin restricción.",
+        "eco": "Acceso y estacionamiento permitidos sin restricción.",
+        "c": "Acceso y estacionamiento permitidos sin restricción.",
+        "b": "Acceso y estacionamiento permitidos sin restricción.",
+        "a": "Prohibido el acceso y la circulación si el vehículo no está domiciliado en Madrid capital y no abona el IVTM en el Ayuntamiento."
+      }
+    },
+    "zbe-getafe": {
+      "name": "ZBE Centro de Getafe",
+      "shortName": "Getafe Centro",
+      "restrictionLevel": "Regulada (CERO/ECO libre; B/C con destino o residentes)",
+      "description": "Zona de Bajas Emisiones del centro urbano y casco histórico de Getafe delimitada por C/ Toledo, Sur, Ferrocarril y Juan de la Cierva.",
+      "lawReference": "Ordenanza Reguladora ZBE de Getafe (BOCM enero 2025)",
+      "rules": {
+        "cero": "Libre acceso y estacionamiento sin restricciones.",
+        "eco": "Libre acceso y estacionamiento sin restricciones.",
+        "c": "Acceso permitido a residentes empadronados, vehículos con destino a aparcamientos o autorizaciones.",
+        "b": "Acceso permitido a residentes empadronados, vehículos con destino a aparcamientos o autorizaciones.",
+        "a": "Prohibido el acceso y la circulación salvo residentes empadronados y PMR autorizados."
+      }
+    },
+    "zbe-fuenlabrada": {
+      "name": "ZBE Distrito Centro de Fuenlabrada",
+      "shortName": "Fuenlabrada Centro",
+      "restrictionLevel": "Regulada (empadronados y B/C/ECO/CERO)",
+      "description": "Zona de Bajas Emisiones del Distrito Centro de Fuenlabrada con exención general para los vehículos censados en el municipio.",
+      "lawReference": "Ordenanza de Movilidad Sostenible y ZBE de Fuenlabrada",
+      "rules": {
+        "cero": "Libre acceso y circulación sin restricciones.",
+        "eco": "Libre acceso y circulación sin restricciones.",
+        "c": "Acceso permitido a residentes y a vehículos con destino o estancia justificada en el área.",
+        "b": "Acceso permitido a residentes y a vehículos con destino o estancia justificada en el área.",
+        "a": "Restricción general de paso para vehículos sin distintivo no empadronados en Fuenlabrada."
+      }
+    },
+    "zbe-alcorcon": {
+      "name": "ZBE Casco Antiguo de Alcorcón",
+      "shortName": "Alcorcón Centro",
+      "restrictionLevel": "Regulada (tráfico de paso sin etiqueta)",
+      "description": "Zona de Bajas Emisiones del casco urbano de Alcorcón que protege el entorno comercial y peatonal de Calle Mayor y Plaza de España.",
+      "lawReference": "Ordenanza Municipal de la ZBE de Alcorcón",
+      "rules": {
+        "cero": "Libre acceso y estacionamiento sin restricciones.",
+        "eco": "Libre acceso y estacionamiento sin restricciones.",
+        "c": "Acceso libre para empadronados y vehículos con destino a la zona.",
+        "b": "Acceso libre para empadronados y vehículos con destino a la zona.",
+        "a": "Restricción de tráfico de paso para vehículos sin distintivo ambiental no empadronados."
+      }
+    },
+    "zbe-alcala": {
+      "name": "ZBE Casco Histórico de Alcalá de Henares",
+      "shortName": "Alcalá Histórico",
+      "restrictionLevel": "Control dinámico (por episodios de NO₂)",
+      "description": "ZBE en el Casco Histórico, Patrimonio de la Humanidad. Las restricciones se activan automáticamente en los episodios de contaminación elevada.",
+      "lawReference": "Ordenanza Reguladora de la ZBE de Alcalá de Henares (BOCM 2025)",
+      "rules": {
+        "cero": "Libre acceso y circulación sin restricciones en todo momento.",
+        "eco": "Libre acceso y circulación sin restricciones en todo momento.",
+        "c": "Libre circulación ordinaria; restricciones solo en episodios severos de contaminación.",
+        "b": "Libre circulación ordinaria; restricciones solo en episodios severos de contaminación.",
+        "a": "Libre circulación ordinaria salvo activación del protocolo por superación de 180 µg/m³ de NO₂."
+      }
+    },
+    "zbe-alcobendas": {
+      "name": "ZBE Distrito Centro de Alcobendas",
+      "shortName": "Alcobendas Centro",
+      "restrictionLevel": "Regulada (CERO/ECO/C/B libre; A restringido)",
+      "description": "Zona de Bajas Emisiones del núcleo histórico y comercial de Alcobendas, en torno a Marquesa Viuda de Aldama y la Av. de España.",
+      "lawReference": "Ordenanza Reguladora de la ZBE de Alcobendas",
+      "rules": {
+        "cero": "Libre acceso y circulación sin restricciones.",
+        "eco": "Libre acceso y circulación sin restricciones.",
+        "c": "Libre acceso y circulación sin restricciones.",
+        "b": "Libre acceso y circulación sin restricciones.",
+        "a": "Prohibición de circulación a vehículos sin distintivo ambiental no empadronados."
+      }
+    },
+    "zbe-mostoles": {
+      "name": "ZBE Área 20 Almendra Central de Móstoles",
+      "shortName": "Móstoles Centro",
+      "restrictionLevel": "Área 20 residencial (restricción de vehículos sin distintivo)",
+      "description": "Zona de Bajas Emisiones y pacificación del tráfico sobre el perímetro del Área 20 de Móstoles (C/ Cristo, Juan XXIII, Reyes Católicos, Ricardo Medem).",
+      "lawReference": "Ordenanza de Tráfico y Movilidad de Móstoles",
+      "rules": {
+        "cero": "Libre circulación y estacionamiento sin restricciones.",
+        "eco": "Libre circulación y estacionamiento sin restricciones.",
+        "c": "Libre acceso a aparcamientos y residentes; libre circulación por el anillo perimetral.",
+        "b": "Libre acceso a aparcamientos y residentes; libre circulación por el anillo perimetral.",
+        "a": "Restricción de paso al interior de la almendra central salvo residentes empadronados y PMR."
+      }
+    },
+    "zbe-parla": {
+      "name": "ZBE Casco Antiguo de Parla",
+      "shortName": "Parla Centro",
+      "restrictionLevel": "Regulada (BOCM 2024/2025)",
+      "description": "Zona de Bajas Emisiones del casco histórico y comercial de Parla que regula el acceso en torno a Calle Real, Calle Pinto y Calle Torrejón.",
+      "lawReference": "Ordenanza Reguladora ZBE Parla (BOCM 20240424-72)",
+      "rules": {
+        "cero": "Libre acceso y estacionamiento sin restricciones.",
+        "eco": "Libre acceso y estacionamiento sin restricciones.",
+        "c": "Acceso permitido a residentes, aparcamientos y autorizaciones comerciales.",
+        "b": "Acceso permitido a residentes, aparcamientos y autorizaciones comerciales.",
+        "a": "Prohibida la circulación al interior salvo residentes empadronados y vehículos esenciales."
+      }
+    },
+    "zbe-rivas": {
+      "name": "ZBE Rivas-Vaciamadrid",
+      "shortName": "Rivas ZBE",
+      "restrictionLevel": "Regulada (entornos escolares y centro)",
+      "description": "Zona de Bajas Emisiones de Rivas que protege los entornos escolares y los ejes residenciales de alta afluencia peatonal.",
+      "lawReference": "Plan de Movilidad Escolar Sostenible y ZBE de Rivas",
+      "rules": {
+        "cero": "Libre acceso sin restricciones.",
+        "eco": "Libre acceso sin restricciones.",
+        "c": "Acceso regulado prioritario.",
+        "b": "Acceso regulado prioritario.",
+        "a": "Control de paso y limitación horaria en los entornos escolares señalizados."
+      }
+    }
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "title": "Image Base64 Converter",
+  "subtitle": "Convert images to Base64 strings, or decode Base64 strings back to preview and download images.",
+  "modes": {
+    "encode": "Image to Base64",
+    "decode": "Base64 to Image"
+  },
+  "labels": {
+    "unknown": "unknown",
+    "loading": "Loading..."
+  },
+  "encoder": {
+    "dropzone": "Select or Drag & Drop an Image",
+    "formatsHint": "Supported formats: PNG, JPG, JPEG, WEBP, GIF, SVG, BMP. Max file size: 5MB.",
+    "sourceTitle": "Source Image",
+    "sourceAlt": "Source Preview",
+    "remove": "Remove Image",
+    "name": "Name:",
+    "type": "Type:",
+    "fileSize": "File Size:",
+    "dimensions": "Dimensions:",
+    "representationTitle": "Base64 Representation",
+    "outputPlaceholder": "Base64 encoded output will appear here...",
+    "copy": "Copy Base64"
+  },
+  "formats": {
+    "dataUri": "Data URI",
+    "raw": "Raw",
+    "html": "HTML",
+    "css": "CSS"
+  },
+  "outputAlt": "Base64 Image",
+  "decoder": {
+    "inputLabel": "Paste Base64 Encoded Image Data",
+    "inputPlaceholder": "Paste Base64 string here (e.g. data:image/png;base64,... or raw Base64)...",
+    "clear": "Clear",
+    "decode": "Decode Base64",
+    "errorTitle": "Decoding Failed",
+    "previewTitle": "Decoded Preview",
+    "previewAlt": "Decoded Preview",
+    "metadataTitle": "Decoded File Metadata",
+    "inferredFormat": "Inferred Format:",
+    "mimeType": "MIME Type:",
+    "estimatedSize": "Estimated Binary Size:",
+    "imageSize": "Image Size:",
+    "download": "Download Image File"
+  },
+  "messages": {
+    "emptyInput": "Please enter a Base64 string to decode.",
+    "decodeFailed": "Could not decode image. Please ensure the pasted text is a valid Base64 encoded image string.",
+    "copied": "Copied to clipboard!",
+    "copyFailed": "Failed to copy to clipboard.",
+    "downloaded": "Image downloaded successfully!",
+    "downloadFailed": "Failed to download the decoded image."
+  },
+  "download": {
+    "fileName": "decoded-image.{{ ext }}"
+  },
+  "about": {
+    "title": "About Image Base64 Conversion",
+    "description": "Base64 encoding converts image binary data into an ASCII string format. This string can be embedded directly in HTML, CSS, or JSON payloads.",
+    "whenToUseTitle": "When to use Base64",
+    "whenToUse": {
+      "icons": "Small icons, SVGs, or graphics to minimize HTTP requests.",
+      "email": "Email templates where external images might be blocked.",
+      "storage": "Storing dynamic image payloads in JSON/XML datasets.",
+      "offline": "Working offline or within standalone web environments."
+    },
+    "bestPracticesTitle": "Best Practices",
+    "bestPractices": {
+      "largeImages": "Avoid encoding large images (e.g. >1MB) as Base64 because it increases the payload size by approximately 33%.",
+      "caching": "For performance, rely on browser caching for static files instead of loading heavy Data URIs in stylesheets."
+    }
+  },
+  "seo": {
+    "title": "Image to Base64 & Base64 to Image Converter",
+    "description": "Convert any image file to a Base64 encoded string or decode Base64 data back to images. Fast, secure, client-side conversion with live previews.",
+    "keywords": "base64, image to base64, base64 to image, base64 decoder, base64 encoder, data uri, webp, png, jpeg"
+  }
+}

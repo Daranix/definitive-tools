@@ -1,0 +1,164 @@
+{
+  "seo": {
+    "title": "Madrid Transport Map - Metro, Cercanías & Fare Zones",
+    "description": "Interactive transit network and CRTM fare zones map for Madrid. Explore Metro, Cercanías, EMT, Interurban buses and tariff zones A through E2.",
+    "keywords": "Madrid transport map, Metro Madrid, Cercanias Renfe, EMT Madrid, CRTM zones, abono transporte, fare zones"
+  },
+  "actions": {
+    "dismissError": "Dismiss error"
+  },
+  "disclaimer": {
+    "ariaLabel": "Legal and accuracy notice",
+    "title": "Notice:",
+    "lede": "Lines, stops and fares are",
+    "approximation": "an approximate guide",
+    "suffix": "and may contain errors or service variations. Always check the official channels (CRTM / Metro / Renfe).",
+    "dismiss": "Dismiss notice"
+  },
+  "mobile": {
+    "openLayers": "Open layer controls",
+    "layersNetworks": "Layers & Networks",
+    "faresZones": "Fares & Zones"
+  },
+  "tabs": {
+    "details": "Details",
+    "layers": "Layers",
+    "faresZones": "Fares & Zones"
+  },
+  "drawer": {
+    "dragHint": "Drag or tap to expand or collapse",
+    "collapse": "Collapse",
+    "expand": "Expand",
+    "closePanel": "Close panel"
+  },
+  "networks": {
+    "metro": {
+      "name": "Metro de Madrid",
+      "shortName": "Metro"
+    },
+    "cercanias": {
+      "name": "Cercanías Renfe",
+      "shortName": "Cercanías"
+    },
+    "emt": {
+      "name": "EMT Madrid (Buses)",
+      "shortName": "EMT"
+    },
+    "interurban": {
+      "name": "Interurban Buses",
+      "shortName": "Interurban"
+    }
+  },
+  "basemaps": {
+    "streets": {
+      "name": "Street View",
+      "shortName": "Street"
+    },
+    "satellite": {
+      "name": "Satellite View",
+      "shortName": "Satellite"
+    },
+    "gray": {
+      "name": "Light Canvas",
+      "shortName": "Light"
+    }
+  },
+  "layers": {
+    "mapView": "Map View",
+    "networks": "Networks",
+    "title": "Transport Networks",
+    "togglePanel": "Toggle network layers panel",
+    "tariffZones": "Tariff Zones (A - E2)",
+    "fareRegions": "CRTM Fare Regions"
+  },
+  "search": {
+    "placeholder": "Search stations, stops, or lines (e.g. Sol, Atocha, C-5, L1)...",
+    "ariaLabel": "Search Madrid transit stations and lines",
+    "clear": "Clear search query",
+    "noResultsTitle": "No matching stations found",
+    "noResultsHint": "Try searching for a different station, stop, or line number"
+  },
+  "zones": {
+    "a": {
+      "name": "Zone A",
+      "coverage": "Madrid capital central municipality (Sol, Atocha, Chamartín, Barajas, Vallecas, Carabanchel)"
+    },
+    "b1": {
+      "name": "Zone B1",
+      "coverage": "First metropolitan crown (Alcobendas, San Sebastián de los Reyes, Pozuelo, Majadahonda, Coslada, San Fernando, Getafe, Leganés, Alcorcón)"
+    },
+    "b2": {
+      "name": "Zone B2",
+      "coverage": "Second metropolitan crown (Las Rozas, Móstoles, Fuenlabrada, Parla, Pinto, Rivas-Vaciamadrid, Torrejón de Ardoz, Tres Cantos)"
+    },
+    "b3": {
+      "name": "Zone B3",
+      "coverage": "Third metropolitan ring (Alcalá de Henares, Colmenar Viejo, Collado Villalba, Valdemoro, Navalcarnero, Arganda del Rey, Arroyomolinos)"
+    },
+    "c1": {
+      "name": "Zone C1",
+      "coverage": "Outer metropolitan region (Aranjuez, El Escorial, Guadarrama, Chinchón, San Martín de Valdeiglesias, Buitrago del Lozoya)"
+    },
+    "c2": {
+      "name": "Zone C2",
+      "coverage": "Border municipalities of Community of Madrid (Cercedilla, Santa María de la Alameda, Puebla de la Sierra)"
+    },
+    "e1": {
+      "name": "Zone E1",
+      "coverage": "Castilla-La Mancha adjacent corridor (Guadalajara, Azuqueca de Henares, Illescas)"
+    },
+    "e2": {
+      "name": "Zone E2",
+      "coverage": "Castilla-La Mancha extended corridor (Talavera de la Reina, Toledo capital, Tarancón)"
+    }
+  },
+  "detail": {
+    "zoneBadge": "Zone {{ zone }}",
+    "accessible": "Accessible",
+    "crtmZone": "CRTM Tariff Zone",
+    "activeRoute": "Active Route",
+    "close": "Close detail card",
+    "linesServed": "Lines Served (click to view route):",
+    "clearRoute": "Clear route",
+    "viewLineRoute": "View full route of line {{ line }}",
+    "routeDisplayed": "Route Displayed",
+    "dismissRoute": "Dismiss route highlight",
+    "monthlyPass": "Abono Transporte (30d):",
+    "active": "Active",
+    "metrobusTenTrip": "Metrobús / 10 trips:",
+    "tenTripTicket": "10-trip ticket:",
+    "youthPass": "Abono Joven (≤ 26 years):",
+    "seniorShort": "+65 years:",
+    "senior": "Over 65s:",
+    "free": "Free",
+    "centerOnMap": "Center on Map",
+    "passValidity": "Passes are valid for all transit modes (Metro, Cercanías, EMT, and Interurban) within this zone.",
+    "routeHighlighted": "The entire route and stops for this line are highlighted on the map.",
+    "deselectLine": "Deselect Line",
+    "disclaimerTitle": "Notice:",
+    "disclaimerBody": "Routes, stations and fares are an approximate guide and may contain errors. Always check the official CRTM, Metro and Cercanías sources."
+  },
+  "legend": {
+    "opacityLabel": "Zone Fill Opacity",
+    "opacityAria": "Zone fill opacity slider",
+    "subtle": "Subtle (5%)",
+    "vibrant": "Vibrant (80%)",
+    "abono": "Abono:",
+    "tenTrips": "10 trips:",
+    "subsidised": "✨ Current subsidised fares (50%–60% CRTM discount)",
+    "youthPass": "Abono Joven (≤ 26 years):",
+    "allZones": "(all zones)",
+    "senior": "Over 65s:",
+    "seniorFree": "Free ({{ price }})",
+    "hint": "Tap any zone card to centre and inspect municipalities and passes.",
+    "title": "Tariff Zones Legend & Fares",
+    "toggle": "Toggle CRTM Tariff Zones Legend",
+    "opacityPercent": "{{ percent }}% opacity",
+    "hintExpanded": "Click any zone card above or click directly on the map to inspect municipalities and passes."
+  },
+  "errors": {
+    "mapInit": "Failed to initialize map graphics engine.",
+    "loadBusEmt": "Failed to load EMT bus network dataset. Please try again.",
+    "loadBusInterurban": "Failed to load INTERURBAN bus network dataset. Please try again."
+  }
+}

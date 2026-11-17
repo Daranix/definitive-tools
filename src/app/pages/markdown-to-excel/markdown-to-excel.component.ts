@@ -1,5 +1,6 @@
 import {
   Component,
+  effect,
   inject,
   model,
   computed,
@@ -9,8 +10,10 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import { TopNavbarComponent } from '@/app/components/top-navbar/top-navbar.component';
+import { I18nService } from '@/app/i18n/i18n.service';
 import { MetadataService } from '@/app/services/metadata.service';
 
 export interface TableData {
@@ -30,6 +33,7 @@ import { FooterComponent } from '../../components/footer/footer.component';
     LucideIconComponent,
     TopNavbarComponent,
     FooterComponent,
+    TranslatePipe,
   ],
   templateUrl: './markdown-to-excel.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -37,6 +41,7 @@ import { FooterComponent } from '../../components/footer/footer.component';
 })
 export class MarkdownToExcelComponent {
   private readonly metadataService = inject(MetadataService);
+  private readonly i18n = inject(I18nService);
 
   readonly inputText = model<string>('');
 
@@ -176,12 +181,18 @@ export class MarkdownToExcelComponent {
   }
 
   constructor() {
+    this.updateMetadata();
+    effect(() => {
+      this.i18n.language();
+      this.updateMetadata();
+    });
+  }
+
+  private updateMetadata(): void {
     this.metadataService.updateMetadata({
-      title: 'Markdown to Excel Converter',
-      description:
-        'Convert Markdown tables to Excel-compatible formats (TSV) easily. Copy and paste your data directly into your favorite spreadsheet software.',
-      keywords:
-        'markdown, excel, converter, table, tsv, spreadsheet, developer tools',
+      title: this.i18n.t('markdown-to-excel.seo.title'),
+      description: this.i18n.t('markdown-to-excel.seo.description'),
+      keywords: this.i18n.t('markdown-to-excel.seo.keywords'),
     });
   }
 

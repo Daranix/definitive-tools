@@ -5,6 +5,12 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { routes } from './app/app.routes';
+import {
+  SUPPORTED_LANGUAGES,
+  withLanguagePrefix,
+  stripLanguagePrefix,
+  type Language,
+} from './app/i18n/languages';
 
 // ---------------------------------------------------------------------------
 // Config
@@ -90,16 +96,44 @@ function getLegalSlugs(): string[] {
 // Priority / changefreq helpers
 // ---------------------------------------------------------------------------
 
+interface SitemapAlternate {
+  hreflang: Language | 'x-default';
+  href: string;
+}
+
 interface SitemapEntry {
   loc: string;
   priority: string;
   changefreq: string;
+  alternates: SitemapAlternate[];
+}
+
+/** Removes the language prefix so every locale shares the same metadata. */
+function basePath(path: string): string {
+  return stripLanguagePrefix(`/${path}`).replace(/^\//, '');
 }
 
 function entryMeta(path: string): Pick<SitemapEntry, 'priority' | 'changefreq'> {
-  if (path === '/') return { priority: '1.0', changefreq: 'weekly' };
-  if (path.startsWith('tool/')) return { priority: '0.8', changefreq: 'monthly' };
+  const base = basePath(path);
+  if (base === '') return { priority: '1.0', changefreq: 'weekly' };
+  if (base.startsWith('tool/')) return { priority: '0.8', changefreq: 'monthly' };
   return { priority: '0.5', changefreq: 'yearly' };
+}
+
+function alternatesFor(path: string): SitemapAlternate[] {
+  const localized = SUPPORTED_LANGUAGES.map((language) => ({
+    hreflang: language as Language | 'x-default',
+    href: `${BASE_URL}${withLanguagePrefix(`/${path}`, language)}`,
+  }));
+
+  // English is the default language, so it doubles as the x-default target.
+  return [
+    ...localized,
+    {
+      hreflang: 'x-default',
+      href: `${BASE_URL}${withLanguagePrefix(`/${path}`, 'en')}`,
+    },
+  ];
 }
 
 // ---------------------------------------------------------------------------
@@ -113,13 +147,19 @@ function buildEntries(): SitemapEntry[] {
   const staticEntries: SitemapEntry[] = staticPaths.map((path) => ({
     loc: path === '/' ? `${BASE_URL}/` : `${BASE_URL}/${path}`,
     ...entryMeta(path),
+    alternates: alternatesFor(path),
   }));
 
-  const legalEntries: SitemapEntry[] = legalSlugs.map((slug) => ({
-    loc: `${BASE_URL}/legal/${slug}`,
-    priority: '0.5',
-    changefreq: 'yearly',
-  }));
+  const legalEntries: SitemapEntry[] = legalSlugs.flatMap((slug) => {
+    const path = `legal/${slug}`;
+    const alternates = alternatesFor(path);
+    return alternates.map((alternate) => ({
+      loc: alternate.href,
+      priority: '0.5',
+      changefreq: 'yearly',
+      alternates,
+    }));
+  });
 
   return [...staticEntries, ...legalEntries];
 }
@@ -133,9 +173,15 @@ function generateXml(): string {
 
   const urlNodes = buildEntries()
     .map(
-      ({ loc, priority, changefreq }) => `
+      ({ loc, priority, changefreq, alternates }) => `
   <url>
     <loc>${loc}</loc>
+${alternates
+  .map(
+    (alternate) =>
+      `    <xhtml:link rel="alternate" hreflang="${alternate.hreflang}" href="${alternate.href}"/>`,
+  )
+  .join('\n')}
     <lastmod>${today}</lastmod>
     <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>
@@ -144,7 +190,7 @@ function generateXml(): string {
     .join('');
 
   return `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urlNodes}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">${urlNodes}
 </urlset>`;
 }
 

@@ -1,0 +1,20 @@
+{
+  "hero": {
+    "badge": "100% Client-Side & Secure",
+    "title": "Your Ultimate Digital Toolkit",
+    "subtitle": "Free, fast, easy-to-use tools for all your digital needs. Your data never leaves your browser.",
+    "searchPlaceholder": "Search for tools (e.g. QR, Swagger, Base64, MD)..."
+  },
+  "tools": {
+    "title": "Popular Utilities",
+    "subtitle": "Select any tool below to start processing directly in your browser.",
+    "launch": "Launch Tool",
+    "noResultsTitle": "No tools found",
+    "noResultsDescription": "We couldn't find any tools matching your criteria. Try adjusting your query or category filters."
+  },
+  "seo": {
+    "title": "Definitive Tools - Free Digital Utilities",
+    "description": "Access free, easy-to-use tools for all your digital needs without registration or downloads.",
+    "keywords": "online tools, free tools, digital tools, web tools, QR generator, utility tools"
+  }
+}

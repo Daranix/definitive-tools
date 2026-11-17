@@ -23,11 +23,11 @@ test.describe('Home Page & Navigation', () => {
     await expect(searchInput).toBeVisible();
 
     await searchInput.fill('QR Code');
-    
+
     const toolCards = page.locator('[data-testid^="tool-card-"]');
-    
-    // WebKit debounce timing fix: wait for the filtered count to reduce to exactly 1 matching card
-    await expect(toolCards).toHaveCount(1);
+
+    // Both QR tools match the query ("QR Code Generator" and "QR Code Reader").
+    await expect(toolCards).toHaveCount(2);
     await expect(toolCards.first()).toContainText('QR');
 
     await searchInput.fill('xyzabc123nonexistent');

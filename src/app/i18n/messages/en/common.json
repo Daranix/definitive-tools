@@ -1,0 +1,136 @@
+{
+  "app": {
+    "name": "Definitive Tools",
+    "shortName": "Def. Tools",
+    "tagline": "Your one-stop destination for free, high-quality online tools."
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "github": "GitHub",
+    "star": "Star",
+    "menu": "Menu",
+    "toggleMenu": "Toggle mobile menu",
+    "mainNavigation": "Main navigation"
+  },
+  "language": {
+    "label": "Language",
+    "change": "Change language",
+    "en": "English",
+    "es": "Español"
+  },
+  "actions": {
+    "copy": "Copy",
+    "copied": "Copied!",
+    "download": "Download",
+    "upload": "Upload",
+    "clear": "Clear",
+    "reset": "Reset",
+    "close": "Close",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "remove": "Remove",
+    "add": "Add",
+    "search": "Search",
+    "loading": "Loading…",
+    "processing": "Processing…",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "tryAgain": "Try again",
+    "start": "Start",
+    "stop": "Stop"
+  },
+  "toolBar": {
+    "favorited": "Favorited",
+    "save": "Save",
+    "saveToFavorites": "Save to Favorites",
+    "share": "Share",
+    "hideHeader": "Hide header",
+    "showHeader": "Show header",
+    "addedToFavorites": "{{ name }} added to favorites!",
+    "removedFromFavorites": "{{ name }} removed from favorites.",
+    "sharedSuccessfully": "Shared successfully!",
+    "linkCopied": "Link copied to clipboard!",
+    "linkCopyFailed": "Failed to copy link to clipboard.",
+    "shareTitle": "{{ name }} - Definitive Tools"
+  },
+  "footer": {
+    "tagline": "Your one-stop destination for free, high-quality online tools.",
+    "githubRepository": "GitHub Repository",
+    "quickLinks": "Quick Links",
+    "legal": "Legal",
+    "contact": "Contact",
+    "links": {
+      "home": "Home",
+      "qrGenerator": "QR Code Generator",
+      "backgroundRemover": "Background Remover",
+      "jwtDecodeEncode": "JWT Decoder / Encoder",
+      "swaggerEditor": "Swagger Editor",
+      "audioEditor": "Audio Editor"
+    },
+    "legalLinks": {
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "cookies": "Cookie Policy",
+      "gdpr": "GDPR"
+    }
+  },
+  "legal": {
+    "loading": "Loading document…",
+    "notFoundTitle": "Document not found",
+    "notFoundDescription": "The legal document you are looking for does not exist or is no longer available.",
+    "backHome": "Back to home",
+    "updatedOn": "Last updated on {{ date }}",
+    "errorDescription": "This document could not be loaded. Please try again later.",
+    "defaultDescription": "{{ title }} - Definitive Tools. Free, secure, client-side online tools.",
+    "defaultKeywords": "{{ title }}, definitive tools, open source"
+  },
+  "seo": {
+    "siteName": "Definitive Tools",
+    "titleSuffix": "Definitive Tools"
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "unexpected": "An unexpected error occurred.",
+    "fileTooLarge": "The file is too large.",
+    "invalidFile": "This file type is not supported.",
+    "browserOnly": "This tool only runs in the browser."
+  },
+  "components": {
+    "loading": "Loading...",
+    "menu": "Menu",
+    "closeToast": "Close toast",
+    "dragDrop": {
+      "prompt": "Drag And Drop your file or",
+      "browse": "click here",
+      "maxSize": "Max.",
+      "required": "Field is required",
+      "fileTooLarge": "The file exceeds the maximum size limit {{ size }}",
+      "invalidExtension": "The file type is not supported. Only {{ extensions }} are allowed."
+    },
+    "modelDownload": {
+      "downloading": "Downloading model ...",
+      "loading": "Loading ...",
+      "loadingFile": "Loading model file ..."
+    }
+  },
+  "validation": {
+    "mustBeText": "This field must be a text value",
+    "mustBeNumber": "This field must be a numerical value",
+    "required": "This field is required",
+    "minCharacters": "This field must be at least {{ minimum }} characters",
+    "minValue": "Value must be at least {{ minimum }}",
+    "maxCharacters": "This field cannot exceed {{ maximum }} characters",
+    "maxValue": "Value cannot be greater than {{ maximum }}",
+    "minItems": "Select at least {{ minimum }} option(s)",
+    "maxItems": "Select no more than {{ maximum }} option(s)",
+    "email": "Please enter a valid email address",
+    "url": "Please enter a valid URL",
+    "invalidFormat": "This value has an invalid format",
+    "invalidOption": "Select one of the available options",
+    "notUnique": "This value must be unique",
+    "invalidDate": "Please enter a valid date"
+  }
+}

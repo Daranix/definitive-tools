@@ -1,0 +1,104 @@
+{
+  "categories": {
+    "all": "Todas",
+    "favorites": "Favoritos",
+    "dev": "Herramientas de desarrollo",
+    "image": "Herramientas de imagen",
+    "text": "Herramientas de texto",
+    "media": "Herramientas multimedia",
+    "maps": "Mapas",
+    "calculators": "Calculadoras"
+  },
+  "meme-generator": {
+    "name": "Generador de memes",
+    "description": "Crea memes divertidos con textos superpuestos personalizados, leyendas arrastrables, estilos de fuente y plantillas prediseñadas populares."
+  },
+  "qr-generator": {
+    "name": "Generador de códigos QR",
+    "description": "Crea códigos QR personalizados para URLs, texto, datos de contacto y mucho más. Códigos QR de alta calidad que funcionan en cualquier lugar."
+  },
+  "qr-reader": {
+    "name": "Lector de códigos QR",
+    "description": "Sube o pega una imagen que contenga un código QR para decodificar e inspeccionar su contenido, enlaces, contraseñas Wi-Fi y datos de contacto."
+  },
+  "background-remover": {
+    "name": "Eliminador de fondos",
+    "description": "Elimina los fondos de tus imágenes al instante. Crea imágenes transparentes con aspecto profesional para tus proyectos, productos y diseños."
+  },
+  "image-converter": {
+    "name": "Conversor de imágenes",
+    "description": "Convierte imágenes entre distintos formatos (PNG, JPEG, WEBP, GIF, BMP) en tu navegador con controles de calidad y dimensiones."
+  },
+  "image-base64-converter": {
+    "name": "Conversor de imagen a Base64",
+    "description": "Convierte imágenes a cadenas Base64 o decodifica datos Base64 para previsualizar y descargar imágenes. Compatible con varios formatos."
+  },
+  "base64-encoder-decoder": {
+    "name": "Codificador / Decodificador Base64",
+    "description": "Codifica texto a Base64 o decodifica Base64 a texto fácilmente. Ideal para transferir datos, incrustar imágenes o trabajar con APIs."
+  },
+  "random-password-generator": {
+    "name": "Generador de contraseñas aleatorias",
+    "description": "Crea contraseñas seguras y aleatorias al instante. Ajusta la complejidad según tus necesidades de seguridad."
+  },
+  "jwt-decode-encode": {
+    "name": "Decodificador / Codificador y Validador JWT",
+    "description": "Codifica y decodifica JSON Web Tokens (JWT) y verifica sus firmas fácilmente. Ideal para desarrollar APIs, depurar la autenticación e inspeccionar tokens."
+  },
+  "opengraph-generator": {
+    "name": "Generador de Open Graph",
+    "description": "Crea tarjetas Open Graph y de Twitter para tus sitios web."
+  },
+  "swagger-editor": {
+    "name": "Editor Swagger",
+    "description": "Edita y visualiza especificaciones de API Swagger."
+  },
+  "markdown-to-excel": {
+    "name": "Markdown a Excel",
+    "description": "Convierte tablas Markdown a formatos compatibles con Excel fácilmente. Copia y pega tus datos directamente en tu hoja de cálculo favorita."
+  },
+  "markdown-to-html": {
+    "name": "Markdown a HTML",
+    "description": "Convierte texto Markdown en código HTML limpio con vista previa en vivo. Aplica estilos al HTML al instante con CSS personalizado, hojas de estilo o presets de diseño."
+  },
+  "audio-editor": {
+    "name": "Editor de audio",
+    "description": "Recorta, corta y convierte archivos de audio directamente en tu navegador. Exporta a MP3, WAV, OGG, AAC y FLAC con bitrate y frecuencia de muestreo personalizados."
+  },
+  "text-to-speech": {
+    "name": "Texto a voz (TTS)",
+    "description": "Convierte texto en audio hablado localmente en tu navegador. Basado en modelos VITS WebAssembly."
+  },
+  "audio-speech-to-text": {
+    "name": "Audio a texto",
+    "description": "Convierte palabras habladas en texto de forma eficiente."
+  },
+  "madrid-transport-map": {
+    "name": "Mapa de transporte de Madrid",
+    "description": "Mapa interactivo de la red de transporte multimodal y las zonas tarifarias del CRTM de Madrid (Metro, Cercanías, EMT, interurbanos, zonas A-E2)."
+  },
+  "madrid-zbe-map": {
+    "name": "Mapa Madrid 360 y ZBE",
+    "description": "Mapa interactivo de las Zonas de Bajas Emisiones de Madrid 360 (Distrito Centro, Plaza Elíptica, anillo M-30, cámaras y comprobador de etiqueta DGT)."
+  },
+  "regla-de-tres": {
+    "name": "Regla de 3",
+    "description": "Calcula reglas de tres simples directas, inversas y compuestas con desglose paso a paso."
+  },
+  "salario-neto-espana": {
+    "name": "Salario Neto España",
+    "description": "Estima tu salario neto anual y mensual en España a partir del bruto, con cotizaciones a la Seguridad Social e IRPF."
+  },
+  "indemnizacion-despido-espana": {
+    "name": "Indemnización por Despido",
+    "description": "Calcula la indemnización laboral en España según el tipo de despido, la antigüedad y la reforma de 2012."
+  },
+  "calculadora-hipoteca": {
+    "name": "Calculadora de Hipotecas",
+    "description": "Simula la cuota mensual, la TAE efectiva, los intereses totales y el cuadro de amortización francés."
+  },
+  "calculadora-cientifica": {
+    "name": "Calculadora Científica",
+    "description": "Realiza cálculos científicos de alta precisión con trigonometría, logaritmos, potencias y memoria."
+  }
+}

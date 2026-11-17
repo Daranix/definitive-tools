@@ -1,0 +1,223 @@
+{
+  "seo": {
+    "title": "Editor de audio multipista y estudio",
+    "description": "Recorta, elimina partes, divide en clips, combina varias pistas y conecta clips con fundidos cruzados suaves — 100 % privado, procesado en tu navegador con WebAssembly."
+  },
+  "page": {
+    "title": "Editor de audio y estudio multipista en el navegador",
+    "subtitle": "Recorta, elimina partes, divide en clips, combina varias pistas y conecta clips con fundidos cruzados suaves — 100 % privado, procesado en tu navegador con WebAssembly."
+  },
+  "modes": {
+    "trim": "Recortar (conservar rango)",
+    "remove": "Cortar y unir (eliminar partes)",
+    "split": "Dividir en clips (exportación múltiple)",
+    "multitrack": "Estudio multipista (mezcla y fundidos)"
+  },
+  "logs": {
+    "title": "Registro de la consola de ejecución",
+    "empty": "Todavía no hay registros. Exporta un archivo de audio para ver el registro.",
+    "loadingCore": "Cargando el núcleo de FFmpeg localmente...",
+    "coreLoaded": "Núcleo de FFmpeg cargado correctamente.",
+    "executing": "Ejecutando: ffmpeg {{ command }}",
+    "writeFile": "Escribiendo el archivo en el sistema de archivos virtual...",
+    "processingTrim": "Procesando el recorte de audio...",
+    "splicing": "Empalmando y concatenando {{ count }} segmentos...",
+    "exportingClip": "Exportando el clip {{ index }} de {{ total }}: «{{ name }}»...",
+    "bundlingZip": "Empaquetando los clips en un archivo ZIP...",
+    "loadingFiles": "Cargando los archivos de audio en el sistema de archivos virtual...",
+    "mixing": "Mezclando {{ count }} clips en la pista maestra...",
+    "masterMixdown": "Ejecutando la mezcla maestra con {{ count }} capas..."
+  },
+  "actions": {
+    "play": "Reproducir",
+    "pause": "Pausar",
+    "playTrimmed": "Reproducir recorte",
+    "addCut": "Añadir corte",
+    "addCutAtPlayhead": "Añadir corte en el cursor",
+    "splitAtPlayhead": "Dividir en el cursor",
+    "removeFile": "Quitar archivo"
+  },
+  "file": {
+    "duration": "Duración: {{ time }}"
+  },
+  "waveform": {
+    "modeTrim": "Forma de onda · Modo recorte",
+    "modeRemove": "Forma de onda · Modo eliminar y unir",
+    "modeSplit": "Forma de onda · Modo dividir clips",
+    "helpTrim": "Arrastra los tiradores cian y rosa para ajustar el inicio y el final. [Space] para reproducir o pausar. Rueda del ratón para hacer zoom.",
+    "helpRemove": "Arrastra los tiradores rojos para ajustar los intervalos de corte. Haz clic en «Añadir corte en el cursor» para añadir más cortes.",
+    "helpSplit": "Arrastra los tiradores entre clips para ajustar los límites de división. Haz clic en «Dividir en el cursor» para cortar.",
+    "decoding": "Decodificando el audio y generando la pirámide de picos de alta resolución...",
+    "startMarker": "Inicio: {{ time }}",
+    "endMarker": "Fin: {{ time }}",
+    "zoomActive": "Zoom activo ({{ zoom }}x) · Muestreo de onda dinámico de alta resolución"
+  },
+  "zoom": {
+    "out": "Alejar",
+    "in": "Acercar"
+  },
+  "tracks": {
+    "voice": "Pista 1 (Voz)",
+    "music": "Pista 2 (Música / Efectos)",
+    "defaultName": "Pista {{ number }}",
+    "add": "Añadir pista",
+    "header": "Pistas ({{ count }})",
+    "volSolo": "Vol. / Solo",
+    "muteTitle": "Silenciar pista",
+    "soloTitle": "Solo de la pista",
+    "deleteTitle": "Eliminar pista",
+    "addClip": "Añadir clip"
+  },
+  "cuts": {
+    "title": "Regiones de corte (partes a eliminar)",
+    "description": "Estos intervalos se eliminarán. El resto se empalmará de forma continua en un único audio.",
+    "empty": "Todavía no hay partes marcadas para eliminar. Haz clic en «Añadir corte en el cursor» o arrastra sobre la forma de onda.",
+    "duration": "Duración del corte: {{ duration }} s",
+    "startLabel": "Inicio:",
+    "endLabel": "Fin:",
+    "deleteTitle": "Eliminar corte",
+    "original": "Original",
+    "removed": "Eliminado",
+    "finalDuration": "Duración final",
+    "summaryTitle": "Resumen de eliminación",
+    "totalCuts": "Cortes totales:",
+    "regionsCount": "{{ count }} región(es)",
+    "keptSegments": "Segmentos conservados:",
+    "partsCount": "{{ count }} parte(s)",
+    "estimatedOutput": "Duración estimada de salida:"
+  },
+  "clips": {
+    "title": "Clips de audio ({{ count }})",
+    "description": "Cada clip se exportará como un archivo independiente y se empaquetará en un archivo .ZIP.",
+    "namePlaceholder": "Nombre del clip",
+    "removeBoundaryTitle": "Quitar límite del clip",
+    "part": "Parte {{ index }}",
+    "name": "Clip {{ index }}",
+    "partSuffix": "{{ name }} (Parte 2)",
+    "copySuffix": "{{ name }} (Copia)",
+    "summaryTitle": "Resumen de clips divididos",
+    "totalClips": "Clips totales:",
+    "filesCount": "{{ count }} archivo(s)",
+    "packaging": "Empaquetado:",
+    "packagingValue": "Descargas individuales + archivo .ZIP"
+  },
+  "trim": {
+    "title": "Selección de recorte",
+    "startSec": "Inicio (s)",
+    "endSec": "Fin (s)",
+    "start": "Inicio",
+    "end": "Fin",
+    "duration": "Duración"
+  },
+  "options": {
+    "title": "Opciones de exportación",
+    "targetFormat": "Formato de destino",
+    "bitrate": "Bitrate",
+    "sampleRate": "Sample Rate",
+    "format": "Formato"
+  },
+  "sampleRates": {
+    "fm": "Calidad FM",
+    "cd": "Calidad CD",
+    "pro": "Pro / DVD"
+  },
+  "export": {
+    "successTrimTitle": "¡Recorte exportado correctamente!",
+    "successSpliceTitle": "¡Empalme exportado correctamente!",
+    "output": "Salida: {{ size }}",
+    "downloadFile": "Descargar {{ fileName }}",
+    "clipsSuccessTitle": "¡Se han exportado {{ count }} clips correctamente!",
+    "clipsDescription": "Descarga los clips individuales o el archivo ZIP completo a continuación.",
+    "downloadAll": "Descargar todo (.ZIP)",
+    "exportingWithFfmpeg": "Exportando audio con FFmpeg...",
+    "exporting": "Exportando...",
+    "trim": "Exportar audio recortado",
+    "remove": "Exportar audio empalmado",
+    "split": "Exportar todos los clips (ZIP)",
+    "renderingMix": "Renderizando la mezcla...",
+    "masterTitle": "Exportación de la mezcla maestra",
+    "masterButton": "Exportar mezcla maestra"
+  },
+  "progress": {
+    "renderingMaster": "Renderizando la mezcla maestra..."
+  },
+  "transport": {
+    "stopTitle": "Detener y volver al inicio"
+  },
+  "tools": {
+    "pointer": "Seleccionar",
+    "pointerTitle": "Herramienta de puntero (seleccionar y mover)",
+    "razor": "Cortar al hacer clic",
+    "razorTitle": "Herramienta de cuchilla (haz clic en cualquier clip para cortarlo)",
+    "split": "Cortar en el cursor",
+    "splitTitle": "Dividir el clip seleccionado en la posición del cursor (atajo: S)"
+  },
+  "timeline": {
+    "totalActiveClips": "Clips activos totales:",
+    "razorHint": "✂ Modo cuchilla: haz clic en cualquier clip donde quieras cortar",
+    "playPause": "Reproducir/Pausar",
+    "splitPlayhead": "Dividir en el cursor",
+    "delete": "Eliminar",
+    "zoom": "Zoom (1x - 32x)"
+  },
+  "master": {
+    "ready": "¡Mezcla maestra lista!",
+    "output": "Salida: {{ size }} · Todas las pistas renderizadas con curvas de volumen y fundidos.",
+    "download": "Descargar audio maestro"
+  },
+  "inspector": {
+    "title": "Inspector del clip",
+    "selected": "Seleccionado",
+    "empty": "Haz clic en cualquier clip de la línea de tiempo para configurar su volumen, posición y fundidos.",
+    "clipName": "Nombre del clip",
+    "assignedTrack": "Pista asignada",
+    "startPosition": "Posición inicial (s)",
+    "volume": "Volumen ({{ percent }})",
+    "fadesTitle": "Curvas de fundido y transiciones",
+    "fadeIn": "Fundido de entrada (s)",
+    "fadeOut": "Fundido de salida (s)",
+    "crossfade": "Fundido cruzado con el clip anterior",
+    "duplicate": "Duplicar"
+  },
+  "clip": {
+    "fadeInTitle": "Arrastra horizontalmente para ajustar el fundido de entrada",
+    "fadeOutTitle": "Arrastra horizontalmente para ajustar el fundido de salida",
+    "trimStartTitle": "Ajustar la duración del inicio del clip",
+    "trimEndTitle": "Ajustar la duración del final del clip"
+  },
+  "messages": {
+    "decodeFailed": "No se ha podido decodificar el audio: {{ message }}",
+    "addedCut": "Región de corte añadida en el cursor.",
+    "splitClips": "Audio dividido en {{ count }} clips.",
+    "trimmedExported": "¡Audio recortado exportado correctamente!",
+    "splicedExported": "¡Audio empalmado exportado correctamente!",
+    "clipsExported": "¡Se han exportado {{ count }} clips!",
+    "exportFailed": "La exportación ha fallado: {{ message }}",
+    "unsupportedFile": "El archivo «{{ name }}» no es un formato de audio compatible.",
+    "addedToTrack": "Se ha añadido «{{ name }}» a la pista.",
+    "failedToLoad": "No se ha podido cargar el audio: {{ message }}",
+    "mustHaveTrack": "Debe haber al menos una pista.",
+    "clickInsideClip": "Haz clic más adentro del clip para dividirlo.",
+    "selectClipToSplit": "Selecciona primero un clip para dividirlo.",
+    "movePlayhead": "Mueve el cursor dentro del clip seleccionado para dividirlo.",
+    "cutClipAt": "Se ha cortado «{{ name }}» en {{ time }}.",
+    "clipDuplicated": "Clip duplicado.",
+    "clipDeleted": "Se ha eliminado el clip «{{ name }}».",
+    "noPreviousClip": "No se ha encontrado ningún clip anterior en esta pista con el que hacer el fundido cruzado.",
+    "crossfadeApplied": "Se ha aplicado un fundido cruzado de {{ duration }} s entre «{{ previous }}» y «{{ name }}».",
+    "addClipFirst": "Añade al menos un clip de audio a la línea de tiempo.",
+    "masterExported": "¡Mezcla maestra exportada correctamente!"
+  },
+  "errors": {
+    "allCutOut": "¡Se ha eliminado todo el audio! No hay nada que exportar.",
+    "noClips": "No hay clips definidos para exportar.",
+    "noActiveClips": "No hay clips activos o sin silenciar en la línea de tiempo para exportar."
+  },
+  "files": {
+    "trimmed": "{{ baseName }}_recortado{{ extension }}",
+    "spliced": "{{ baseName }}_empalmado{{ extension }}",
+    "clipsZip": "{{ baseName }}_clips.zip",
+    "defaultClipsZip": "clips.zip",
+    "masterMix": "Mezcla_Maestra_{{ timestamp }}{{ extension }}"
+  }
+}

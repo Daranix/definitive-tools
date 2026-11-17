@@ -8,10 +8,12 @@ import {
 import {
   Component,
   effect,
+  inject,
   model,
   output,
   ChangeDetectionStrategy,
 } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import {
   FONT_TYPES,
@@ -19,6 +21,7 @@ import {
 } from '../../../opengraph-font-options/opengraph-font-options.component';
 import { ContextMenuDirective } from '@/app/directives/context-menu.directive';
 import { FormsModule } from '@angular/forms';
+import { I18nService } from '@/app/i18n/i18n.service';
 
 const DESCRIPTION_DEFAULT_FONT_OPTIONS: OpenGraphTemplateFormInputFontOptions =
   {
@@ -43,12 +46,15 @@ const TITLE_DEFAULT_FONT_OPTIONS: OpenGraphTemplateFormInputFontOptions = {
     OpengraphFontOptionsComponent,
     ContextMenuDirective,
     FormsModule,
+    TranslatePipe,
   ],
   templateUrl: './opengraph-template-form-notice.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './opengraph-template-form-notice.component.scss',
 })
 export class OpengraphTemplateFormNoticeComponent {
+  private readonly i18n = inject(I18nService);
+
   readonly onFormUpdated = output<OpenGraphTemplateNotice>();
   readonly TAG_DEFAULT_FONT_OPTIONS = DESCRIPTION_DEFAULT_FONT_OPTIONS;
   readonly TITLE_DEFAULT_FONT_OPTIONS = TITLE_DEFAULT_FONT_OPTIONS;
@@ -59,8 +65,12 @@ export class OpengraphTemplateFormNoticeComponent {
   readonly titleFontOptions = model<OpenGraphTemplateFormInputFontOptions>(
     TITLE_DEFAULT_FONT_OPTIONS,
   );
-  readonly description = model<string>('Easy Storage');
-  readonly title = model<string>('Managed Databases for Everyone');
+  readonly description = model<string>(
+    this.i18n.t('opengraph-generator.defaults.easyStorage'),
+  );
+  readonly title = model<string>(
+    this.i18n.t('opengraph-generator.defaults.managedDatabases'),
+  );
   readonly logo = model<OpenGraphImage | undefined>({
     name: 'logo.png',
     url: '/img/opengraph-examples/logo-1.png',

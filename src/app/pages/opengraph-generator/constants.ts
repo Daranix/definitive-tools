@@ -39,11 +39,11 @@ export const BACKGROUND_OVERLAY_PATTERNS = [
 export type BackgroundOverlayPattern = typeof BACKGROUND_OVERLAY_PATTERNS[number];
 
 export const BACKGROUND_OVERLAY_PATTERNS_VIEW = {
-    'none': { icon: 'circle-off', label: 'None' },
-    'grid': { icon: 'grid-2-x-2', label: 'Grid' },
-    'graph': { icon: 'grid-3-x-3', label: 'Graph' },
-    'dots': { icon: 'circle-ellipsis', label: 'Dots' }
-} as const satisfies Record<BackgroundOverlayPattern, { icon: string, label: string }>;
+    'none': { icon: 'circle-off' },
+    'grid': { icon: 'grid-2-x-2' },
+    'graph': { icon: 'grid-3-x-3' },
+    'dots': { icon: 'circle-ellipsis' }
+} as const satisfies Record<BackgroundOverlayPattern, { icon: string }>;
 
 export const BACKGROUND_OVERLAY_COLORS = [
     'rgb(3, 7, 18)',

@@ -102,72 +102,75 @@ export class MadridZbeMapService {
 
     // 1. ZBEDEP Distrito Centro
     let centroAllowed: 'yes' | 'conditional' | 'no' = 'no';
-    let centroTitle = '';
-    let centroMsg = '';
+    let centroTitleKey = '';
+    let centroMsgKey = '';
     let centroSerAllowed = false;
     let centroMaxHours: number | undefined = undefined;
     let centroFine = false;
+    let centroFineEur: number | undefined = undefined;
+    let centroEarlyEur: number | undefined = undefined;
 
     if (badge === 'cero') {
       centroAllowed = 'yes';
-      centroTitle = 'Acceso y Estacionamiento Libre';
-      centroMsg = 'Permitida la circulación y el estacionamiento en el SER sin coste ni límite horario.';
+      centroTitleKey = 'madrid-zbe-map.simulator.centro.ceroTitle';
+      centroMsgKey = 'madrid-zbe-map.simulator.centro.ceroMessage';
       centroSerAllowed = true;
     } else if (badge === 'eco') {
       centroAllowed = 'yes';
-      centroTitle = 'Acceso Libre (SER máx. 2h)';
-      centroMsg = 'Acceso libre. En superficie (SER) puedes estacionar un máximo de 2 horas. En parking público, sin límite.';
+      centroTitleKey = 'madrid-zbe-map.simulator.centro.ecoTitle';
+      centroMsgKey = 'madrid-zbe-map.simulator.centro.ecoMessage';
       centroSerAllowed = true;
       centroMaxHours = 2;
     } else if (badge === 'c' || badge === 'b') {
       if (resident === 'zone-resident') {
         centroAllowed = 'yes';
-        centroTitle = 'Acceso Permitido (Residente)';
-        centroMsg = 'Como residente empadronado en Distrito Centro, puedes acceder y estacionar en tu barrio.';
+        centroTitleKey = 'madrid-zbe-map.simulator.centro.residentTitle';
+        centroMsgKey = 'madrid-zbe-map.simulator.centro.residentMessage';
         centroSerAllowed = true;
       } else if (vType === 'motorcycle') {
         centroAllowed = 'conditional';
-        centroTitle = 'Acceso Horario (07:00 a 22:00)';
-        centroMsg = 'Las motocicletas y ciclomotores con etiqueta B o C pueden acceder libremente de 07:00 a 22:00 h.';
+        centroTitleKey = 'madrid-zbe-map.simulator.centro.motorcycleTitle';
+        centroMsgKey = 'madrid-zbe-map.simulator.centro.motorcycleMessage';
         centroSerAllowed = true;
       } else if (purpose === 'public-parking') {
         centroAllowed = 'conditional';
-        centroTitle = 'Acceso Condicionado a Parking';
-        centroMsg =
-          'Obligatorio estacionar en un aparcamiento de uso público o garaje privado concertado. Prohibido aparcar en la calle.';
+        centroTitleKey = 'madrid-zbe-map.simulator.centro.parkingTitle';
+        centroMsgKey = 'madrid-zbe-map.simulator.centro.parkingMessage';
         centroSerAllowed = false;
       } else {
         centroAllowed = 'no';
-        centroTitle = 'Acceso Denegado (Multa de 200 €)';
-        centroMsg =
-          'Los vehículos B y C no pueden acceder solo de paso (tránsito) ni para aparcar en la calle (SER).';
+        centroTitleKey = 'madrid-zbe-map.simulator.centro.transitTitle';
+        centroMsgKey = 'madrid-zbe-map.simulator.centro.transitMessage';
         centroSerAllowed = false;
         centroFine = true;
+        centroFineEur = 200;
       }
     } else {
       // Badge A
       if (resident === 'zone-resident') {
         centroAllowed = 'conditional';
-        centroTitle = 'Acceso Solo Residentes Históricos';
-        centroMsg =
-          'Permitido únicamente si el vehículo ya estaba empadronado en el distrito antes del 2021 o si traslada a personas con movilidad reducida (PMR).';
+        centroTitleKey = 'madrid-zbe-map.simulator.centro.historicTitle';
+        centroMsgKey = 'madrid-zbe-map.simulator.centro.historicMessage';
         centroSerAllowed = true;
       } else {
         centroAllowed = 'no';
-        centroTitle = 'Acceso Prohibido las 24 horas';
-        centroMsg =
-          'Prohibida la entrada a vehículos Sin Distintivo (A) bajo sanción de 200 € (100 € pronto pago).';
+        centroTitleKey = 'madrid-zbe-map.simulator.centro.deniedTitle';
+        centroMsgKey = 'madrid-zbe-map.simulator.centro.deniedMessage';
         centroSerAllowed = false;
         centroFine = true;
+        centroFineEur = 200;
+        centroEarlyEur = 100;
       }
     }
 
     results.push({
       zoneId: 'zbe-distrito-centro',
-      zoneName: 'ZBEDEP Distrito Centro',
+      zoneNameKey: 'madrid-zbe-map.simulator.zones.zbe-distrito-centro',
       allowed: centroAllowed,
-      title: centroTitle,
-      message: centroMsg,
+      titleKey: centroTitleKey,
+      messageKey: centroMsgKey,
+      fineEur: centroFineEur,
+      earlyPaymentEur: centroEarlyEur,
       serParkingAllowed: centroSerAllowed,
       serMaxHours: centroMaxHours,
       fineRisk: centroFine
@@ -175,138 +178,147 @@ export class MadridZbeMapService {
 
     // 2. ZBEDEP Plaza Elíptica
     let elipticaAllowed: 'yes' | 'conditional' | 'no' = 'yes';
-    let elipticaTitle = 'Acceso y Circulación Libre';
-    let elipticaMsg = 'Sin restricciones específicas de ZBE para distintivos CERO, ECO, C y B.';
+    let elipticaTitleKey = 'madrid-zbe-map.simulator.eliptica.defaultTitle';
+    let elipticaMsgKey = 'madrid-zbe-map.simulator.eliptica.defaultMessage';
     let elipticaFine = false;
+    let elipticaFineEur: number | undefined = undefined;
 
     if (badge === 'a') {
       if (resident === 'zone-resident') {
         elipticaAllowed = 'conditional';
-        elipticaTitle = 'Permitido Solo Residentes';
-        elipticaMsg = 'Vehículo empadronado en el perímetro delimitado de Plaza Elíptica.';
+        elipticaTitleKey = 'madrid-zbe-map.simulator.eliptica.residentTitle';
+        elipticaMsgKey = 'madrid-zbe-map.simulator.eliptica.residentMessage';
       } else {
         elipticaAllowed = 'no';
-        elipticaTitle = 'Acceso Prohibido las 24 horas';
-        elipticaMsg =
-          'Prohibido el acceso y circulación a vehículos Sin Distintivo (A). Sanción: 200 €.';
+        elipticaTitleKey = 'madrid-zbe-map.simulator.eliptica.deniedTitle';
+        elipticaMsgKey = 'madrid-zbe-map.simulator.eliptica.deniedMessage';
         elipticaFine = true;
+        elipticaFineEur = 200;
       }
     }
 
     results.push({
       zoneId: 'zbe-plaza-eliptica',
-      zoneName: 'ZBEDEP Plaza Elíptica',
+      zoneNameKey: 'madrid-zbe-map.simulator.zones.zbe-plaza-eliptica',
       allowed: elipticaAllowed,
-      title: elipticaTitle,
-      message: elipticaMsg,
+      titleKey: elipticaTitleKey,
+      messageKey: elipticaMsgKey,
+      fineEur: elipticaFineEur,
       serParkingAllowed: badge !== 'a',
       fineRisk: elipticaFine
     });
 
     // 3. Madrid ZBE - Interior M-30
     let m30Allowed: 'yes' | 'conditional' | 'no' = 'yes';
-    let m30Title = 'Acceso y Circulación Libre';
-    let m30Msg = 'Circulación permitida por M-30 y calles interiores según normativa general de tráfico y SER.';
+    let m30TitleKey = 'madrid-zbe-map.simulator.m30.defaultTitle';
+    let m30MsgKey = 'madrid-zbe-map.simulator.m30.defaultMessage';
     let m30Fine = false;
+    let m30FineEur: number | undefined = undefined;
 
     if (badge === 'a') {
       if (resident === 'madrid-resident' || resident === 'zone-resident') {
         m30Allowed = 'conditional';
-        m30Title = 'Permitido (IVTM en Madrid Capital)';
-        m30Msg = 'Permitido solo si el turismo paga el Impuesto de Tracción Mecánica (IVTM) en Madrid capital.';
+        m30TitleKey = 'madrid-zbe-map.simulator.m30.residentTitle';
+        m30MsgKey = 'madrid-zbe-map.simulator.m30.residentMessage';
       } else {
         m30Allowed = 'no';
-        m30Title = 'Prohibido Circular en M-30 e Interior';
-        m30Msg =
-          'Vehículos A no domiciliados en la capital tienen prohibido circular por la M-30 y el interior. Sanción: 200 €.';
+        m30TitleKey = 'madrid-zbe-map.simulator.m30.deniedTitle';
+        m30MsgKey = 'madrid-zbe-map.simulator.m30.deniedMessage';
         m30Fine = true;
+        m30FineEur = 200;
       }
     }
 
     results.push({
       zoneId: 'zbe-interior-m30',
-      zoneName: 'Madrid ZBE - Interior M-30',
+      zoneNameKey: 'madrid-zbe-map.simulator.zones.zbe-interior-m30',
       allowed: m30Allowed,
-      title: m30Title,
-      message: m30Msg,
+      titleKey: m30TitleKey,
+      messageKey: m30MsgKey,
+      fineEur: m30FineEur,
       serParkingAllowed: badge !== 'a',
       fineRisk: m30Fine
     });
 
     // 4. Madrid ZBE - Municipio Completo
     let muniAllowed: 'yes' | 'conditional' | 'no' = 'yes';
-    let muniTitle = 'Acceso Libre en Todo Madrid';
-    let muniMsg = 'Permitida la circulación por todas las vías del municipio de Madrid.';
+    let muniTitleKey = 'madrid-zbe-map.simulator.municipio.defaultTitle';
+    let muniMsgKey = 'madrid-zbe-map.simulator.municipio.defaultMessage';
     let muniFine = false;
+    let muniFineEur: number | undefined = undefined;
 
     if (badge === 'a') {
       if (resident === 'madrid-resident' || resident === 'zone-resident') {
         muniAllowed = 'conditional';
-        muniTitle = 'Permitido Temporalmente (Empadronados)';
-        muniMsg = 'Turismos A domiciliados en Madrid con IVTM al día.';
+        muniTitleKey = 'madrid-zbe-map.simulator.municipio.residentTitle';
+        muniMsgKey = 'madrid-zbe-map.simulator.municipio.residentMessage';
       } else {
         muniAllowed = 'no';
-        muniTitle = 'Prohibido en Todo el Municipio';
-        muniMsg =
-          'Prohibida la circulación por cualquier vía pública del término municipal de Madrid. Sanción: 200 €.';
+        muniTitleKey = 'madrid-zbe-map.simulator.municipio.deniedTitle';
+        muniMsgKey = 'madrid-zbe-map.simulator.municipio.deniedMessage';
         muniFine = true;
+        muniFineEur = 200;
       }
     }
 
     results.push({
       zoneId: 'zbe-municipio',
-      zoneName: 'Madrid ZBE (Término Municipal)',
+      zoneNameKey: 'madrid-zbe-map.simulator.zones.zbe-municipio',
       allowed: muniAllowed,
-      title: muniTitle,
-      message: muniMsg,
+      titleKey: muniTitleKey,
+      messageKey: muniMsgKey,
+      fineEur: muniFineEur,
       serParkingAllowed: badge !== 'a',
       fineRisk: muniFine
     });
 
     // 5. ZBE Centro de Getafe
     let getafeAllowed: 'yes' | 'conditional' | 'no' = 'no';
-    let getafeTitle = '';
-    let getafeMsg = '';
+    let getafeTitleKey = '';
+    let getafeMsgKey = '';
     let getafeFine = false;
+    let getafeFineEur: number | undefined = undefined;
 
     if (badge === 'cero' || badge === 'eco') {
       getafeAllowed = 'yes';
-      getafeTitle = 'Acceso Libre (CERO / ECO)';
-      getafeMsg = 'Los vehículos CERO y ECO pueden circular y estacionar sin restricciones por el centro de Getafe.';
+      getafeTitleKey = 'madrid-zbe-map.simulator.getafe.freeTitle';
+      getafeMsgKey = 'madrid-zbe-map.simulator.getafe.freeMessage';
     } else if (badge === 'c' || badge === 'b') {
       if (resident === 'zone-resident') {
         getafeAllowed = 'yes';
-        getafeTitle = 'Acceso Permitido (Empadronado en Getafe)';
-        getafeMsg = 'Los vehículos censados e inscritos en el padrón de Getafe tienen libre acceso al casco urbano.';
+        getafeTitleKey = 'madrid-zbe-map.simulator.getafe.residentTitle';
+        getafeMsgKey = 'madrid-zbe-map.simulator.getafe.residentMessage';
       } else if (purpose === 'public-parking') {
         getafeAllowed = 'conditional';
-        getafeTitle = 'Acceso Permitido con Destino a Parking';
-        getafeMsg = 'Permitido el acceso a no residentes si se dirigen a aparcamientos públicos o reservas de estacionamiento.';
+        getafeTitleKey = 'madrid-zbe-map.simulator.getafe.parkingTitle';
+        getafeMsgKey = 'madrid-zbe-map.simulator.getafe.parkingMessage';
       } else {
         getafeAllowed = 'conditional';
-        getafeTitle = 'Tránsito Restringido';
-        getafeMsg = 'Los vehículos B y C no empadronados deben justificar estancia o destino en el perímetro de Getafe.';
+        getafeTitleKey = 'madrid-zbe-map.simulator.getafe.transitTitle';
+        getafeMsgKey = 'madrid-zbe-map.simulator.getafe.transitMessage';
       }
     } else {
       // Badge A
       if (resident === 'zone-resident') {
         getafeAllowed = 'conditional';
-        getafeTitle = 'Acceso Restringido a Residentes';
-        getafeMsg = 'Solo los vehículos de residentes con autorización o PMR pueden acceder sin etiqueta.';
+        getafeTitleKey = 'madrid-zbe-map.simulator.getafe.restrictedTitle';
+        getafeMsgKey = 'madrid-zbe-map.simulator.getafe.restrictedMessage';
       } else {
         getafeAllowed = 'no';
-        getafeTitle = 'Prohibido el Acceso (Sanción 200 €)';
-        getafeMsg = 'Prohibida la circulación de vehículos Sin Distintivo (A) por el perímetro de la ZBE de Getafe.';
+        getafeTitleKey = 'madrid-zbe-map.simulator.getafe.deniedTitle';
+        getafeMsgKey = 'madrid-zbe-map.simulator.getafe.deniedMessage';
         getafeFine = true;
+        getafeFineEur = 200;
       }
     }
 
     results.push({
       zoneId: 'zbe-getafe',
-      zoneName: 'ZBE Centro de Getafe',
+      zoneNameKey: 'madrid-zbe-map.simulator.zones.zbe-getafe',
       allowed: getafeAllowed,
-      title: getafeTitle,
-      message: getafeMsg,
+      titleKey: getafeTitleKey,
+      messageKey: getafeMsgKey,
+      fineEur: getafeFineEur,
       serParkingAllowed: badge !== 'a',
       fineRisk: getafeFine
     });
@@ -335,11 +347,9 @@ export class MadridZbeMapService {
         matches.push({
           id: z.id,
           name: z.name,
-          subtitle: `${z.restrictionLevel} • ${z.areaKm2} km²`,
           type: 'zone',
           coordinates: z.center ?? [-3.7038, 40.4168],
           zoom: z.zoom ?? 13,
-          badge: 'Zona ZBE',
           badgeColor: z.color
         });
       }
@@ -356,12 +366,12 @@ export class MadridZbeMapService {
         matches.push({
           id: c.id,
           name: c.name,
-          subtitle: `${c.location} (${c.zoneName})`,
           type: 'camera',
           coordinates: c.coordinates,
           zoom: 16,
-          badge: 'Cámara OCR',
-          badgeColor: '#0EA5E9'
+          badgeColor: '#0EA5E9',
+          location: c.location,
+          zoneName: c.zoneName
         });
       }
     }
@@ -377,12 +387,12 @@ export class MadridZbeMapService {
         matches.push({
           id: p.id,
           name: p.name,
-          subtitle: `${p.capacity} plazas • ${p.transitConnections}`,
           type: 'parking',
           coordinates: p.coordinates,
           zoom: 15.5,
-          badge: 'Aparcamiento P+R',
-          badgeColor: '#10B981'
+          badgeColor: '#10B981',
+          capacity: p.capacity,
+          transitConnections: p.transitConnections
         });
       }
     }
@@ -424,7 +434,9 @@ export class MadridZbeMapService {
       this.parkingsRegistry.set(parkings);
     } catch (err) {
       console.warn('Failed to load ZBE points metadata:', err);
-      this.setError('No se pudieron cargar los puntos de control y aparcamientos.');
+      // The component resolves this key through I18nService so the banner
+      // follows the active language.
+      this.setError('madrid-zbe-map.errors.pointsLoad');
     }
   }
 

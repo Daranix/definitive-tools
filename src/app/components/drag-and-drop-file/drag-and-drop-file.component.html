@@ -11,16 +11,16 @@
       @if (!file()) {
         <i class="pi pi-file-import text-4xl"></i>
         <p>
-          Drag And Drop your file or
+          {{ 'common.components.dragDrop.prompt' | translate }}
           <label
             (click)="inputFile.click()"
             [for]="name()"
             class="font-bold underline m-0 text-black cursor-pointer"
-            >click here</label
+            >{{ 'common.components.dragDrop.browse' | translate }}</label
           >
           <br />
           @if (maxFileSize()) {
-            Max. {{ maxFileSize() | fileSize }}
+            {{ 'common.components.dragDrop.maxSize' | translate }} {{ maxFileSize() | fileSize }}
           }
         </p>
       }

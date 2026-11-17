@@ -3,13 +3,16 @@ import { MetadataService } from '@/app/services/metadata.service';
 import { ToastService } from '@/app/services/toast.service';
 import {
   Component,
+  effect,
   inject,
   model,
   signal,
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
+import { I18nService } from '@/app/i18n/i18n.service';
 
 import { FooterComponent } from '../../components/footer/footer.component';
 
@@ -20,6 +23,7 @@ import { FooterComponent } from '../../components/footer/footer.component';
     FormsModule,
     TopNavbarComponent,
     FooterComponent,
+    TranslatePipe,
   ],
   templateUrl: './random-password-generator.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -28,6 +32,7 @@ import { FooterComponent } from '../../components/footer/footer.component';
 export class RandomPasswordGeneratorComponent {
   private readonly metadataService = inject(MetadataService);
   private readonly toastService = inject(ToastService);
+  private readonly i18n = inject(I18nService);
 
   readonly password = signal<string | undefined>(undefined);
   readonly copied = signal(false);
@@ -38,12 +43,10 @@ export class RandomPasswordGeneratorComponent {
   readonly includeSymbols = model(true);
 
   constructor() {
-    this.metadataService.updateMetadata({
-      title: 'Random Password Generator',
-      description:
-        'Generate secure, randomized passwords. Customize complexity to meet different security requirements.',
-      keywords:
-        'password, random, generator, secure, complexity, security, requirements',
+    this.updateMetadata();
+    effect(() => {
+      this.i18n.language();
+      this.updateMetadata();
     });
   }
 
@@ -57,7 +60,9 @@ export class RandomPasswordGeneratorComponent {
     if (this.includeSymbols()) charset += '!@#$%&';
 
     if (charset === '') {
-      this.password.set('Please select at least one character type');
+      this.password.set(
+        this.i18n.t('random-password-generator.messages.noCharacterType')
+      );
       return;
     }
 
@@ -77,6 +82,16 @@ export class RandomPasswordGeneratorComponent {
     }
 
     navigator.clipboard.writeText(password);
-    this.toastService.success({ message: 'Password copied to clipboard' });
+    this.toastService.success({
+      message: this.i18n.t('random-password-generator.messages.copied'),
+    });
+  }
+
+  private updateMetadata(): void {
+    this.metadataService.updateMetadata({
+      title: this.i18n.t('random-password-generator.seo.title'),
+      description: this.i18n.t('random-password-generator.seo.description'),
+      keywords: this.i18n.t('random-password-generator.seo.keywords'),
+    });
   }
 }

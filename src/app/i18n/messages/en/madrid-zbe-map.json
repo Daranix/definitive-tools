@@ -1,0 +1,440 @@
+{
+  "seo": {
+    "title": "Madrid 360 & ZBE Map - Interactive Low Emission Zones",
+    "description": "Interactive map of Madrid 360 and the Low Emission Zones (ZBE Distrito Centro, Plaza Elíptica, M-30, OCR enforcement cameras and a DGT sticker simulator).",
+    "keywords": "Madrid 360, ZBE Madrid, Madrid Central, ZBEDEP Distrito Centro, Plaza Elíptica ZBE, M-30 low emission zone, Madrid ZBE cameras, Madrid DGT stickers"
+  },
+  "errors": {
+    "mapInit": "The map rendering engine could not be initialised.",
+    "pointsLoad": "The checkpoints and car parks could not be loaded."
+  },
+  "errorBanner": {
+    "close": "Dismiss notification"
+  },
+  "disclaimer": {
+    "aria": "Legal and accuracy notice",
+    "lead": "Notice:",
+    "before": "Boundaries, cameras and regulations are",
+    "highlight": "an approximate guide",
+    "after": "and may contain errors. Always check the official Madrid City Council and DGT ordinances.",
+    "close": "Dismiss notice"
+  },
+  "tabs": {
+    "layers": "Layers",
+    "detail": "Zone info",
+    "simulator": "Simulator"
+  },
+  "panel": {
+    "expand": "Expand panel",
+    "collapse": "Collapse panel"
+  },
+  "mobile": {
+    "openLayers": "Open layer controls",
+    "layers": "Layers",
+    "zones": "ZBE zones",
+    "zonesShort": "Zones",
+    "simulator": "Simulator",
+    "simulatorDgt": "DGT simulator",
+    "details": "Details",
+    "dragHandle": "Drag or tap to expand or collapse",
+    "closePanel": "Close panel"
+  },
+  "search": {
+    "placeholder": "Search for a ZBE zone, camera or P+R car park...",
+    "aria": "Search Madrid 360 and Low Emission Zones",
+    "clear": "Clear search",
+    "emptyTitle": "No matches",
+    "emptyHint": "Try searching for Centro, Plaza Elíptica, M-30, Pitis or Alcalá",
+    "badges": {
+      "zone": "ZBE zone",
+      "camera": "OCR camera",
+      "parking": "P+R car park"
+    },
+    "zoneSubtitle": "{{ level }} • {{ area }} km²",
+    "cameraSubtitle": "{{ location }} ({{ zone }})",
+    "parkingSubtitle": "{{ capacity }} spaces • {{ transit }}"
+  },
+  "layers": {
+    "title": "Layers and controls",
+    "basemapTitle": "Map style",
+    "mapViewTitle": "Map view",
+    "quickFocus": "Quick focus presets",
+    "quickFocusShort": "Quick focus",
+    "madridCapital": "City of Madrid",
+    "metropolitanRing": "Metropolitan ring",
+    "zonesTitle": "Low Emission Zones",
+    "poiTitle": "Checkpoints and infrastructure",
+    "keyPointsTitle": "Key points",
+    "camerasLabel": "Access cameras (OCR)",
+    "camerasHint": "Number plate checkpoints",
+    "camerasShort": "OCR cameras",
+    "parkingsLabel": "Park & Ride car parks",
+    "parkingsHint": "Park & Ride sites connected to Metro and Cercanías",
+    "parkingsShort": "P+R car parks",
+    "opacityLabel": "Zone opacity",
+    "opacityShort": "Zone opacity",
+    "opacityAria": "Adjust the transparency of the zone layers",
+    "opacityAriaShort": "Adjust the opacity of the zones",
+    "toggleAria": "Expand or collapse the layers panel",
+    "basemaps": {
+      "streets": {
+        "name": "Streets and roads",
+        "shortName": "Streets"
+      },
+      "satellite": {
+        "name": "High-resolution satellite",
+        "shortName": "Satellite"
+      },
+      "gray": {
+        "name": "Light cartographic grey",
+        "shortName": "Light"
+      }
+    }
+  },
+  "legend": {
+    "title": "ZBE legend",
+    "titleEmbedded": "Low Emission Zones",
+    "toggleAria": "Toggle the ZBE zone legend",
+    "count": "{{ count }} zones",
+    "countEmbedded": "{{ count }} active zones",
+    "hint": "Click any zone to centre the map and view the vehicle restrictions.",
+    "hintEmbedded": "Tap a zone to focus the map and see the full restrictions for each DGT sticker.",
+    "surfaceLabel": "Area:",
+    "area": "{{ value }} km²",
+    "fineLabel": "Fine:",
+    "sanction": "Penalty: {{ amount }}"
+  },
+  "detail": {
+    "close": "Close details",
+    "rulesTitle": "Access rules by DGT sticker",
+    "sanction": "Penalty for unauthorised access: {{ amount }}",
+    "legalNotice": "Serious infringement under the Traffic Act ({{ amount }} for early payment). Legal basis: {{ law }}.",
+    "focusZone": "Centre the zone on the map",
+    "camera": {
+      "location": "Location:",
+      "direction": "Direction:",
+      "zone": "Controlled zone:",
+      "lanes": "Lanes / equipment:",
+      "lanesValue": "{{ lanes }} lanes monitored ({{ devices }} LPR readers)",
+      "gps": "GPS coordinates:",
+      "technology": "Technology:",
+      "function": "Function:",
+      "zoom": "Zoom in on the camera"
+    },
+    "parking": {
+      "capacity": "{{ count }} total spaces",
+      "address": "Address:",
+      "transit": "Metro / Cercanías connection:",
+      "electric": "Electric vehicle spaces:",
+      "pmr": "PMR spaces:",
+      "hours": "Opening hours:",
+      "benefit": "Madrid 360 benefit:",
+      "zoom": "Zoom in on the car park"
+    },
+    "empty": {
+      "title": "ZBE zone information",
+      "description": "Click any zone on the map or in the legend to see its access restrictions, exceptions by DGT sticker and penalties.",
+      "footnote": "Approximate, indicative data. Always check official sources."
+    },
+    "footnote": {
+      "lead": "Notice:",
+      "body": "Boundaries, cameras and regulations are an approximate guide and may contain errors. Always check the official Madrid City Council and DGT regulations."
+    }
+  },
+  "simulator": {
+    "title": "Madrid 360 access simulator",
+    "subtitle": "Check instantly whether your vehicle can drive and where it can park",
+    "stepBadge": "1. DGT environmental sticker",
+    "stepVehicle": "2. Vehicle type",
+    "stepResidency": "3. Residency status",
+    "stepPurpose": "4. Reason for the journey or destination",
+    "resultsTitle": "Result by ZBE zone",
+    "verdict": {
+      "allowed": "ALLOWED",
+      "conditional": "CONDITIONAL",
+      "denied": "PROHIBITED"
+    },
+    "ser": {
+      "label": "SER parking:",
+      "max": "Max. {{ hours }} h",
+      "allowed": "Allowed",
+      "denied": "Not allowed"
+    },
+    "viewOnMap": "View on the map",
+    "vehicleTypes": {
+      "car": "Car",
+      "motorcycle": "Motorcycle / moped",
+      "van": "Van / mixed-use"
+    },
+    "residency": {
+      "nonResident": "Non-resident (from outside)",
+      "madridResident": "Resident in the city of Madrid",
+      "zoneResident": "Resident in Distrito Centro"
+    },
+    "purposes": {
+      "publicParking": "Public car park / garage",
+      "serStreet": "Park on the street (SER)",
+      "transit": "Passing through (no parking)"
+    },
+    "zones": {
+      "zbe-distrito-centro": "ZBEDEP Distrito Centro",
+      "zbe-plaza-eliptica": "ZBEDEP Plaza Elíptica",
+      "zbe-interior-m30": "Madrid ZBE - Interior M-30",
+      "zbe-municipio": "Madrid ZBE (Whole Municipality)",
+      "zbe-getafe": "Getafe Centre ZBE"
+    },
+    "centro": {
+      "ceroTitle": "Free access and parking",
+      "ceroMessage": "Driving and SER parking allowed, with no charge and no time limit.",
+      "ecoTitle": "Free access (SER max. 2 h)",
+      "ecoMessage": "Free access. On-street parking (SER) for up to 2 hours. In public car parks, no limit.",
+      "residentTitle": "Access allowed (resident)",
+      "residentMessage": "As a resident registered in Distrito Centro, you can enter and park in your neighbourhood.",
+      "motorcycleTitle": "Access by time (07:00 to 22:00)",
+      "motorcycleMessage": "Motorcycles and mopeds with a B or C sticker can enter freely between 07:00 and 22:00.",
+      "parkingTitle": "Access conditional on parking",
+      "parkingMessage": "You must park in a public car park or a contracted private garage. On-street parking is prohibited.",
+      "transitTitle": "Access denied (fine of {{ amount }})",
+      "transitMessage": "Vehicles with a B or C sticker cannot enter simply to pass through (transit) or to park on the street (SER).",
+      "historicTitle": "Access for historic residents only",
+      "historicMessage": "Permitted only if the vehicle was already registered in the district before 2021, or if it is transporting people with reduced mobility (PMR).",
+      "deniedTitle": "Access prohibited 24 hours a day",
+      "deniedMessage": "Vehicles without a sticker (A) are not allowed to enter, subject to a fine of {{ amount }} ({{ earlyAmount }} for early payment)."
+    },
+    "eliptica": {
+      "defaultTitle": "Free access and movement",
+      "defaultMessage": "No ZBE-specific restrictions for CERO, ECO, C and B stickers.",
+      "residentTitle": "Residents only",
+      "residentMessage": "Vehicle registered within the defined perimeter of Plaza Elíptica.",
+      "deniedTitle": "Access prohibited 24 hours a day",
+      "deniedMessage": "Access and movement prohibited for vehicles without a sticker (A). Penalty: {{ amount }}."
+    },
+    "m30": {
+      "defaultTitle": "Free access and movement",
+      "defaultMessage": "Driving permitted on the M-30 and the inner streets under the general traffic rules and the SER scheme.",
+      "residentTitle": "Permitted (IVTM paid in the city of Madrid)",
+      "residentMessage": "Permitted only if the car pays the Motor Vehicle Tax (IVTM) in the city of Madrid.",
+      "deniedTitle": "Driving prohibited on the M-30 and in the inner area",
+      "deniedMessage": "A vehicles not registered in the city are prohibited from driving on the M-30 and in the inner area. Penalty: {{ amount }}."
+    },
+    "municipio": {
+      "defaultTitle": "Free access across Madrid",
+      "defaultMessage": "Driving permitted on every road within the municipality of Madrid.",
+      "residentTitle": "Temporarily permitted (registered residents)",
+      "residentMessage": "A cars registered in Madrid with the IVTM up to date.",
+      "deniedTitle": "Prohibited throughout the municipality",
+      "deniedMessage": "Driving prohibited on any public road within the municipality of Madrid. Penalty: {{ amount }}."
+    },
+    "getafe": {
+      "freeTitle": "Free access (CERO / ECO)",
+      "freeMessage": "CERO and ECO vehicles can drive and park without restrictions in the centre of Getafe.",
+      "residentTitle": "Access allowed (registered in Getafe)",
+      "residentMessage": "Vehicles listed on the Getafe municipal register have free access to the town centre.",
+      "parkingTitle": "Access allowed when heading to a car park",
+      "parkingMessage": "Non-residents may enter if they are heading to public car parks or to reserved parking spaces.",
+      "transitTitle": "Restricted transit",
+      "transitMessage": "B and C vehicles that are not registered in Getafe must justify their stay or destination within the Getafe perimeter.",
+      "restrictedTitle": "Access restricted to residents",
+      "restrictedMessage": "Only residents' vehicles with authorisation, or PMR vehicles, can enter without a sticker.",
+      "deniedTitle": "Access prohibited (penalty {{ amount }})",
+      "deniedMessage": "Vehicles without a sticker (A) are prohibited from driving within the perimeter of the Getafe ZBE."
+    }
+  },
+  "badges": {
+    "cero": {
+      "label": "0 emissions",
+      "chip": "Emissions",
+      "description": "100% electric vehicles (BEV), plug-in hybrids (PHEV) with a range of 40 km or more, and fuel-cell vehicles."
+    },
+    "eco": {
+      "label": "ECO",
+      "chip": "ECO",
+      "description": "Non-plug-in hybrids (HEV), plug-in hybrids with less than 40 km of range, mild hybrids (MHEV) and gas vehicles (LPG/CNG)."
+    },
+    "c": {
+      "label": "C (green)",
+      "chip": "C",
+      "description": "Petrol cars and light vans registered from {{ petrolDate }} (Euro 4, 5 and 6) and diesel vehicles from {{ dieselDate }} (Euro 6)."
+    },
+    "b": {
+      "label": "B (yellow)",
+      "chip": "B",
+      "description": "Petrol cars registered between {{ petrolDate }} and 2005 (Euro 3), and diesel cars registered between 2006 and {{ dieselDate }} (Euro 4 and 5)."
+    },
+    "a": {
+      "label": "No sticker (A)",
+      "chip": "No sticker",
+      "description": "The most polluting vehicles: petrol vehicles registered before 2001 (pre-Euro 3) and diesel vehicles registered before 2006 (pre-Euro 4)."
+    }
+  },
+  "zones": {
+    "zbe-distrito-centro": {
+      "name": "ZBEDEP Distrito Centro (Madrid Central)",
+      "shortName": "Distrito Centro",
+      "restrictionLevel": "Maximum restriction",
+      "description": "Special Protection Low Emission Zone in the historic heart of Madrid. Strict access rules based on the environmental sticker, with compulsory parking.",
+      "lawReference": "Sustainable Mobility Ordinance (OMS) art. 23",
+      "rules": {
+        "cero": "Free access and free on-street parking (SER), with no charge and no time limit.",
+        "eco": "Free access. On-street parking (SER) for a maximum of 2 hours, or in underground car parks.",
+        "c": "Access only if you park in a public or contracted private car park, or with an invitation from a resident.",
+        "b": "Access only if you park in a public or contracted private car park, or with an invitation from a resident.",
+        "a": "Access completely prohibited except for residents registered before 2021, PMR and emergency services."
+      }
+    },
+    "zbe-plaza-eliptica": {
+      "name": "ZBEDEP Plaza Elíptica",
+      "shortName": "Plaza Elíptica",
+      "restrictionLevel": "Very high (special protection)",
+      "description": "Special Protection Low Emission Zone centred on the historic pollution hotspot of Usera and Carabanchel, around the A-42.",
+      "lawReference": "Sustainable Mobility Ordinance (OMS) art. 24",
+      "rules": {
+        "cero": "Free movement and parking with no ZBE-specific restrictions.",
+        "eco": "Free movement and parking with no ZBE-specific restrictions.",
+        "c": "Free movement and parking with no ZBE-specific restrictions.",
+        "b": "Free movement and parking with no ZBE-specific restrictions.",
+        "a": "Access completely prohibited, 24 hours a day, to A vehicles (no sticker), except registered residents or PMR transfers."
+      }
+    },
+    "zbe-interior-m30": {
+      "name": "Madrid ZBE - Interior M-30",
+      "shortName": "Interior M-30",
+      "restrictionLevel": "High (A vehicles and M-30)",
+      "description": "Area enclosed by the M-30 motorway ring, covering the 7 central districts of the city.",
+      "lawReference": "Sustainable Mobility Ordinance (OMS) art. 21",
+      "rules": {
+        "cero": "Free access and SER parking with no time limit.",
+        "eco": "Free access. Standard SER parking with a tariff discount.",
+        "c": "Free access. Standard SER parking.",
+        "b": "Free access. Standard SER parking.",
+        "a": "Cars without an environmental sticker that are not registered in Madrid are prohibited from driving on the M-30 and the inner streets."
+      }
+    },
+    "zbe-municipio": {
+      "name": "Madrid ZBE (Whole Municipality)",
+      "shortName": "Madrid-wide ZBE",
+      "restrictionLevel": "Moderate (A vehicles)",
+      "description": "Low Emission Zone covering the whole municipal area of Madrid (the 21 districts of the city).",
+      "lawReference": "Sustainable Mobility Ordinance (OMS) art. 21 and the Traffic Act",
+      "rules": {
+        "cero": "Access and parking permitted without restriction.",
+        "eco": "Access and parking permitted without restriction.",
+        "c": "Access and parking permitted without restriction.",
+        "b": "Access and parking permitted without restriction.",
+        "a": "Access and driving prohibited if the vehicle is not registered in the city of Madrid and does not pay the IVTM to the City Council."
+      }
+    },
+    "zbe-getafe": {
+      "name": "Getafe Centre ZBE",
+      "shortName": "Getafe Centre",
+      "restrictionLevel": "Regulated (CERO/ECO free; B/C with a destination or for residents)",
+      "description": "Low Emission Zone in the town centre and historic quarter of Getafe, bounded by C/ Toledo, Sur, Ferrocarril and Juan de la Cierva.",
+      "lawReference": "Getafe ZBE Regulatory Ordinance (BOCM January 2025)",
+      "rules": {
+        "cero": "Free access and parking with no restrictions.",
+        "eco": "Free access and parking with no restrictions.",
+        "c": "Access permitted for registered residents, vehicles heading to a car park or with authorisation.",
+        "b": "Access permitted for registered residents, vehicles heading to a car park or with authorisation.",
+        "a": "Access and driving prohibited except for registered residents and authorised PMR."
+      }
+    },
+    "zbe-fuenlabrada": {
+      "name": "Fuenlabrada ZBE (Distrito Centro)",
+      "shortName": "Fuenlabrada Centre",
+      "restrictionLevel": "Regulated (registered residents and B/C/ECO/CERO)",
+      "description": "Low Emission Zone in the Distrito Centro of Fuenlabrada, with a general exemption for vehicles registered in the municipality.",
+      "lawReference": "Sustainable Mobility and ZBE Ordinance of Fuenlabrada",
+      "rules": {
+        "cero": "Free access and movement with no restrictions.",
+        "eco": "Free access and movement with no restrictions.",
+        "c": "Access permitted for residents and for vehicles with a destination or a justified stay in the area.",
+        "b": "Access permitted for residents and for vehicles with a destination or a justified stay in the area.",
+        "a": "General restriction on through traffic for vehicles without a sticker that are not registered in Fuenlabrada."
+      }
+    },
+    "zbe-alcorcon": {
+      "name": "Alcorcón Old Town ZBE",
+      "shortName": "Alcorcón Centre",
+      "restrictionLevel": "Regulated (through traffic without a sticker)",
+      "description": "Low Emission Zone in the urban centre of Alcorcón, protecting the shopping and pedestrian area around Calle Mayor and Plaza de España.",
+      "lawReference": "Alcorcón ZBE Municipal Ordinance",
+      "rules": {
+        "cero": "Free access and parking with no restrictions.",
+        "eco": "Free access and parking with no restrictions.",
+        "c": "Free access for registered residents and vehicles heading into the zone.",
+        "b": "Free access for registered residents and vehicles heading into the zone.",
+        "a": "Through traffic restricted for vehicles without an environmental sticker that are not registered locally."
+      }
+    },
+    "zbe-alcala": {
+      "name": "Alcalá de Henares Historic Centre ZBE",
+      "shortName": "Alcalá Historic Centre",
+      "restrictionLevel": "Dynamic control (NO₂ episodes)",
+      "description": "Low Emission Zone in the Historic Centre, a World Heritage Site. Restrictions are activated automatically during high-pollution episodes.",
+      "lawReference": "Alcalá de Henares ZBE Regulatory Ordinance (BOCM 2025)",
+      "rules": {
+        "cero": "Free access and movement with no restrictions at any time.",
+        "eco": "Free access and movement with no restrictions at any time.",
+        "c": "Normal free movement; restrictions only during severe pollution episodes.",
+        "b": "Normal free movement; restrictions only during severe pollution episodes.",
+        "a": "Normal free movement unless the protocol is triggered by NO₂ exceeding 180 µg/m³."
+      }
+    },
+    "zbe-alcobendas": {
+      "name": "Alcobendas ZBE (Distrito Centro)",
+      "shortName": "Alcobendas Centre",
+      "restrictionLevel": "Regulated (CERO/ECO/C/B free; A restricted)",
+      "description": "Low Emission Zone in the historic and commercial core of Alcobendas, around Marquesa Viuda de Aldama and Av. de España.",
+      "lawReference": "Alcobendas ZBE Regulatory Ordinance",
+      "rules": {
+        "cero": "Free access and movement with no restrictions.",
+        "eco": "Free access and movement with no restrictions.",
+        "c": "Free access and movement with no restrictions.",
+        "b": "Free access and movement with no restrictions.",
+        "a": "Driving prohibited for vehicles without an environmental sticker that are not registered locally."
+      }
+    },
+    "zbe-mostoles": {
+      "name": "Móstoles ZBE (Área 20 central core)",
+      "shortName": "Móstoles Centre",
+      "restrictionLevel": "Residential Área 20 (restriction on vehicles without a sticker)",
+      "description": "Low Emission Zone and traffic calming across the Área 20 perimeter in Móstoles (C/ Cristo, Juan XXIII, Reyes Católicos, Ricardo Medem).",
+      "lawReference": "Móstoles Traffic and Mobility Ordinance",
+      "rules": {
+        "cero": "Free movement and parking with no restrictions.",
+        "eco": "Free movement and parking with no restrictions.",
+        "c": "Free access to car parks and for residents; free movement around the perimeter ring.",
+        "b": "Free access to car parks and for residents; free movement around the perimeter ring.",
+        "a": "Entry into the central core restricted except for registered residents and PMR."
+      }
+    },
+    "zbe-parla": {
+      "name": "Parla Old Town ZBE",
+      "shortName": "Parla Centre",
+      "restrictionLevel": "Regulated (BOCM 2024/2025)",
+      "description": "Low Emission Zone in the historic and commercial quarter of Parla, regulating access around Calle Real, Calle Pinto and Calle Torrejón.",
+      "lawReference": "Parla ZBE Regulatory Ordinance (BOCM 20240424-72)",
+      "rules": {
+        "cero": "Free access and parking with no restrictions.",
+        "eco": "Free access and parking with no restrictions.",
+        "c": "Access permitted for residents, car parks and commercial authorisations.",
+        "b": "Access permitted for residents, car parks and commercial authorisations.",
+        "a": "Driving into the area prohibited except for registered residents and essential vehicles."
+      }
+    },
+    "zbe-rivas": {
+      "name": "Rivas-Vaciamadrid ZBE",
+      "shortName": "Rivas ZBE",
+      "restrictionLevel": "Regulated (school areas and town centre)",
+      "description": "Low Emission Zone in Rivas, protecting school areas and residential streets with heavy foot traffic.",
+      "lawReference": "Rivas Sustainable School Mobility Plan and ZBE",
+      "rules": {
+        "cero": "Free access with no restrictions.",
+        "eco": "Free access with no restrictions.",
+        "c": "Priority regulated access.",
+        "b": "Priority regulated access.",
+        "a": "Access control and time limits in signposted school areas."
+      }
+    }
+  }
+}

@@ -1,6 +1,7 @@
 /// <reference path="../../../../node_modules/monaco-editor/monaco.d.ts" />
 import {
   Component,
+  computed,
   inject,
   signal,
   viewChild,
@@ -13,8 +14,10 @@ import {
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import { MonacoEditorComponent } from '@/app/components/monaco-editor/monaco-editor.component';
+import { I18nService } from '@/app/i18n/i18n.service';
 import { MetadataService } from '@/app/services/metadata.service';
 import { MarkdownPreviewComponent } from '@/app/components/markdown-preview/markdown-preview.component';
 
@@ -37,8 +40,10 @@ marked.use(
   }),
 );
 
+type PresetId = 'github' | 'indigo' | 'warm';
+
 // Preset stylesheet asset paths
-const PRESET_URLS = {
+const PRESET_URLS: Record<PresetId, string> = {
   github: '/presets/github.css',
   indigo: '/presets/indigo.css',
   warm: '/presets/warm.css',
@@ -53,6 +58,7 @@ const PRESET_URLS = {
     LucideIconComponent,
     MonacoEditorComponent,
     MarkdownPreviewComponent,
+    TranslatePipe,
   ],
   templateUrl: './markdown-to-html.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -62,6 +68,7 @@ export class MarkdownToHtmlComponent implements AfterViewInit {
   private readonly platformId = inject(PLATFORM_ID);
   readonly isBrowser = signal<boolean>(isPlatformBrowser(this.platformId));
   private readonly metadataService = inject(MetadataService);
+  private readonly i18n = inject(I18nService);
   private readonly httpClient = inject(HttpClient);
 
   // Editor ViewChildren references
@@ -75,18 +82,30 @@ export class MarkdownToHtmlComponent implements AfterViewInit {
 
   // Core signals
   readonly markdownText = signal<string>('');
+  /** Last localized sample document injected into the editor. */
+  private lastSampleText = '';
   readonly previewHtml = signal<string>('');
   readonly customCss = signal<string>('');
   readonly activeTab = signal<'preview' | 'code'>('code');
   readonly mobilePanel = signal<'editor' | 'preview'>('editor');
   readonly isStylesDrawerOpen = signal<boolean>(false);
-  readonly selectedPreset = signal<'github' | 'indigo' | 'warm'>('github');
+  readonly selectedPreset = signal<PresetId>('github');
   readonly leftWidthPercent = signal<number>(50);
 
-  // Load initial welcome template and mermaid script resource using httpResource.text (Browser Only, bypassed on SSR)
-  readonly welcomeResource = httpResource.text(() =>
-    this.isBrowser() ? '/presets/welcome.md' : undefined,
-  );
+  /** Theme preset buttons, labelled for the active language. */
+  readonly presets = computed<{ id: PresetId; label: string }[]>(() => [
+    { id: 'github', label: this.i18n.t('markdown-to-html.presets.github') },
+    { id: 'indigo', label: this.i18n.t('markdown-to-html.presets.indigo') },
+    { id: 'warm', label: this.i18n.t('markdown-to-html.presets.warm') },
+  ]);
+
+  // Load initial welcome template (localized) and mermaid script resource using httpResource.text (Browser Only, bypassed on SSR)
+  readonly welcomeResource = httpResource.text(() => {
+    if (!this.isBrowser()) return undefined;
+    return this.i18n.language() === 'es'
+      ? '/presets/es/welcome.md'
+      : '/presets/welcome.md';
+  });
   readonly mermaidScriptResource = httpResource.text(() =>
     this.isBrowser() ? '/scripts/mermaid-interactivity.js' : undefined,
   );
@@ -133,24 +152,29 @@ export class MarkdownToHtmlComponent implements AfterViewInit {
     });
 
   constructor() {
-    this.metadataService.updateMetadata({
-      title: 'Markdown to HTML Converter | definitive-tools',
-      description:
-        'Convert markdown text to clean HTML code instantly with real-time responsive browser side-by-side editing, customized CSS styling presets, and simple code exports.',
-      keywords:
-        'markdown to html, html generator, css preview, dynamic styling, inline css, markup editor, clean code',
+    this.updateMetadata();
+    effect(() => {
+      this.i18n.language();
+      this.updateMetadata();
     });
 
-    // Reactive effect to load initial welcome markdown template via httpResource
+    // Reactive effect to load the localized welcome markdown template via httpResource.
+    // The sample is only replaced while the editor still shows the previous sample,
+    // so switching language never discards markdown the user already edited.
     effect(() => {
       const welcomeText = this.welcomeResource.value();
       const editor = this.leftEditor();
-      if (welcomeText) {
-        this.markdownText.set(welcomeText);
-        this.updatePreview(welcomeText);
-        if (editor) {
-          editor.getEditorInstance()?.setValue(welcomeText);
-        }
+      if (!welcomeText) return;
+
+      const current = this.markdownText();
+      const untouched = current === '' || current === this.lastSampleText;
+      if (!untouched) return;
+
+      this.lastSampleText = welcomeText;
+      this.markdownText.set(welcomeText);
+      this.updatePreview(welcomeText);
+      if (editor) {
+        editor.getEditorInstance()?.setValue(welcomeText);
       }
     });
 
@@ -178,6 +202,14 @@ export class MarkdownToHtmlComponent implements AfterViewInit {
       this.initMermaidGlobalHandlers();
       this.loadPresetCss('github');
     }
+  }
+
+  private updateMetadata(): void {
+    this.metadataService.updateMetadata({
+      title: this.i18n.t('markdown-to-html.seo.title'),
+      description: this.i18n.t('markdown-to-html.seo.description'),
+      keywords: this.i18n.t('markdown-to-html.seo.keywords'),
+    });
   }
 
   private initMermaidGlobalHandlers() {
@@ -311,12 +343,12 @@ export class MarkdownToHtmlComponent implements AfterViewInit {
           toolbar.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
 
           toolbar.innerHTML = `
-            <button onclick="window.__mermaidZoom(this, 0.8)" title="Zoom Out" style="padding: 0.2rem 0.45rem; background: ${btnBg}; color: ${btnText}; border: 1px solid ${btnBorder}; border-radius: 0.375rem; cursor: pointer; font-size: 0.75rem; font-weight: 700;">-</button>
-            <button onclick="window.__mermaidResetZoom(this)" title="Reset Zoom" style="padding: 0.2rem 0.45rem; background: ${btnBg}; color: ${btnText}; border: 1px solid ${btnBorder}; border-radius: 0.375rem; cursor: pointer; font-size: 0.75rem; font-weight: 600;">1:1</button>
-            <button onclick="window.__mermaidZoom(this, 1.2)" title="Zoom In" style="padding: 0.2rem 0.45rem; background: ${btnBg}; color: ${btnText}; border: 1px solid ${btnBorder}; border-radius: 0.375rem; cursor: pointer; font-size: 0.75rem; font-weight: 700;">+</button>
+            <button onclick="window.__mermaidZoom(this, 0.8)" title="${this.i18n.t('markdown-to-html.mermaid.zoomOut')}" style="padding: 0.2rem 0.45rem; background: ${btnBg}; color: ${btnText}; border: 1px solid ${btnBorder}; border-radius: 0.375rem; cursor: pointer; font-size: 0.75rem; font-weight: 700;">-</button>
+            <button onclick="window.__mermaidResetZoom(this)" title="${this.i18n.t('markdown-to-html.mermaid.resetZoom')}" style="padding: 0.2rem 0.45rem; background: ${btnBg}; color: ${btnText}; border: 1px solid ${btnBorder}; border-radius: 0.375rem; cursor: pointer; font-size: 0.75rem; font-weight: 600;">1:1</button>
+            <button onclick="window.__mermaidZoom(this, 1.2)" title="${this.i18n.t('markdown-to-html.mermaid.zoomIn')}" style="padding: 0.2rem 0.45rem; background: ${btnBg}; color: ${btnText}; border: 1px solid ${btnBorder}; border-radius: 0.375rem; cursor: pointer; font-size: 0.75rem; font-weight: 700;">+</button>
             <div style="width: 1px; height: 0.9rem; background: ${btnBorder}; margin: 0 0.2rem;"></div>
-            <button onclick="window.__mermaidDownloadSvg(this)" title="Download SVG" style="padding: 0.2rem 0.5rem; background: #4f46e5; color: #ffffff; border: 1px solid #6366f1; border-radius: 0.375rem; cursor: pointer; font-size: 0.7rem; font-weight: 600;">SVG</button>
-            <button onclick="window.__mermaidDownloadPng(this)" title="Download PNG" style="padding: 0.2rem 0.5rem; background: #059669; color: #ffffff; border: 1px solid #10b981; border-radius: 0.375rem; cursor: pointer; font-size: 0.7rem; font-weight: 600;">PNG</button>
+            <button onclick="window.__mermaidDownloadSvg(this)" title="${this.i18n.t('markdown-to-html.mermaid.downloadSvg')}" style="padding: 0.2rem 0.5rem; background: #4f46e5; color: #ffffff; border: 1px solid #6366f1; border-radius: 0.375rem; cursor: pointer; font-size: 0.7rem; font-weight: 600;">SVG</button>
+            <button onclick="window.__mermaidDownloadPng(this)" title="${this.i18n.t('markdown-to-html.mermaid.downloadPng')}" style="padding: 0.2rem 0.5rem; background: #059669; color: #ffffff; border: 1px solid #10b981; border-radius: 0.375rem; cursor: pointer; font-size: 0.7rem; font-weight: 600;">PNG</button>
           `;
 
           const viewport = doc.createElement('div');
@@ -353,7 +385,10 @@ export class MarkdownToHtmlComponent implements AfterViewInit {
           errContainer.style.fontFamily = 'monospace';
           errContainer.style.fontSize = '0.85rem';
           errContainer.style.margin = '1rem 0';
-          errContainer.textContent = `Mermaid Diagram Syntax Error: ${err instanceof Error ? err.message : String(err)}`;
+          errContainer.textContent = this.i18n.t(
+            'markdown-to-html.mermaid.syntaxError',
+            { message: err instanceof Error ? err.message : String(err) },
+          );
 
           const targetToReplace =
             node.parentElement?.tagName === 'PRE' ? node.parentElement : node;
@@ -394,7 +429,7 @@ export class MarkdownToHtmlComponent implements AfterViewInit {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = 'document.md';
+    link.download = this.i18n.t('markdown-to-html.files.markdownName');
     link.click();
     URL.revokeObjectURL(url);
   }
@@ -408,7 +443,7 @@ export class MarkdownToHtmlComponent implements AfterViewInit {
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Converted Document</title>
+  <title>${this.i18n.t('markdown-to-html.files.htmlTitle')}</title>
   <style>
     ${this.customCss()}
   </style>
@@ -422,7 +457,7 @@ export class MarkdownToHtmlComponent implements AfterViewInit {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = 'document.html';
+    link.download = this.i18n.t('markdown-to-html.files.htmlName');
     link.click();
     URL.revokeObjectURL(url);
   }
@@ -453,7 +488,7 @@ export class MarkdownToHtmlComponent implements AfterViewInit {
       <!DOCTYPE html>
       <html>
       <head>
-        <title>Print Document</title>
+        <title>${this.i18n.t('markdown-to-html.files.printTitle')}</title>
         <style>
           ${this.customCss()}
           @media print {
@@ -483,7 +518,7 @@ export class MarkdownToHtmlComponent implements AfterViewInit {
     }, 250);
   }
 
-  private loadPresetCss(preset: 'github' | 'indigo' | 'warm') {
+  private loadPresetCss(preset: PresetId) {
     this.httpClient
       .get(PRESET_URLS[preset], { responseType: 'text' })
       .subscribe({
@@ -497,7 +532,7 @@ export class MarkdownToHtmlComponent implements AfterViewInit {
       });
   }
 
-  applyPreset(preset: 'github' | 'indigo' | 'warm') {
+  applyPreset(preset: PresetId) {
     this.selectedPreset.set(preset);
     this.loadPresetCss(preset);
   }
@@ -508,7 +543,7 @@ export class MarkdownToHtmlComponent implements AfterViewInit {
 
     const file = input.files[0];
     if (file.type !== 'text/css' && !file.name.endsWith('.css')) {
-      alert('Please upload a valid CSS file (.css)');
+      alert(this.i18n.t('markdown-to-html.errors.invalidCssFile'));
       return;
     }
 

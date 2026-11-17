@@ -3,8 +3,8 @@
     <!-- Opacity Slider -->
     <div class="pb-2">
       <div class="flex items-center justify-between text-xs text-slate-600 mb-1.5 font-medium">
-        <span>Zone Fill Opacity</span>
-        <span class="font-bold text-indigo-600">{{ Math.round(service.zoneOpacity() * 100) }}%</span>
+        <span>{{ 'madrid-transport-map.legend.opacityLabel' | translate }}</span>
+        <span class="font-bold text-indigo-600">{{ opacityPercentLabel() }}</span>
       </div>
       <input
         type="range"
@@ -13,18 +13,18 @@
         step="0.05"
         [value]="service.zoneOpacity()"
         (input)="onOpacityChange($event)"
-        aria-label="Zone fill opacity slider"
+        [attr.aria-label]="'madrid-transport-map.legend.opacityAria' | translate"
         class="w-full accent-indigo-600 cursor-pointer h-2 bg-slate-200 rounded-lg"
       />
       <div class="flex justify-between text-[10px] text-slate-400 mt-1">
-        <span>Subtle (5%)</span>
-        <span>Vibrant (80%)</span>
+        <span>{{ 'madrid-transport-map.legend.subtle' | translate }}</span>
+        <span>{{ 'madrid-transport-map.legend.vibrant' | translate }}</span>
       </div>
     </div>
 
     <!-- Zone Cards Grid -->
     <div class="grid grid-cols-2 gap-2">
-      @for (zone of zonesList; track zone.code) {
+      @for (zone of zonesList(); track zone.code) {
         <button
           type="button"
           (click)="selectZone(zone)"
@@ -47,21 +47,21 @@
             </span>
           </div>
           <div class="flex items-baseline justify-between text-[11px] text-slate-600 mt-0.5">
-            <span>Abono:</span>
+            <span>{{ 'madrid-transport-map.legend.abono' | translate }}</span>
             <div class="flex items-center gap-1">
               @if (zone.nominalMonthlyPriceEur) {
-                <span class="text-[9px] text-slate-400 line-through">€{{ zone.nominalMonthlyPriceEur.toFixed(2) }}</span>
+                <span class="text-[9px] text-slate-400 line-through">{{ currency(zone.nominalMonthlyPriceEur) }}</span>
               }
-              <span class="font-bold text-emerald-700">€{{ zone.monthlyPassPriceEur.toFixed(2) }}</span>
+              <span class="font-bold text-emerald-700">{{ currency(zone.monthlyPassPriceEur) }}</span>
             </div>
           </div>
           <div class="flex items-baseline justify-between text-[10px] text-slate-500">
-            <span>10 Viajes:</span>
+            <span>{{ 'madrid-transport-map.legend.tenTrips' | translate }}</span>
             <div class="flex items-center gap-1">
               @if (zone.nominalTenTripPriceEur) {
-                <span class="text-[8px] text-slate-400 line-through">€{{ zone.nominalTenTripPriceEur.toFixed(2) }}</span>
+                <span class="text-[8px] text-slate-400 line-through">{{ currency(zone.nominalTenTripPriceEur) }}</span>
               }
-              <span class="font-medium text-slate-700">€{{ zone.tenTripPriceEur.toFixed(2) }}</span>
+              <span class="font-medium text-slate-700">{{ currency(zone.tenTripPriceEur) }}</span>
             </div>
           </div>
         </button>
@@ -69,13 +69,13 @@
     </div>
 
     <div class="text-[10px] text-slate-600 bg-slate-50 p-2 rounded-xl border border-slate-200/60 space-y-0.5">
-      <div class="font-medium text-slate-700">✨ Tarifas bonificadas vigentes (Descuento 50%-60% CRTM)</div>
-      <div class="text-slate-500">• Abono Joven (hasta 26 años): <span class="font-semibold text-indigo-600">10,00 €</span> (todas las zonas)</div>
-      <div class="text-slate-500">• Mayores de 65 años: <span class="font-semibold text-emerald-600">Gratuito (0,00 €)</span></div>
+      <div class="font-medium text-slate-700">{{ 'madrid-transport-map.legend.subsidised' | translate }}</div>
+      <div class="text-slate-500">• {{ 'madrid-transport-map.legend.youthPass' | translate }} <span class="font-semibold text-indigo-600">{{ currency(youthPassPrice) }}</span> {{ 'madrid-transport-map.legend.allZones' | translate }}</div>
+      <div class="text-slate-500">• {{ 'madrid-transport-map.legend.senior' | translate }} <span class="font-semibold text-emerald-600">{{ 'madrid-transport-map.legend.seniorFree' | translate: { price: currency(seniorPassPrice) } }}</span></div>
     </div>
 
     <p class="text-[11px] text-slate-500 italic leading-relaxed pt-2 border-t border-slate-100">
-      Toca cualquier tarjeta de zona para centrar e inspeccionar municipios y abonos.
+      {{ 'madrid-transport-map.legend.hint' | translate }}
     </p>
   </div>
 } @else {
@@ -85,15 +85,15 @@
       type="button"
       (click)="toggleExpand()"
       class="w-full px-4 py-3 flex items-center justify-between text-left font-semibold text-slate-800 hover:bg-slate-50/80 transition-colors focus:outline-hidden"
-      aria-label="Toggle CRTM Tariff Zones Legend"
+      [attr.aria-label]="'madrid-transport-map.legend.toggle' | translate"
     >
       <div class="flex items-center gap-2">
         <div class="w-4 h-4 rounded-sm bg-linear-to-tr from-blue-600 via-emerald-500 to-amber-500"></div>
-        <span class="text-sm">Tariff Zones Legend & Fares</span>
+        <span class="text-sm">{{ 'madrid-transport-map.legend.title' | translate }}</span>
       </div>
       <div class="flex items-center gap-2">
         <span class="text-[11px] font-normal text-slate-500">
-          {{ Math.round(service.zoneOpacity() * 100) }}% opacity
+          {{ 'madrid-transport-map.legend.opacityPercent' | translate: { percent: opacityPercent() } }}
         </span>
         <lucide-icon
           name="chevron-down"
@@ -107,8 +107,8 @@
       <!-- Opacity Slider -->
       <div>
         <div class="flex items-center justify-between text-xs text-slate-600 mb-1.5 font-medium">
-          <span>Zone Fill Opacity</span>
-          <span class="font-bold text-indigo-600">{{ Math.round(service.zoneOpacity() * 100) }}%</span>
+          <span>{{ 'madrid-transport-map.legend.opacityLabel' | translate }}</span>
+          <span class="font-bold text-indigo-600">{{ opacityPercentLabel() }}</span>
         </div>
         <input
           type="range"
@@ -117,18 +117,18 @@
           step="0.05"
           [value]="service.zoneOpacity()"
           (input)="onOpacityChange($event)"
-          aria-label="Zone fill opacity slider"
+          [attr.aria-label]="'madrid-transport-map.legend.opacityAria' | translate"
           class="w-full accent-indigo-600 cursor-pointer h-1.5 bg-slate-200 rounded-lg"
         />
         <div class="flex justify-between text-[10px] text-slate-400 mt-1">
-          <span>Subtle (5%)</span>
-          <span>Vibrant (80%)</span>
+          <span>{{ 'madrid-transport-map.legend.subtle' | translate }}</span>
+          <span>{{ 'madrid-transport-map.legend.vibrant' | translate }}</span>
         </div>
       </div>
 
       <!-- Zone Cards Grid -->
       <div class="grid grid-cols-2 gap-2 max-h-60 overflow-y-auto pr-1">
-        @for (zone of zonesList; track zone.code) {
+        @for (zone of zonesList(); track zone.code) {
           <button
             type="button"
             (click)="selectZone(zone)"
@@ -151,21 +151,21 @@
               </span>
             </div>
             <div class="flex items-baseline justify-between text-[11px] text-slate-600 mt-0.5">
-              <span>Abono:</span>
+              <span>{{ 'madrid-transport-map.legend.abono' | translate }}</span>
               <div class="flex items-center gap-1">
                 @if (zone.nominalMonthlyPriceEur) {
-                  <span class="text-[9px] text-slate-400 line-through">€{{ zone.nominalMonthlyPriceEur.toFixed(2) }}</span>
+                  <span class="text-[9px] text-slate-400 line-through">{{ currency(zone.nominalMonthlyPriceEur) }}</span>
                 }
-                <span class="font-bold text-emerald-700">€{{ zone.monthlyPassPriceEur.toFixed(2) }}</span>
+                <span class="font-bold text-emerald-700">{{ currency(zone.monthlyPassPriceEur) }}</span>
               </div>
             </div>
             <div class="flex items-baseline justify-between text-[10px] text-slate-500">
-              <span>10 Viajes:</span>
+              <span>{{ 'madrid-transport-map.legend.tenTrips' | translate }}</span>
               <div class="flex items-center gap-1">
                 @if (zone.nominalTenTripPriceEur) {
-                  <span class="text-[8px] text-slate-400 line-through">€{{ zone.nominalTenTripPriceEur.toFixed(2) }}</span>
+                  <span class="text-[8px] text-slate-400 line-through">{{ currency(zone.nominalTenTripPriceEur) }}</span>
                 }
-                <span class="font-medium text-slate-700">€{{ zone.tenTripPriceEur.toFixed(2) }}</span>
+                <span class="font-medium text-slate-700">{{ currency(zone.tenTripPriceEur) }}</span>
               </div>
             </div>
           </button>
@@ -173,13 +173,13 @@
       </div>
 
       <div class="text-[10px] text-slate-600 bg-slate-50 p-2 rounded-xl border border-slate-200/60 space-y-0.5">
-        <div class="font-medium text-slate-700">✨ Tarifas bonificadas vigentes (Descuento 50%-60% CRTM)</div>
-        <div class="text-slate-500">• Abono Joven (&le; 26 años): <span class="font-semibold text-indigo-600">10,00 €</span> (todas las zonas)</div>
-        <div class="text-slate-500">• Mayores de 65 años: <span class="font-semibold text-emerald-600">Gratuito (0,00 €)</span></div>
+        <div class="font-medium text-slate-700">{{ 'madrid-transport-map.legend.subsidised' | translate }}</div>
+        <div class="text-slate-500">• {{ 'madrid-transport-map.legend.youthPass' | translate }} <span class="font-semibold text-indigo-600">{{ currency(youthPassPrice) }}</span> {{ 'madrid-transport-map.legend.allZones' | translate }}</div>
+        <div class="text-slate-500">• {{ 'madrid-transport-map.legend.senior' | translate }} <span class="font-semibold text-emerald-600">{{ 'madrid-transport-map.legend.seniorFree' | translate: { price: currency(seniorPassPrice) } }}</span></div>
       </div>
 
       <p class="text-[11px] text-slate-500 italic leading-relaxed pt-1 border-t border-slate-100">
-        Click any zone card above or click directly on the map to inspect municipalities and passes.
+        {{ 'madrid-transport-map.legend.hintExpanded' | translate }}
       </p>
     </div>
   }

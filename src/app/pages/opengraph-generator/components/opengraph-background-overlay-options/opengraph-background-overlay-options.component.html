@@ -1,12 +1,12 @@
 <div class="grid gap-4">
     <div class="space-y-2">
-        <h4 class="font-medium leading-none">Background Grid Overlay</h4>
-        <p class="text-sm text-gray-400">Customize the background grid overlay.</p>
+        <h4 class="font-medium leading-none">{{ 'opengraph-generator.background.overlay.title' | translate }}</h4>
+        <p class="text-sm text-gray-400">{{ 'opengraph-generator.background.overlay.hint' | translate }}</p>
     </div>
     <div class="grid gap-4">
         <div class="grid gap-4">
             <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                for="font-family">Pattern</label>
+                for="font-family">{{ 'opengraph-generator.background.overlay.pattern' | translate }}</label>
             <div class="grid grid-flow-col grid-cols-4 gap-2 outline-hidden">
                 @for(pattern of BACKGROUND_OVERLAY_PATTERNS; track $index) {
                 @let patternView = BACKGROUND_OVERLAY_PATTERNS_VIEW[pattern];
@@ -14,14 +14,14 @@
                     (click)="overlayPattern.set(pattern)"
                     class="flex flex-col justify-center align-middle items-center rounded-md border px-4 py-2 w-full text-left font-semibold hover:bg-gray-100 hover:text-gray-700 transition">
                     <lucide-angular [name]="patternView.icon" class="block w-6 h-6"></lucide-angular>
-                    {{ patternView.label }}
+                    {{ BACKGROUND_OVERLAY_PATTERN_LABELS()[pattern] }}
                 </button>
                 }
             </div>
         </div>
         <div class="grid items-center gap-4">
             <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                for="text-color">Color</label>
+                for="text-color">{{ 'opengraph-generator.background.overlay.color' | translate }}</label>
             <div class="grid gap-2 col-span-2 outline-hidden">
                 <div class="flex flex-wrap gap-1">
                     @for (overlayColorOpt of BACKGROUND_OVERLAY_COLORS; track $index) {
@@ -41,7 +41,7 @@
 
         <!-- Overlay Opacity -->
         <div class="mb-6">
-            <label for="qrSize" class="block text-gray-700 text-sm font-bold mb-2">Opacity</label>
+            <label for="qrSize" class="block text-gray-700 text-sm font-bold mb-2">{{ 'opengraph-generator.background.overlay.opacity' | translate }}</label>
             <div class="flex items-center">
                 <input type="range" min="0" max="100" [(ngModel)]="overlayOpacity" #overlayOpacityRef
                     class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
@@ -51,7 +51,7 @@
 
         <!-- Overlay Blur Radius -->
         <div class="mb-6">
-            <label for="blurRadius" class="block text-gray-700 text-sm font-bold mb-2">Blur Radius</label>
+            <label for="blurRadius" class="block text-gray-700 text-sm font-bold mb-2">{{ 'opengraph-generator.background.overlay.blurRadius' | translate }}</label>
             <div class="flex items-center">
                 <input type="range" min="0" max="100" [(ngModel)]="overlayBlurRadius" #overlayBlurRadiusRef
                     class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">

@@ -1,13 +1,16 @@
-import { NgClass, UpperCasePipe } from '@angular/common';
+import { NgClass } from '@angular/common';
 import {
   Component,
+  computed,
+  effect,
   inject,
   model,
   signal,
-  WritableSignal,
   ChangeDetectionStrategy,
 } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
+import { I18nService } from '@/app/i18n/i18n.service';
 import {
   QrContentType,
   QrFormData,
@@ -36,6 +39,9 @@ type QrField<T extends QrContentType> = FieldTree<
   Extract<QrFormModel, { contentType: T }>
 >;
 
+type QrErrorCorrectionLevel = 'low' | 'medium' | 'quartile' | 'high';
+type QrWifiEncryption = 'wpa' | 'wep' | 'none';
+
 const EXTENSIONS = [
   'svg',
   'png',
@@ -43,48 +49,14 @@ const EXTENSIONS = [
   'webp',
 ] as const satisfies Array<FileExtension>;
 
-const ERROR_CORRECTION_LEVELS = [
-  { id: 'low', name: 'Low (L)' },
-  { id: 'medium', name: 'Medium (M)' },
-  { id: 'quartile', name: 'Quartile (Q)' },
-  { id: 'high', name: 'High (H)' },
-] as const;
-
-const CONTENT_TYPES = [
-  { id: 'url', name: 'URL', icon: 'link' },
-  { id: 'text', name: 'Text', icon: 'case-upper' },
-  { id: 'email', name: 'Email', icon: 'at-sign' },
-  { id: 'phone', name: 'Phone', icon: 'phone' },
-  { id: 'sms', name: 'SMS', icon: 'tablet-smartphone' },
-  { id: 'vcard', name: 'vCard', icon: 'id-card' },
-  { id: 'wifi', name: 'WiFi', icon: 'wifi' },
-  { id: 'geo', name: 'Location', icon: 'map-pin' },
-] as const;
-
-export const ENCRYPTION_TYPES = [
-  { id: 'wpa', name: 'WPA/WPA2' },
-  { id: 'wep', name: 'WEP' },
-  { id: 'none', name: 'None' },
-];
-
-export const DOT_TYPES: ReadonlyArray<{ id: DotType; name: string }> = [
-  { id: 'dots', name: 'Dots' },
-  { id: 'rounded', name: 'Rounded' },
-  { id: 'classy', name: 'Classy' },
-  { id: 'classy-rounded', name: 'Classy Rounded' },
-  { id: 'square', name: 'Square' },
-  { id: 'extra-rounded', name: 'Extra Rounded' },
-];
-
-export const CORNERS_SQUARE_STYLES: ReadonlyArray<{
-  id: CornerSquareType;
-  name: string;
-}> = [...DOT_TYPES, { id: 'dot', name: 'Dot' }];
-
-export const CORNERS_INNER_DOT_STYLES: ReadonlyArray<{
-  id: CornerSquareType;
-  name: string;
-}> = [...DOT_TYPES, { id: 'dot', name: 'Dot' }];
+const DOT_STYLE_KEYS = [
+  { id: 'dots', key: 'dots' },
+  { id: 'rounded', key: 'rounded' },
+  { id: 'classy', key: 'classy' },
+  { id: 'classy-rounded', key: 'classyRounded' },
+  { id: 'square', key: 'square' },
+  { id: 'extra-rounded', key: 'extraRounded' },
+] as const satisfies ReadonlyArray<{ id: DotType; key: string }>;
 
 @Component({
   selector: 'app-qr-generator',
@@ -92,9 +64,9 @@ export const CORNERS_INNER_DOT_STYLES: ReadonlyArray<{
     LucideIconComponent,
     NgClass,
     FormField,
-    UpperCasePipe,
     TopNavbarComponent,
     FooterComponent,
+    TranslatePipe,
   ],
   templateUrl: './qr-generator.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -103,14 +75,91 @@ export const CORNERS_INNER_DOT_STYLES: ReadonlyArray<{
 export class QrGeneratorComponent {
   private readonly metadataService = inject(MetadataService);
   private readonly toastService = inject(ToastService);
+  private readonly i18n = inject(I18nService);
 
-  readonly contentTypes = CONTENT_TYPES;
-  readonly errorCorrectionLevels = ERROR_CORRECTION_LEVELS;
-  readonly encryptionTypes = ENCRYPTION_TYPES;
-  readonly extensions = EXTENSIONS;
-  readonly dotsTypes = DOT_TYPES;
-  readonly cornersSquareStyles = CORNERS_SQUARE_STYLES;
-  readonly cornersInnerDotStyles = CORNERS_INNER_DOT_STYLES;
+  readonly i18nService = this.i18n;
+
+  readonly contentTypes = computed<
+    ReadonlyArray<{ id: QrContentType; name: string; icon: string }>
+  >(() => [
+    { id: 'url', name: this.i18n.t('qr-generator.contentType.url'), icon: 'link' },
+    { id: 'text', name: this.i18n.t('qr-generator.contentType.text'), icon: 'case-upper' },
+    { id: 'email', name: this.i18n.t('qr-generator.contentType.email'), icon: 'at-sign' },
+    { id: 'phone', name: this.i18n.t('qr-generator.contentType.phone'), icon: 'phone' },
+    { id: 'sms', name: this.i18n.t('qr-generator.contentType.sms'), icon: 'tablet-smartphone' },
+    { id: 'vcard', name: this.i18n.t('qr-generator.contentType.vcard'), icon: 'id-card' },
+    { id: 'wifi', name: this.i18n.t('qr-generator.contentType.wifi'), icon: 'wifi' },
+    { id: 'geo', name: this.i18n.t('qr-generator.contentType.geo'), icon: 'map-pin' },
+  ]);
+
+  readonly errorCorrectionLevels = computed<
+    ReadonlyArray<{ id: QrErrorCorrectionLevel; name: string }>
+  >(() => [
+    {
+      id: 'low',
+      name: this.i18n.t('qr-generator.customization.errorCorrectionLevels.low'),
+    },
+    {
+      id: 'medium',
+      name: this.i18n.t('qr-generator.customization.errorCorrectionLevels.medium'),
+    },
+    {
+      id: 'quartile',
+      name: this.i18n.t('qr-generator.customization.errorCorrectionLevels.quartile'),
+    },
+    {
+      id: 'high',
+      name: this.i18n.t('qr-generator.customization.errorCorrectionLevels.high'),
+    },
+  ]);
+
+  readonly encryptionTypes = computed<
+    ReadonlyArray<{ id: QrWifiEncryption; name: string }>
+  >(() => [
+    {
+      id: 'wpa',
+      name: this.i18n.t('qr-generator.wifi.encryptionTypes.wpa'),
+    },
+    {
+      id: 'wep',
+      name: this.i18n.t('qr-generator.wifi.encryptionTypes.wep'),
+    },
+    {
+      id: 'none',
+      name: this.i18n.t('qr-generator.wifi.encryptionTypes.none'),
+    },
+  ]);
+
+  readonly dotsTypes = computed<ReadonlyArray<{ id: DotType; name: string }>>(
+    () =>
+      DOT_STYLE_KEYS.map(({ id, key }) => ({
+        id,
+        name: this.i18n.t(`qr-generator.customization.dotStyles.${key}`),
+      })),
+  );
+
+  readonly cornersSquareStyles = computed<
+    ReadonlyArray<{ id: CornerSquareType; name: string }>
+  >(() => [
+    ...this.dotsTypes(),
+    { id: 'dot', name: this.i18n.t('qr-generator.customization.dotStyles.dot') },
+  ]);
+
+  readonly cornersInnerDotStyles = computed<
+    ReadonlyArray<{ id: CornerSquareType; name: string }>
+  >(() => [
+    ...this.dotsTypes(),
+    { id: 'dot', name: this.i18n.t('qr-generator.customization.dotStyles.dot') },
+  ]);
+
+  readonly downloadFormats = computed<
+    ReadonlyArray<{ extension: FileExtension; label: string }>
+  >(() =>
+    EXTENSIONS.map((extension) => ({
+      extension,
+      label: extension.toUpperCase(),
+    })),
+  );
 
   readonly qrFormModel = model<QrFormModel>({
     contentType: 'text',
@@ -134,12 +183,10 @@ export class QrGeneratorComponent {
   >(undefined);
 
   constructor() {
-    this.metadataService.updateMetadata({
-      title: 'QR Code Generator - Definitive Tools',
-      description:
-        'Generate customized QR codes for URLs, text, contact information, and more. high-quality QR codes that work anywhere.',
-      keywords:
-        'qr code generator, qr code, qr codes, qr, qrcode, qrcodes, free qr code generator, free qrcode generator, free qr code, free qrcodes, online qr code generator, online qrcode generator, online qr code, online qrcodes, qr code generator online, qr code online, qr codes online, qr online, qrcode online, qrcodes online, free qr code online, free qrcode online, free qr codes online, free qrcodes online',
+    this.updateMetadata();
+    effect(() => {
+      this.i18n.language();
+      this.updateMetadata();
     });
   }
 
@@ -193,7 +240,7 @@ export class QrGeneratorComponent {
         }
       });
       this.toastService.warning({
-        message: 'Please correct all validation errors first.',
+        message: this.i18n.t('qr-generator.validation.fixErrors'),
       });
       return;
     }
@@ -246,7 +293,10 @@ export class QrGeneratorComponent {
 
   async download(fileExtension: FileExtension) {
     const qr = this.lastQrGenerated()!.qr;
-    await qr.download({ name: 'qr-code', extension: fileExtension });
+    await qr.download({
+      name: this.i18n.t('qr-generator.download.fileName'),
+      extension: fileExtension,
+    });
   }
 
   // Type guard for discriminated union form elements
@@ -264,13 +314,23 @@ export class QrGeneratorComponent {
       }
     } catch (error) {
       console.error(error);
-      this.toastService.error({ message: 'Failed to access geolocation.' });
+      this.toastService.error({
+        message: this.i18n.t('qr-generator.messages.geolocationFailed'),
+      });
     }
   }
 
   private async getCurrentLocationPromise() {
     return new Promise<GeolocationPosition>((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(resolve, reject);
+    });
+  }
+
+  private updateMetadata(): void {
+    this.metadataService.updateMetadata({
+      title: this.i18n.t('qr-generator.seo.title'),
+      description: this.i18n.t('qr-generator.seo.description'),
+      keywords: this.i18n.t('qr-generator.seo.keywords'),
     });
   }
 }

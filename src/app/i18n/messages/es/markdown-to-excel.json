@@ -1,0 +1,35 @@
+{
+  "title": "Markdown a Excel",
+  "input": {
+    "label": "Tabla de Markdown",
+    "placeholder": "| Columna 1 | Columna 2 |\\n| --- | --- |\\n| Fila 1 | Fila 2 |"
+  },
+  "preview": {
+    "title": "Vista previa de Excel",
+    "hint": "Selecciona y copia la tabla de abajo",
+    "empty": "Pega una tabla de Markdown válida para ver la vista previa."
+  },
+  "howTo": {
+    "title": "Cómo usar esta herramienta",
+    "steps": {
+      "paste": {
+        "title": "1. Pega el Markdown",
+        "description": "Copia tu tabla de Markdown desde GitHub, VS Code o cualquier archivo MD y pégala en el editor de la izquierda."
+      },
+      "check": {
+        "title": "2. Revisa la vista previa",
+        "descriptionPrefix": "Descubre al instante cómo queda tu tabla. Admitimos marcadores de alineación de columna como",
+        "descriptionSuffix": "."
+      },
+      "export": {
+        "title": "3. Pega en Excel",
+        "description": "Pulsa «Copiar para Excel» y pega directamente en Excel, Google Sheets o Numbers. No hace falta descargar ningún archivo."
+      }
+    }
+  },
+  "seo": {
+    "title": "Conversor de Markdown a Excel",
+    "description": "Convierte tablas de Markdown a formatos compatibles con Excel (TSV) de forma sencilla. Copia y pega tus datos directamente en tu hoja de cálculo favorita.",
+    "keywords": "markdown, excel, conversor, tabla, tsv, hoja de cálculo, herramientas para desarrolladores"
+  }
+}

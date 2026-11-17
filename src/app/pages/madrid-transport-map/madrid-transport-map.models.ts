@@ -1,15 +1,18 @@
 export type TariffZoneCode = 'A' | 'B1' | 'B2' | 'B3' | 'C1' | 'C2' | 'E1' | 'E2';
 export type NetworkId = 'metro' | 'cercanias' | 'emt' | 'interurban';
 
+/**
+ * Tariff zone data. Display copy (zone names and coverage descriptions) lives
+ * in the `madrid-transport-map.zones.*` translation keys, therefore this model
+ * only carries the stable identifiers, colours and fares.
+ */
 export interface TariffZoneInfo {
   code: TariffZoneCode;
-  name: string;
   color: string;
   monthlyPassPriceEur: number;
   nominalMonthlyPriceEur?: number;
   tenTripPriceEur: number;
   nominalTenTripPriceEur?: number;
-  coverageDescription: string;
 }
 
 export interface TransitStopProperties {
@@ -54,11 +57,12 @@ export interface SearchResultItem {
   type: 'station';
 }
 
+/**
+ * Visual identity of a transit network. The translated name and short name are
+ * resolved from the `madrid-transport-map.networks.*` keys.
+ */
 export interface NetworkMeta {
   id: NetworkId;
-  name: string;
-  shortName: string;
-  description: string;
   color: string;
   badgeClass: string;
   icon: string;
@@ -67,36 +71,24 @@ export interface NetworkMeta {
 export const NETWORK_METAS: Record<NetworkId, NetworkMeta> = {
   metro: {
     id: 'metro',
-    name: 'Metro de Madrid',
-    shortName: 'Metro',
-    description: 'Underground rapid transit network covering capital and metropolitan ring',
     color: '#00A9E0',
     badgeClass: 'bg-sky-100 text-sky-800 border-sky-300',
     icon: 'train-track'
   },
   cercanias: {
     id: 'cercanias',
-    name: 'Cercanías Renfe',
-    shortName: 'Cercanías',
-    description: 'Regional suburban commuter rail across Madrid and Castilla-La Mancha',
     color: '#E4002B',
     badgeClass: 'bg-red-100 text-red-800 border-red-300',
     icon: 'train-track'
   },
   emt: {
     id: 'emt',
-    name: 'EMT Madrid (Autobuses)',
-    shortName: 'EMT',
-    description: 'Municipal surface bus network operating across Madrid capital (Zone A)',
     color: '#0284C7',
     badgeClass: 'bg-blue-100 text-blue-800 border-blue-300',
     icon: 'bus'
   },
   interurban: {
     id: 'interurban',
-    name: 'Autobuses Interurbanos',
-    shortName: 'Interurbanos',
-    description: 'Green suburban regional buses connecting outer municipalities and crowns',
     color: '#16A34A',
     badgeClass: 'bg-emerald-100 text-emerald-800 border-emerald-300',
     icon: 'bus'
@@ -106,92 +98,79 @@ export const NETWORK_METAS: Record<NetworkId, NetworkMeta> = {
 export const TARIFF_ZONES: Record<TariffZoneCode, TariffZoneInfo> = {
   A: {
     code: 'A',
-    name: 'Zona A',
     color: '#2563EB',
     monthlyPassPriceEur: 32.70,
     nominalMonthlyPriceEur: 54.60,
     tenTripPriceEur: 7.30,
-    nominalTenTripPriceEur: 12.20,
-    coverageDescription: 'Madrid capital central municipality (Sol, Atocha, Chamartín, Barajas, Vallecas, Carabanchel)'
+    nominalTenTripPriceEur: 12.20
   },
   B1: {
     code: 'B1',
-    name: 'Zona B1',
     color: '#059669',
     monthlyPassPriceEur: 38.20,
     nominalMonthlyPriceEur: 63.70,
     tenTripPriceEur: 8.70,
-    nominalTenTripPriceEur: 14.50,
-    coverageDescription: 'First metropolitan crown (Alcobendas, San Sebastián de los Reyes, Pozuelo, Majadahonda, Coslada, San Fernando, Getafe, Leganés, Alcorcón)'
+    nominalTenTripPriceEur: 14.50
   },
   B2: {
     code: 'B2',
-    name: 'Zona B2',
     color: '#10B981',
     monthlyPassPriceEur: 43.20,
     nominalMonthlyPriceEur: 72.00,
     tenTripPriceEur: 10.20,
-    nominalTenTripPriceEur: 17.00,
-    coverageDescription: 'Second metropolitan crown (Las Rozas, Móstoles, Fuenlabrada, Parla, Pinto, Rivas-Vaciamadrid, Torrejón de Ardoz, Tres Cantos)'
+    nominalTenTripPriceEur: 17.00
   },
   B3: {
     code: 'B3',
-    name: 'Zona B3',
     color: '#D97706',
     monthlyPassPriceEur: 49.20,
     nominalMonthlyPriceEur: 82.00,
     tenTripPriceEur: 12.00,
-    nominalTenTripPriceEur: 20.00,
-    coverageDescription: 'Third metropolitan ring (Alcalá de Henares, Colmenar Viejo, Collado Villalba, Valdemoro, Navalcarnero, Arganda del Rey, Arroyomolinos)'
+    nominalTenTripPriceEur: 20.00
   },
   C1: {
     code: 'C1',
-    name: 'Zona C1',
     color: '#EA580C',
     monthlyPassPriceEur: 49.20,
     nominalMonthlyPriceEur: 89.50,
     tenTripPriceEur: 14.10,
-    nominalTenTripPriceEur: 23.50,
-    coverageDescription: 'Outer metropolitan region (Aranjuez, El Escorial, Guadarrama, Chinchón, San Martín de Valdeiglesias, Buitrago del Lozoya)'
+    nominalTenTripPriceEur: 23.50
   },
   C2: {
     code: 'C2',
-    name: 'Zona C2',
     color: '#DC2626',
     monthlyPassPriceEur: 49.20,
     nominalMonthlyPriceEur: 99.30,
     tenTripPriceEur: 15.90,
-    nominalTenTripPriceEur: 26.50,
-    coverageDescription: 'Border municipalities of Community of Madrid (Cercedilla, Santa María de la Alameda, Puebla de la Sierra)'
+    nominalTenTripPriceEur: 26.50
   },
   E1: {
     code: 'E1',
-    name: 'Zona E1',
     color: '#7C3AED',
     monthlyPassPriceEur: 66.35,
     nominalMonthlyPriceEur: 110.60,
     tenTripPriceEur: 18.60,
-    nominalTenTripPriceEur: 31.00,
-    coverageDescription: 'Castilla-La Mancha adjacent corridor (Guadalajara, Azuqueca de Henares, Illescas)'
+    nominalTenTripPriceEur: 31.00
   },
   E2: {
     code: 'E2',
-    name: 'Zona E2',
     color: '#9333EA',
     monthlyPassPriceEur: 79.05,
     nominalMonthlyPriceEur: 131.80,
     tenTripPriceEur: 22.80,
-    nominalTenTripPriceEur: 38.00,
-    coverageDescription: 'Castilla-La Mancha extended corridor (Talavera de la Reina, Toledo capital, Tarancón)'
+    nominalTenTripPriceEur: 38.00
   }
 };
 
 export type BasemapType = 'streets' | 'satellite' | 'gray';
 
+/**
+ * Basemap tile configuration. The translated labels come from the
+ * `madrid-transport-map.basemaps.*` keys; the attribution is a legal credit and
+ * intentionally stays in English in both languages.
+ */
 export interface BasemapOption {
   id: BasemapType;
-  name: string;
-  shortName: string;
   icon: string;
   tiles: string[];
   attribution: string;
@@ -200,8 +179,6 @@ export interface BasemapOption {
 export const BASEMAP_CONFIGS: Record<BasemapType, BasemapOption> = {
   streets: {
     id: 'streets',
-    name: 'Street View',
-    shortName: 'Street',
     icon: 'map',
     tiles: [
       'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}'
@@ -210,8 +187,6 @@ export const BASEMAP_CONFIGS: Record<BasemapType, BasemapOption> = {
   },
   satellite: {
     id: 'satellite',
-    name: 'Satellite View',
-    shortName: 'Satellite',
     icon: 'globe',
     tiles: [
       'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
@@ -220,8 +195,6 @@ export const BASEMAP_CONFIGS: Record<BasemapType, BasemapOption> = {
   },
   gray: {
     id: 'gray',
-    name: 'Light Canvas',
-    shortName: 'Light',
     icon: 'layers',
     tiles: [
       'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}'
@@ -240,4 +213,3 @@ export const ZONE_CENTERS: Record<TariffZoneCode, { coordinates: [number, number
   E1: { coordinates: [-3.25, 40.55], zoom: 9 },
   E2: { coordinates: [-4.02, 39.95], zoom: 8.5 }
 };
-

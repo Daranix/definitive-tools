@@ -1,0 +1,29 @@
+{
+  "title": "Subida y procesamiento de imágenes",
+  "actions": {
+    "removeBackground": "Eliminar el fondo",
+    "cancel": "Cancelar",
+    "download": "Descargar imagen",
+    "processAnother": "Procesar otra imagen"
+  },
+  "status": {
+    "downloadingModel": "Descargando el modelo ...",
+    "processing": "Procesando la imagen ...",
+    "loadingModel": "Cargando el archivo del modelo ..."
+  },
+  "about": {
+    "title": "Acerca de la eliminación de fondos",
+    "heading": "¿Qué es la eliminación de fondos?",
+    "description": "La eliminación de fondos es una técnica de edición digital de imágenes que separa el motivo principal de su fondo. Así se crean imágenes transparentes que puedes colocar sobre cualquier fondo nuevo."
+  },
+  "messages": {
+    "error": "Se ha producido un error al intentar eliminar el fondo. Inténtalo de nuevo."
+  },
+  "files": {
+    "output": "salida.png"
+  },
+  "seo": {
+    "title": "Eliminador de fondos",
+    "description": "Elimina fondos de imágenes al instante. Crea imágenes transparentes con aspecto profesional para tus proyectos, productos y diseños."
+  }
+}

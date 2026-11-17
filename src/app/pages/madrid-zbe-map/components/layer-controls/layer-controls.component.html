@@ -4,11 +4,11 @@
     <!-- Basemap Selector -->
     <div class="pb-3 border-b border-slate-150">
       <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-2 px-0.5">
-        Estilo de Mapa
+        {{ 'madrid-zbe-map.layers.basemapTitle' | translate }}
       </span>
       <div class="grid grid-cols-3 gap-1.5 bg-slate-100 p-1.5 rounded-2xl">
         @for (base of basemapsList; track base) {
-          @let cfg = basemapConfigs[base];
+          @let cfg = basemapConfigs()[base];
           @let isSelected = service.activeBasemap() === base;
           <button
             type="button"
@@ -28,10 +28,10 @@
     <!-- Quick Focus Presets -->
     <div class="pb-3 border-b border-slate-150 space-y-2">
       <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block px-0.5">
-        Enfoques Rápidos
+        {{ 'madrid-zbe-map.layers.quickFocus' | translate }}
       </span>
       <div>
-        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1 px-0.5">Madrid Capital</span>
+        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1 px-0.5">{{ 'madrid-zbe-map.layers.madridCapital' | translate }}</span>
         <div class="grid grid-cols-2 gap-1.5 mb-2">
           @for (zoneId of madridZones; track zoneId) {
             @let z = zonesMeta[zoneId];
@@ -41,11 +41,11 @@
               class="px-2.5 py-1.5 bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 border border-slate-200 hover:border-emerald-200 rounded-xl text-xs font-semibold flex items-center gap-2 transition-colors truncate cursor-pointer"
             >
               <span class="w-2.5 h-2.5 rounded-full shrink-0" [style.backgroundColor]="z.color"></span>
-              <span class="truncate">{{ z.shortName }}</span>
+              <span class="truncate">{{ 'madrid-zbe-map.zones.' + zoneId + '.shortName' | translate }}</span>
             </button>
           }
         </div>
-        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1 px-0.5">Corona Metropolitana</span>
+        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1 px-0.5">{{ 'madrid-zbe-map.layers.metropolitanRing' | translate }}</span>
         <div class="grid grid-cols-2 gap-1.5">
           @for (zoneId of metropolitanZones; track zoneId) {
             @let z = zonesMeta[zoneId];
@@ -55,7 +55,7 @@
               class="px-2.5 py-1.5 bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 border border-slate-200 hover:border-emerald-200 rounded-xl text-xs font-semibold flex items-center gap-2 transition-colors truncate cursor-pointer"
             >
               <span class="w-2.5 h-2.5 rounded-full shrink-0" [style.backgroundColor]="z.color"></span>
-              <span class="truncate">{{ z.shortName }}</span>
+              <span class="truncate">{{ 'madrid-zbe-map.zones.' + zoneId + '.shortName' | translate }}</span>
             </button>
           }
         </div>
@@ -65,12 +65,12 @@
     <!-- ZBE Zones Toggles -->
     <div class="space-y-3">
       <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block px-0.5">
-        Zonas de Bajas Emisiones
+        {{ 'madrid-zbe-map.layers.zonesTitle' | translate }}
       </span>
       
       <!-- Madrid Capital -->
       <div class="space-y-1.5">
-        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block px-0.5">Madrid Capital</span>
+        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block px-0.5">{{ 'madrid-zbe-map.layers.madridCapital' | translate }}</span>
         @for (zoneId of madridZones; track zoneId) {
           @let z = zonesMeta[zoneId];
           @let active = service.zoneVisibility()[zoneId];
@@ -89,10 +89,10 @@
               ></span>
               <div class="truncate">
                 <span class="text-xs font-semibold text-slate-800 block truncate leading-tight">
-                  {{ z.name }}
+                  {{ 'madrid-zbe-map.zones.' + zoneId + '.name' | translate }}
                 </span>
                 <span class="text-[10px] text-slate-500 block truncate leading-tight mt-0.5">
-                  {{ z.restrictionLevel }}
+                  {{ 'madrid-zbe-map.zones.' + zoneId + '.restrictionLevel' | translate }}
                 </span>
               </div>
             </div>
@@ -116,7 +116,7 @@
 
       <!-- Corona Metropolitana -->
       <div class="space-y-1.5 pt-1">
-        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block px-0.5">Corona Metropolitana</span>
+        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block px-0.5">{{ 'madrid-zbe-map.layers.metropolitanRing' | translate }}</span>
         @for (zoneId of metropolitanZones; track zoneId) {
           @let z = zonesMeta[zoneId];
           @let active = service.zoneVisibility()[zoneId];
@@ -135,10 +135,10 @@
               ></span>
               <div class="truncate">
                 <span class="text-xs font-semibold text-slate-800 block truncate leading-tight">
-                  {{ z.name }}
+                  {{ 'madrid-zbe-map.zones.' + zoneId + '.name' | translate }}
                 </span>
                 <span class="text-[10px] text-slate-500 block truncate leading-tight mt-0.5">
-                  {{ z.restrictionLevel }}
+                  {{ 'madrid-zbe-map.zones.' + zoneId + '.restrictionLevel' | translate }}
                 </span>
               </div>
             </div>
@@ -164,7 +164,7 @@
     <!-- POI Toggles: Cameras & Parkings -->
     <div class="pt-3 border-t border-slate-150 space-y-2">
       <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block px-0.5">
-        Puntos de Control e Infraestructura
+        {{ 'madrid-zbe-map.layers.poiTitle' | translate }}
       </span>
 
       <!-- Cameras Toggle -->
@@ -180,8 +180,8 @@
             <lucide-icon name="camera" class="w-4 h-4"></lucide-icon>
           </div>
           <div>
-            <span class="text-xs font-semibold text-slate-800 block">Cámaras de Acceso (OCR)</span>
-            <span class="text-[10px] text-slate-500 block">Puntos de control de matrículas</span>
+            <span class="text-xs font-semibold text-slate-800 block">{{ 'madrid-zbe-map.layers.camerasLabel' | translate }}</span>
+            <span class="text-[10px] text-slate-500 block">{{ 'madrid-zbe-map.layers.camerasHint' | translate }}</span>
           </div>
         </div>
         <div
@@ -211,8 +211,8 @@
             <lucide-icon name="circle-parking" class="w-4 h-4"></lucide-icon>
           </div>
           <div>
-            <span class="text-xs font-semibold text-slate-800 block">Aparcamientos Disuasorios</span>
-            <span class="text-[10px] text-slate-500 block">Park & Ride conectados a Metro/Tren</span>
+            <span class="text-xs font-semibold text-slate-800 block">{{ 'madrid-zbe-map.layers.parkingsLabel' | translate }}</span>
+            <span class="text-[10px] text-slate-500 block">{{ 'madrid-zbe-map.layers.parkingsHint' | translate }}</span>
           </div>
         </div>
         <div
@@ -233,8 +233,8 @@
     <!-- Opacity Slider -->
     <div class="pt-3 border-t border-slate-150">
       <div class="flex items-center justify-between text-xs mb-1.5 px-0.5">
-        <span class="font-medium text-slate-600">Opacidad de Zonas</span>
-        <span class="font-bold text-slate-800">{{ (service.zoneOpacity() * 100).toFixed(0) }}%</span>
+        <span class="font-medium text-slate-600">{{ 'madrid-zbe-map.layers.opacityLabel' | translate }}</span>
+        <span class="font-bold text-slate-800">{{ i18n.formatPercent(service.zoneOpacity(), { maximumFractionDigits: 0 }) }}</span>
       </div>
       <input
         type="range"
@@ -244,7 +244,7 @@
         [value]="service.zoneOpacity()"
         (input)="onOpacityChange($event)"
         class="w-full accent-emerald-600 h-1.5 bg-slate-200 rounded-lg cursor-pointer"
-        aria-label="Ajustar transparencia de capas de zonas"
+        [attr.aria-label]="'madrid-zbe-map.layers.opacityAria' | translate"
       />
     </div>
   </div>
@@ -260,13 +260,13 @@
     >
       <div class="flex items-center gap-2">
         <lucide-icon name="layers" class="w-4 h-4 text-emerald-600"></lucide-icon>
-        <span class="text-xs font-bold text-slate-800 uppercase tracking-wide">Capas & Controles</span>
+        <span class="text-xs font-bold text-slate-800 uppercase tracking-wide">{{ 'madrid-zbe-map.layers.title' | translate }}</span>
       </div>
       <button
         type="button"
         class="text-slate-400 hover:text-slate-600 p-0.5 rounded-sm transition-transform"
         [class.rotate-180]="isCollapsed()"
-        aria-label="Expandir o contraer panel de capas"
+        [attr.aria-label]="'madrid-zbe-map.layers.toggleAria' | translate"
       >
         <lucide-icon name="chevron-down" class="w-4 h-4"></lucide-icon>
       </button>
@@ -277,11 +277,11 @@
         <!-- Basemap Style Selector -->
         <div>
           <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5 px-0.5">
-            Vista del Mapa
+            {{ 'madrid-zbe-map.layers.mapViewTitle' | translate }}
           </span>
           <div class="grid grid-cols-3 gap-1 bg-slate-100 p-1 rounded-xl">
             @for (base of basemapsList; track base) {
-              @let cfg = basemapConfigs[base];
+              @let cfg = basemapConfigs()[base];
               @let isSelected = service.activeBasemap() === base;
               <button
                 type="button"
@@ -302,10 +302,10 @@
         <!-- Presets -->
         <div class="space-y-1.5">
           <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block px-0.5">
-            Enfoque Rápido
+            {{ 'madrid-zbe-map.layers.quickFocusShort' | translate }}
           </span>
           <div>
-            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1 px-0.5">Madrid Capital</span>
+            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1 px-0.5">{{ 'madrid-zbe-map.layers.madridCapital' | translate }}</span>
             <div class="grid grid-cols-2 gap-1 mb-2">
               @for (zoneId of madridZones; track zoneId) {
                 @let z = zonesMeta[zoneId];
@@ -315,11 +315,11 @@
                   class="px-2 py-1 bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 border border-slate-200 hover:border-emerald-200 rounded-lg text-[11px] font-semibold flex items-center gap-1.5 transition-colors truncate cursor-pointer"
                 >
                   <span class="w-2 h-2 rounded-full shrink-0" [style.backgroundColor]="z.color"></span>
-                  <span class="truncate">{{ z.shortName }}</span>
+                  <span class="truncate">{{ 'madrid-zbe-map.zones.' + zoneId + '.shortName' | translate }}</span>
                 </button>
               }
             </div>
-            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1 px-0.5">Corona Metropolitana</span>
+            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1 px-0.5">{{ 'madrid-zbe-map.layers.metropolitanRing' | translate }}</span>
             <div class="grid grid-cols-2 gap-1">
               @for (zoneId of metropolitanZones; track zoneId) {
                 @let z = zonesMeta[zoneId];
@@ -329,7 +329,7 @@
                   class="px-2 py-1 bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 border border-slate-200 hover:border-emerald-200 rounded-lg text-[11px] font-semibold flex items-center gap-1.5 transition-colors truncate cursor-pointer"
                 >
                   <span class="w-2 h-2 rounded-full shrink-0" [style.backgroundColor]="z.color"></span>
-                  <span class="truncate">{{ z.shortName }}</span>
+                  <span class="truncate">{{ 'madrid-zbe-map.zones.' + zoneId + '.shortName' | translate }}</span>
                 </button>
               }
             </div>
@@ -339,12 +339,12 @@
         <!-- ZBE Zones Toggles -->
         <div class="space-y-2.5">
           <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block px-0.5">
-            Zonas de Bajas Emisiones
+            {{ 'madrid-zbe-map.layers.zonesTitle' | translate }}
           </span>
 
           <!-- Madrid Capital -->
           <div class="space-y-1">
-            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block px-0.5">Madrid Capital</span>
+            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block px-0.5">{{ 'madrid-zbe-map.layers.madridCapital' | translate }}</span>
             @for (zoneId of madridZones; track zoneId) {
               @let z = zonesMeta[zoneId];
               @let active = service.zoneVisibility()[zoneId];
@@ -363,10 +363,10 @@
                   ></span>
                   <div class="truncate">
                     <span class="text-xs font-semibold text-slate-800 block truncate leading-tight">
-                      {{ z.name }}
+                      {{ 'madrid-zbe-map.zones.' + zoneId + '.name' | translate }}
                     </span>
                     <span class="text-[10px] text-slate-500 block truncate leading-tight">
-                      {{ z.restrictionLevel }}
+                      {{ 'madrid-zbe-map.zones.' + zoneId + '.restrictionLevel' | translate }}
                     </span>
                   </div>
                 </div>
@@ -390,7 +390,7 @@
 
           <!-- Corona Metropolitana -->
           <div class="space-y-1 pt-1">
-            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block px-0.5">Corona Metropolitana</span>
+            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block px-0.5">{{ 'madrid-zbe-map.layers.metropolitanRing' | translate }}</span>
             @for (zoneId of metropolitanZones; track zoneId) {
               @let z = zonesMeta[zoneId];
               @let active = service.zoneVisibility()[zoneId];
@@ -409,10 +409,10 @@
                   ></span>
                   <div class="truncate">
                     <span class="text-xs font-semibold text-slate-800 block truncate leading-tight">
-                      {{ z.name }}
+                      {{ 'madrid-zbe-map.zones.' + zoneId + '.name' | translate }}
                     </span>
                     <span class="text-[10px] text-slate-500 block truncate leading-tight">
-                      {{ z.restrictionLevel }}
+                      {{ 'madrid-zbe-map.zones.' + zoneId + '.restrictionLevel' | translate }}
                     </span>
                   </div>
                 </div>
@@ -438,7 +438,7 @@
         <!-- Infrastructure Toggles -->
         <div class="pt-2.5 border-t border-slate-150 space-y-1.5">
           <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block px-0.5">
-            Puntos Clave
+            {{ 'madrid-zbe-map.layers.keyPointsTitle' | translate }}
           </span>
 
           <!-- Cameras -->
@@ -453,7 +453,7 @@
               <div class="w-6 h-6 rounded-lg bg-sky-500 text-white flex items-center justify-center shrink-0 shadow-2xs">
                 <lucide-icon name="camera" class="w-3.5 h-3.5"></lucide-icon>
               </div>
-              <span class="text-xs font-semibold text-slate-800">Cámaras OCR</span>
+              <span class="text-xs font-semibold text-slate-800">{{ 'madrid-zbe-map.layers.camerasShort' | translate }}</span>
             </div>
             <div
               class="w-10 h-6 rounded-full transition-colors duration-200 ease-in-out p-0.5 flex items-center shrink-0 border"
@@ -481,7 +481,7 @@
               <div class="w-6 h-6 rounded-lg bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-2xs">
                 <lucide-icon name="circle-parking" class="w-3.5 h-3.5"></lucide-icon>
               </div>
-              <span class="text-xs font-semibold text-slate-800">Aparcamientos P+R</span>
+              <span class="text-xs font-semibold text-slate-800">{{ 'madrid-zbe-map.layers.parkingsShort' | translate }}</span>
             </div>
             <div
               class="w-10 h-6 rounded-full transition-colors duration-200 ease-in-out p-0.5 flex items-center shrink-0 border"
@@ -501,8 +501,8 @@
         <!-- Opacity Slider -->
         <div class="pt-2 border-t border-slate-150">
           <div class="flex items-center justify-between text-[11px] mb-1 px-0.5">
-            <span class="text-slate-600 font-medium">Opacidad Zonas</span>
-            <span class="font-bold text-slate-800">{{ (service.zoneOpacity() * 100).toFixed(0) }}%</span>
+            <span class="text-slate-600 font-medium">{{ 'madrid-zbe-map.layers.opacityShort' | translate }}</span>
+            <span class="font-bold text-slate-800">{{ i18n.formatPercent(service.zoneOpacity(), { maximumFractionDigits: 0 }) }}</span>
           </div>
           <input
             type="range"
@@ -512,7 +512,7 @@
             [value]="service.zoneOpacity()"
             (input)="onOpacityChange($event)"
             class="w-full accent-emerald-600 h-1.5 bg-slate-200 rounded-lg cursor-pointer"
-            aria-label="Ajustar opacidad de zonas"
+            [attr.aria-label]="'madrid-zbe-map.layers.opacityAriaShort' | translate"
           />
         </div>
       </div>

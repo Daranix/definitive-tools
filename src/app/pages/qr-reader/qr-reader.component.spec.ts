@@ -5,6 +5,7 @@ import { QrReaderComponent } from './qr-reader.component';
 import { MetadataService } from '@/app/services/metadata.service';
 import { ToastService } from '@/app/services/toast.service';
 import { USED_ICONS } from '@/app/utils/constants';
+import { provideI18nTesting } from '@/app/i18n/i18n.testing';
 
 describe('QrReaderComponent', () => {
   let fixture: ComponentFixture<QrReaderComponent>;

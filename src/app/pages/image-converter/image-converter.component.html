@@ -3,9 +3,9 @@
 
   <main class="grow container mx-auto px-4 py-8 max-w-6xl">
     <div class="mb-8 text-center md:text-left">
-      <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Client-Side Image Converter</h1>
+      <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">{{ 'image-converter.title' | translate }}</h1>
       <p class="mt-2 text-md text-gray-600">
-        Convert and resize your images directly in your browser. Powered by WebAssembly for 100% privacy and local-only processing.
+        {{ 'image-converter.subtitle' | translate }}
       </p>
     </div>
 
@@ -35,7 +35,7 @@
                     {{ file()?.name }}
                   </h2>
                   <p class="text-xs text-gray-500">
-                    Original Size: {{ (originalSize() | number:'1.0-0') }} bytes ({{ (originalSize() / 1024) | number:'1.1-1' }} KB)
+                    {{ originalSizeLabel() }}
                   </p>
                 </div>
               </div>
@@ -59,7 +59,7 @@
                     }"
                     class="px-4 py-1.5 text-xs font-semibold rounded-lg transition-all flex items-center gap-2 border border-transparent">
                     <lucide-angular name="columns-2" class="h-3.5 w-3.5"></lucide-angular>
-                    Side by Side
+                    {{ 'image-converter.view.sideBySide' | translate }}
                   </button>
                   <button 
                     (click)="viewMode.set('slider')"
@@ -69,7 +69,7 @@
                     }"
                     class="px-4 py-1.5 text-xs font-semibold rounded-lg transition-all flex items-center gap-2 border border-transparent">
                     <lucide-angular name="split" class="h-3.5 w-3.5"></lucide-angular>
-                    Split Slider
+                    {{ 'image-converter.view.slider' | translate }}
                   </button>
                 </div>
               </div>
@@ -79,16 +79,16 @@
             @if (viewMode() === 'slider' && outputUrl() && !converting()) {
               <!-- Split Slider View -->
               <div class="flex flex-col gap-2">
-                <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Before & After Comparison</span>
+                <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">{{ 'image-converter.view.comparison' | translate }}</span>
                 <div class="relative bg-gray-950 rounded-xl overflow-hidden border border-gray-150 aspect-video flex items-center justify-center select-none shadow-inner group">
                   <!-- Labels -->
-                  <span class="absolute top-3 left-3 px-2 py-1 bg-black/60 text-[10px] font-bold text-white rounded-md uppercase tracking-wider backdrop-blur-xs z-10 pointer-events-none">Original</span>
-                  <span class="absolute top-3 right-3 px-2 py-1 bg-indigo-600/90 text-[10px] font-bold text-white rounded-md uppercase tracking-wider backdrop-blur-xs z-10 pointer-events-none">Converted</span>
+                  <span class="absolute top-3 left-3 px-2 py-1 bg-black/60 text-[10px] font-bold text-white rounded-md uppercase tracking-wider backdrop-blur-xs z-10 pointer-events-none">{{ 'image-converter.view.original' | translate }}</span>
+                  <span class="absolute top-3 right-3 px-2 py-1 bg-indigo-600/90 text-[10px] font-bold text-white rounded-md uppercase tracking-wider backdrop-blur-xs z-10 pointer-events-none">{{ 'image-converter.view.converted' | translate }}</span>
 
                   <!-- Bottom Layer: Original Image -->
                   <img 
                     [src]="fileUrl()" 
-                    alt="Original preview" 
+                    [alt]="'image-converter.view.originalAlt' | translate" 
                     class="max-w-full max-h-full object-contain pointer-events-none select-none" />
 
                   <!-- Top Layer: Converted Image (Clipped) -->
@@ -97,7 +97,7 @@
                     [style.clip-path]="'inset(0 0 0 ' + sliderPercent() + '%)'">
                     <img 
                       [src]="outputUrl()" 
-                      alt="Converted preview" 
+                      [alt]="'image-converter.view.convertedAlt' | translate" 
                       class="max-w-full max-h-full object-contain pointer-events-none select-none" />
                   </div>
 
@@ -125,12 +125,12 @@
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Input Preview -->
                 <div class="flex flex-col gap-2">
-                  <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Source Image</span>
+                  <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">{{ 'image-converter.preview.source' | translate }}</span>
                   <div class="relative bg-gray-50 rounded-xl overflow-hidden border border-gray-100 aspect-video flex items-center justify-center p-2 group">
                     @if (fileUrl()) {
                       <img 
                         [src]="fileUrl()" 
-                        alt="Source preview" 
+                        [alt]="'image-converter.preview.sourceAlt' | translate" 
                         class="max-w-full max-h-full object-contain rounded-lg shadow-xs transition group-hover:scale-105" />
                     }
                   </div>
@@ -138,7 +138,7 @@
 
                 <!-- Output Preview -->
                 <div class="flex flex-col gap-2">
-                  <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Converted Result</span>
+                  <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">{{ 'image-converter.preview.result' | translate }}</span>
                   <div class="relative bg-gray-50 rounded-xl overflow-hidden border border-gray-100 aspect-video flex items-center justify-center p-2">
                     @if (converting()) {
                       <div class="flex flex-col items-center gap-3">
@@ -146,21 +146,21 @@
                           <div class="w-12 h-12 rounded-full border-4 border-indigo-100 border-t-indigo-600 animate-spin"></div>
                         </div>
                         <div class="text-center">
-                          <p class="text-sm font-semibold text-gray-700">Converting...</p>
+                          <p class="text-sm font-semibold text-gray-700">{{ 'image-converter.status.converting' | translate }}</p>
                           @if (progress() > 0) {
-                            <p class="text-xs text-indigo-600 font-mono mt-1">{{ progress() }}%</p>
+                            <p class="text-xs text-indigo-600 font-mono mt-1">{{ progressLabel() }}</p>
                           }
                         </div>
                       </div>
                     } @else if (outputUrl()) {
                       <img 
                         [src]="outputUrl()" 
-                        alt="Output preview" 
+                        [alt]="'image-converter.preview.resultAlt' | translate" 
                         class="max-w-full max-h-full object-contain rounded-lg shadow-xs" />
                     } @else {
                       <div class="flex flex-col items-center text-center p-4 text-gray-400">
                         <lucide-angular name="arrow-right-left" class="h-8 w-8 mb-2 opacity-40"></lucide-angular>
-                        <p class="text-xs">Adjust configurations and hit "Convert Image" to render the output.</p>
+                        <p class="text-xs">{{ 'image-converter.preview.emptyHint' | translate }}</p>
                       </div>
                     }
                   </div>
@@ -176,13 +176,13 @@
                     <lucide-angular name="check" class="h-5 w-5"></lucide-angular>
                   </div>
                   <div>
-                    <h4 class="text-sm font-semibold text-gray-900">Conversion Successful!</h4>
+                    <h4 class="text-sm font-semibold text-gray-900">{{ 'image-converter.result.successTitle' | translate }}</h4>
                     <p class="text-xs text-gray-600 mt-0.5">
-                      New Size: {{ (convertedSize() / 1024) | number:'1.1-1' }} KB
+                      {{ 'image-converter.result.newSize' | translate: { kilobytes: convertedSizeLabel() } }}
                       @if (sizeChangePercent() > 0) {
-                        • <span class="text-emerald-600 font-bold">Saved {{ sizeChangePercent() }}%</span>
+                        • <span class="text-emerald-600 font-bold">{{ 'image-converter.result.saved' | translate: { percent: sizeChangePercentLabel() } }}</span>
                       } @else if (sizeChangePercent() < 0) {
-                        • <span class="text-amber-600 font-bold">Increased by {{ -sizeChangePercent() }}%</span>
+                        • <span class="text-amber-600 font-bold">{{ 'image-converter.result.increased' | translate: { percent: sizeChangePercentLabel() } }}</span>
                       }
                     </p>
                   </div>
@@ -192,7 +192,7 @@
                   (click)="handleDownload()" 
                   class="w-full md:w-auto px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl shadow-xs hover:shadow-sm transition flex items-center justify-center gap-2 text-sm font-semibold">
                   <lucide-angular name="download" class="h-4 w-4"></lucide-angular>
-                  Download Output
+                  {{ 'image-converter.result.download' | translate }}
                 </button>
               </div>
             }
@@ -206,7 +206,7 @@
             class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-50 transition border-b border-gray-50">
             <div class="flex items-center gap-2">
               <lucide-angular name="sliders" class="h-4 w-4 text-gray-400"></lucide-angular>
-              <span class="text-sm font-semibold text-gray-700">Execution Console Logger</span>
+              <span class="text-sm font-semibold text-gray-700">{{ 'image-converter.console.title' | translate }}</span>
             </div>
             <lucide-angular 
               name="chevron-down" 
@@ -218,7 +218,7 @@
           @if (showLogs()) {
             <div class="p-6 bg-gray-950 font-mono text-[11px] leading-relaxed text-emerald-400 h-64 overflow-y-auto flex flex-col gap-1">
               @if (logs().length === 0) {
-                <span class="text-gray-500 italic">No logs recorded yet. Start converting to see logs.</span>
+                <span class="text-gray-500 italic">{{ 'image-converter.console.empty' | translate }}</span>
               } @else {
                 @for (log of logs(); track $index) {
                   <div>{{ log }}</div>
@@ -232,11 +232,11 @@
       <!-- Configurations Sidebar (Right Panel) -->
       <div class="lg:col-span-4 flex flex-col gap-6">
         <div class="bg-white rounded-2xl border border-gray-100 shadow-xs p-6 flex flex-col gap-6">
-          <h3 class="text-lg font-bold text-gray-900 border-b border-gray-50 pb-3">Conversion Options</h3>
+          <h3 class="text-lg font-bold text-gray-900 border-b border-gray-50 pb-3">{{ 'image-converter.options.title' | translate }}</h3>
 
           <!-- Format Choice -->
           <div class="flex flex-col gap-2">
-            <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Target Format</label>
+            <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">{{ 'image-converter.options.targetFormat' | translate }}</label>
             <div class="grid grid-cols-3 gap-2">
               @for (fmt of formats; track fmt) {
                 <button 
@@ -257,51 +257,51 @@
           @if (optionsForm.targetFormat().value() === 'webp' || optionsForm.targetFormat().value() === 'jpeg') {
             <div class="flex flex-col gap-3">
               <div class="flex items-center justify-between">
-                <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Quality Compression</label>
+                <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">{{ 'image-converter.options.quality' | translate }}</label>
                 <span class="text-xs font-mono font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-sm">
-                  {{ optionsForm.quality().value() }}%
+                  {{ qualityLabel() }}
                 </span>
               </div>
               <input 
                 type="range" 
                 [formField]="optionsForm.quality"
                 class="w-full accent-indigo-600 h-1.5 bg-gray-100 rounded-lg appearance-none cursor-pointer" />
-              <span class="text-[10px] text-gray-400">Lower quality results in smaller files, but can blur high-frequency details.</span>
+              <span class="text-[10px] text-gray-400">{{ 'image-converter.options.qualityHint' | translate }}</span>
             </div>
           }
 
           <!-- Image Resizing -->
           <div class="flex flex-col gap-3">
-            <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Resize Dimensions (Optional)</label>
+            <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">{{ 'image-converter.options.resize' | translate }}</label>
             <div class="grid grid-cols-2 gap-3">
               <div class="flex flex-col gap-1.5">
-                <span class="text-[10px] text-gray-400 font-semibold uppercase">Width (px)</span>
+                <span class="text-[10px] text-gray-400 font-semibold uppercase">{{ 'image-converter.options.width' | translate }}</span>
                 <input 
                   type="number" 
                   [formField]="optionsForm.resizeWidth"
-                  placeholder="Auto"
+                  [placeholder]="'image-converter.options.auto' | translate"
                   class="w-full text-sm py-2 px-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition outline-hidden" />
                 @if (optionsForm.resizeWidth().invalid() && optionsForm.resizeWidth().touched()) {
                   <span class="text-[10px] text-red-500 font-medium">
-                    {{ optionsForm.resizeWidth().errors()[0]?.message || 'Invalid width' }}
+                    {{ (optionsForm.resizeWidth().errors()[0]?.message || 'image-converter.validation.widthPositive') | translate }}
                   </span>
                 }
               </div>
               <div class="flex flex-col gap-1.5">
-                <span class="text-[10px] text-gray-400 font-semibold uppercase">Height (px)</span>
+                <span class="text-[10px] text-gray-400 font-semibold uppercase">{{ 'image-converter.options.height' | translate }}</span>
                 <input 
                   type="number" 
                   [formField]="optionsForm.resizeHeight"
-                  placeholder="Auto"
+                  [placeholder]="'image-converter.options.auto' | translate"
                   class="w-full text-sm py-2 px-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition outline-hidden" />
                 @if (optionsForm.resizeHeight().invalid() && optionsForm.resizeHeight().touched()) {
                   <span class="text-[10px] text-red-500 font-medium">
-                    {{ optionsForm.resizeHeight().errors()[0]?.message || 'Invalid height' }}
+                    {{ (optionsForm.resizeHeight().errors()[0]?.message || 'image-converter.validation.heightPositive') | translate }}
                   </span>
                 }
               </div>
             </div>
-            <span class="text-[10px] text-gray-400">Leave any dimensions blank to auto-calculate maintaining the native aspect ratio.</span>
+            <span class="text-[10px] text-gray-400">{{ 'image-converter.options.resizeHint' | translate }}</span>
           </div>
         </div>
       </div>

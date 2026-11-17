@@ -1,0 +1,500 @@
+{
+  "shared": {
+    "copy": "Copiar",
+    "copiedLabel": "Copiado",
+    "copied": "Resultado copiado al portapapeles",
+    "copyFailed": "No se pudo copiar el resultado",
+    "notAvailable": "N/A",
+    "formError": "Revisa los datos introducidos en el formulario.",
+    "removeItem": "Eliminar {{ name }}"
+  },
+  "ruleOfThree": {
+    "badge": "Cálculo proporcional de precisión",
+    "title": "Calculadora de Regla de 3",
+    "subtitle": "Resuelve reglas de tres simples directas, inversas y compuestas mixtas con fórmula y desglose paso a paso.",
+    "seo": {
+      "title": "Calculadora de Regla de 3 Online - Directa, Inversa y Compuesta",
+      "description": "Calcula reglas de tres simples directas, inversas y compuestas mixtas paso a paso con alta precisión decimal.",
+      "keywords": "regla de tres, regla de 3 directa, regla de 3 inversa, regla de 3 compuesta, calculadora proporcionalidad"
+    },
+    "tabs": {
+      "ariaLabel": "Tipo de regla de tres",
+      "simpleDirect": "Simple Directa",
+      "simpleInverse": "Simple Inversa",
+      "compound": "Compuesta (Directa / Inversa / Mixta)"
+    },
+    "examples": {
+      "label": "Ejemplos:",
+      "recipe": "Receta (directa)",
+      "speed": "Velocidad y tiempo (inversa)",
+      "factory": "Obra mixta (compuesta)",
+      "logistics": "Transporte (compuesta)"
+    },
+    "decimals": {
+      "label": "Decimales:"
+    },
+    "actions": {
+      "reset": "Reiniciar",
+      "swapRows": "Intercambiar filas",
+      "invertCases": "Invertir casos",
+      "addCondition": "Añadir magnitud"
+    },
+    "simple": {
+      "directTitle": "Proporción Directa",
+      "directDescription": "A mayor valor de la primera magnitud, mayor valor de la segunda.",
+      "inverseTitle": "Proporción Inversa",
+      "inverseDescription": "A mayor valor de la primera magnitud, menor valor de la segunda.",
+      "labelKnown": "Nombre de magnitud 1",
+      "labelResult": "Nombre de magnitud 2",
+      "placeholderKnown": "Ej. Unidades",
+      "placeholderResult": "Ej. Precio (€)",
+      "fieldA": "Si {{ name }} es (A)",
+      "fieldB": "Entonces {{ name }} es (B)",
+      "fieldC": "Para {{ name }} igual a (C)",
+      "unknown": "Incógnita {{ name }} (X)"
+    },
+    "compound": {
+      "title": "Regla de 3 Compuesta",
+      "description": "Combina entre 2 y 6 magnitudes con relación directa o inversa respecto al objetivo.",
+      "targetLabel": "Magnitud a calcular (objetivo)",
+      "targetPlaceholder": "Ej. Días",
+      "baseLabel": "Valor conocido de referencia",
+      "rowName": "Magnitud {{ index }}",
+      "baseCase": "Caso base",
+      "newCase": "Nuevo caso",
+      "relation": "Relación",
+      "relationDirect": "Directa",
+      "relationInverse": "Inversa"
+    },
+    "result": {
+      "title": "Resultado calculado",
+      "unknownFallback": "Incógnita X",
+      "stepsTitle": "Desglose paso a paso"
+    },
+    "defaults": {
+      "unitKnown": "Unidades",
+      "unitResult": "Precio (€)",
+      "compoundTarget": "Días",
+      "workers": "Trabajadores",
+      "hoursPerDay": "Horas al día",
+      "metersBuilt": "Metros construidos",
+      "defaultTarget": "Resultado",
+      "magnitudeA": "Magnitud A",
+      "magnitudeB": "Magnitud B",
+      "magnitudeIndexed": "Magnitud {{ index }}",
+      "servings": "Comensales",
+      "flour": "Harina (g)",
+      "speed": "Velocidad (km/h)",
+      "time": "Tiempo (horas)",
+      "trucks": "Camiones",
+      "distance": "Distancia (km)",
+      "cost": "Coste (€)"
+    },
+    "steps": {
+      "simpleDirect": "Planteamiento directo: si {{ a }} → {{ b }}, entonces {{ c }} → X.",
+      "simpleInverse": "Planteamiento inverso: si {{ a }} → {{ b }}, entonces {{ c }} → X.",
+      "crossMultiply": "Multiplicación en cruz: X = ({{ left }} × {{ right }}) / {{ denominator }}.",
+      "constantProduct": "Producto constante: X = ({{ left }} × {{ right }}) / {{ denominator }}.",
+      "intermediate": "Operación intermedia: {{ numerator }} / {{ denominator }} = {{ result }}.",
+      "compoundDirect": "{{ name }} (directa): factor = {{ expression }} = {{ factor }}.",
+      "compoundInverse": "{{ name }} (inversa): factor = {{ expression }} = {{ factor }}.",
+      "compoundResult": "Resultado ({{ target }}): {{ base }} × {{ factors }} = {{ result }}."
+    },
+    "errors": {
+      "missingValues": "Introduce todos los valores numéricos (A, B y C) para calcular el resultado.",
+      "directZero": "El valor A no puede ser cero en una regla de tres directa.",
+      "inverseZero": "El valor C no puede ser cero en una regla de tres inversa.",
+      "compoundRange": "La regla de tres compuesta requiere entre 2 y 6 magnitudes.",
+      "baseValue": "Introduce un valor base válido para la magnitud objetivo.",
+      "rowValues": "Revisa los valores numéricos de \"{{ name }}\".",
+      "directKnownZero": "El valor conocido de \"{{ name }}\" no puede ser cero en relación directa.",
+      "inverseTargetZero": "El valor objetivo de \"{{ name }}\" no puede ser cero en relación inversa."
+    },
+    "validation": {
+      "number": "Introduce un número válido.",
+      "value": "Introduce un valor numérico válido.",
+      "relation": "Selecciona una relación válida.",
+      "directZeroField": "El valor A no puede ser cero en una regla de tres directa.",
+      "inverseZeroField": "El valor C no puede ser cero en una regla de tres inversa.",
+      "baseValue": "Introduce un valor base válido para la magnitud objetivo.",
+      "compoundRange": "La regla de tres compuesta requiere entre 2 y 6 magnitudes.",
+      "baseFor": "Introduce un valor base válido para \"{{ name }}\".",
+      "directZeroFor": "El valor conocido de \"{{ name }}\" no puede ser cero en relación directa.",
+      "targetFor": "Introduce un nuevo valor válido para \"{{ name }}\".",
+      "inverseZeroFor": "El valor objetivo de \"{{ name }}\" no puede ser cero en relación inversa."
+    }
+  },
+  "netSalary": {
+    "badge": "Nómina España 2026 (IRPF + Seguridad Social)",
+    "title": "Calculadora de Salario Neto España 2026",
+    "subtitle": "Estima tu sueldo neto mensual y anual con cotizaciones a la Seguridad Social 2026, cuota de solidaridad, MEI y retención de IRPF.",
+    "seo": {
+      "title": "Calculadora de Salario Neto España 2026 - IRPF y Seguridad Social",
+      "description": "Calcula tu sueldo neto mensual y anual en España para 2026 incluyendo Seguridad Social, cuota de solidaridad, MEI y retención de IRPF.",
+      "keywords": "calculadora salario neto espana, sueldo neto 2026, calcular irpf, seguridad social, cuota solidaridad"
+    },
+    "sectionTitle": "Datos salariales y personales",
+    "fields": {
+      "grossAnnual": "Salario bruto anual (€)",
+      "grossAnnualAria": "Selector deslizante salario bruto anual",
+      "extraPayments": "Número de pagas extra",
+      "extraPaymentsHint": "0 = 12 pagas, 2 = 14 pagas · Total: {{ total }} pagas/año",
+      "contractType": "Tipo de contrato",
+      "contractIndefinite": "Indefinido (1,55 % desempleo)",
+      "contractTemporary": "Temporal (1,60 % desempleo)",
+      "region": "Comunidad Autónoma",
+      "regionGeneral": "Referencia general",
+      "regionMadrid": "Comunidad de Madrid",
+      "regionCataluna": "Cataluña",
+      "regionAndalucia": "Andalucía",
+      "regionValencia": "Comunidad Valenciana",
+      "regionGalicia": "Galicia",
+      "age": "Tramo de edad",
+      "ageUnder65": "Menor de 65 años",
+      "age65to74": "De 65 a 74 años",
+      "age75plus": "75 años o más",
+      "family": "Situación familiar",
+      "familySingle": "Soltero/a, viudo/a o divorciado/a",
+      "familyMarriedLowIncome": "Casado/a (cónyuge < 1.500 €/año)",
+      "familyOther": "Casado/a (otras situaciones)",
+      "disability": "Discapacidad",
+      "disabilityNone": "Sin discapacidad",
+      "disability33to64": "Grado del 33 % al 64 %",
+      "disability65plus": "Grado del 65 % o superior",
+      "childrenTotal": "Hijos a cargo (0–10)",
+      "childrenUnder3": "Menores de 3 años",
+      "sharedCustody": "Descendientes prorrateados al 50 % (custodia compartida o dos declarantes)",
+      "geographicMobility": "Movilidad geográfica (+2.000 € de gasto deducible)"
+    },
+    "kpi": {
+      "netMonthly": "Salario neto mensual ({{ count }} pagas)",
+      "extraPaymentOne": "+ {{ count }} paga extra de {{ amount }}",
+      "extraPaymentMany": "+ {{ count }} pagas extra de {{ amount }}",
+      "netAnnual": "Salario neto anual",
+      "irpfWithholding": "Retención IRPF",
+      "socialSecurity": "Seguridad Social"
+    },
+    "distribution": {
+      "title": "Distribución del salario bruto",
+      "gross": "Bruto: {{ amount }}",
+      "net": "Neto",
+      "irpf": "IRPF",
+      "socialSecurity": "Seg. Social"
+    },
+    "table": {
+      "title": "Desglose anual y mensual",
+      "concept": "Concepto",
+      "annual": "Anual",
+      "perPayment": "Por paga ({{ count }})",
+      "grossSalary": "Salario bruto",
+      "socialSecurity": "Seguridad Social (base {{ base }})",
+      "solidarityIncluded": "Incluye {{ amount }} de cuota de solidaridad 2026",
+      "irpf": "IRPF estimado ({{ percent }})",
+      "irpfBase": "Base liquidable: {{ base }} · Mínimo personal/familiar: {{ minimum }}",
+      "art20": "Reducción rendimientos trabajo (Art. 20): {{ amount }}",
+      "netSalary": "Salario neto percibido"
+    },
+    "disclaimer": "Cálculo orientativo basado en las tablas de referencia del IRPF y las bases y cuota de solidaridad de la Seguridad Social para 2026 (base máxima {{ maxBase }}/mes y MEI del {{ meiRate }}). No sustituye al algoritmo oficial de retenciones de la AEAT ni contempla deducciones específicas adicionales.",
+    "errors": {
+      "grossNegative": "El salario bruto anual debe ser un importe mayor o igual a 0 €.",
+      "extraPaymentsRange": "El número de pagas extra debe ser un entero entre 0 y 12.",
+      "childrenInvalid": "El número de hijos a cargo debe ser un valor numérico válido."
+    },
+    "validation": {
+      "grossRequired": "Introduce el salario bruto anual.",
+      "grossNegative": "El salario bruto anual no puede ser negativo.",
+      "grossMax": "El salario bruto anual no puede superar 2.000.000 €.",
+      "extraRequired": "Introduce el número de pagas extra.",
+      "extraInteger": "El número de pagas extra debe ser un número entero.",
+      "extraMin": "El mínimo de pagas extra es 0.",
+      "extraMax": "El máximo de pagas extra es 12.",
+      "region": "Selecciona una comunidad autónoma válida.",
+      "age": "Selecciona un tramo de edad válido.",
+      "contract": "Selecciona un tipo de contrato válido.",
+      "family": "Selecciona una situación familiar válida.",
+      "childrenRequired": "Introduce el número de hijos a cargo.",
+      "childrenInteger": "El número de hijos debe ser un entero.",
+      "childrenMin": "No puede ser negativo.",
+      "childrenMax": "El máximo admitido es 10 hijos.",
+      "under3Required": "Introduce los hijos menores de 3 años.",
+      "under3Integer": "Debe ser un número entero.",
+      "under3Min": "No puede ser negativo.",
+      "under3Max": "El máximo admitido es 10.",
+      "under3Exceeds": "Los hijos menores de 3 años no pueden superar el total de hijos.",
+      "disability": "Selecciona un grado de discapacidad válido."
+    }
+  },
+  "severance": {
+    "badge": "Estatuto de los Trabajadores · Reforma 2012",
+    "title": "Calculadora de Indemnización por Despido",
+    "subtitle": "Calcula la indemnización laboral en España con prorrateo mensual del Tribunal Supremo, tramo mixto 45/33 días, topes legales y límite exento de IRPF.",
+    "seo": {
+      "title": "Calculadora de Indemnización por Despido España",
+      "description": "Calcula la indemnización por despido improcedente (45/33 días), objetivo (20 días), fin de contrato temporal o modificación sustancial en España.",
+      "keywords": "calculadora indemnizacion despido espana, despido improcedente 45 33 dias, despido objetivo, finiquito indemnizacion"
+    },
+    "sectionTitle": "Datos de la relación laboral",
+    "fields": {
+      "startDate": "Fecha de inicio de contrato",
+      "endDate": "Fecha de despido / fin",
+      "salaryMode": "Modo de salario bruto",
+      "salaryModeAnnual": "Bruto anual",
+      "salaryModeMonthly": "Bruto mensual",
+      "salaryAnnual": "Salario bruto anual (€)",
+      "salaryMonthly": "Salario bruto mensual (€)",
+      "extraPayments": "Número de pagas extra",
+      "extraPaymentsHint": "0 = 12 pagas, 2 = 14 pagas · Total: {{ total }} pagas/año",
+      "dismissalType": "Tipo de extinción o despido",
+      "dismissalUnfair": "Despido improcedente (45 / 33 días)",
+      "dismissalObjective": "Despido objetivo o ERE procedente (20 días)",
+      "dismissalModification": "Modificación sustancial o traslado (20 días)",
+      "dismissalTemporaryEnd": "Fin de contrato temporal (12 días)",
+      "dismissalDisciplinary": "Despido disciplinario procedente (0 días)"
+    },
+    "dismissals": {
+      "unfair": "Despido improcedente (45 / 33 días por año)",
+      "objective": "Despido objetivo o ERE procedente (20 días/año, máx. 12 meses)",
+      "modification": "Modificación sustancial o traslado (20 días/año, máx. 9 meses)",
+      "temporaryEnd": "Fin de contrato temporal (12 días/año)",
+      "disciplinary": "Despido disciplinario procedente (0 días)"
+    },
+    "kpi": {
+      "total": "Indemnización total estimada",
+      "days": "Días indemnizados",
+      "dayValueOne": "{{ days }} día",
+      "daysValue": "{{ days }} días",
+      "dailySalary": "Salario diario",
+      "seniority": "Antigüedad",
+      "tenure": "{{ years }}a {{ months }}m {{ days }}d",
+      "computableMonths": "Meses computables",
+      "monthValueOne": "{{ months }} mes",
+      "monthsValue": "{{ months }} meses"
+    },
+    "reform": {
+      "title": "Desglose por reforma laboral (12/02/2012)",
+      "period": "Tramo",
+      "computableMonths": "Meses computables",
+      "module": "Módulo",
+      "days": "Días",
+      "pre": "Previo al 12/02/2012",
+      "post": "Desde el 12/02/2012",
+      "module45": "45 días/año",
+      "module33": "33 días/año",
+      "total": "Total días tras aplicar topes",
+      "note": "Nota: Cada tramo (previo y posterior al 12/02/2012) redondea independientemente cualquier fracción de mes al mes completo según la doctrina del Tribunal Supremo."
+    },
+    "cap": {
+      "title": "Tope legal aplicado"
+    },
+    "caps": {
+      "unfairMax1260": "Tope máximo de 42 mensualidades (1.260 días) sobre el tramo anterior al 12/02/2012.",
+      "unfairPre720": "Tramo previo al 12/02/2012 superior a 720 días: se consolidan los días devengados antes de la reforma sin añadir días posteriores.",
+      "unfairMax720": "Tope máximo legal de 24 mensualidades (720 días).",
+      "objective360": "Tope máximo legal de 12 mensualidades (360 días).",
+      "modification270": "Tope máximo legal de 9 mensualidades (270 días)."
+    },
+    "irpf": {
+      "grossAnnual": "Salario bruto anual de cálculo",
+      "exemptLimit": "Límite exento de IRPF",
+      "notExemptPrefix": "Esta indemnización no está exenta de IRPF: los",
+      "notExemptSuffix": "tributan como rendimiento del trabajo.",
+      "exemptExceededPrefix": "La indemnización supera el límite exento de 180.000 €. El exceso de",
+      "exemptExceededSuffix": "tributa como rendimiento del trabajo en el IRPF.",
+      "note": "El cálculo sigue el criterio del Tribunal Supremo de computar cada fracción de mes como mes completo (salario bruto anual / 365 días). Recuerda que la finalización de contrato temporal no goza de exención en IRPF."
+    },
+    "errors": {
+      "dates": "Introduce fechas de inicio y fin válidas (AAAA-MM-DD).",
+      "endBeforeStart": "La fecha de despido o fin debe ser igual o posterior a la fecha de inicio.",
+      "salaryNegative": "El salario bruto debe ser un importe mayor o igual a 0 €.",
+      "extraPaymentsRange": "El número de pagas extra debe ser un entero entre 0 y 12."
+    },
+    "validation": {
+      "startRequired": "Introduce la fecha de inicio de contrato.",
+      "startInvalid": "Introduce una fecha de inicio válida (AAAA-MM-DD).",
+      "endRequired": "Introduce la fecha de despido o fin.",
+      "endInvalid": "Introduce una fecha de fin válida (AAAA-MM-DD).",
+      "salaryMode": "Selecciona un modo de salario válido.",
+      "salaryRequired": "Introduce el importe del salario bruto.",
+      "salaryNegative": "El salario bruto no puede ser negativo.",
+      "salaryMax": "El importe salarial excede el máximo permitido.",
+      "extraRequired": "Introduce el número de pagas extra.",
+      "dismissalType": "Selecciona un tipo de despido válido.",
+      "endBeforeStart": "La fecha de despido o fin debe ser igual o posterior a la fecha de inicio.",
+      "extraInteger": "El número de pagas extra debe ser un número entero.",
+      "extraMin": "El mínimo de pagas extra es 0.",
+      "extraMax": "El máximo de pagas extra es 12."
+    }
+  },
+  "mortgage": {
+    "badge": "Sistema de amortización francés",
+    "title": "Calculadora de Hipotecas",
+    "subtitle": "Calcula tu cuota mensual, la TAE efectiva considerando gastos y seguros, el ahorro total necesario y el cuadro de amortización completo.",
+    "seo": {
+      "title": "Calculadora de Hipotecas - Cuota, TAE y Cuadro de Amortización",
+      "description": "Simula tu hipoteca con sistema francés, calcula la cuota mensual, la TAE efectiva con gastos, el ahorro necesario y descarga el cuadro de amortización en CSV.",
+      "keywords": "calculadora hipoteca, simulador hipoteca, cuota mensual, calcular TAE, cuadro de amortizacion frances"
+    },
+    "loan": {
+      "sectionTitle": "Datos del préstamo",
+      "price": "Precio de la vivienda (€)",
+      "priceAria": "Selector deslizante precio de la vivienda",
+      "downPayment": "Ahorro aportado / Entrada",
+      "downPaymentPercent": "Porcentaje de entrada",
+      "downPaymentPercentAria": "Selector deslizante porcentaje de entrada",
+      "term": "Plazo de amortización (años)",
+      "termAria": "Selector deslizante plazo en años",
+      "termValue": "{{ years }} años ({{ payments }} cuotas)",
+      "tin": "Tipo de interés nominal (TIN anual %)",
+      "tinAria": "Selector deslizante TIN anual"
+    },
+    "fees": {
+      "title": "Gastos e impuestos (TAE y ahorro)",
+      "subtitle": "Opcionales para calcular la TAE real y la liquidez total necesaria.",
+      "initialFees": "Gastos iniciales (€)",
+      "initialFeesHint": "Tasación, apertura, etc.",
+      "recurringCost": "Coste anual vinculado (€)",
+      "recurringCostHint": "Seguros hogar/vida anuales",
+      "purchaseTax": "Impuestos y gastos de compraventa (% ITP / IVA + notaría)"
+    },
+    "result": {
+      "monthlyPayment": "Cuota mensual estimada",
+      "tae": "TAE efectiva",
+      "loanAmount": "Préstamo",
+      "ltv": "Financiación (LTV)",
+      "totalInterest": "Total intereses",
+      "totalPaid": "Total a devolver"
+    },
+    "cash": {
+      "title": "Ahorro total necesario",
+      "downPayment": "Entrada aportada:",
+      "taxes": "Impuestos y notaría ({{ percent }}):",
+      "initialFees": "Gastos iniciales préstamo:"
+    },
+    "split": {
+      "title": "Distribución del pago total",
+      "principal": "Capital prestado ({{ percent }})",
+      "interest": "Intereses totales ({{ percent }})"
+    },
+    "schedule": {
+      "ariaView": "Vista de amortización",
+      "annual": "Vista Anual",
+      "monthly": "Vista Mensual",
+      "export": "Exportar CSV",
+      "year": "Año",
+      "month": "Mes",
+      "payment": "Cuota",
+      "principal": "Capital",
+      "interest": "Intereses",
+      "balance": "Pendiente",
+      "yearRow": "Año {{ year }}",
+      "monthRow": "Mes {{ month }}"
+    },
+    "errors": {
+      "title": "Datos de entrada no válidos",
+      "pricePositive": "El precio de la vivienda debe ser mayor que cero.",
+      "downPaymentRange": "La entrada aportada debe ser mayor o igual a 0 y menor que el precio de la vivienda.",
+      "termRange": "El plazo de la hipoteca debe situarse entre 1 y 40 años.",
+      "tinRange": "El TIN anual debe estar comprendido entre 0 % y 30 %.",
+      "feesNegative": "Los gastos e impuestos adicionales no pueden ser negativos."
+    },
+    "validation": {
+      "priceRequired": "Introduce el precio de la vivienda.",
+      "priceMin": "El precio mínimo es de 1.000 €.",
+      "priceMax": "El precio máximo es de 50.000.000 €.",
+      "downPaymentRequired": "Introduce el importe de la entrada.",
+      "downPaymentMin": "La entrada no puede ser negativa.",
+      "downPaymentPercentRequired": "Introduce el porcentaje de entrada.",
+      "downPaymentPercentMin": "El porcentaje mínimo es 0 %.",
+      "downPaymentPercentMax": "El porcentaje máximo de entrada es 99,9 %.",
+      "termRequired": "Introduce el plazo en años.",
+      "termInteger": "El plazo debe ser un número entero de años.",
+      "termMin": "El plazo mínimo es 1 año.",
+      "termMax": "El plazo máximo es 40 años.",
+      "tinRequired": "Introduce el TIN anual.",
+      "tinMin": "El TIN no puede ser negativo.",
+      "tinMax": "El TIN máximo admitido es 30 %.",
+      "initialFeesRequired": "Introduce los gastos iniciales (0 si no hay).",
+      "initialFeesMin": "Los gastos iniciales no pueden ser negativos.",
+      "recurringCostRequired": "Introduce el coste anual vinculado (0 si no hay).",
+      "recurringCostMin": "El coste anual vinculado no puede ser negativo.",
+      "purchaseTaxRequired": "Introduce el porcentaje de impuestos y gastos.",
+      "purchaseTaxMin": "El porcentaje no puede ser negativo.",
+      "purchaseTaxMax": "El porcentaje máximo admitido es 25 %.",
+      "downPaymentBelowPrice": "La entrada aportada debe ser inferior al precio de la vivienda."
+    },
+    "csv": {
+      "annualFileName": "amortizacion-hipoteca-anual.csv",
+      "monthlyFileName": "amortizacion-hipoteca-mensual.csv",
+      "year": "Año",
+      "annualPayment": "Cuota anual (EUR)",
+      "principal": "Capital amortizado (EUR)",
+      "interest": "Intereses (EUR)",
+      "balance": "Capital pendiente (EUR)",
+      "month": "Mes",
+      "payment": "Cuota (EUR)",
+      "exported": "Cuadro de amortización exportado en CSV"
+    }
+  },
+  "scientific": {
+    "badge": "Aritmética decimal de precisión arbitraria",
+    "title": "Calculadora Científica",
+    "subtitle": "Calcula con hasta 50 dígitos significativos, funciones trigonométricas, hiperbólicas, logaritmos, potencias, memoria e historial.",
+    "seo": {
+      "title": "Calculadora Científica de Alta Precisión",
+      "description": "Calculadora científica online con precisión arbitraria de 15, 30 o 50 dígitos, trigonometría, logaritmos, factorial, memoria e historial.",
+      "keywords": "calculadora cientifica, calculadora alta precision, trigonometria, logaritmos, factorial, decimal.js"
+    },
+    "angleAria": "Unidad angular",
+    "precisionLabel": "Precisión:",
+    "precisionOption": "{{ value }} dígitos",
+    "precisionShort": "{{ value }} díg.",
+    "expressionAria": "Expresión matemática",
+    "placeholder": "Ej. sin(30) + sqrt(2) * 10",
+    "memoryBadge": "M: {{ value }}",
+    "history": {
+      "title": "Historial de cálculos",
+      "clear": "Limpiar",
+      "empty": "Todavía no hay operaciones registradas. Pulsa «=» o Intro para calcular.",
+      "shortcutsTitle": "Atajos de teclado:",
+      "shortcutsBefore": "Introduce expresiones con el teclado y pulsa",
+      "shortcutsEvaluateKey": "Intro",
+      "shortcutsMiddle": "para evaluar o",
+      "shortcutsClearKey": "Esc",
+      "shortcutsAfter": "para limpiar."
+    },
+    "messages": {
+      "memoryCleared": "Memoria borrada (MC)",
+      "memoryAddInvalid": "No hay un valor válido para sumar a memoria",
+      "memorySubtractInvalid": "No hay un valor válido para restar de memoria"
+    },
+    "errors": {
+      "unknownSymbol": "Símbolo o función desconocida: \"{{ symbol }}\".",
+      "invalidCharacter": "Carácter no válido en la expresión: \"{{ char }}\".",
+      "factorialUsage": "Uso no válido del operador factorial (!).",
+      "unbalancedParens": "Paréntesis desbalanceados.",
+      "factorialInteger": "El factorial solo está definido para enteros no negativos.",
+      "factorialMax": "El factorial máximo permitido es {{ max }}!.",
+      "tanUndefined": "Tangente indefinida para este ángulo.",
+      "asinRange": "El argumento de asin debe estar entre -1 y 1.",
+      "acosRange": "El argumento de acos debe estar entre -1 y 1.",
+      "lnPositive": "El logaritmo neperiano requiere un valor positivo.",
+      "logPositive": "El logaritmo base 10 requiere un valor positivo.",
+      "log2Positive": "El logaritmo base 2 requiere un valor positivo.",
+      "sqrtNegative": "No se puede calcular la raíz cuadrada de un número negativo.",
+      "invZero": "División por cero en 1/x.",
+      "unsupportedFunction": "Función no soportada: \"{{ name }}\".",
+      "emptyExpression": "Introduce una expresión matemática.",
+      "missingArgument": "Falta argumento para la función \"{{ name }}\".",
+      "incompleteExpression": "Expresión incompleta.",
+      "missingFactorialOperand": "Falta operando para el factorial.",
+      "incompleteOperation": "Operación incompleta: faltan operandos.",
+      "divisionByZero": "División por cero.",
+      "moduloByZero": "Módulo por cero.",
+      "powerUndefined": "Potencia indefinida (0 elevado a exponente negativo).",
+      "negativeBaseExponent": "No se admite base negativa con exponente no entero en reales.",
+      "invalidExpression": "Expresión matemática no válida.",
+      "outOfRange": "El resultado excede el rango finito permitido.",
+      "evaluation": "Error al evaluar la expresión."
+    }
+  }
+}

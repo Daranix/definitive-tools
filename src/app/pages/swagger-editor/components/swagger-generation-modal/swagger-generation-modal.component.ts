@@ -11,7 +11,9 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 import { CheerpjService } from '@/app/core/services/cheerpj.service';
+import { I18nService } from '@/app/i18n/i18n.service';
 
 const OPENAPI_GENERATOR_JAR =
   '/swagger-editor/openapi-generator-cli-7.22.0.jar';
@@ -24,13 +26,14 @@ interface GeneratorConfig {
 @Component({
   selector: 'app-swagger-generation-modal',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   templateUrl: './swagger-generation-modal.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './swagger-generation-modal.component.scss',
 })
 export class SwaggerGenerationModalComponent {
   private readonly cheerpjService = inject(CheerpjService);
+  private readonly i18n = inject(I18nService);
 
   spec = input.required<string>();
   generator = input.required<GeneratorConfig>();
@@ -39,7 +42,9 @@ export class SwaggerGenerationModalComponent {
 
   readonly isGenerating = this.cheerpjService.isGenerating;
   readonly isMinimized = this.cheerpjService.isMinimized;
-  readonly generationStatus = signal<string>('Initializing...');
+  readonly generationStatus = signal<string>(
+    this.i18n.t('swagger-editor.modal.generation.initializing'),
+  );
   readonly consoleLogs = signal<{ message: string; type: 'info' | 'error' }[]>(
     [],
   );
@@ -77,8 +82,13 @@ export class SwaggerGenerationModalComponent {
   cancelGeneration() {
     if (!this.isGenerating()) return;
     this.cancelRequested.set(true);
-    this.addConsoleLog('Cancellation requested by user. Aborting...', 'error');
-    this.generationStatus.set('Cancellation in progress...');
+    this.addConsoleLog(
+      this.i18n.t('swagger-editor.modal.logs.cancellationRequested'),
+      'error',
+    );
+    this.generationStatus.set(
+      this.i18n.t('swagger-editor.modal.generation.cancelling'),
+    );
   }
 
   private setupConsoleInterception() {
@@ -122,22 +132,32 @@ export class SwaggerGenerationModalComponent {
       this.isGenerating.set(true);
 
       // 1. Ensure runtime is ready
-      this.generationStatus.set('Preparing CheerpJ runtime...');
+      this.generationStatus.set(
+        this.i18n.t('swagger-editor.modal.generation.preparingRuntime'),
+      );
       await this.cheerpjService.initializeRuntime();
       if (this.cancelRequested()) return;
 
       // 2. Clear previous output to prevent bundling old files
-      this.generationStatus.set('Cleaning virtual filesystem...');
+      this.generationStatus.set(
+        this.i18n.t('swagger-editor.modal.generation.cleaningFilesystem'),
+      );
       await this.clearOutputDirectory();
       if (this.cancelRequested()) return;
 
       // 3. Prepare files
-      this.generationStatus.set('Preparing OpenAPI specification...');
+      this.generationStatus.set(
+        this.i18n.t('swagger-editor.modal.generation.preparingSpec'),
+      );
       (window as any).cheerpOSAddStringFile('/str/openapi.yaml', this.spec());
       if (this.cancelRequested()) return;
 
       // 4. Run generator
-      this.generationStatus.set(`Generating ${this.generator().lang}...`);
+      this.generationStatus.set(
+        this.i18n.t('swagger-editor.modal.generation.generating', {
+          lang: this.generator().lang,
+        }),
+      );
       const jarPath = `/app${OPENAPI_GENERATOR_JAR}`;
       const exitCode = await (window as any).cheerpjRunJar(
         jarPath,
@@ -152,7 +172,7 @@ export class SwaggerGenerationModalComponent {
 
       if (this.cancelRequested()) {
         this.addConsoleLog(
-          'Process finished after cancellation. Output discarded.',
+          this.i18n.t('swagger-editor.modal.logs.processFinishedAfterCancel'),
           'info',
         );
         return;
@@ -164,11 +184,18 @@ export class SwaggerGenerationModalComponent {
 
       // 5. Bundle and download
       await this.downloadGeneratedZip();
-      this.generationStatus.set('Generation complete!');
+      this.generationStatus.set(
+        this.i18n.t('swagger-editor.modal.generation.complete'),
+      );
     } catch (ex) {
       if (this.cancelRequested()) return;
-      console.error('Generation failed', ex);
-      this.generationStatus.set('Generation failed.');
+      console.error(
+        this.i18n.t('swagger-editor.modal.logs.generationFailed'),
+        ex,
+      );
+      this.generationStatus.set(
+        this.i18n.t('swagger-editor.modal.generation.failed'),
+      );
     } finally {
       this.isGenerating.set(false);
       this.restoreConsole();
@@ -196,11 +223,16 @@ export class SwaggerGenerationModalComponent {
   private async downloadGeneratedZip() {
     try {
       const JSZip = (await import('jszip')).default;
-      this.generationStatus.set('Bundling files into ZIP...');
+      this.generationStatus.set(
+        this.i18n.t('swagger-editor.modal.generation.bundling'),
+      );
       const zip = new JSZip();
 
       const dbName = await this.cheerpjService.findDatabaseName();
-      console.log('Accessing virtual filesystem from:', dbName);
+      console.log(
+        this.i18n.t('swagger-editor.modal.logs.accessingFilesystem'),
+        dbName,
+      );
 
       const db = await this.openIndexedDB(dbName);
       const transaction = db.transaction(['files'], 'readonly');
@@ -212,7 +244,11 @@ export class SwaggerGenerationModalComponent {
           const cursor = event.target.result;
           if (cursor) {
             const path = cursor.key as string;
-            console.log('IDB Entry found:', path, cursor.value.type);
+            console.log(
+              this.i18n.t('swagger-editor.modal.logs.idbEntryFound'),
+              path,
+              cursor.value.type,
+            );
             // In CheerpJ 4.x, the value is an object containing 'contents' (Uint8Array)
             // and 'type'. We only want files.
             const entry = cursor.value;
@@ -221,7 +257,10 @@ export class SwaggerGenerationModalComponent {
                 .replace('/files/out/', '')
                 .replace(/^\/+/, '');
               if (relativePath) {
-                console.log('Adding to ZIP:', relativePath);
+                console.log(
+                  this.i18n.t('swagger-editor.modal.logs.addingToZip'),
+                  relativePath,
+                );
                 zip.file(relativePath, entry.contents);
               }
             }
@@ -235,7 +274,14 @@ export class SwaggerGenerationModalComponent {
       });
 
       const blob = await zip.generateAsync({ type: 'blob' });
-      this.downloadFile(blob, `${this.generator()}-generated.zip`);
+      // The original name interpolated the generator config object itself; keep
+      // that exact value so the downloaded file name does not change.
+      this.downloadFile(
+        blob,
+        this.i18n.t('swagger-editor.modal.downloads.generatedZip', {
+          generator: `${this.generator()}`,
+        }),
+      );
     } catch (ex) {
       throw new Error(
         `Failed to create ZIP: ${ex instanceof Error ? ex.message : 'Unknown error'}`,

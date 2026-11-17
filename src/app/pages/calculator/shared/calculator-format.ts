@@ -1,6 +1,23 @@
 import Decimal from 'decimal.js';
 import { z } from 'zod';
 
+/**
+ * Signature of a translation lookup, compatible with `I18nService.t`.
+ *
+ * Calculation helpers stay free of Angular dependencies, so the components pass
+ * their locale-aware translator down to them instead of importing the service.
+ */
+export type CalculatorTranslate = (
+  key: string,
+  params?: Record<string, unknown>,
+) => string;
+
+/** Messages shown by {@link copyTextToClipboard}. */
+export interface CopyMessages {
+  success: string;
+  error: string;
+}
+
 export interface NumberFieldRuleOptions {
   requiredMessage: string;
   min?: { value: number; message: string };
@@ -37,45 +54,63 @@ export interface ToastNotifier {
   error(opts: { message: string }): void;
 }
 
-const currencyFormatterCache = new Map<number, Intl.NumberFormat>();
-const numberFormatterCache = new Map<number, Intl.NumberFormat>();
+/** Locale used when a caller does not provide one (Spanish, the source language). */
+export const DEFAULT_CALCULATOR_LOCALE = 'es-ES';
+
+const currencyFormatterCache = new Map<string, Intl.NumberFormat>();
+const numberFormatterCache = new Map<string, Intl.NumberFormat>();
 
 function toFiniteNumber(value: number | Decimal): number {
   const numeric = value instanceof Decimal ? value.toNumber() : value;
   return Number.isFinite(numeric) ? numeric : 0;
 }
 
-function getCurrencyFormatter(decimals: number): Intl.NumberFormat {
+function normalizeLocale(locale: string | undefined): string {
+  const trimmed = locale?.trim();
+  return trimmed ? trimmed : DEFAULT_CALCULATOR_LOCALE;
+}
+
+function getCurrencyFormatter(
+  decimals: number,
+  locale: string,
+): Intl.NumberFormat {
   const normalizedDecimals = Math.max(0, Math.min(6, Math.trunc(decimals)));
-  const cached = currencyFormatterCache.get(normalizedDecimals);
+  const normalizedLocale = normalizeLocale(locale);
+  const cacheKey = `${normalizedLocale}|${normalizedDecimals}`;
+  const cached = currencyFormatterCache.get(cacheKey);
   if (cached) {
     return cached;
   }
 
-  const formatter = new Intl.NumberFormat('es-ES', {
+  const formatter = new Intl.NumberFormat(normalizedLocale, {
     style: 'currency',
     currency: 'EUR',
     minimumFractionDigits: normalizedDecimals,
     maximumFractionDigits: normalizedDecimals,
     useGrouping: true,
   });
-  currencyFormatterCache.set(normalizedDecimals, formatter);
+  currencyFormatterCache.set(cacheKey, formatter);
   return formatter;
 }
 
-function getNumberFormatter(maxDecimals: number): Intl.NumberFormat {
+function getNumberFormatter(
+  maxDecimals: number,
+  locale: string,
+): Intl.NumberFormat {
   const normalizedDecimals = Math.max(0, Math.min(12, Math.trunc(maxDecimals)));
-  const cached = numberFormatterCache.get(normalizedDecimals);
+  const normalizedLocale = normalizeLocale(locale);
+  const cacheKey = `${normalizedLocale}|${normalizedDecimals}`;
+  const cached = numberFormatterCache.get(cacheKey);
   if (cached) {
     return cached;
   }
 
-  const formatter = new Intl.NumberFormat('es-ES', {
+  const formatter = new Intl.NumberFormat(normalizedLocale, {
     minimumFractionDigits: 0,
     maximumFractionDigits: normalizedDecimals,
     useGrouping: true,
   });
-  numberFormatterCache.set(normalizedDecimals, formatter);
+  numberFormatterCache.set(cacheKey, formatter);
   return formatter;
 }
 
@@ -97,17 +132,25 @@ export function round2(value: Decimal): Decimal {
 }
 
 /**
- * Formats a numeric or Decimal value as Euro currency in Spanish locale.
+ * Formats a numeric or Decimal value as Euro currency for the given locale.
  */
-export function formatCurrencyEs(value: number | Decimal, decimals = 2): string {
-  return getCurrencyFormatter(decimals).format(toFiniteNumber(value));
+export function formatCurrency(
+  value: number | Decimal,
+  decimals = 2,
+  locale: string = DEFAULT_CALCULATOR_LOCALE,
+): string {
+  return getCurrencyFormatter(decimals, locale).format(toFiniteNumber(value));
 }
 
 /**
- * Formats a numeric or Decimal value in Spanish locale up to maxDecimals places.
+ * Formats a numeric or Decimal value in the given locale up to maxDecimals places.
  */
-export function formatNumberEs(value: number | Decimal, maxDecimals = 2): string {
-  return getNumberFormatter(maxDecimals).format(toFiniteNumber(value));
+export function formatNumber(
+  value: number | Decimal,
+  maxDecimals = 2,
+  locale: string = DEFAULT_CALCULATOR_LOCALE,
+): string {
+  return getNumberFormatter(maxDecimals, locale).format(toFiniteNumber(value));
 }
 
 /**
@@ -165,12 +208,15 @@ export function parseNullableNumber(rawValue: unknown): number | null {
 
 /**
  * Copies text to the browser clipboard safely for SSR and reports status via ToastService.
+ *
+ * The success/failure messages are provided by the caller so they follow the
+ * active language.
  */
 export async function copyTextToClipboard(
   isBrowser: boolean,
   text: string,
   toastService: ToastNotifier,
-  successMessage = 'Resultado copiado al portapapeles',
+  messages: CopyMessages,
 ): Promise<boolean> {
   if (!isBrowser || typeof navigator === 'undefined' || !navigator?.clipboard) {
     return false;
@@ -178,10 +224,10 @@ export async function copyTextToClipboard(
 
   try {
     await navigator.clipboard.writeText(text);
-    toastService.success({ message: successMessage });
+    toastService.success({ message: messages.success });
     return true;
   } catch {
-    toastService.error({ message: 'No se pudo copiar el resultado' });
+    toastService.error({ message: messages.error });
     return false;
   }
 }

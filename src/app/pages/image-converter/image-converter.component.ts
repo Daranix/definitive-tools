@@ -7,13 +7,15 @@ import {
   effect,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { isPlatformBrowser, NgClass, DecimalPipe } from '@angular/common';
+import { isPlatformBrowser, NgClass } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import { TopNavbarComponent } from '@/app/components/top-navbar/top-navbar.component';
 import { FooterComponent } from '@/app/components/footer/footer.component';
 import { DragAndDropFileComponent } from '@/app/components/drag-and-drop-file/drag-and-drop-file.component';
 import { MetadataService } from '@/app/services/metadata.service';
 import { ToastService } from '@/app/services/toast.service';
+import { I18nService } from '@/app/i18n/i18n.service';
 import {
   form,
   validateStandardSchema,
@@ -35,11 +37,11 @@ export interface ConversionOptions {
   imports: [
     LucideIconComponent,
     NgClass,
-    DecimalPipe,
     TopNavbarComponent,
     FooterComponent,
     DragAndDropFileComponent,
     FormField,
+    TranslatePipe,
   ],
   templateUrl: './image-converter.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -49,6 +51,7 @@ export class ImageConverterComponent {
   private readonly metadataService = inject(MetadataService);
   private readonly toastService = inject(ToastService);
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly i18n = inject(I18nService);
 
   readonly allowedExtensions = [
     '.png',
@@ -83,13 +86,13 @@ export class ImageConverterComponent {
       .number()
       .nullable()
       .refine((val) => val === null || val > 0, {
-        message: 'Width must be a positive number',
+        message: 'image-converter.validation.widthPositive',
       }),
     resizeHeight: z
       .number()
       .nullable()
       .refine((val) => val === null || val > 0, {
-        message: 'Height must be a positive number',
+        message: 'image-converter.validation.heightPositive',
       }),
   });
 
@@ -117,15 +120,42 @@ export class ImageConverterComponent {
     return Math.round((diff / orig) * 100);
   });
 
+  // Localised display values (numbers follow the active language).
+  readonly originalSizeLabel = computed(() =>
+    this.i18n.t('image-converter.file.originalSize', {
+      bytes: this.i18n.formatNumber(this.originalSize(), {
+        maximumFractionDigits: 0,
+      }),
+      kilobytes: this.i18n.formatNumber(this.originalSize() / 1024, {
+        minimumFractionDigits: 1,
+        maximumFractionDigits: 1,
+      }),
+    }),
+  );
+  readonly convertedSizeLabel = computed(() =>
+    this.i18n.formatNumber(this.convertedSize() / 1024, {
+      minimumFractionDigits: 1,
+      maximumFractionDigits: 1,
+    }),
+  );
+  readonly sizeChangePercentLabel = computed(() =>
+    this.i18n.formatPercent(Math.abs(this.sizeChangePercent()) / 100),
+  );
+  readonly qualityLabel = computed(() =>
+    this.i18n.formatPercent(this.optionsForm.quality().value() / 100),
+  );
+  readonly progressLabel = computed(() =>
+    this.i18n.formatPercent(this.progress() / 100),
+  );
+
   private ffmpeg: any;
   private pendingConvert = false;
 
   constructor() {
-    this.metadataService.updateMetadata({
-      title: 'Image Converter',
-      description:
-        'Convert images client-side between different formats like PNG, JPEG, WEBP, GIF, BMP, and TIFF using FFmpeg.wasm. Resize and compress with privacy.',
-      updateCanonical: true,
+    this.updateMetadata();
+    effect(() => {
+      this.i18n.language();
+      this.updateMetadata();
     });
 
     // Cleanup input URL on destroy/change
@@ -196,7 +226,10 @@ export class ImageConverterComponent {
     if (!isPlatformBrowser(this.platformId)) return;
     if (this.loaded()) return;
 
-    this.logs.set([...this.logs(), 'Loading FFmpeg Core locally...']);
+    this.logs.set([
+      ...this.logs(),
+      this.i18n.t('image-converter.logs.loadingCore'),
+    ]);
     try {
       const { FFmpeg } = await import('@ffmpeg/ffmpeg');
       const { toBlobURL } = await import('@ffmpeg/util');
@@ -230,16 +263,18 @@ export class ImageConverterComponent {
       this.loaded.set(true);
       this.logs.update((currentLogs) => [
         ...currentLogs,
-        'FFmpeg core loaded successfully.',
+        this.i18n.t('image-converter.logs.coreLoaded'),
       ]);
     } catch (error: any) {
       console.error(error);
       this.toastService.error({
-        message: 'Failed to load FFmpeg core resources.',
+        message: this.i18n.t('image-converter.messages.loadFailed'),
       });
       this.logs.update((currentLogs) => [
         ...currentLogs,
-        `Error: ${error?.message || error}`,
+        this.i18n.t('image-converter.logs.error', {
+          message: error?.message || error,
+        }),
       ]);
     }
   }
@@ -254,7 +289,7 @@ export class ImageConverterComponent {
     if (!currentFile) {
       if (!isAuto)
         this.toastService.warning({
-          message: 'Please select an image file first.',
+          message: this.i18n.t('image-converter.messages.selectFile'),
         });
       return;
     }
@@ -262,7 +297,7 @@ export class ImageConverterComponent {
     if (this.optionsForm().invalid()) {
       if (!isAuto)
         this.toastService.warning({
-          message: 'Please fix validation errors first.',
+          message: this.i18n.t('image-converter.messages.fixValidation'),
         });
       return;
     }
@@ -280,7 +315,7 @@ export class ImageConverterComponent {
       await this.initFFmpeg();
 
       if (!this.loaded()) {
-        throw new Error('FFmpeg failed to load properly.');
+        throw new Error(this.i18n.t('image-converter.messages.ffmpegNotLoaded'));
       }
 
       const fmt = this.optionsForm.targetFormat().value();
@@ -294,7 +329,9 @@ export class ImageConverterComponent {
 
       this.logs.update((currentLogs) => [
         ...currentLogs,
-        `Loading "${currentFile.name}" into virtual file system...`,
+        this.i18n.t('image-converter.logs.loadingInput', {
+          name: currentFile.name,
+        }),
       ]);
 
       const { fetchFile } = await import('@ffmpeg/util');
@@ -327,7 +364,9 @@ export class ImageConverterComponent {
 
       this.logs.update((currentLogs) => [
         ...currentLogs,
-        `Executing: ffmpeg ${args.join(' ')}`,
+        this.i18n.t('image-converter.logs.executing', {
+          command: args.join(' '),
+        }),
       ]);
 
       // Run FFmpeg
@@ -349,21 +388,32 @@ export class ImageConverterComponent {
         0,
         currentFile.name.lastIndexOf('.'),
       );
-      this.outputFileName.set(`${baseName}_converted${targetExt}`);
+      this.outputFileName.set(
+        this.i18n.t('image-converter.files.converted', {
+          baseName,
+          extension: targetExt,
+        }),
+      );
 
       // Cleanup virtual files to free memory
       await this.ffmpeg.deleteFile(inputName);
       await this.ffmpeg.deleteFile(outputName);
 
-      this.toastService.success({ message: 'Image converted successfully!' });
+      this.toastService.success({
+        message: this.i18n.t('image-converter.messages.converted'),
+      });
     } catch (error: any) {
       console.error(error);
       this.toastService.error({
-        message: `Conversion failed: ${error?.message || error}`,
+        message: this.i18n.t('image-converter.messages.conversionFailed', {
+          message: error?.message || error,
+        }),
       });
       this.logs.update((currentLogs) => [
         ...currentLogs,
-        `Execution failed: ${error?.message || error}`,
+        this.i18n.t('image-converter.logs.executionFailed', {
+          message: error?.message || error,
+        }),
       ]);
     } finally {
       this.converting.set(false);
@@ -387,5 +437,13 @@ export class ImageConverterComponent {
 
   clear() {
     this.onFileSelected(undefined);
+  }
+
+  private updateMetadata(): void {
+    this.metadataService.updateMetadata({
+      title: this.i18n.t('image-converter.seo.title'),
+      description: this.i18n.t('image-converter.seo.description'),
+      updateCanonical: true,
+    });
   }
 }

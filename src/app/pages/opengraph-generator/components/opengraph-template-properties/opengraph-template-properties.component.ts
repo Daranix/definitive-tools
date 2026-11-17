@@ -1,7 +1,9 @@
 import { NgClass, NgStyle } from '@angular/common';
 import {
   Component,
+  computed,
   effect,
+  inject,
   input,
   linkedSignal,
   model,
@@ -9,8 +11,10 @@ import {
   signal,
   ChangeDetectionStrategy,
 } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
 import {
+  BackgroundOverlayPattern,
   BackgroundType,
   GRADIENT_DIRECTIONS,
   GRADIENT_COMBINATIONS,
@@ -34,6 +38,7 @@ import { ContextMenuDirective } from '@/app/directives/context-menu.directive';
 import { OpengraphBackgroundOverlayOptionsComponent } from '../opengraph-background-overlay-options/opengraph-background-overlay-options.component';
 import { DragAndDropFileComponent } from '@/app/components/drag-and-drop-file/drag-and-drop-file.component';
 import { getChecksumSha256 } from '@/app/utils/functions';
+import { I18nService } from '@/app/i18n/i18n.service';
 
 @Component({
   selector: 'app-opengraph-template-properties',
@@ -46,12 +51,24 @@ import { getChecksumSha256 } from '@/app/utils/functions';
     ContextMenuDirective,
     OpengraphBackgroundOverlayOptionsComponent,
     DragAndDropFileComponent,
+    TranslatePipe,
   ],
   templateUrl: './opengraph-template-properties.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './opengraph-template-properties.component.scss',
 })
 export class OpengraphTemplatePropertiesComponent {
+  private readonly i18n = inject(I18nService);
+
+  readonly BACKGROUND_OVERLAY_PATTERN_LABELS = computed<
+    Record<BackgroundOverlayPattern, string>
+  >(() => ({
+    none: this.i18n.t('opengraph-generator.background.overlay.patterns.none'),
+    grid: this.i18n.t('opengraph-generator.background.overlay.patterns.grid'),
+    graph: this.i18n.t('opengraph-generator.background.overlay.patterns.graph'),
+    dots: this.i18n.t('opengraph-generator.background.overlay.patterns.dots'),
+  }));
+
   constructor() {
     effect(() => {
       this.propertiesUpdated.emit({
@@ -68,11 +85,22 @@ export class OpengraphTemplatePropertiesComponent {
   readonly GRADIENT_DIRECTIONS = GRADIENT_DIRECTIONS;
   readonly BACKGROUND_OVERLAY_PATTERNS_VIEW = BACKGROUND_OVERLAY_PATTERNS_VIEW;
 
-  readonly BACKGROUND_TYPES = [
-    { key: 'gradient', value: 'Gradient' },
-    { key: 'solid', value: 'Solid Color' },
-    { key: 'image', value: 'Image' },
-  ] as const;
+  readonly BACKGROUND_TYPES = computed<
+    ReadonlyArray<{ key: BackgroundType; value: string }>
+  >(() => [
+    {
+      key: 'gradient',
+      value: this.i18n.t('opengraph-generator.background.types.gradient'),
+    },
+    {
+      key: 'solid',
+      value: this.i18n.t('opengraph-generator.background.types.solid'),
+    },
+    {
+      key: 'image',
+      value: this.i18n.t('opengraph-generator.background.types.image'),
+    },
+  ]);
 
   readonly ICON_GRADIENT_DIRECTIONS = {
     bottom: 'move-down',

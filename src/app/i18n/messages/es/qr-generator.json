@@ -1,0 +1,140 @@
+{
+  "title": "Configuración del código QR",
+  "contentType": {
+    "label": "Tipo de contenido",
+    "url": "URL",
+    "text": "Texto",
+    "email": "Correo electrónico",
+    "phone": "Teléfono",
+    "sms": "SMS",
+    "vcard": "vCard",
+    "wifi": "WiFi",
+    "geo": "Ubicación"
+  },
+  "url": {
+    "label": "URL del sitio web",
+    "placeholder": "https://www.example.com",
+    "hint": "Introduce la URL completa, incluido https://, para los sitios web."
+  },
+  "text": {
+    "label": "Contenido de texto",
+    "placeholder": "Introduce el texto que quieras codificar en el código QR"
+  },
+  "email": {
+    "address": "Dirección de correo electrónico",
+    "addressPlaceholder": "recipient@example.com",
+    "subject": "Asunto (opcional)",
+    "subjectPlaceholder": "Asunto del correo",
+    "body": "Cuerpo (opcional)",
+    "bodyPlaceholder": "Contenido del correo"
+  },
+  "phone": {
+    "label": "Número de teléfono",
+    "placeholder": "+1 555 123 4567"
+  },
+  "sms": {
+    "number": "Número de teléfono",
+    "numberPlaceholder": "+1 555 123 4567",
+    "message": "Mensaje",
+    "messagePlaceholder": "Contenido del SMS"
+  },
+  "vcard": {
+    "firstName": "Nombre",
+    "lastName": "Apellidos",
+    "company": "Empresa (opcional)",
+    "phone": "Número de teléfono",
+    "email": "Correo electrónico",
+    "website": "Sitio web (opcional)",
+    "address": "Dirección (opcional)"
+  },
+  "wifi": {
+    "ssid": "Nombre de la red (SSID)",
+    "encryption": "Tipo de cifrado",
+    "password": "Contraseña",
+    "encryptionTypes": {
+      "wpa": "WPA/WPA2",
+      "wep": "WEP",
+      "none": "Ninguna"
+    }
+  },
+  "geo": {
+    "latitude": "Latitud",
+    "latitudePlaceholder": "p. ej. 37.7749",
+    "longitude": "Longitud",
+    "longitudePlaceholder": "p. ej. -122.4194",
+    "useCurrentLocation": "Usar mi ubicación actual"
+  },
+  "customization": {
+    "title": "Personaliza el código QR",
+    "dotsShape": "Forma de los puntos",
+    "dotsShapeHint": "La forma de los puntos del código QR.",
+    "cornersStyle": "Estilo de las esquinas",
+    "cornersStyleHint": "El estilo de las esquinas del código QR.",
+    "cornersInnerDotStyle": "Estilo del punto interior de las esquinas",
+    "cornersInnerDotStyleHint": "El estilo de las esquinas del código QR.",
+    "size": "Tamaño",
+    "errorCorrection": "Nivel de corrección de errores",
+    "errorCorrectionHint": "Los niveles de corrección más altos hacen que tu código QR sea más fiable, pero aumentan la complejidad.",
+    "foregroundColor": "Color de primer plano",
+    "backgroundColor": "Color de fondo",
+    "dotStyles": {
+      "dots": "Puntos",
+      "rounded": "Redondeados",
+      "classy": "Elegantes",
+      "classyRounded": "Elegantes redondeados",
+      "square": "Cuadrados",
+      "extraRounded": "Extra redondeados",
+      "dot": "Punto"
+    },
+    "errorCorrectionLevels": {
+      "low": "Bajo (L)",
+      "medium": "Medio (M)",
+      "quartile": "Cuartil (Q)",
+      "high": "Alto (H)"
+    }
+  },
+  "actions": {
+    "generate": "Generar código QR"
+  },
+  "preview": {
+    "title": "Código QR",
+    "empty": "Tu código QR aparecerá aquí",
+    "imageAlt": "Código QR",
+    "downloadAs": "Descargar como {{ format }}",
+    "testTitle": "Prueba tu código QR",
+    "testDescription": "Escanea el código QR con tu dispositivo para comprobar que funciona correctamente."
+  },
+  "about": {
+    "title": "Acerca de los códigos QR",
+    "heading": "¿Qué son los códigos QR?",
+    "description": "Los códigos QR (Quick Response) son códigos de barras bidimensionales que se pueden escanear con la cámara de un teléfono. Almacenan distintos tipos de información, como URL, texto, datos de contacto y mucho más. Se desarrollaron originalmente en Japón para el seguimiento de piezas de automoción y se han vuelto omnipresentes para compartir información rápidamente."
+  },
+  "download": {
+    "fileName": "codigo-qr"
+  },
+  "validation": {
+    "invalidUrl": "Introduce una URL válida",
+    "invalidText": "Texto no válido",
+    "invalidEmailAddress": "Dirección de correo no válida",
+    "invalidEmail": "Correo no válido",
+    "invalidPhoneNumber": "Número de teléfono no válido",
+    "firstNameRequired": "El nombre es obligatorio",
+    "lastNameRequired": "Los apellidos son obligatorios",
+    "phoneRequired": "El número de teléfono es obligatorio",
+    "ssidRequired": "El SSID de la red es obligatorio",
+    "latitudeRequired": "La latitud es obligatoria",
+    "longitudeRequired": "La longitud es obligatoria",
+    "invalidValue": "Valor no válido",
+    "sizeMin": "El tamaño debe ser de al menos 100 px",
+    "sizeMax": "El tamaño debe ser como máximo 2000 px",
+    "fixErrors": "Corrige primero todos los errores de validación."
+  },
+  "messages": {
+    "geolocationFailed": "No se ha podido acceder a la geolocalización."
+  },
+  "seo": {
+    "title": "Generador de códigos QR - Definitive Tools",
+    "description": "Genera códigos QR personalizados para URL, texto, información de contacto y mucho más. Códigos QR de alta calidad que funcionan en cualquier lugar.",
+    "keywords": "generador de códigos qr, código qr, códigos qr, qr, qrcode, qrcodes, generador de códigos qr gratis, generador de qrcode gratis, código qr gratis, códigos qr gratis, generador de códigos qr online, generador de qrcode online, código qr online, códigos qr online, qr online, qrcode online, qrcodes online, código qr gratis online, qrcode gratis online, códigos qr gratis online, qrcodes gratis online"
+  }
+}

@@ -412,7 +412,13 @@ export class MadridTransportMapService {
       this.setError(null);
       return data;
     } catch {
-      this.setError(`Failed to load ${network.toUpperCase()} bus network dataset. Please try again.`);
+      // The component resolves this key through I18nService so the banner
+      // follows the active language.
+      this.setError(
+        network === 'emt'
+          ? 'madrid-transport-map.errors.loadBusEmt'
+          : 'madrid-transport-map.errors.loadBusInterurban'
+      );
       return null;
     }
   }

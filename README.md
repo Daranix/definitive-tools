@@ -37,6 +37,31 @@ Definitive Tools is a collection of free, easy-to-use online tools designed to m
 2. Select the tool you need.
 3. Follow the simple on-screen instructions.
 
+## Languages
+
+The application is fully bilingual, in English and Spanish.
+
+| Language | Home | Tool | Legal |
+|----------|------|------|-------|
+| English (default) | `/` | `/tool/qr-generator` | `/legal/privacy` |
+| Spanish | `/es` | `/es/tool/qr-generator` | `/es/legal/privacy` |
+
+English is the default language and never carries a URL prefix. Every other language is mounted under its language code, which keeps each translation independently addressable and indexable (`hreflang` alternates and a multilingual `sitemap.xml` are generated automatically). The URL decides the language; the visitor's explicit choice is saved so that the bare home page `/` reopens in their language.
+
+Translations are compiled into the application bundle at build time, so server rendering and prerendering emit the correct language on the first byte.
+
+### Working on translations
+
+- Conventions and examples: [`docs/i18n.md`](docs/i18n.md).
+- Source of truth: `src/app/i18n/messages/<language>/<namespace>.json`, one fragment per feature.
+- Generated bundles: `src/app/i18n/translations/<language>.json` — never edit by hand.
+
+```bash
+npm run i18n:build                      # merge fragments into the runtime bundles
+npm run i18n:check                      # verify both languages expose the same keys
+node scripts/check-i18n-fragment.mjs X  # verify a single namespace
+```
+
 ## Contributing
 
 If you have suggestions for new tools or improvements, feel free to reach out or contribute to the project!

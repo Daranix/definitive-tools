@@ -4,16 +4,16 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <!-- Options Panel -->
         <div class="lg:col-span-2 bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-2xl font-bold mb-6 text-gray-800">QR Code Configuration</h2>
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">{{ 'qr-generator.title' | translate }}</h2>
 
             @let selectedContentType = qrForm.contentType().value();
 
             <form (submit)="$event.preventDefault(); generateQrCode()" onsubmit="return false;">
                 <!-- Content Type Selection -->
                 <div class="mb-8">
-                    <label class="block text-gray-700 text-sm font-bold mb-3">Content Type</label>
+                    <label class="block text-gray-700 text-sm font-bold mb-3">{{ 'qr-generator.contentType.label' | translate }}</label>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                        @for (contentType of contentTypes; track $index) {
+                        @for (contentType of contentTypes(); track $index) {
                         <button type="button" (click)="changeContentType(contentType.id)"
                             [attr.data-testid]="'content-type-' + contentType.id"
                             [ngClass]="{'bg-indigo-600 text-white': selectedContentType === contentType.id, 'bg-white hover:bg-gray-50 hover:text-gray-700': selectedContentType !== contentType.id}"
@@ -27,30 +27,30 @@
                 @if(isFormType(qrForm, 'url')) {
                 <!-- URL Content Form (default view) -->
                 <div id="url-form" class="mb-8">
-                    <label for="url" class="block text-gray-700 text-sm font-bold mb-2">Website URL</label>
+                    <label for="url" class="block text-gray-700 text-sm font-bold mb-2">{{ 'qr-generator.url.label' | translate }}</label>
                     <input type="text" id="url" [formField]="qrForm.url"
                         class="min-w-0 block w-full px-3 py-2 rounded-md focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 border"
-                        placeholder="https://www.example.com">
+                        [placeholder]="'qr-generator.url.placeholder' | translate">
                     @if (qrForm.url().invalid() && qrForm.url().touched()) {
                         <span class="text-xs text-red-500 font-medium mt-1 block">
-                            {{ qrForm.url().errors()[0]?.message || 'Invalid URL' }}
+                            {{ qrForm.url().errors()[0]?.message | translate }}
                         </span>
                     }
-                    <p class="mt-2 text-sm text-gray-500">Enter the full URL including https:// for websites.</p>
+                    <p class="mt-2 text-sm text-gray-500">{{ 'qr-generator.url.hint' | translate }}</p>
                 </div>
                 }
 
                 @if(isFormType(qrForm, 'text')) {
                     <!-- Text Content Form -->
                     <div id="text-form" class="mb-8">
-                        <label for="text-input" class="block text-gray-700 text-sm font-bold mb-2">Text Content</label>
+                        <label for="text-input" class="block text-gray-700 text-sm font-bold mb-2">{{ 'qr-generator.text.label' | translate }}</label>
                         <textarea id="text-input" rows="4"
                             [formField]="qrForm.textInput"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500"
-                            placeholder="Enter any text you want encoded in the QR code"></textarea>
+                            [placeholder]="'qr-generator.text.placeholder' | translate"></textarea>
                         @if (qrForm.textInput().invalid() && qrForm.textInput().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
-                                {{ qrForm.textInput().errors()[0]?.message || 'Invalid text' }}
+                                {{ (qrForm.textInput().errors()[0]?.message | translate) || ('qr-generator.validation.invalidText' | translate) }}
                             </span>
                         }
                     </div>
@@ -60,35 +60,35 @@
                 <!-- Email Content Form -->
                 <div id="email-form" class="mb-8">
                     <div class="mb-4">
-                        <label for="email-address" class="block text-gray-700 text-sm font-bold mb-2">Email Address</label>
+                        <label for="email-address" class="block text-gray-700 text-sm font-bold mb-2">{{ 'qr-generator.email.address' | translate }}</label>
                         <input type="email" id="email-address" [formField]="qrForm.emailAddress"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500"
-                            placeholder="recipient@example.com">
+                            [placeholder]="'qr-generator.email.addressPlaceholder' | translate">
                         @if (qrForm.emailAddress().invalid() && qrForm.emailAddress().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
-                                {{ qrForm.emailAddress().errors()[0]?.message || 'Invalid email address' }}
+                                {{ (qrForm.emailAddress().errors()[0]?.message | translate) || ('qr-generator.validation.invalidEmailAddress' | translate) }}
                             </span>
                         }
                     </div>
                     <div class="mb-4">
-                        <label for="email-subject" class="block text-gray-700 text-sm font-bold mb-2">Subject (optional)</label>
+                        <label for="email-subject" class="block text-gray-700 text-sm font-bold mb-2">{{ 'qr-generator.email.subject' | translate }}</label>
                         <input type="text" id="email-subject" [formField]="qrForm.emailSubject!"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500"
-                            placeholder="Email subject">
+                            [placeholder]="'qr-generator.email.subjectPlaceholder' | translate">
                         @if (qrForm.emailSubject!().invalid() && qrForm.emailSubject!().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
-                                {{ qrForm.emailSubject!().errors()[0]?.message }}
+                                {{ qrForm.emailSubject!().errors()[0]?.message | translate }}
                             </span>
                         }
                     </div>
                     <div>
-                        <label for="email-body" class="block text-gray-700 text-sm font-bold mb-2">Body (optional)</label>
+                        <label for="email-body" class="block text-gray-700 text-sm font-bold mb-2">{{ 'qr-generator.email.body' | translate }}</label>
                         <textarea id="email-body" rows="4" [formField]="qrForm.emailBody!"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500"
-                            placeholder="Email content"></textarea>
+                            [placeholder]="'qr-generator.email.bodyPlaceholder' | translate"></textarea>
                         @if (qrForm.emailBody!().invalid() && qrForm.emailBody!().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
-                                {{ qrForm.emailBody!().errors()[0]?.message }}
+                                {{ qrForm.emailBody!().errors()[0]?.message | translate }}
                             </span>
                         }
                     </div>
@@ -98,13 +98,13 @@
                 @if(isFormType(qrForm, 'phone')) {
                 <!-- Phone Content Form -->
                 <div id="phone-form" class="mb-8">
-                    <label for="phone-input" class="block text-gray-700 text-sm font-bold mb-2">Phone Number</label>
+                    <label for="phone-input" class="block text-gray-700 text-sm font-bold mb-2">{{ 'qr-generator.phone.label' | translate }}</label>
                     <input type="tel" id="phone-input" [formField]="qrForm.phoneNumber"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500"
-                        placeholder="+1 555 123 4567">
+                        [placeholder]="'qr-generator.phone.placeholder' | translate">
                     @if (qrForm.phoneNumber().invalid() && qrForm.phoneNumber().touched()) {
                         <span class="text-xs text-red-500 font-medium mt-1 block">
-                            {{ qrForm.phoneNumber().errors()[0]?.message || 'Invalid phone number' }}
+                            {{ (qrForm.phoneNumber().errors()[0]?.message | translate) || ('qr-generator.validation.invalidPhoneNumber' | translate) }}
                         </span>
                     }
                 </div>
@@ -114,24 +114,24 @@
                 <!-- SMS Content Form -->
                 <div id="sms-form" class="mb-8">
                     <div class="mb-4">
-                        <label for="sms-phone" class="block text-gray-700 text-sm font-bold mb-2">Phone Number</label>
+                        <label for="sms-phone" class="block text-gray-700 text-sm font-bold mb-2">{{ 'qr-generator.sms.number' | translate }}</label>
                         <input type="tel" id="sms-phone" [formField]="qrForm.smsPhoneNumber"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500"
-                            placeholder="+1 555 123 4567">
+                            [placeholder]="'qr-generator.sms.numberPlaceholder' | translate">
                         @if (qrForm.smsPhoneNumber().invalid() && qrForm.smsPhoneNumber().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
-                                {{ qrForm.smsPhoneNumber().errors()[0]?.message || 'Invalid phone number' }}
+                                {{ (qrForm.smsPhoneNumber().errors()[0]?.message | translate) || ('qr-generator.validation.invalidPhoneNumber' | translate) }}
                             </span>
                         }
                     </div>
                     <div>
-                        <label for="sms-message" class="block text-gray-700 text-sm font-bold mb-2">Message</label>
+                        <label for="sms-message" class="block text-gray-700 text-sm font-bold mb-2">{{ 'qr-generator.sms.message' | translate }}</label>
                         <textarea id="sms-message" rows="4" [formField]="qrForm.smsMessage"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500"
-                            placeholder="SMS content"></textarea>
+                            [placeholder]="'qr-generator.sms.messagePlaceholder' | translate"></textarea>
                         @if (qrForm.smsMessage().invalid() && qrForm.smsMessage().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
-                                {{ qrForm.smsMessage().errors()[0]?.message }}
+                                {{ qrForm.smsMessage().errors()[0]?.message | translate }}
                             </span>
                         }
                     </div>
@@ -143,73 +143,73 @@
                 <div id="vcard-form" class="mb-8">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div>
-                            <label for="vcard-firstname" class="block text-gray-700 text-sm font-bold mb-2">First Name</label>
+                            <label for="vcard-firstname" class="block text-gray-700 text-sm font-bold mb-2">{{ 'qr-generator.vcard.firstName' | translate }}</label>
                             <input type="text" id="vcard-firstname" [formField]="qrForm.vcardFirstName"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500">
                             @if (qrForm.vcardFirstName().invalid() && qrForm.vcardFirstName().touched()) {
                                 <span class="text-xs text-red-500 font-medium mt-1 block">
-                                    {{ qrForm.vcardFirstName().errors()[0]?.message || 'First name is required' }}
+                                    {{ (qrForm.vcardFirstName().errors()[0]?.message | translate) || ('qr-generator.validation.firstNameRequired' | translate) }}
                                 </span>
                             }
                         </div>
                         <div>
-                            <label for="vcard-lastname" class="block text-gray-700 text-sm font-bold mb-2">Last Name</label>
+                            <label for="vcard-lastname" class="block text-gray-700 text-sm font-bold mb-2">{{ 'qr-generator.vcard.lastName' | translate }}</label>
                             <input type="text" id="vcard-lastname" [formField]="qrForm.vcardLastName"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500">
                             @if (qrForm.vcardLastName().invalid() && qrForm.vcardLastName().touched()) {
                                 <span class="text-xs text-red-500 font-medium mt-1 block">
-                                    {{ qrForm.vcardLastName().errors()[0]?.message || 'Last name is required' }}
+                                    {{ (qrForm.vcardLastName().errors()[0]?.message | translate) || ('qr-generator.validation.lastNameRequired' | translate) }}
                                 </span>
                             }
                         </div>
                     </div>
                     <div class="mb-4">
-                        <label for="vcard-company" class="block text-gray-700 text-sm font-bold mb-2">Company (optional)</label>
+                        <label for="vcard-company" class="block text-gray-700 text-sm font-bold mb-2">{{ 'qr-generator.vcard.company' | translate }}</label>
                         <input type="text" id="vcard-company" [formField]="qrForm.vcardCompany!"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500">
                         @if (qrForm.vcardCompany!().invalid() && qrForm.vcardCompany!().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
-                                {{ qrForm.vcardCompany!().errors()[0]?.message }}
+                                {{ qrForm.vcardCompany!().errors()[0]?.message | translate }}
                             </span>
                         }
                     </div>
                     <div class="mb-4">
-                        <label for="vcard-phone" class="block text-gray-700 text-sm font-bold mb-2">Phone Number</label>
+                        <label for="vcard-phone" class="block text-gray-700 text-sm font-bold mb-2">{{ 'qr-generator.vcard.phone' | translate }}</label>
                         <input type="tel" id="vcard-phone" [formField]="qrForm.vcardPhoneNumber"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500">
                         @if (qrForm.vcardPhoneNumber().invalid() && qrForm.vcardPhoneNumber().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
-                                {{ qrForm.vcardPhoneNumber().errors()[0]?.message || 'Phone number is required' }}
+                                {{ (qrForm.vcardPhoneNumber().errors()[0]?.message | translate) || ('qr-generator.validation.phoneRequired' | translate) }}
                             </span>
                         }
                     </div>
                     <div class="mb-4">
-                        <label for="vcard-email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                        <label for="vcard-email" class="block text-gray-700 text-sm font-bold mb-2">{{ 'qr-generator.vcard.email' | translate }}</label>
                         <input type="email" id="vcard-email" [formField]="qrForm.vcardEmail"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500">
                         @if (qrForm.vcardEmail().invalid() && qrForm.vcardEmail().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
-                                {{ qrForm.vcardEmail().errors()[0]?.message || 'Invalid email' }}
+                                {{ (qrForm.vcardEmail().errors()[0]?.message | translate) || ('qr-generator.validation.invalidEmail' | translate) }}
                             </span>
                         }
                     </div>
                     <div class="mb-4">
-                        <label for="vcard-website" class="block text-gray-700 text-sm font-bold mb-2">Website (optional)</label>
+                        <label for="vcard-website" class="block text-gray-700 text-sm font-bold mb-2">{{ 'qr-generator.vcard.website' | translate }}</label>
                         <input type="url" id="vcard-website" [formField]="qrForm.vcardWebsite!"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500">
                         @if (qrForm.vcardWebsite!().invalid() && qrForm.vcardWebsite!().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
-                                {{ qrForm.vcardWebsite!().errors()[0]?.message }}
+                                {{ qrForm.vcardWebsite!().errors()[0]?.message | translate }}
                             </span>
                         }
                     </div>
                     <div>
-                        <label for="vcard-address" class="block text-gray-700 text-sm font-bold mb-2">Address (optional)</label>
+                        <label for="vcard-address" class="block text-gray-700 text-sm font-bold mb-2">{{ 'qr-generator.vcard.address' | translate }}</label>
                         <textarea id="vcard-address" rows="2" [formField]="qrForm.vcardAddress!"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500"></textarea>
                         @if (qrForm.vcardAddress!().invalid() && qrForm.vcardAddress!().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
-                                {{ qrForm.vcardAddress!().errors()[0]?.message }}
+                                {{ qrForm.vcardAddress!().errors()[0]?.message | translate }}
                             </span>
                         }
                     </div>
@@ -220,19 +220,19 @@
                 <!-- WiFi Content Form -->
                 <div id="wifi-form" class="mb-8">
                     <div class="mb-4">
-                        <label for="wifi-ssid" class="block text-gray-700 text-sm font-bold mb-2">Network Name (SSID)</label>
+                        <label for="wifi-ssid" class="block text-gray-700 text-sm font-bold mb-2">{{ 'qr-generator.wifi.ssid' | translate }}</label>
                         <input type="text" id="wifi-ssid" [formField]="qrForm.wifiSsid"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500">
                         @if (qrForm.wifiSsid().invalid() && qrForm.wifiSsid().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
-                                {{ qrForm.wifiSsid().errors()[0]?.message || 'Network SSID is required' }}
+                                {{ (qrForm.wifiSsid().errors()[0]?.message | translate) || ('qr-generator.validation.ssidRequired' | translate) }}
                             </span>
                         }
                     </div>
                     <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Encryption Type</label>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">{{ 'qr-generator.wifi.encryption' | translate }}</label>
                         <div class="flex space-x-4">
-                            @for (encryptionType of encryptionTypes; track $index) {
+                            @for (encryptionType of encryptionTypes(); track $index) {
                                 <label class="inline-flex items-center cursor-pointer">
                                     <input type="radio" [value]="encryptionType.id" [formField]="qrForm.wifiEncryption"
                                         class="form-radio text-indigo-600">
@@ -242,18 +242,18 @@
                         </div>
                         @if (qrForm.wifiEncryption().invalid() && qrForm.wifiEncryption().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
-                                {{ qrForm.wifiEncryption().errors()[0]?.message }}
+                                {{ qrForm.wifiEncryption().errors()[0]?.message | translate }}
                             </span>
                         }
                     </div>
                     @if(qrForm.wifiEncryption().value() !== 'none') {
                         <div>
-                            <label for="wifi-password" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                            <label for="wifi-password" class="block text-gray-700 text-sm font-bold mb-2">{{ 'qr-generator.wifi.password' | translate }}</label>
                             <input type="password" id="wifi-password" [formField]="qrForm.wifiPassword!"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500">
                             @if (qrForm.wifiPassword!().invalid() && qrForm.wifiPassword!().touched()) {
                                 <span class="text-xs text-red-500 font-medium mt-1 block">
-                                    {{ qrForm.wifiPassword!().errors()[0]?.message }}
+                                    {{ qrForm.wifiPassword!().errors()[0]?.message | translate }}
                                 </span>
                             }
                         </div>
@@ -265,24 +265,24 @@
                 <!-- Location Content Form -->
                 <div id="geo-form" class="mb-8">
                     <div class="mb-4">
-                        <label for="geo-latitude" class="block text-gray-700 text-sm font-bold mb-2">Latitude</label>
+                        <label for="geo-latitude" class="block text-gray-700 text-sm font-bold mb-2">{{ 'qr-generator.geo.latitude' | translate }}</label>
                         <input type="text" id="geo-latitude" [formField]="qrForm.geoLatitude"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500"
-                            placeholder="e.g. 37.7749">
+                            [placeholder]="'qr-generator.geo.latitudePlaceholder' | translate">
                         @if (qrForm.geoLatitude().invalid() && qrForm.geoLatitude().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
-                                {{ qrForm.geoLatitude().errors()[0]?.message || 'Latitude is required' }}
+                                {{ (qrForm.geoLatitude().errors()[0]?.message | translate) || ('qr-generator.validation.latitudeRequired' | translate) }}
                             </span>
                         }
                     </div>
                     <div>
-                        <label for="geo-longitude" class="block text-gray-700 text-sm font-bold mb-2">Longitude</label>
+                        <label for="geo-longitude" class="block text-gray-700 text-sm font-bold mb-2">{{ 'qr-generator.geo.longitude' | translate }}</label>
                         <input type="text" id="geo-longitude" [formField]="qrForm.geoLongitude"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500"
-                            placeholder="e.g. -122.4194">
+                            [placeholder]="'qr-generator.geo.longitudePlaceholder' | translate">
                         @if (qrForm.geoLongitude().invalid() && qrForm.geoLongitude().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
-                                {{ qrForm.geoLongitude().errors()[0]?.message || 'Longitude is required' }}
+                                {{ (qrForm.geoLongitude().errors()[0]?.message | translate) || ('qr-generator.validation.longitudeRequired' | translate) }}
                             </span>
                         }
                     </div>
@@ -290,7 +290,7 @@
                         <button id="get-current-location"
                             type="button"
                             class="text-indigo-600 hover:text-indigo-800 transition text-sm font-medium" (click)="getCurrentLocation()">
-                            <lucide-icon name="map-pin" class="inline-block"></lucide-icon> Use my current location
+                            <lucide-icon name="map-pin" class="inline-block"></lucide-icon> {{ 'qr-generator.geo.useCurrentLocation' | translate }}
                         </button>
                     </div>
                 </div>
@@ -299,13 +299,13 @@
 
                 <!-- QR Code Customization -->
                 <div class="mb-6">
-                    <h3 class="text-xl font-semibold mb-4 text-gray-800">Customize QR Code</h3>
+                    <h3 class="text-xl font-semibold mb-4 text-gray-800">{{ 'qr-generator.customization.title' | translate }}</h3>
 
                     <!-- Dots Type Inside the QR-->
                     <div class="mb-6">
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Dots Shape</label>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">{{ 'qr-generator.customization.dotsShape' | translate }}</label>
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
-                            @for (dotType of dotsTypes; track $index) {
+                            @for (dotType of dotsTypes(); track $index) {
                             <label
                                 class="border border-gray-300 rounded-md p-2 flex items-center justify-between cursor-pointer hover:bg-gray-50 transition">
                                 <span>{{ dotType.name }}</span>
@@ -314,19 +314,19 @@
                             </label>
                             }
                         </div>
-                        <p class="mt-2 text-sm text-gray-500">The shape of the dots in the QR code.</p>
+                        <p class="mt-2 text-sm text-gray-500">{{ 'qr-generator.customization.dotsShapeHint' | translate }}</p>
                         @if (qrForm.dotsType().invalid() && qrForm.dotsType().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
-                                {{ qrForm.dotsType().errors()[0]?.message }}
+                                {{ qrForm.dotsType().errors()[0]?.message | translate }}
                             </span>
                         }
                     </div>
 
                     <!-- Corners Style Inside the QR-->
                     <div class="mb-6">
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Corners Style</label>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">{{ 'qr-generator.customization.cornersStyle' | translate }}</label>
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
-                            @for (cornerSquareStyle of cornersSquareStyles; track $index) {
+                            @for (cornerSquareStyle of cornersSquareStyles(); track $index) {
                             <label
                                 class="border border-gray-300 rounded-md p-2 flex items-center justify-between cursor-pointer hover:bg-gray-50 transition">
                                 <span>{{ cornerSquareStyle.name }}</span>
@@ -335,19 +335,19 @@
                             </label>
                             }
                         </div>
-                        <p class="mt-2 text-sm text-gray-500">The style of the corners in the QR code.</p>
+                        <p class="mt-2 text-sm text-gray-500">{{ 'qr-generator.customization.cornersStyleHint' | translate }}</p>
                         @if (qrForm.cornersStyle().invalid() && qrForm.cornersStyle().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
-                                {{ qrForm.cornersStyle().errors()[0]?.message }}
+                                {{ qrForm.cornersStyle().errors()[0]?.message | translate }}
                             </span>
                         }
                     </div>
 
                     <!-- Corners Dot Style the QR-->
                     <div class="mb-6">
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Corners Inner Dot Style</label>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">{{ 'qr-generator.customization.cornersInnerDotStyle' | translate }}</label>
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
-                            @for (cornerSquareStyle of cornersInnerDotStyles; track $index) {
+                            @for (cornerSquareStyle of cornersInnerDotStyles(); track $index) {
                             <label
                                 class="border border-gray-300 rounded-md p-2 flex items-center justify-between cursor-pointer hover:bg-gray-50 transition">
                                 <span>{{ cornerSquareStyle.name }}</span>
@@ -356,36 +356,36 @@
                             </label>
                             }
                         </div>
-                        <p class="mt-2 text-sm text-gray-500">The style of the corners in the QR code.</p>
+                        <p class="mt-2 text-sm text-gray-500">{{ 'qr-generator.customization.cornersInnerDotStyleHint' | translate }}</p>
                         @if (qrForm.cornersInnerDotStyle().invalid() && qrForm.cornersInnerDotStyle().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
-                                {{ qrForm.cornersInnerDotStyle().errors()[0]?.message }}
+                                {{ qrForm.cornersInnerDotStyle().errors()[0]?.message | translate }}
                             </span>
                         }
                     </div>
 
                     <!-- Size -->
                     <div class="mb-6">
-                        <label for="qrSize" class="block text-gray-700 text-sm font-bold mb-2">Size</label>
+                        <label for="qrSize" class="block text-gray-700 text-sm font-bold mb-2">{{ 'qr-generator.customization.size' | translate }}</label>
                         <div class="flex items-center">
                             <input type="range" id="qrSize" min="100" max="2000"
                                 [value]="qrForm.size().value()"
                                 (input)="qrForm.size().value.set(+$any($event.target).value)"
                                 class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
-                            <span id="size-value" class="ml-4 text-gray-700 w-12 text-center">{{ qrForm.size().value() }}px</span>
+                            <span id="size-value" class="ml-4 text-gray-700 w-12 text-center">{{ i18nService.formatNumber(qrForm.size().value()) }}px</span>
                         </div>
                         @if (qrForm.size().invalid() && qrForm.size().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
-                                {{ qrForm.size().errors()[0]?.message }}
+                                {{ qrForm.size().errors()[0]?.message | translate }}
                             </span>
                         }
                     </div>
 
                     <!-- Error Correction -->
                     <div class="mb-6">
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Error Correction Level</label>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">{{ 'qr-generator.customization.errorCorrection' | translate }}</label>
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
-                            @for (errorCorrectionLevel of errorCorrectionLevels; track $index) {
+                            @for (errorCorrectionLevel of errorCorrectionLevels(); track $index) {
                             <label
                                 class="border border-gray-300 rounded-md p-2 flex items-center justify-between cursor-pointer hover:bg-gray-50 transition">
                                 <span>{{ errorCorrectionLevel.name }}</span>
@@ -394,10 +394,10 @@
                             </label>
                             }
                         </div>
-                        <p class="mt-2 text-sm text-gray-500">Higher correction levels make your QR code more reliable but increase complexity.</p>
+                        <p class="mt-2 text-sm text-gray-500">{{ 'qr-generator.customization.errorCorrectionHint' | translate }}</p>
                         @if (qrForm.errorCorrectionLevel().invalid() && qrForm.errorCorrectionLevel().touched()) {
                             <span class="text-xs text-red-500 font-medium mt-1 block">
-                                {{ qrForm.errorCorrectionLevel().errors()[0]?.message }}
+                                {{ qrForm.errorCorrectionLevel().errors()[0]?.message | translate }}
                             </span>
                         }
                     </div>
@@ -405,7 +405,7 @@
                     <!-- Colors -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label for="fg-color" class="block text-gray-700 text-sm font-bold mb-2">Foreground Color</label>
+                            <label for="fg-color" class="block text-gray-700 text-sm font-bold mb-2">{{ 'qr-generator.customization.foregroundColor' | translate }}</label>
                             <div class="flex">
                                 <input type="color" id="fg-color" [formField]="qrForm.foregroundColor"
                                     class="h-10 w-10 rounded-sm border border-gray-300">
@@ -414,12 +414,12 @@
                             </div>
                             @if (qrForm.foregroundColor().invalid() && qrForm.foregroundColor().touched()) {
                                 <span class="text-xs text-red-500 font-medium mt-1 block">
-                                    {{ qrForm.foregroundColor().errors()[0]?.message }}
+                                    {{ qrForm.foregroundColor().errors()[0]?.message | translate }}
                                 </span>
                             }
                         </div>
                         <div>
-                            <label for="bg-color" class="block text-gray-700 text-sm font-bold mb-2">Background Color</label>
+                            <label for="bg-color" class="block text-gray-700 text-sm font-bold mb-2">{{ 'qr-generator.customization.backgroundColor' | translate }}</label>
                             <div class="flex">
                                 <input type="color" id="bg-color" [formField]="qrForm.backgroundColor"
                                     class="h-10 w-10 rounded-sm border border-gray-300">
@@ -428,7 +428,7 @@
                             </div>
                             @if (qrForm.backgroundColor().invalid() && qrForm.backgroundColor().touched()) {
                                 <span class="text-xs text-red-500 font-medium mt-1 block">
-                                    {{ qrForm.backgroundColor().errors()[0]?.message }}
+                                    {{ qrForm.backgroundColor().errors()[0]?.message | translate }}
                                 </span>
                             }
                         </div>
@@ -438,7 +438,7 @@
                 <div class="flex justify-center">
                     <button id="generate-qr" type="submit"
                         class="bg-indigo-600 text-white font-medium py-3 px-8 rounded-md hover:bg-indigo-700 transition focus:outline-hidden focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                        Generate QR Code
+                        {{ 'qr-generator.actions.generate' | translate }}
                     </button>
                 </div>
             </form>
@@ -447,7 +447,7 @@
 
         <!-- QR Code Preview -->
         <div class="bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-2xl font-bold mb-4 text-gray-800">QR Code</h2>
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">{{ 'qr-generator.preview.title' | translate }}</h2>
 
             <div class="flex flex-col items-center space-y-6">
                 <div id="qr-code-container"
@@ -457,27 +457,27 @@
                     @if(!lastQrGenerated()) {
                         <div class="text-gray-400 text-center p-6">
                             <i class="fas fa-qrcode text-5xl mb-4"></i>
-                            <p>Your QR code will appear here</p>
+                            <p>{{ 'qr-generator.preview.empty' | translate }}</p>
                         </div>
                     } @else {
-                        <img [src]="lastQrGenerated()!.url" alt="QR Code" class="h-64 my-2 w-auto">
+                        <img [src]="lastQrGenerated()!.url" [alt]="'qr-generator.preview.imageAlt' | translate" class="h-64 my-2 w-auto">
                     }
                 </div>
 
                 @if(lastQrGenerated()) {
                     <div id="download-container" class="w-full space-y-3">
-                        @for (extension of extensions; track $index) {
+                        @for (downloadFormat of downloadFormats(); track $index) {
                             <button
                                 type="button"
-                                (click)="download(extension)"
+                                (click)="download(downloadFormat.extension)"
                                 class="w-full gap-2 bg-indigo-600 text-white font-medium py-2 px-4 rounded-sm hover:bg-indigo-700 transition flex items-center justify-center">
-                                <lucide-icon name="download"></lucide-icon> Download as {{ extension | uppercase }}
+                                <lucide-icon name="download"></lucide-icon> {{ 'qr-generator.preview.downloadAs' | translate: { format: downloadFormat.label } }}
                             </button>
                         }
                     </div>
                     <div class="mt-8">
-                        <h3 class="text-lg font-semibold mb-4 text-gray-800">Test Your QR Code</h3>
-                        <p class="text-gray-600 mb-4">Scan the QR code with your device to ensure it works correctly.</p>
+                        <h3 class="text-lg font-semibold mb-4 text-gray-800">{{ 'qr-generator.preview.testTitle' | translate }}</h3>
+                        <p class="text-gray-600 mb-4">{{ 'qr-generator.preview.testDescription' | translate }}</p>
                     </div>
                 }
 
@@ -490,15 +490,12 @@
     <!-- QR Code Information Section -->
     <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
         <div class="md:col-span-2">
-            <h2 class="text-2xl font-bold mb-6 text-gray-800">About QR Codes</h2>
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">{{ 'qr-generator.about.title' | translate }}</h2>
 
             <div class="bg-white rounded-lg shadow-md p-6 space-y-6">
                 <div>
-                    <h3 class="text-xl font-semibold mb-3 text-gray-800">What are QR Codes?</h3>
-                    <p class="text-gray-600">QR (Quick Response) codes are two-dimensional barcodes that can be scanned
-                        using a smartphone camera. They store various types of information such as URLs, text, contact
-                        details, and more. Originally developed in Japan for tracking automotive parts, they've become
-                        ubiquitous for quickly sharing information.</p>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">{{ 'qr-generator.about.heading' | translate }}</h3>
+                    <p class="text-gray-600">{{ 'qr-generator.about.description' | translate }}</p>
                 </div>
             </div>
         </div>

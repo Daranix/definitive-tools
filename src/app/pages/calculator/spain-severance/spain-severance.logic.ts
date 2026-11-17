@@ -9,7 +9,7 @@ import {
   isValid,
   parse,
 } from 'date-fns';
-import { computeTotalPayments, round2 } from '../shared/calculator-format';
+import { computeTotalPayments, round2, type CalculatorTranslate } from '../shared/calculator-format';
 
 export type SalaryInputMode = 'annual' | 'monthly';
 export type DismissalType =
@@ -51,6 +51,14 @@ export type SpainSeveranceResult =
   | { ok: true; data: SpainSeveranceSummary }
   | { ok: false; error: string };
 
+/**
+ * Presentation options: the UI passes the active translator so error and cap
+ * messages follow the current language. Pure logic callers may omit it.
+ */
+export interface SpainSeveranceOptions {
+  translate?: CalculatorTranslate;
+}
+
 const ISO_DATE_FORMAT = 'yyyy-MM-dd';
 const ISO_DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 const PARSE_REFERENCE = new Date(2000, 0, 1);
@@ -91,28 +99,32 @@ function calculateInclusiveTenure(
 /**
  * Calculates Spanish labor severance pay with 2012 reform 45/33 split and statutory caps.
  */
-export function calculateSpainSeverance(input: SpainSeveranceInput): SpainSeveranceResult {
+export function calculateSpainSeverance(
+  input: SpainSeveranceInput,
+  options: SpainSeveranceOptions = {},
+): SpainSeveranceResult {
+  const t: CalculatorTranslate = options.translate ?? ((key) => key);
   const start = parseIsoDate(input.startDate);
   const end = parseIsoDate(input.endDate);
 
   if (!start || !end) {
     return {
       ok: false,
-      error: 'Introduce fechas de inicio y fin válidas (AAAA-MM-DD).',
+      error: t('calculators.severance.errors.dates'),
     };
   }
 
   if (isBefore(end, start)) {
     return {
       ok: false,
-      error: 'La fecha de despido o fin debe ser igual o posterior a la fecha de inicio.',
+      error: t('calculators.severance.errors.endBeforeStart'),
     };
   }
 
   if (!Number.isFinite(input.salaryAmount) || input.salaryAmount < 0) {
     return {
       ok: false,
-      error: 'El salario bruto debe ser un importe mayor o igual a 0 €.',
+      error: t('calculators.severance.errors.salaryNegative'),
     };
   }
 
@@ -125,7 +137,7 @@ export function calculateSpainSeverance(input: SpainSeveranceInput): SpainSevera
     ) {
       return {
         ok: false,
-        error: 'El número de pagas extra debe ser un entero entre 0 y 12.',
+        error: t('calculators.severance.errors.extraPaymentsRange'),
       };
     }
   }
@@ -167,17 +179,15 @@ export function calculateSpainSeverance(input: SpainSeveranceInput): SpainSevera
       if (daysPreDec.gt(720)) {
         if (daysPreDec.gt(1260)) {
           totalDaysFinalDec = new Decimal(1260);
-          capApplied =
-            'Tope máximo de 42 mensualidades (1.260 días) sobre el tramo anterior al 12/02/2012.';
+          capApplied = t('calculators.severance.caps.unfairMax1260');
         } else {
           totalDaysFinalDec = daysPreDec;
-          capApplied =
-            'Tramo previo al 12/02/2012 superior a 720 días: se consolidan los días devengados antes de la reforma sin añadir días posteriores.';
+          capApplied = t('calculators.severance.caps.unfairPre720');
         }
         daysPostDec = new Decimal(0);
       } else if (totalDaysUncappedDec.gt(720)) {
         totalDaysFinalDec = new Decimal(720);
-        capApplied = 'Tope máximo legal de 24 mensualidades (720 días).';
+        capApplied = t('calculators.severance.caps.unfairMax720');
       } else {
         totalDaysFinalDec = totalDaysUncappedDec;
       }
@@ -188,7 +198,7 @@ export function calculateSpainSeverance(input: SpainSeveranceInput): SpainSevera
       totalDaysUncappedDec = new Decimal(fullTenure.computableMonths).mul(20).div(12);
       if (totalDaysUncappedDec.gt(360)) {
         totalDaysFinalDec = new Decimal(360);
-        capApplied = 'Tope máximo legal de 12 mensualidades (360 días).';
+        capApplied = t('calculators.severance.caps.objective360');
       } else {
         totalDaysFinalDec = totalDaysUncappedDec;
       }
@@ -199,7 +209,7 @@ export function calculateSpainSeverance(input: SpainSeveranceInput): SpainSevera
       totalDaysUncappedDec = new Decimal(fullTenure.computableMonths).mul(20).div(12);
       if (totalDaysUncappedDec.gt(270)) {
         totalDaysFinalDec = new Decimal(270);
-        capApplied = 'Tope máximo legal de 9 mensualidades (270 días).';
+        capApplied = t('calculators.severance.caps.modification270');
       } else {
         totalDaysFinalDec = totalDaysUncappedDec;
       }

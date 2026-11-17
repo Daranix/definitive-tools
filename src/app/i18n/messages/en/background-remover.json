@@ -1,0 +1,29 @@
+{
+  "title": "Image Upload & Processing",
+  "actions": {
+    "removeBackground": "Remove Background",
+    "cancel": "Cancel",
+    "download": "Download Image",
+    "processAnother": "Process Another Image"
+  },
+  "status": {
+    "downloadingModel": "Downloading model ...",
+    "processing": "Processing the image ...",
+    "loadingModel": "Loading model file ..."
+  },
+  "about": {
+    "title": "About Background Removal",
+    "heading": "What is Background Removal?",
+    "description": "Background removal is a digital image editing technique that separates the main subject from its background. This creates transparent images that can be placed on any new background."
+  },
+  "messages": {
+    "error": "An error ocurred when trying to remove the background. Please try again."
+  },
+  "files": {
+    "output": "output.png"
+  },
+  "seo": {
+    "title": "Background Remover",
+    "description": "Remove backgrounds from images instantly. Create professional-looking transparent images for your projects, products, and designs."
+  }
+}

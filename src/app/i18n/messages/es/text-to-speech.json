@@ -1,0 +1,80 @@
+{
+  "seo": {
+    "title": "Generador local de texto a voz (TTS)",
+    "description": "Genera audio hablado de sonido natural a partir de texto localmente en tu navegador. Se ejecuta por completo en el cliente con WebAssembly y ONNX Runtime.",
+    "keywords": "texto a voz, tts, síntesis de voz, tts local, piper, vits, webassembly, onnx runtime"
+  },
+  "title": "Texto a voz (TTS)",
+  "subtitle": "Convierte texto en voz de sonido natural directamente en tu navegador. Con la potencia de los modelos VITS WebAssembly.",
+  "input": {
+    "label": "Texto que quieres sintetizar",
+    "placeholder": "Escribe la frase que quieres que lea la IA...",
+    "characters": "Caracteres: {{ count }}",
+    "offlineNote": "Toda la síntesis se realiza sin conexión en tu equipo"
+  },
+  "voice": {
+    "label": "Selecciona un modelo de voz",
+    "loading": "Cargando la lista de voces disponibles...",
+    "language": "Idioma:",
+    "quality": "Clase de calidad:",
+    "modelId": "ID del modelo:",
+    "unknownLanguage": "Idioma desconocido"
+  },
+  "actions": {
+    "generate": "Generar audio hablado",
+    "generating": "Generando la voz...",
+    "download": "Descargar la voz en WAV"
+  },
+  "output": {
+    "title": "Salida de audio",
+    "emptyTitle": "La voz sintetizada aparecerá aquí",
+    "emptyHint": "Haz clic en «Generar audio hablado» para empezar",
+    "downloading": "Descargando el modelo de voz ONNX",
+    "loading": "Cargando...",
+    "synthesizing": "Sintetizando el audio...",
+    "computing": "Calculando las muestras WAV con el modelo VITS local",
+    "ready": "¡Listo para reproducir!"
+  },
+  "progress": {
+    "connecting": "Conectando y descargando el modelo...",
+    "modelFile": "Archivo del modelo"
+  },
+  "help": {
+    "title": "Cómo funciona:",
+    "worker": "ONNX Runtime compila el modelo de voz en un Web Worker en segundo plano.",
+    "firstRun": "La primera generación descarga el modelo de voz seleccionado (~15-40 MB).",
+    "cache": "Los modelos descargados se guardan en la caché del navegador (OPFS) para generar al instante y sin conexión en las siguientes ocasiones."
+  },
+  "about": {
+    "title": "Acerca del TTS web local (VITS)",
+    "description": "Los sistemas tradicionales de texto a voz dependen de servidores en la nube (como Google TTS u OpenAI Audio) para procesar el texto y devolver el audio. Esta herramienta compila y ejecuta la inferencia neuronal de texto a voz por completo en tu navegador, con total privacidad y funcionamiento sin conexión.",
+    "advantagesTitle": "Ventajas",
+    "advantagePrivateTitle": "100 % privado",
+    "advantagePrivate": "Tu texto nunca sale de tu dispositivo.",
+    "advantageCostTitle": "Cero costes de servidor",
+    "advantageCost": "Realiza el procesado con la CPU de tu equipo.",
+    "advantageOfflineTitle": "Funciona sin conexión",
+    "advantageOffline": "Guarda los modelos en el sistema de archivos privado del origen (OPFS).",
+    "technicalTitle": "Base técnica",
+    "vitsTitle": "Arquitectura VITS",
+    "vits": "Inferencia variacional de extremo a extremo con aprendizaje adversarial.",
+    "onnxTitle": "ONNX Runtime Web",
+    "onnx": "Backend WebAssembly para ejecutar redes neuronales con rapidez en el navegador.",
+    "piperTitle": "Piper TTS",
+    "piper": "Pesos del proyecto Piper de Rhasspy optimizados para una síntesis de voz nítida."
+  },
+  "errors": {
+    "appUpdated": "La aplicación se ha actualizado en segundo plano. Recarga la página para sintetizar voz.",
+    "engine": "Se ha producido un error en el motor de voz en segundo plano. Recarga la página.",
+    "workersUnsupported": "Este navegador no admite Web Workers. No se puede sintetizar voz.",
+    "synthesisFailed": "No se ha podido sintetizar la voz.",
+    "enterText": "Escribe algún texto.",
+    "selectVoice": "Selecciona un modelo de voz."
+  },
+  "messages": {
+    "generated": "¡Voz generada correctamente!"
+  },
+  "downloads": {
+    "audioFileName": "voz-sintetizada-{{ voiceId }}.wav"
+  }
+}

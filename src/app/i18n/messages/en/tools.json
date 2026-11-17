@@ -1,0 +1,104 @@
+{
+  "categories": {
+    "all": "All",
+    "favorites": "Favorites",
+    "dev": "Dev Tools",
+    "image": "Image Tools",
+    "text": "Text Tools",
+    "media": "Media Tools",
+    "maps": "Maps",
+    "calculators": "Calculators"
+  },
+  "meme-generator": {
+    "name": "Meme Generator",
+    "description": "Create funny memes with custom text overlays, drag-and-drop captions, font styling, and popular pre-set templates."
+  },
+  "qr-generator": {
+    "name": "QR Code Generator",
+    "description": "Create customized QR codes for URLs, text, contact information, and more. high-quality QR codes that work anywhere."
+  },
+  "qr-reader": {
+    "name": "QR Code Reader",
+    "description": "Upload or paste an image containing a QR code to decode and inspect its content, links, Wi-Fi passwords, and contact info."
+  },
+  "background-remover": {
+    "name": "Background Remover",
+    "description": "Remove backgrounds from images instantly. Create professional-looking transparent images for your projects, products, and designs."
+  },
+  "image-converter": {
+    "name": "Image Converter",
+    "description": "Convert images between different formats (PNG, JPEG, WEBP, GIF, BMP) client-side with quality and dimensions controls."
+  },
+  "image-base64-converter": {
+    "name": "Image Base64 Converter",
+    "description": "Convert images to Base64 strings or decode Base64 data back to preview and download images. Supports multiple formats."
+  },
+  "base64-encoder-decoder": {
+    "name": "Base64 Encoder / Decoder",
+    "description": "Easily encode text to Base64 or decode Base64 to text. Perfect for data transfer, embedding images, or working with APIs."
+  },
+  "random-password-generator": {
+    "name": "Random Password Generator",
+    "description": "Create strong, secure, and random passwords instantly. Customize complexity to meet different security requirements."
+  },
+  "jwt-decode-encode": {
+    "name": "JWT Decoder / Encoder & Validator",
+    "description": "Easily encode / decode JSON Web Tokens (JWTs) and verify their signatures. Perfect for API development, authentication debugging, and token inspection."
+  },
+  "opengraph-generator": {
+    "name": "Opengraph Generator",
+    "description": "Create Opengraph and Twitter Cards for your websites."
+  },
+  "swagger-editor": {
+    "name": "Swagger Editor",
+    "description": "Edit and visualize Swagger API specifications."
+  },
+  "markdown-to-excel": {
+    "name": "Markdown to Excel",
+    "description": "Convert Markdown tables to Excel-compatible formats easily. Copy and paste your data directly into your favorite spreadsheet software."
+  },
+  "markdown-to-html": {
+    "name": "Markdown to HTML",
+    "description": "Convert Markdown text to clean HTML code with a live preview. Style the HTML instantly using custom CSS, stylesheets, or premium design presets."
+  },
+  "audio-editor": {
+    "name": "Audio Editor",
+    "description": "Trim, cut, and convert audio files directly in your browser. Export to MP3, WAV, OGG, AAC, and FLAC with custom bitrate and sample rate settings."
+  },
+  "text-to-speech": {
+    "name": "Text to Speech (TTS)",
+    "description": "Convert text to spoken audio locally in your browser. Powered by VITS WebAssembly models."
+  },
+  "audio-speech-to-text": {
+    "name": "Audio Speech to Text",
+    "description": "Convert spoken words into text efficiently."
+  },
+  "madrid-transport-map": {
+    "name": "Madrid Transport Map",
+    "description": "Interactive multimodal transit network and CRTM tariff zones map for Madrid (Metro, Cercanías, EMT, Interurban, Zones A-E2)."
+  },
+  "madrid-zbe-map": {
+    "name": "Madrid 360 & ZBE Map",
+    "description": "Interactive map of Madrid 360 Low Emission Zones (Distrito Centro, Plaza Elíptica, M-30 ring, cameras & DGT sticker checker)."
+  },
+  "regla-de-tres": {
+    "name": "Rule of Three",
+    "description": "Calculate simple direct, inverse and compound rules of three with a step-by-step breakdown."
+  },
+  "salario-neto-espana": {
+    "name": "Net Salary Spain",
+    "description": "Estimate your gross-to-net annual and monthly salary in Spain, including Social Security contributions and income tax."
+  },
+  "indemnizacion-despido-espana": {
+    "name": "Severance Pay Spain",
+    "description": "Calculate Spanish statutory severance pay based on dismissal type, seniority and the 2012 labour reform."
+  },
+  "calculadora-hipoteca": {
+    "name": "Mortgage Calculator",
+    "description": "Simulate the monthly payment, effective APR, total interest and the French amortisation schedule."
+  },
+  "calculadora-cientifica": {
+    "name": "Scientific Calculator",
+    "description": "Perform high-precision scientific calculations with trigonometry, logarithms, powers and memory."
+  }
+}

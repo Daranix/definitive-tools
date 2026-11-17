@@ -1,13 +1,16 @@
 import {
   Component,
   computed,
+  effect,
   inject,
   signal,
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { DragAndDropFileComponent } from '@/app/components/drag-and-drop-file/drag-and-drop-file.component';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MetadataService } from '@/app/services/metadata.service';
+import { I18nService } from '@/app/i18n/i18n.service';
 import { BlobPipe } from '@/app/pipes/blob.pipe';
 import type {
   PreTrainedModel,
@@ -34,6 +37,7 @@ import { FooterComponent } from '../../components/footer/footer.component';
     ProgressBarComponent,
     TopNavbarComponent,
     FooterComponent,
+    TranslatePipe,
   ],
   templateUrl: './background-remover.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -42,6 +46,7 @@ import { FooterComponent } from '../../components/footer/footer.component';
 export class BackgroundRemoverComponent {
   private readonly toastService = inject(ToastService);
   private readonly metadataService = inject(MetadataService);
+  private readonly i18n = inject(I18nService);
 
   readonly allowedExtensions = ['.png', '.jpg', '.jpeg', '.webp'];
 
@@ -61,11 +66,10 @@ export class BackgroundRemoverComponent {
   private processor?: Processor;
 
   constructor() {
-    this.metadataService.updateMetadata({
-      title: 'Background Remover',
-      description:
-        'Remove backgrounds from images instantly. Create professional-looking transparent images for your projects, products, and designs.',
-      updateCanonical: true,
+    this.updateMetadata();
+    effect(() => {
+      this.i18n.language();
+      this.updateMetadata();
     });
   }
 
@@ -127,8 +131,7 @@ export class BackgroundRemoverComponent {
       this.imageOutput.set(imageDataBlob);
     } catch (error) {
       this.toastService.error({
-        message:
-          'An error ocurred when trying to remove the background. Please try again.',
+        message: this.i18n.t('background-remover.messages.error'),
       });
       console.error('Error removing background:', error);
     }
@@ -150,7 +153,15 @@ export class BackgroundRemoverComponent {
   downloadImage() {
     const link = document.createElement('a');
     link.href = this.imageOutputUrl()!;
-    link.download = 'output.png';
+    link.download = this.i18n.t('background-remover.files.output');
     link.click();
+  }
+
+  private updateMetadata(): void {
+    this.metadataService.updateMetadata({
+      title: this.i18n.t('background-remover.seo.title'),
+      description: this.i18n.t('background-remover.seo.description'),
+      updateCanonical: true,
+    });
   }
 }

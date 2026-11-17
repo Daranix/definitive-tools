@@ -1,0 +1,86 @@
+{
+  "platforms": {
+    "openGraph": "Open Graph",
+    "twitter": "Twitter / X"
+  },
+  "dimensions": "Dimensions: {{ width }}x{{ height }}",
+  "sections": {
+    "chooseTemplate": "Choose template",
+    "templateProperties": "Template Properties",
+    "imagePreview": "Image Preview"
+  },
+  "actions": {
+    "downloadImage": "Download Image"
+  },
+  "about": {
+    "title": "About Image Generation",
+    "heading": "What is Open Graph?",
+    "description": "Open Graph is a technology that allows web pages to become rich objects in social networks. When you share a link on social media, Open Graph meta tags determine what image, title, and description appear in the post."
+  },
+  "fields": {
+    "title": "Title",
+    "description": "Description",
+    "tag": "Tag",
+    "image": "Image",
+    "logo": "Logo",
+    "file": "File:"
+  },
+  "background": {
+    "label": "Background",
+    "hint": "Set a custom background for your image.",
+    "types": {
+      "gradient": "Gradient",
+      "solid": "Solid Color",
+      "image": "Image"
+    },
+    "gradientDirection": "Gradient Direction",
+    "overlay": {
+      "label": "Background Overlay",
+      "title": "Background Grid Overlay",
+      "hint": "Customize the background grid overlay.",
+      "pattern": "Pattern",
+      "patterns": {
+        "none": "None",
+        "grid": "Grid",
+        "graph": "Graph",
+        "dots": "Dots"
+      },
+      "color": "Color",
+      "opacity": "Opacity",
+      "blurRadius": "Blur Radius"
+    }
+  },
+  "fontOptions": {
+    "title": "Font Settings",
+    "hint": "Customize the tag font.",
+    "family": "Font family",
+    "weight": "Font weight",
+    "size": "Font size",
+    "color": "Text Color",
+    "weights": {
+      "thin": "Thin",
+      "extraLight": "Extra Light",
+      "light": "Light",
+      "regular": "Regular",
+      "medium": "Medium",
+      "semiBold": "Semi Bold",
+      "bold": "Bold",
+      "extraBold": "Extra Bold",
+      "black": "Black"
+    }
+  },
+  "defaults": {
+    "easyStorage": "Easy Storage",
+    "managedDatabases": "Managed Databases for Everyone",
+    "marketing": "Marketing",
+    "openGraphImages": "Generate Beautiful Open Graph Images"
+  },
+  "download": {
+    "fileName": "opengraph-image"
+  },
+  "seo": {
+    "title": "Opengraph Generator",
+    "description": "Create professional Opengraph images and Twitter Cards that boost your website's visibility on social media platforms. Easy-to-use tool for generating custom social previews.",
+    "keywords": "opengraph generator, twitter cards, social media preview, meta tags, social share images, open graph protocol, social media optimization, website metadata, custom social images"
+  }
+}

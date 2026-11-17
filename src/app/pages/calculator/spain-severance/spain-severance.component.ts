@@ -1,15 +1,25 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
 import { FormField, form, validateStandardSchema } from '@angular/forms/signals';
 import Decimal from 'decimal.js';
+import { TranslatePipe } from '@ngx-translate/core';
 import { TopNavbarComponent } from '@/app/components/top-navbar/top-navbar.component';
 import { FooterComponent } from '@/app/components/footer/footer.component';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
+import { I18nService } from '@/app/i18n/i18n.service';
 import { MetadataService } from '@/app/services/metadata.service';
 import {
   computeTotalPayments,
-  formatCurrencyEs,
-  formatNumberEs,
+  formatCurrency,
+  formatNumber,
   round2,
+  type CalculatorTranslate,
 } from '../shared/calculator-format';
 import {
   DismissalType,
@@ -17,17 +27,24 @@ import {
   SpainSeveranceResult,
   calculateSpainSeverance,
 } from './spain-severance.logic';
-import { SpainSeveranceFormModel, SpainSeveranceSchema } from './spain-severance.schema';
+import {
+  SpainSeveranceFormModel,
+  createSpainSeveranceSchema,
+} from './spain-severance.schema';
 
 @Component({
   selector: 'app-spain-severance',
   standalone: true,
-  imports: [FormField, TopNavbarComponent, FooterComponent, LucideIconComponent],
+  imports: [FormField, TopNavbarComponent, FooterComponent, LucideIconComponent, TranslatePipe],
   templateUrl: './spain-severance.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SpainSeveranceComponent {
   private readonly metadataService = inject(MetadataService);
+  private readonly i18n = inject(I18nService);
+
+  private readonly translate: CalculatorTranslate = (key, params) =>
+    this.i18n.t(key, params);
 
   readonly severanceModel = signal<SpainSeveranceFormModel>({
     startDate: '2020-01-15',
@@ -38,8 +55,12 @@ export class SpainSeveranceComponent {
     dismissalType: 'unfair',
   });
 
+  private readonly severanceSchema = computed(() =>
+    createSpainSeveranceSchema(this.translate),
+  );
+
   readonly severanceForm = form(this.severanceModel, (schemaPath) => {
-    validateStandardSchema(schemaPath, SpainSeveranceSchema);
+    validateStandardSchema(schemaPath, () => this.severanceSchema());
   });
 
   readonly totalPayments = computed(() =>
@@ -47,33 +68,46 @@ export class SpainSeveranceComponent {
   );
 
   readonly result = computed<SpainSeveranceResult>(() => {
+    // Re-evaluate validation messages whenever the language changes.
+    this.i18n.language();
     const raw = this.severanceModel();
-    const parsed = SpainSeveranceSchema.safeParse(raw);
+    const parsed = this.severanceSchema().safeParse(raw);
     if (!parsed.success) {
       return {
         ok: false,
-        error: parsed.error.issues[0]?.message ?? 'Revisa los datos introducidos en el formulario.',
+        error:
+          parsed.error.issues[0]?.message ??
+          this.translate('calculators.shared.formError'),
       };
     }
 
     const valid = parsed.data;
-    return calculateSpainSeverance({
-      startDate: valid.startDate,
-      endDate: valid.endDate,
-      salaryMode: valid.salaryMode,
-      salaryAmount: valid.salaryAmount ?? 0,
-      extraPayments: valid.extraPayments ?? 0,
-      dismissalType: valid.dismissalType,
-    });
+    return calculateSpainSeverance(
+      {
+        startDate: valid.startDate,
+        endDate: valid.endDate,
+        salaryMode: valid.salaryMode,
+        salaryAmount: valid.salaryAmount ?? 0,
+        extraPayments: valid.extraPayments ?? 0,
+        dismissalType: valid.dismissalType,
+      },
+      { translate: this.translate },
+    );
   });
 
+  readonly dismissalLabels = computed<Record<DismissalType, string>>(() => ({
+    unfair: this.translate('calculators.severance.dismissals.unfair'),
+    objective: this.translate('calculators.severance.dismissals.objective'),
+    modification: this.translate('calculators.severance.dismissals.modification'),
+    temporary_end: this.translate('calculators.severance.dismissals.temporaryEnd'),
+    disciplinary: this.translate('calculators.severance.dismissals.disciplinary'),
+  }));
+
   constructor() {
-    this.metadataService.updateMetadata({
-      title: 'Calculadora de Indemnización por Despido España',
-      description:
-        'Calcula la indemnización por despido improcedente (45/33 días), objetivo (20 días), fin de contrato temporal o modificación sustancial en España.',
-      keywords:
-        'calculadora indemnizacion despido espana, despido improcedente 45 33 dias, despido objetivo, finiquito indemnizacion',
+    this.updateMetadata();
+    effect(() => {
+      this.i18n.language();
+      this.updateMetadata();
     });
   }
 
@@ -101,25 +135,22 @@ export class SpainSeveranceComponent {
   }
 
   formatEur(value: number): string {
-    return formatCurrencyEs(value);
+    return formatCurrency(value, 2, this.i18n.locale());
   }
 
   formatNum(value: number, maxDecimals = 2): string {
-    return formatNumberEs(value, maxDecimals);
+    return formatNumber(value, maxDecimals, this.i18n.locale());
   }
 
   dismissalLabel(type: DismissalType): string {
-    switch (type) {
-      case 'unfair':
-        return 'Despido improcedente (45 / 33 días por año)';
-      case 'objective':
-        return 'Despido objetivo o ERE procedente (20 días/año, máx. 12 meses)';
-      case 'modification':
-        return 'Modificación sustancial o traslado (20 días/año, máx. 9 meses)';
-      case 'temporary_end':
-        return 'Fin de contrato temporal (12 días/año)';
-      case 'disciplinary':
-        return 'Despido disciplinario procedente (0 días)';
-    }
+    return this.dismissalLabels()[type];
+  }
+
+  private updateMetadata(): void {
+    this.metadataService.updateMetadata({
+      title: this.i18n.t('calculators.severance.seo.title'),
+      description: this.i18n.t('calculators.severance.seo.description'),
+      keywords: this.i18n.t('calculators.severance.seo.keywords'),
+    });
   }
 }

@@ -6,19 +6,19 @@
     <div class="text-center mb-8">
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-semibold mb-3">
         <lucide-icon name="divide" class="w-3.5 h-3.5"></lucide-icon>
-        <span>Cálculo proporcional de precisión</span>
+        <span>{{ 'calculators.ruleOfThree.badge' | translate }}</span>
       </div>
       <h1 data-testid="tool-title" class="text-3xl font-extrabold text-slate-900 tracking-tight sm:text-4xl">
-        Calculadora de Regla de 3
+        {{ 'calculators.ruleOfThree.title' | translate }}
       </h1>
       <p class="mt-2 max-w-2xl mx-auto text-base text-slate-600">
-        Resuelve reglas de tres simples directas, inversas y compuestas mixtas con fórmula y desglose paso a paso.
+        {{ 'calculators.ruleOfThree.subtitle' | translate }}
       </p>
     </div>
 
     <!-- Mode Selector Tabs -->
     <div class="flex justify-center mb-6">
-      <div class="bg-slate-200/80 p-1.5 rounded-xl inline-flex flex-wrap justify-center gap-1.5 shadow-inner" role="tablist" aria-label="Tipo de regla de tres">
+      <div class="bg-slate-200/80 p-1.5 rounded-xl inline-flex flex-wrap justify-center gap-1.5 shadow-inner" role="tablist" [attr.aria-label]="'calculators.ruleOfThree.tabs.ariaLabel' | translate">
         <button
           type="button"
           role="tab"
@@ -29,7 +29,7 @@
             ? 'px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg bg-white text-indigo-700 shadow-xs transition cursor-pointer'
             : 'px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg text-slate-600 hover:text-slate-900 transition cursor-pointer'"
         >
-          Simple Directa
+          {{ 'calculators.ruleOfThree.tabs.simpleDirect' | translate }}
         </button>
         <button
           type="button"
@@ -41,7 +41,7 @@
             ? 'px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg bg-white text-indigo-700 shadow-xs transition cursor-pointer'
             : 'px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg text-slate-600 hover:text-slate-900 transition cursor-pointer'"
         >
-          Simple Inversa
+          {{ 'calculators.ruleOfThree.tabs.simpleInverse' | translate }}
         </button>
         <button
           type="button"
@@ -53,7 +53,7 @@
             ? 'px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg bg-white text-indigo-700 shadow-xs transition cursor-pointer'
             : 'px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg text-slate-600 hover:text-slate-900 transition cursor-pointer'"
         >
-          Compuesta (Directa / Inversa / Mixta)
+          {{ 'calculators.ruleOfThree.tabs.compound' | translate }}
         </button>
       </div>
     </div>
@@ -61,39 +61,39 @@
     <!-- Examples & Controls Bar -->
     <div class="flex flex-wrap items-center justify-between gap-3 mb-6 bg-white p-3.5 rounded-2xl border border-slate-200 shadow-xs">
       <div class="flex flex-wrap items-center gap-2">
-        <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider mr-1">Ejemplos:</span>
+        <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider mr-1">{{ 'calculators.ruleOfThree.examples.label' | translate }}</span>
         <button
           type="button"
           (click)="applyPreset('recipe')"
           class="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 transition cursor-pointer"
         >
-          Receta (directa)
+          {{ 'calculators.ruleOfThree.examples.recipe' | translate }}
         </button>
         <button
           type="button"
           (click)="applyPreset('speed')"
           class="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 transition cursor-pointer"
         >
-          Velocidad y tiempo (inversa)
+          {{ 'calculators.ruleOfThree.examples.speed' | translate }}
         </button>
         <button
           type="button"
           (click)="applyPreset('factory')"
           class="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 transition cursor-pointer"
         >
-          Obra mixta (compuesta)
+          {{ 'calculators.ruleOfThree.examples.factory' | translate }}
         </button>
         <button
           type="button"
           (click)="applyPreset('logistics')"
           class="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 transition cursor-pointer"
         >
-          Transporte (compuesta)
+          {{ 'calculators.ruleOfThree.examples.logistics' | translate }}
         </button>
       </div>
 
       <div class="flex items-center gap-2">
-        <label for="rot-decimals" class="text-xs font-medium text-slate-600">Decimales:</label>
+        <label for="rot-decimals" class="text-xs font-medium text-slate-600">{{ 'calculators.ruleOfThree.decimals.label' | translate }}</label>
         <select
           id="rot-decimals"
           [value]="ruleModel().decimals"
@@ -112,7 +112,7 @@
           class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-100 transition cursor-pointer"
         >
           <lucide-icon name="rotate-cw" class="w-3.5 h-3.5"></lucide-icon>
-          <span>Reiniciar</span>
+          <span>{{ 'calculators.ruleOfThree.actions.reset' | translate }}</span>
         </button>
       </div>
     </div>
@@ -124,13 +124,13 @@
           <div class="flex items-center justify-between mb-5">
             <div>
               <h2 class="text-lg font-bold text-slate-900">
-                {{ ruleModel().mode === 'simple-direct' ? 'Proporción Directa' : 'Proporción Inversa' }}
+                {{ (ruleModel().mode === 'simple-direct' ? 'calculators.ruleOfThree.simple.directTitle' : 'calculators.ruleOfThree.simple.inverseTitle') | translate }}
               </h2>
               <p class="text-xs text-slate-500 mt-0.5">
                 {{
-                  ruleModel().mode === 'simple-direct'
-                    ? 'A mayor valor de la primera magnitud, mayor valor de la segunda.'
-                    : 'A mayor valor de la primera magnitud, menor valor de la segunda.'
+                  (ruleModel().mode === 'simple-direct'
+                    ? 'calculators.ruleOfThree.simple.directDescription'
+                    : 'calculators.ruleOfThree.simple.inverseDescription') | translate
                 }}
               </p>
             </div>
@@ -141,7 +141,7 @@
               class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition cursor-pointer"
             >
               <lucide-icon name="arrow-right-left" class="w-3.5 h-3.5"></lucide-icon>
-              <span>Intercambiar filas</span>
+              <span>{{ 'calculators.ruleOfThree.actions.swapRows' | translate }}</span>
             </button>
           </div>
 
@@ -149,25 +149,25 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
             <div>
               <label for="simple-label-known" class="block text-xs font-semibold text-slate-600 mb-1">
-                Nombre de magnitud 1
+                {{ 'calculators.ruleOfThree.simple.labelKnown' | translate }}
               </label>
               <input
                 id="simple-label-known"
                 type="text"
                 [formField]="ruleForm.simpleLabelKnown"
-                placeholder="Ej. Unidades"
+                [placeholder]="'calculators.ruleOfThree.simple.placeholderKnown' | translate"
                 class="w-full px-3 py-2 text-sm rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
               />
             </div>
             <div>
               <label for="simple-label-result" class="block text-xs font-semibold text-slate-600 mb-1">
-                Nombre de magnitud 2
+                {{ 'calculators.ruleOfThree.simple.labelResult' | translate }}
               </label>
               <input
                 id="simple-label-result"
                 type="text"
                 [formField]="ruleForm.simpleLabelResult"
-                placeholder="Ej. Precio (€)"
+                [placeholder]="'calculators.ruleOfThree.simple.placeholderResult' | translate"
                 class="w-full px-3 py-2 text-sm rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
               />
             </div>
@@ -178,7 +178,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-11 gap-3 items-start bg-slate-50 p-4 rounded-xl border border-slate-200">
               <div class="sm:col-span-5">
                 <label for="rot-input-a" class="block text-xs font-semibold text-slate-600 mb-1">
-                  Si {{ ruleModel().simpleLabelKnown || 'A' }} es (A)
+                  {{ 'calculators.ruleOfThree.simple.fieldA' | translate: { name: ruleModel().simpleLabelKnown || 'A' } }}
                 </label>
                 <input
                   id="rot-input-a"
@@ -197,7 +197,7 @@
               <div class="sm:col-span-1 text-center text-slate-400 font-bold text-lg sm:pt-7">→</div>
               <div class="sm:col-span-5">
                 <label for="rot-input-b" class="block text-xs font-semibold text-slate-600 mb-1">
-                  Entonces {{ ruleModel().simpleLabelResult || 'B' }} es (B)
+                  {{ 'calculators.ruleOfThree.simple.fieldB' | translate: { name: ruleModel().simpleLabelResult || 'B' } }}
                 </label>
                 <input
                   id="rot-input-b"
@@ -218,7 +218,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-11 gap-3 items-start bg-indigo-50/50 p-4 rounded-xl border border-indigo-100">
               <div class="sm:col-span-5">
                 <label for="rot-input-c" class="block text-xs font-semibold text-indigo-900 mb-1">
-                  Para {{ ruleModel().simpleLabelKnown || 'C' }} igual a (C)
+                  {{ 'calculators.ruleOfThree.simple.fieldC' | translate: { name: ruleModel().simpleLabelKnown || 'C' } }}
                 </label>
                 <input
                   id="rot-input-c"
@@ -237,7 +237,7 @@
               <div class="sm:col-span-1 text-center text-indigo-500 font-bold text-lg sm:pt-7">→</div>
               <div class="sm:col-span-5">
                 <span class="block text-xs font-semibold text-indigo-900 mb-1">
-                  Incógnita {{ ruleModel().simpleLabelResult || 'X' }} (X)
+                  {{ 'calculators.ruleOfThree.simple.unknown' | translate: { name: ruleModel().simpleLabelResult || 'X' } }}
                 </span>
                 <div
                   data-testid="rot-inline-x"
@@ -254,9 +254,9 @@
           <!-- Compound Mode -->
           <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
             <div>
-              <h2 class="text-lg font-bold text-slate-900">Regla de 3 Compuesta</h2>
+              <h2 class="text-lg font-bold text-slate-900">{{ 'calculators.ruleOfThree.compound.title' | translate }}</h2>
               <p class="text-xs text-slate-500 mt-0.5">
-                Combina entre 2 y 6 magnitudes con relación directa o inversa respecto al objetivo.
+                {{ 'calculators.ruleOfThree.compound.description' | translate }}
               </p>
             </div>
             <div class="flex items-center gap-2">
@@ -266,7 +266,7 @@
                 class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition cursor-pointer"
               >
                 <lucide-icon name="arrow-right-left" class="w-3.5 h-3.5"></lucide-icon>
-                <span>Invertir casos</span>
+                <span>{{ 'calculators.ruleOfThree.actions.invertCases' | translate }}</span>
               </button>
               <button
                 type="button"
@@ -276,7 +276,7 @@
                 class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed transition cursor-pointer"
               >
                 <lucide-icon name="plus" class="w-3.5 h-3.5"></lucide-icon>
-                <span>Añadir magnitud</span>
+                <span>{{ 'calculators.ruleOfThree.actions.addCondition' | translate }}</span>
               </button>
             </div>
           </div>
@@ -285,19 +285,19 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-xl bg-indigo-50/60 border border-indigo-100 mb-5">
             <div>
               <label for="compound-target-label" class="block text-xs font-semibold text-indigo-900 mb-1">
-                Magnitud a calcular (objetivo)
+                {{ 'calculators.ruleOfThree.compound.targetLabel' | translate }}
               </label>
               <input
                 id="compound-target-label"
                 type="text"
                 [formField]="ruleForm.compoundTargetLabel"
-                placeholder="Ej. Días"
+                [placeholder]="'calculators.ruleOfThree.compound.targetPlaceholder' | translate"
                 class="w-full px-3 py-2 text-sm rounded-xl border border-indigo-200 bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
               />
             </div>
             <div>
               <label for="compound-base-value" class="block text-xs font-semibold text-indigo-900 mb-1">
-                Valor conocido de referencia
+                {{ 'calculators.ruleOfThree.compound.baseLabel' | translate }}
               </label>
               <input
                 id="compound-base-value"
@@ -324,7 +324,7 @@
               >
                 <div class="sm:col-span-4">
                   <label [for]="'cond-label-' + row.id" class="block text-xs font-semibold text-slate-600 mb-1">
-                    Magnitud {{ idx + 1 }}
+                    {{ 'calculators.ruleOfThree.compound.rowName' | translate: { index: idx + 1 } }}
                   </label>
                   <input
                     [id]="'cond-label-' + row.id"
@@ -336,7 +336,7 @@
 
                 <div class="sm:col-span-2">
                   <label [for]="'cond-known-' + row.id" class="block text-xs font-semibold text-slate-600 mb-1">
-                    Caso base
+                    {{ 'calculators.ruleOfThree.compound.baseCase' | translate }}
                   </label>
                   <input
                     [id]="'cond-known-' + row.id"
@@ -354,7 +354,7 @@
 
                 <div class="sm:col-span-2">
                   <label [for]="'cond-target-' + row.id" class="block text-xs font-semibold text-slate-600 mb-1">
-                    Nuevo caso
+                    {{ 'calculators.ruleOfThree.compound.newCase' | translate }}
                   </label>
                   <input
                     [id]="'cond-target-' + row.id"
@@ -372,15 +372,15 @@
 
                 <div class="sm:col-span-3">
                   <label [for]="'cond-rel-' + row.id" class="block text-xs font-semibold text-slate-600 mb-1">
-                    Relación
+                    {{ 'calculators.ruleOfThree.compound.relation' | translate }}
                   </label>
                   <select
                     [id]="'cond-rel-' + row.id"
                     [formField]="ruleForm.compoundConditions[idx].relation"
                     class="w-full px-2.5 py-2 text-sm font-medium rounded-lg border border-slate-200 bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
                   >
-                    <option value="direct">Directa</option>
-                    <option value="inverse">Inversa</option>
+                    <option value="direct">{{ 'calculators.ruleOfThree.compound.relationDirect' | translate }}</option>
+                    <option value="inverse">{{ 'calculators.ruleOfThree.compound.relationInverse' | translate }}</option>
                   </select>
                 </div>
 
@@ -389,7 +389,7 @@
                     type="button"
                     [disabled]="!canRemoveCondition()"
                     (click)="removeCondition(row.id)"
-                    [attr.aria-label]="'Eliminar ' + row.label"
+                    [attr.aria-label]="'calculators.shared.removeItem' | translate: { name: row.label }"
                     class="p-2 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 disabled:opacity-30 disabled:cursor-not-allowed transition cursor-pointer"
                   >
                     <lucide-icon name="trash-2" class="w-4 h-4"></lucide-icon>
@@ -410,10 +410,10 @@
           <div class="flex items-start justify-between gap-3">
             <div>
               <p class="text-xs font-semibold uppercase tracking-wider text-indigo-200">
-                Resultado calculado
+                {{ 'calculators.ruleOfThree.result.title' | translate }}
               </p>
               <p class="text-sm text-indigo-100 mt-0.5">
-                {{ ruleModel().mode === 'compound' ? (ruleModel().compoundTargetLabel || 'Incógnita X') : (ruleModel().simpleLabelResult || 'Incógnita X') }}
+                {{ ruleModel().mode === 'compound' ? (ruleModel().compoundTargetLabel || ('calculators.ruleOfThree.result.unknownFallback' | translate)) : (ruleModel().simpleLabelResult || ('calculators.ruleOfThree.result.unknownFallback' | translate)) }}
               </p>
             </div>
             @if (result().ok) {
@@ -424,7 +424,7 @@
                 class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/15 hover:bg-white/25 text-xs font-semibold transition cursor-pointer"
               >
                 <lucide-icon [name]="copied() ? 'check' : 'copy'" class="w-3.5 h-3.5"></lucide-icon>
-                <span>{{ copied() ? 'Copiado' : 'Copiar' }}</span>
+                <span>{{ (copied() ? 'calculators.shared.copiedLabel' : 'calculators.shared.copy') | translate }}</span>
               </button>
             }
           </div>
@@ -452,7 +452,7 @@
             <div class="bg-white rounded-2xl border border-slate-200 shadow-xs p-5">
               <h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2">
                 <lucide-icon name="info" class="w-4 h-4 text-indigo-600"></lucide-icon>
-                <span>Desglose paso a paso</span>
+                <span>{{ 'calculators.ruleOfThree.result.stepsTitle' | translate }}</span>
               </h3>
               <ol class="space-y-2.5 text-sm text-slate-700 list-decimal list-inside">
                 @for (step of res.steps; track $index) {

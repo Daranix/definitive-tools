@@ -104,232 +104,150 @@ import {
   LucideXCircle,
 } from '@lucide/angular';
 
+/**
+ * Category identifiers used for filtering and grouping.
+ * Human readable labels live in the translation bundles under `tools.categories.*`.
+ */
 export const CATEGORIES = [
-  'All',
-  'Favorites',
-  'Dev Tools',
-  'Image Tools',
-  'Text Tools',
-  'Media Tools',
-  'Maps',
-  'Calculadora',
+    'all',
+    'favorites',
+    'dev',
+    'image',
+    'text',
+    'media',
+    'maps',
+    'calculators',
 ] as const;
 export type ToolCategory = (typeof CATEGORIES)[number];
 
+/** Categories an individual tool can belong to. */
+export type ToolCategoryId = Exclude<ToolCategory, 'all' | 'favorites'>;
+
 export interface Tool {
     id: string;
-    name: string;
-    description: string;
+    /** Tooltip / brand colour token, keep in sync with Tailwind safelist. */
     color: string;
     icon: string;
-    category: string;
+    category: ToolCategoryId;
 }
 
 export const TOOLS: ReadonlyArray<Tool> = [
     {
-        id: 'meme-generator',
-        name: 'Meme Generator',
-        description: 'Create funny memes with custom text overlays, drag-and-drop captions, font styling, and popular pre-set templates.',
-        icon: 'smile',
+        id: 'meme-generator',        icon: 'smile',
         color: 'indigo',
-        category: 'Image Tools'
+        category: 'image'
     },
     {
-        id: 'qr-generator',
-        name: 'QR Code Generator',
-        description: 'Create customized QR codes for URLs, text, contact information, and more. high-quality QR codes that work anywhere.',
-        icon: 'qr-code',
+        id: 'qr-generator',        icon: 'qr-code',
         color: 'indigo',
-        category: 'Image Tools'
+        category: 'image'
     },
     {
-        id: 'qr-reader',
-        name: 'QR Code Reader',
-        description: 'Upload or paste an image containing a QR code to decode and inspect its content, links, Wi-Fi passwords, and contact info.',
-        icon: 'scan-qr-code',
+        id: 'qr-reader',        icon: 'scan-qr-code',
         color: 'indigo',
-        category: 'Image Tools'
+        category: 'image'
     },
     {
-        id: 'background-remover',
-        name: 'Background Remover',
-        description: 'Remove backgrounds from images instantly. Create professional-looking transparent images for your projects, products, and designs.',
-        icon: 'image-off',
+        id: 'background-remover',        icon: 'image-off',
         color: 'indigo',
-        category: 'Image Tools'
+        category: 'image'
     },
     {
-        id: 'image-converter',
-        name: 'Image Converter',
-        description: 'Convert images between different formats (PNG, JPEG, WEBP, GIF, BMP) client-side with quality and dimensions controls.',
-        icon: 'image',
+        id: 'image-converter',        icon: 'image',
         color: 'indigo',
-        category: 'Image Tools'
+        category: 'image'
     },
     {
-        id: 'image-base64-converter',
-        name: 'Image Base64 Converter',
-        description: 'Convert images to Base64 strings or decode Base64 data back to preview and download images. Supports multiple formats.',
-        icon: 'image',
+        id: 'image-base64-converter',        icon: 'image',
         color: 'indigo',
-        category: 'Image Tools'
+        category: 'image'
     },
     {
-        id: 'base64-encoder-decoder',
-        name: 'Base64 Encoder / Decoder',
-        description: 'Easily encode text to Base64 or decode Base64 to text. Perfect for data transfer, embedding images, or working with APIs.',
-        icon: 'code',
+        id: 'base64-encoder-decoder',        icon: 'code',
         color: 'indigo',
-        category: 'Dev Tools'
+        category: 'dev'
     },
     {
-        id: 'random-password-generator',
-        name: 'Random Password Generator',
-        description: 'Create strong, secure, and random passwords instantly. Customize complexity to meet different security requirements.',
-        icon: 'key',
+        id: 'random-password-generator',        icon: 'key',
         color: 'indigo',
-        category: 'Text Tools'
+        category: 'text'
     },
     {
-        id: 'jwt-decode-encode',
-        name: 'JWT Decoder / Encoder & Validator',
-        description: 'Easily encode / decode JSON Web Tokens (JWTs) and verify their signatures. Perfect for API development, authentication debugging, and token inspection.',
-        icon: 'lock-keyhole-open',
+        id: 'jwt-decode-encode',        icon: 'lock-keyhole-open',
         color: 'indigo',
-        category: 'Dev Tools'
+        category: 'dev'
     },
     {
-        id: 'opengraph-generator',
-        name: 'Opengraph Generator',
-        description: 'Create Opengraph and Twitter Cards for your websites.',
-        icon: 'bolt',
+        id: 'opengraph-generator',        icon: 'bolt',
         color: 'indigo',
-        category: 'Image Tools'
+        category: 'image'
     },
     {
-        id: 'swagger-editor',
-        name: 'Swagger Editor',
-        description: 'Edit and visualize Swagger API specifications.',
-        icon: 'bolt',
+        id: 'swagger-editor',        icon: 'bolt',
         color: 'indigo',
-        category: 'Dev Tools'
+        category: 'dev'
     },
     {
-        id: 'markdown-to-excel',
-        name: 'Markdown to Excel',
-        description: 'Convert Markdown tables to Excel-compatible formats easily. Copy and paste your data directly into your favorite spreadsheet software.',
-        icon: 'file-text',
+        id: 'markdown-to-excel',        icon: 'file-text',
         color: 'indigo',
-        category: 'Text Tools'
-    },
-    /*{
-        id: 'markdown-to-pdf',
-        name: 'Markdown to PDF',
-        description: 'Convert Markdown text to professional PDF documents with a live preview. Perfect for documentation, notes, and quick reports.',
-        icon: 'file-text',
-        color: 'indigo',
-        category: 'Text Tools'
-    },*/
-    {
-        id: 'markdown-to-html',
-        name: 'Markdown to HTML',
-        description: 'Convert Markdown text to clean HTML code with a live preview. Style the HTML instantly using custom CSS, stylesheets, or premium design presets.',
-        icon: 'code',
-        color: 'indigo',
-        category: 'Text Tools'
+        category: 'text'
     },
     {
-        id: 'audio-editor',
-        name: 'Audio Editor',
-        description: 'Trim, cut, and convert audio files directly in your browser. Export to MP3, WAV, OGG, AAC, and FLAC with custom bitrate and sample rate settings.',
-        icon: 'music',
+        id: 'markdown-to-html',        icon: 'code',
         color: 'indigo',
-        category: 'Media Tools'
+        category: 'text'
     },
     {
-        id: 'text-to-speech',
-        name: 'Text to Speech (TTS)',
-        description: 'Convert text to spoken audio locally in your browser. Powered by VITS WebAssembly models.',
-        icon: 'music',
+        id: 'audio-editor',        icon: 'music',
         color: 'indigo',
-        category: 'Media Tools'
+        category: 'media'
     },
     {
-        id: 'audio-speech-to-text',
-        name: 'Audio Speech to Text',
-        description: 'Convert spoken words into text efficiently.',
-        icon: 'speech',
+        id: 'text-to-speech',        icon: 'music',
         color: 'indigo',
-        category: 'Media Tools'
+        category: 'media'
     },
     {
-        id: 'madrid-transport-map',
-        name: 'Madrid Transport Map',
-        description: 'Interactive multimodal transit network and CRTM tariff zones map for Madrid (Metro, Cercanías, EMT, Interurban, Zones A-E2).',
-        icon: 'map',
+        id: 'audio-speech-to-text',        icon: 'speech',
         color: 'indigo',
-        category: 'Maps'
+        category: 'media'
     },
     {
-        id: 'madrid-zbe-map',
-        name: 'Madrid 360 & ZBE Map',
-        description: 'Interactive map of Madrid 360 Low Emission Zones (Distrito Centro, Plaza Elíptica, M-30 ring, cameras & DGT sticker checker).',
-        icon: 'shield-alert',
+        id: 'madrid-transport-map',        icon: 'map',
+        color: 'indigo',
+        category: 'maps'
+    },
+    {
+        id: 'madrid-zbe-map',        icon: 'shield-alert',
         color: 'emerald',
-        category: 'Maps'
+        category: 'maps'
     },
     {
-        id: 'regla-de-tres',
-        name: 'Regla de 3',
-        description: 'Calcula reglas de tres simples directas, inversas y compuestas con desglose paso a paso.',
-        icon: 'divide',
+        id: 'regla-de-tres',        icon: 'divide',
         color: 'indigo',
-        category: 'Calculadora'
+        category: 'calculators'
     },
     {
-        id: 'salario-neto-espana',
-        name: 'Salario Neto España',
-        description: 'Estima tu sueldo neto anual y mensual en España con cotizaciones a la Seguridad Social e IRPF.',
-        icon: 'badge-euro',
+        id: 'salario-neto-espana',        icon: 'badge-euro',
         color: 'indigo',
-        category: 'Calculadora'
+        category: 'calculators'
     },
     {
-        id: 'indemnizacion-despido-espana',
-        name: 'Indemnización por Despido',
-        description: 'Calcula la indemnización laboral en España según tipo de despido, antigüedad y reforma de 2012.',
-        icon: 'briefcase',
+        id: 'indemnizacion-despido-espana',        icon: 'briefcase',
         color: 'indigo',
-        category: 'Calculadora'
+        category: 'calculators'
     },
     {
-        id: 'calculadora-hipoteca',
-        name: 'Calculadora de Hipotecas',
-        description: 'Simula la cuota mensual, TAE efectiva, intereses totales y cuadro de amortización francés.',
-        icon: 'house',
+        id: 'calculadora-hipoteca',        icon: 'house',
         color: 'indigo',
-        category: 'Calculadora'
+        category: 'calculators'
     },
     {
-        id: 'calculadora-cientifica',
-        name: 'Calculadora Científica',
-        description: 'Realiza cálculos científicos de alta precisión con trigonometría, logaritmos, potencias y memoria.',
-        icon: 'calculator',
+        id: 'calculadora-cientifica',        icon: 'calculator',
         color: 'indigo',
-        category: 'Calculadora'
+        category: 'calculators'
     }
 ];
-
-export const VALIDATION_CONSTANTS = {
-    required: 'This field is required',
-    minLength: 'This field must be at least {{ limit }} characters long',
-    maxLength: 'This field must be at most {{ limit }} characters long',
-    min: 'This field must be at least {{ limit }}',
-    max: 'This field must be at most {{ limit }}',
-    email: 'This field must be a valid email',
-    pattern: 'This field must match the pattern {{ pattern }}',
-    unique: 'This field must be unique'
-} as const;
 
 export const USED_ICONS = {
     Archive: LucideArchive,

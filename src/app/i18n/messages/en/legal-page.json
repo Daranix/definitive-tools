@@ -1,0 +1,9 @@
+{
+  "breadcrumb": {
+    "label": "Breadcrumb",
+    "legal": "Legal"
+  },
+  "error": {
+    "code": "({{ code }})"
+  }
+}

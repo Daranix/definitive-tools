@@ -1,3 +1,13 @@
+/**
+ * Canonical Madrid 360 / ZBE dataset.
+ *
+ * The textual fields below are the reference data (official zone names, rules
+ * and sticker descriptions in their original wording). Everything rendered in
+ * the UI is read from the `madrid-zbe-map` translation namespace
+ * (`madrid-zbe-map.zones.*`, `madrid-zbe-map.badges.*`), keyed by `ZbeZoneId`
+ * and `DgtBadge`, so the dataset itself stays locale independent: it is only
+ * used for search matching, colours, geometry, codes and raw numbers.
+ */
 export type ZbeZoneId =
   | 'zbe-distrito-centro'
   | 'zbe-plaza-eliptica'
@@ -93,13 +103,20 @@ export interface ZbeLayerVisibilityState {
 
 export interface SearchResultItem {
   id: string;
+  /** Dataset name: the canonical zone name or the camera / parking label. */
   name: string;
-  subtitle: string;
   type: 'zone' | 'camera' | 'parking';
   coordinates: [number, number];
   zoom?: number;
-  badge?: string;
   badgeColor?: string;
+  /** Camera street / location, straight from the dataset. */
+  location?: string;
+  /** Camera enforcement zone label, straight from the dataset. */
+  zoneName?: string;
+  /** Parking capacity, formatted by the consumer. */
+  capacity?: number;
+  /** Parking transit connections, straight from the dataset. */
+  transitConnections?: string;
 }
 
 export interface DgtBadgeMeta {
@@ -116,10 +133,17 @@ export interface DgtBadgeMeta {
 
 export interface DgtSimulationResult {
   zoneId: ZbeZoneId;
-  zoneName: string;
+  /** Translation key of the zone label shown in the results list. */
+  zoneNameKey: string;
   allowed: 'yes' | 'conditional' | 'no';
-  title: string;
-  message: string;
+  /** Translation key of the verdict headline. */
+  titleKey: string;
+  /** Translation key of the verdict explanation. */
+  messageKey: string;
+  /** Fine amount (EUR) referenced by the copy, if any. */
+  fineEur?: number;
+  /** Early-payment amount (EUR) referenced by the copy, if any. */
+  earlyPaymentEur?: number;
   serParkingAllowed: boolean;
   serMaxHours?: number;
   fineRisk: boolean;

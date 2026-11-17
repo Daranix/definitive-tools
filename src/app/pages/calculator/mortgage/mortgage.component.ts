@@ -1,30 +1,43 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
 import { FormField, form, validateStandardSchema } from '@angular/forms/signals';
 import Decimal from 'decimal.js';
+import { TranslatePipe } from '@ngx-translate/core';
 import { TopNavbarComponent } from '@/app/components/top-navbar/top-navbar.component';
 import { FooterComponent } from '@/app/components/footer/footer.component';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
+import { I18nService } from '@/app/i18n/i18n.service';
 import { MetadataService } from '@/app/services/metadata.service';
 import { ToastService } from '@/app/services/toast.service';
 import {
   downloadCsv,
-  formatCurrencyEs,
-  formatNumberEs,
+  formatCurrency,
   parseNullableNumber,
+  type CalculatorTranslate,
 } from '../shared/calculator-format';
 import { MortgageResult, calculateMortgage } from './mortgage.logic';
-import { MortgageFormModel, MortgageSchema } from './mortgage.schema';
+import { MortgageFormModel, createMortgageSchema } from './mortgage.schema';
 
 @Component({
   selector: 'app-mortgage',
   standalone: true,
-  imports: [FormField, TopNavbarComponent, FooterComponent, LucideIconComponent],
+  imports: [FormField, TopNavbarComponent, FooterComponent, LucideIconComponent, TranslatePipe],
   templateUrl: './mortgage.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MortgageComponent {
   private readonly metadataService = inject(MetadataService);
   private readonly toastService = inject(ToastService);
+  private readonly i18n = inject(I18nService);
+
+  private readonly translate: CalculatorTranslate = (key, params) =>
+    this.i18n.t(key, params);
 
   readonly mortgageModel = signal<MortgageFormModel>({
     propertyPrice: 250000,
@@ -37,8 +50,12 @@ export class MortgageComponent {
     purchaseTaxPercent: 8,
   });
 
+  private readonly mortgageSchema = computed(() =>
+    createMortgageSchema(this.translate),
+  );
+
   readonly mortgageForm = form(this.mortgageModel, (schemaPath) => {
-    validateStandardSchema(schemaPath, MortgageSchema);
+    validateStandardSchema(schemaPath, () => this.mortgageSchema());
   });
 
   readonly tableView = signal<'annual' | 'monthly'>('annual');
@@ -57,25 +74,32 @@ export class MortgageComponent {
   );
 
   readonly result = computed<MortgageResult>(() => {
+    // Re-evaluate validation messages whenever the language changes.
+    this.i18n.language();
     const raw = this.mortgageModel();
-    const parsed = MortgageSchema.safeParse(raw);
+    const parsed = this.mortgageSchema().safeParse(raw);
     if (!parsed.success) {
       return {
         ok: false,
-        error: parsed.error.issues[0]?.message ?? 'Revisa los datos introducidos en el formulario.',
+        error:
+          parsed.error.issues[0]?.message ??
+          this.translate('calculators.shared.formError'),
       };
     }
 
     const valid = parsed.data;
-    return calculateMortgage({
-      propertyPrice: valid.propertyPrice ?? 0,
-      downPayment: valid.downPayment ?? 0,
-      years: valid.years ?? 1,
-      tinAnnual: valid.tinAnnual ?? 0,
-      additionalInitialFees: valid.additionalInitialFees ?? 0,
-      annualRecurringCost: valid.annualRecurringCost ?? 0,
-      purchaseTaxPercent: valid.purchaseTaxPercent ?? 0,
-    });
+    return calculateMortgage(
+      {
+        propertyPrice: valid.propertyPrice ?? 0,
+        downPayment: valid.downPayment ?? 0,
+        years: valid.years ?? 1,
+        tinAnnual: valid.tinAnnual ?? 0,
+        additionalInitialFees: valid.additionalInitialFees ?? 0,
+        annualRecurringCost: valid.annualRecurringCost ?? 0,
+        purchaseTaxPercent: valid.purchaseTaxPercent ?? 0,
+      },
+      { translate: this.translate },
+    );
   });
 
   readonly principalSharePercent = computed<number>(() => {
@@ -94,12 +118,10 @@ export class MortgageComponent {
   });
 
   constructor() {
-    this.metadataService.updateMetadata({
-      title: 'Calculadora de Hipotecas - Cuota, TAE y Cuadro de Amortización',
-      description:
-        'Simula tu hipoteca con sistema francés, calcula la cuota mensual, la TAE efectiva con gastos, el ahorro necesario y descarga el cuadro de amortización en CSV.',
-      keywords:
-        'calculadora hipoteca, simulador hipoteca, cuota mensual, calcular TAE, cuadro de amortizacion frances',
+    this.updateMetadata();
+    effect(() => {
+      this.i18n.language();
+      this.updateMetadata();
     });
   }
 
@@ -167,14 +189,16 @@ export class MortgageComponent {
   }
 
   formatEur(value: number | null): string {
-    return formatCurrencyEs(value ?? 0);
+    return formatCurrency(value ?? 0, 2, this.i18n.locale());
   }
 
   formatPct(value: number | null, maxDecimals = 2): string {
     if (value === null) {
-      return 'N/A';
+      return this.translate('calculators.shared.notAvailable');
     }
-    return `${formatNumberEs(value, maxDecimals)} %`;
+    return this.i18n.formatPercent(value / 100, {
+      maximumFractionDigits: maxDecimals,
+    });
   }
 
   exportCsv(): void {
@@ -185,11 +209,11 @@ export class MortgageComponent {
 
     if (this.tableView() === 'annual') {
       const headers = [
-        'Año',
-        'Cuota anual (EUR)',
-        'Capital amortizado (EUR)',
-        'Intereses (EUR)',
-        'Capital pendiente (EUR)',
+        this.translate('calculators.mortgage.csv.year'),
+        this.translate('calculators.mortgage.csv.annualPayment'),
+        this.translate('calculators.mortgage.csv.principal'),
+        this.translate('calculators.mortgage.csv.interest'),
+        this.translate('calculators.mortgage.csv.balance'),
       ];
       const rows = res.data.yearlySummary.map((row) => [
         row.year,
@@ -198,15 +222,19 @@ export class MortgageComponent {
         row.totalInterest.toFixed(2),
         row.endingBalance.toFixed(2),
       ]);
-      downloadCsv('amortizacion-hipoteca-anual.csv', headers, rows);
+      downloadCsv(
+        this.translate('calculators.mortgage.csv.annualFileName'),
+        headers,
+        rows,
+      );
     } else {
       const headers = [
-        'Mes',
-        'Año',
-        'Cuota (EUR)',
-        'Capital amortizado (EUR)',
-        'Intereses (EUR)',
-        'Capital pendiente (EUR)',
+        this.translate('calculators.mortgage.csv.month'),
+        this.translate('calculators.mortgage.csv.year'),
+        this.translate('calculators.mortgage.csv.payment'),
+        this.translate('calculators.mortgage.csv.principal'),
+        this.translate('calculators.mortgage.csv.interest'),
+        this.translate('calculators.mortgage.csv.balance'),
       ];
       const rows = res.data.schedule.map((row) => [
         row.month,
@@ -216,9 +244,23 @@ export class MortgageComponent {
         row.interest.toFixed(2),
         row.remainingBalance.toFixed(2),
       ]);
-      downloadCsv('amortizacion-hipoteca-mensual.csv', headers, rows);
+      downloadCsv(
+        this.translate('calculators.mortgage.csv.monthlyFileName'),
+        headers,
+        rows,
+      );
     }
 
-    this.toastService.success({ message: 'Cuadro de amortización exportado en CSV' });
+    this.toastService.success({
+      message: this.translate('calculators.mortgage.csv.exported'),
+    });
+  }
+
+  private updateMetadata(): void {
+    this.metadataService.updateMetadata({
+      title: this.i18n.t('calculators.mortgage.seo.title'),
+      description: this.i18n.t('calculators.mortgage.seo.description'),
+      keywords: this.i18n.t('calculators.mortgage.seo.keywords'),
+    });
   }
 }

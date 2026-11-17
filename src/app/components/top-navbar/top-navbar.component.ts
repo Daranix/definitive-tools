@@ -12,20 +12,31 @@ import {
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 import { LucideIconComponent } from '@/app/components/lucide-icon/lucide-icon.component';
+import { LanguageSwitcherComponent } from '@/app/components/language-switcher/language-switcher.component';
+import { LocalizeUrlPipe } from '@/app/pipes/localize-url.pipe';
+import { I18nService } from '@/app/i18n/i18n.service';
 import { ToastService } from '@app/services/toast.service';
 import { GithubService } from '../../services/github.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-top-navbar',
-  imports: [LucideIconComponent, RouterLink],
+  imports: [
+    LucideIconComponent,
+    RouterLink,
+    LocalizeUrlPipe,
+    TranslatePipe,
+    LanguageSwitcherComponent,
+  ],
   templateUrl: './top-navbar.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './top-navbar.component.scss',
 })
 export class TopNavbarComponent {
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly i18n = inject(I18nService);
   readonly activatedRoute = inject(ActivatedRoute);
   readonly toastService = inject(ToastService);
   private readonly githubService = inject(GithubService);
@@ -35,7 +46,9 @@ export class TopNavbarComponent {
   readonly hideHero = input<boolean>(false);
   readonly isCollapsed = model<boolean>(false);
 
-  readonly stars = toSignal(this.githubService.getRepoStars(), { initialValue: 0 });
+  readonly stars = toSignal(this.githubService.getRepoStars(), {
+    initialValue: 0,
+  });
   readonly info = computed(() => this.getToolInfo());
   readonly isMobileMenuOpen = signal<boolean>(false);
   readonly isFavorite = signal<boolean>(false);
@@ -54,14 +67,25 @@ export class TopNavbarComponent {
     });
   }
 
+  /**
+   * Tool metadata for the active route, with its name and description already
+   * translated for the active language.
+   */
   private getToolInfo() {
-    const id = this.activatedRoute.snapshot.data['id'];
-    const tool = TOOLS.find((tool) => tool.id === id);
-    if (tool) {
-      return tool;
+    // Re-resolve labels when the language changes.
+    this.i18n.language();
+
+    const id = this.activatedRoute.snapshot.data['id'] as string | undefined;
+    const tool = TOOLS.find((candidate) => candidate.id === id);
+    if (!tool) {
+      return undefined;
     }
 
-    return undefined;
+    return {
+      ...tool,
+      name: this.i18n.t(`tools.${tool.id}.name`),
+      description: this.i18n.t(`tools.${tool.id}.description`),
+    };
   }
 
   private getFavorites(): string[] {
@@ -84,13 +108,17 @@ export class TopNavbarComponent {
       favs = favs.filter((id) => id !== toolInfo.id);
       this.isFavorite.set(false);
       this.toastService.info({
-        message: `${toolInfo.name} removed from favorites.`,
+        message: this.i18n.t('common.toolBar.removedFromFavorites', {
+          name: toolInfo.name,
+        }),
       });
     } else {
       favs.push(toolInfo.id);
       this.isFavorite.set(true);
       this.toastService.success({
-        message: `${toolInfo.name} added to favorites!`,
+        message: this.i18n.t('common.toolBar.addedToFavorites', {
+          name: toolInfo.name,
+        }),
       });
     }
     if (isPlatformBrowser(this.platformId)) {
@@ -103,7 +131,7 @@ export class TopNavbarComponent {
     if (!toolInfo) return;
 
     const shareData = {
-      title: `${toolInfo.name} - Definitive Tools`,
+      title: this.i18n.t('common.toolBar.shareTitle', { name: toolInfo.name }),
       text: toolInfo.description,
       url: window.location.href,
     };
@@ -116,7 +144,9 @@ export class TopNavbarComponent {
       navigator
         .share(shareData)
         .then(() =>
-          this.toastService.success({ message: 'Shared successfully!' }),
+          this.toastService.success({
+            message: this.i18n.t('common.toolBar.sharedSuccessfully'),
+          }),
         )
         .catch((err) => {
           if (err.name !== 'AbortError') {
@@ -132,11 +162,13 @@ export class TopNavbarComponent {
     navigator.clipboard
       .writeText(window.location.href)
       .then(() => {
-        this.toastService.success({ message: 'Link copied to clipboard!' });
+        this.toastService.success({
+          message: this.i18n.t('common.toolBar.linkCopied'),
+        });
       })
       .catch(() => {
         this.toastService.error({
-          message: 'Failed to copy link to clipboard.',
+          message: this.i18n.t('common.toolBar.linkCopyFailed'),
         });
       });
   }

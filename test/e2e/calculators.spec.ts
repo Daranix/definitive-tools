@@ -8,7 +8,7 @@ async function gotoTool(page: Page, url: string): Promise<void> {
 test.describe('Calculadora Section & Tools', () => {
   test('filters home dashboard by Calculadora category showing 5 tools', async ({ page }) => {
     await page.goto('/', { waitUntil: 'networkidle' });
-    await page.getByTestId('category-filter-Calculadora').click();
+    await page.getByTestId('category-filter-Calculators').click();
 
     const toolCards = page.locator('[data-testid^="tool-card-"]');
     await expect(toolCards).toHaveCount(5);
@@ -24,7 +24,7 @@ test.describe('Calculadora Section & Tools', () => {
     page,
   }) => {
     await gotoTool(page, '/tool/regla-de-tres');
-    await expect(page.locator('h1').first()).toContainText('Regla de 3');
+    await expect(page.locator('h1').first()).toContainText('Rule of Three');
 
     await page.getByTestId('rot-input-a').fill('4');
     await page.getByTestId('rot-input-b').fill('12');
@@ -41,11 +41,11 @@ test.describe('Calculadora Section & Tools', () => {
     await expect(page.getByTestId('rot-result-value')).toHaveText('16');
   });
 
-  test('Salario Neto España 2026 updates net monthly across extraPayments (0, 2, 3)', async ({
+  test('Net Salary Spain 2026 updates net monthly across extraPayments (0, 2, 3)', async ({
     page,
   }) => {
     await gotoTool(page, '/tool/salario-neto-espana');
-    await expect(page.locator('h1').first()).toContainText('Salario Neto España');
+    await expect(page.locator('h1').first()).toContainText('Net Salary Spain');
 
     await page.getByTestId('salary-gross-input').fill('40000');
     const extraInput = page.getByTestId('salary-extra-payments-input');
@@ -63,11 +63,11 @@ test.describe('Calculadora Section & Tools', () => {
     expect(net3).not.toBe(net2);
   });
 
-  test('Indemnización por Despido computes pre/post-2012, monthly extraPayments, and disciplinary zero', async ({
+  test('Severance Pay Spain computes pre/post-2012, monthly extraPayments, and disciplinary zero', async ({
     page,
   }) => {
     await gotoTool(page, '/tool/indemnizacion-despido-espana');
-    await expect(page.locator('h1').first()).toContainText('Indemnización por Despido');
+    await expect(page.locator('h1').first()).toContainText('Severance Pay Spain');
 
     await page.getByTestId('sev-start-date').fill('2010-02-12');
     await page.getByTestId('sev-end-date').fill('2014-02-11');
@@ -75,43 +75,44 @@ test.describe('Calculadora Section & Tools', () => {
 
     await expect(page.getByTestId('sev-reform-breakdown')).toBeVisible();
     await expect(page.getByTestId('sev-total-days')).toContainText('156');
-    await expect(page.getByTestId('sev-total-amount')).toContainText('15.600,00');
+    // English locale formatting for EUR.
+    await expect(page.getByTestId('sev-total-amount')).toContainText('15,600.00');
 
     await page.getByTestId('sev-salary-mode-monthly').click();
     await expect(page.getByTestId('sev-salary-amount')).toHaveValue('3041.67');
     await page.getByTestId('sev-salary-amount').fill('2000');
     await page.getByTestId('sev-extra-payments-input').fill('3');
-    await expect(page.getByTestId('sev-total-amount')).toContainText('12.821,92');
+    await expect(page.getByTestId('sev-total-amount')).toContainText('12,821.92');
 
     await page.getByTestId('sev-dismissal-select').selectOption('disciplinary');
     await expect(page.getByTestId('sev-total-days')).toContainText('0');
-    await expect(page.getByTestId('sev-total-amount')).toContainText('0,00');
+    await expect(page.getByTestId('sev-total-amount')).toContainText('0.00');
   });
 
-  test('Calculadora de Hipotecas updates monthly payment, TAE, and schedule view', async ({
+  test('Mortgage Calculator updates monthly payment, TAE, and schedule view', async ({
     page,
   }) => {
     await gotoTool(page, '/tool/calculadora-hipoteca');
-    await expect(page.locator('h1').first()).toContainText('Calculadora de Hipotecas');
+    await expect(page.locator('h1').first()).toContainText('Mortgage Calculator');
 
     await page.getByTestId('mortgage-price-input').fill('250000');
     await page.getByTestId('mortgage-down-pct-input').fill('20');
     await page.getByTestId('mortgage-years-input').fill('30');
     await page.getByTestId('mortgage-tin-input').fill('3');
 
-    await expect(page.getByTestId('mortgage-loan-amount')).toContainText('200.000,00');
-    await expect(page.getByTestId('mortgage-monthly-payment')).toContainText('843,21');
+    await expect(page.getByTestId('mortgage-loan-amount')).toContainText('200,000.00');
+    await expect(page.getByTestId('mortgage-monthly-payment')).toContainText('843.21');
     await expect(page.getByTestId('mortgage-tae')).toContainText('%');
 
     await page.getByTestId('mortgage-view-monthly').click();
     await expect(page.locator('tbody tr')).toHaveCount(360);
   });
 
-  test('Calculadora Científica evaluates arbitrary-precision expressions and history', async ({
+  test('Scientific Calculator evaluates arbitrary-precision expressions and history', async ({
     page,
   }) => {
     await gotoTool(page, '/tool/calculadora-cientifica');
-    await expect(page.locator('h1').first()).toContainText('Calculadora Científica');
+    await expect(page.locator('h1').first()).toContainText('Scientific Calculator');
 
     const exprInput = page.getByTestId('sci-expression-input');
     await exprInput.fill('0.1 + 0.2');
@@ -125,5 +126,32 @@ test.describe('Calculadora Section & Tools', () => {
     await expect(page.getByTestId('sci-display-result')).toHaveText('0.5');
 
     await expect(page.getByTestId('sci-history-list').locator('li')).toHaveCount(2);
+  });
+});
+
+test.describe('Calculadora tools in Spanish', () => {
+  test('renders the Spanish calculator copy under /es', async ({ page }) => {
+    await page.goto('/es/tool/regla-de-tres', { waitUntil: 'networkidle' });
+
+    await expect(page.locator('html')).toHaveAttribute('lang', 'es');
+    await expect(page.locator('h1').first()).toContainText('Regla de 3');
+
+    await page.getByTestId('rot-input-a').fill('4');
+    await page.getByTestId('rot-input-b').fill('12');
+    await page.getByTestId('rot-input-c').fill('10');
+    // Spanish locale formatting.
+    await expect(page.getByTestId('rot-result-value')).toHaveText('30');
+  });
+
+  test('formats Spanish currency with the Spanish locale', async ({ page }) => {
+    await page.goto('/es/tool/calculadora-hipoteca', { waitUntil: 'networkidle' });
+
+    await page.getByTestId('mortgage-price-input').fill('250000');
+    await page.getByTestId('mortgage-down-pct-input').fill('20');
+    await page.getByTestId('mortgage-years-input').fill('30');
+    await page.getByTestId('mortgage-tin-input').fill('3');
+
+    await expect(page.getByTestId('mortgage-loan-amount')).toContainText('200.000,00');
+    await expect(page.getByTestId('mortgage-monthly-payment')).toContainText('843,21');
   });
 });
